@@ -47,7 +47,10 @@ public class Player : MonoBehaviour
         // transform: 해당 게임 오브젝트
         // .position: 게임 오브젝트의 위치
         // Time.deltaTime: 일관된 움직임 보장
-        transform.position += direction * speed * Time.deltaTime;
+        transform.position
+            += direction       // 방향
+            * speed            // 이동 간격
+            * Time.deltaTime;  // 시간당 일관된 이동
     }
 
     // 진행 방향을 바라봄
