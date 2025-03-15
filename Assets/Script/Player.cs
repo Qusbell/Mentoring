@@ -12,9 +12,10 @@ public class Player : MonoBehaviour
 
     // 다중 레이캐스트
     // 각 레이 사이의 간격
-    float raySpacing = 0.4f;
+    float raySpacing;
     // 착지 시, 착지했는지 거리 판단
-    float rayDistance = 0.6f;
+    float rayDistance;
+
 
     // 물리효과
     Rigidbody rigid;
@@ -32,6 +33,14 @@ public class Player : MonoBehaviour
     {
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
+
+        // 레이 사이의 간격
+        // 0.4는 좀 널널한 느낌
+        // 0.3은 좀 빡빡한 느낌
+        raySpacing = (transform.localScale.x + transform.localScale.z) * 0.4f;
+        // 착지 확인 간격
+        // y 길이의 0.5
+        rayDistance = transform.localScale.y * 0.5f;
     }
 
 
@@ -103,20 +112,37 @@ public class Player : MonoBehaviour
     {
         // 점프를 입력했다면 && 착지 상태라면
         if (isJumpKeyDown && IsGrounded())
-        // 위쪽 방향으로 jumpHeight만큼 힘을 가함
-        { rigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse); }
+        {
+            // 중력가속도 초기화
+            rigid.velocity = Vector3.zero;
+            // 위쪽 방향으로 jumpHeight만큼 힘을 가함
+            rigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
+        }
 
     }
+
 
     bool IsGrounded()
     {
-        // 오브젝트 위치
+        // 오브젝트 위치 (가운데)
         Vector3 origin = transform.position;
 
-        // 앞/중앙/뒤 레이
-        return 
-            Physics.Raycast(origin + (transform.forward * raySpacing), Vector3.down, rayDistance) ||  // 앞쪽 레이캐스트
-            Physics.Raycast(origin, Vector3.down, rayDistance) ||                                     // 중앙 레이캐스트
-            Physics.Raycast(origin - (transform.forward * raySpacing), Vector3.down, rayDistance);    // 뒤쪽 레이캐스트
+        // 앞/가운데/뒤 레이캐스트
+        return
+            // 앞쪽 레이캐스트
+            Physics.Raycast(origin + (transform.forward * raySpacing),
+            Vector3.down,
+            rayDistance)||
+
+            // 중간 레이캐스트
+            Physics.Raycast(origin,
+            Vector3.down,
+            rayDistance) ||
+
+            // 뒤쪽 레이캐스트
+            Physics.Raycast(origin - (transform.forward * raySpacing),
+            Vector3.down,
+            rayDistance);
     }
+
 }
