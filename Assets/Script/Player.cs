@@ -1,45 +1,56 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    float hAxis;  // ¡ç¡æ ÁÂ¿ìÀÌµ¿ ÀÔ·Â
-    float vAxis;  // ¡è¡é ¾ÕµÚÀÌµ¿ ÀÔ·Â
-
-    bool isJumpKeyDown;  // Á¡ÇÁ ÀÔ·Â ¿©ºÎ
+    // ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•œ ë¬¼ë¦¬íš¨ê³¼
+    Rigidbody rigid;
 
 
-    // ´ÙÁß ·¹ÀÌÄ³½ºÆ®
-    // °¢ ·¹ÀÌ »çÀÌÀÇ °£°İ
+    // ë°©í–¥ ì…ë ¥ë°›ìŒ
+    float moveHorizontal;
+    float moveVertical;
+    // ì´ë™í•  ë°©í–¥(ì •ê·œí™” ë²¡í„°)
+    Vector3 direction;
+    // ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜
+    Vector3 origin;
+
+    // ì í”„ ì…ë ¥ ì—¬ë¶€
+    bool isJumpKeyDown;
+    // ë‹¤ì¤‘ ë ˆì´ìºìŠ¤íŠ¸ (ì°©ì§€ íŒì •)
+    // ê° ë ˆì´ ì‚¬ì´ì˜ ê°„ê²©
     float raySpacing;
-    // ÂøÁö ½Ã, ÂøÁöÇß´ÂÁö °Å¸® ÆÇ´Ü
+    // ì°©ì§€ ì‹œ, ì°©ì§€í–ˆëŠ”ì§€ ê±°ë¦¬ íŒë‹¨
     float rayDistance;
 
 
-    // ¹°¸®È¿°ú
-    Rigidbody rigid;
-
-    // ÀÌµ¿ÇÒ ¹æÇâ(Á¤±ÔÈ­ º¤ÅÍ)
-    Vector3 direction;
-
-    // 1ÃÊ´ç ÀÌµ¿ÇÒ Ä­ ¼ö (WASD)
+    // 1ì´ˆë‹¹ ì´ë™í•  ì¹¸ ìˆ˜ (WASD)
     public float speed;
-    // Á¡ÇÁ ³ôÀÌ
+    // ì í”„ ë†’ì´
     public float jumpHeight;
 
 
+    // ìƒì„± ì‹œ ì´ˆê¸°í™”
     void Awake()
     {
-        // Rigidbody ÃÊ±âÈ­
+        // Rigidbody ì´ˆê¸°í™”
         rigid = GetComponent<Rigidbody>();
+        // null ì´ˆê¸°í™” ë°©ì–´
+        if (rigid == null)
+        {
+            Debug.LogError("Rigidbody ì»´í¬ë„ŒíŠ¸ ëˆ„ë½!", gameObject);
+            enabled = false;
+        }
 
-        // ·¹ÀÌ »çÀÌÀÇ °£°İ
-        // 0.4´Â Á» ³Î³ÎÇÑ ´À³¦
-        // 0.3Àº Á» ºıºıÇÑ ´À³¦
+        // ë ˆì´ ì‚¬ì´ì˜ ê°„ê²©
+        // 0.4ëŠ” ì¢€ ë„ë„í•œ ëŠë‚Œ
+        // 0.3ì€ ì¢€ ë¹¡ë¹¡í•œ ëŠë‚Œ
         raySpacing = (transform.localScale.x + transform.localScale.z) * 0.4f;
-        // ÂøÁö È®ÀÎ °£°İ
-        // y ±æÀÌÀÇ 0.5
+        // ì°©ì§€ í™•ì¸ ê°„ê²©
+        // y ê¸¸ì´ì˜ 0.5
+        // ì •ìœ¡ë©´ì²´ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì„¤ì •ë¨
         rayDistance = transform.localScale.y * 0.5f;
     }
 
@@ -47,102 +58,108 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ÀÔ·Â
+        // ì…ë ¥
         SetInput();
-        // Á¤±ÔÈ­µÈ(¸ğµç ¹æÇâÀ¸·Î Å©±â°¡ 1ÀÎ) ¹æÇâº¤ÅÍ »ı¼º
-        SetDirection();
-
-        // ÀÔ·ÂµÈ ¹æÇâÀ¸·Î
-        // ¿ÀºêÁ§Æ® ¿òÁ÷ÀÓ/È¸Àü/Á¡ÇÁ
+        // ì…ë ¥ëœ ë°©í–¥ìœ¼ë¡œ
+        // ì˜¤ë¸Œì íŠ¸ ì›€ì§ì„/íšŒì „/ì í”„
         Move();
         Turn();
         Jump();
     }
 
 
-    // ÀÌµ¿ ¹æÇâ ÀÔ·Â
+    // ì´ë™ ë°©í–¥ ì…ë ¥
     void InputWASD()
+    // ì…ë ¥(WASD, â†‘â†“â†â†’)ìœ¼ë¡œ ë°©í–¥ ì§€ì •
+    // ì •ê·œí™”ëœ(ëª¨ë“  ë°©í–¥ìœ¼ë¡œ í¬ê¸°ê°€ 1ì¸) ë°©í–¥ë²¡í„° ìƒì„±
     {
-        // ÀÔ·Â(WASD, ¡è¡é¡ç¡æ)À¸·Î ¹æÇâ ÁöÁ¤
-        hAxis = Input.GetAxisRaw("Horizontal");
-        vAxis = Input.GetAxisRaw("Vertical");
+        // ë°©í–¥ ì…ë ¥ë°›ìŒ
+        moveHorizontal = Input.GetAxisRaw("Horizontal");
+        moveVertical = Input.GetAxisRaw("Vertical");
+
+        // ë°©í–¥ ëŒ€ì…
+        direction = new Vector3(moveHorizontal, 0, moveVertical).normalized;
+
+        // ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ ê°±ì‹ 
+        SetOrigin();
     }
 
-    // Á¡ÇÁ ¿©ºÎ ÀÔ·Â
+    // ì í”„ ì—¬ë¶€ ì…ë ¥
     void InputJump()
     { isJumpKeyDown = Input.GetButtonDown("Jump"); }
-    
-    
-    // °¢Á¾ ÀÔ·Â ´ëÀÀ
+
+
+    // ê°ì¢… ì…ë ¥ ëŒ€ì‘
     void SetInput()
     {
-        InputWASD();  // WASD ¹æÇâ ÀÔ·Â
-        InputJump();  // Á¡ÇÁ ÀÔ·Â
+        InputWASD();  // WASD ì…ë ¥
+        InputJump();  // Jump ì…ë ¥
     }
 
-
-    // ¹æÇâ ¼³Á¤
-    // Á¤±ÔÈ­µÈ ¹æÇâ
-    void SetDirection()
-    { direction = new Vector3(hAxis, 0, vAxis).normalized; }
-
-
-    // ÀÌµ¿
-    // À§Ä¡ += ¹æÇâ * ½ºÇÇµå
+    // ì´ë™
+    // ìœ„ì¹˜ += ë°©í–¥ * ìŠ¤í”¼ë“œ
     void Move()
     {
-        // transform: ÇØ´ç °ÔÀÓ ¿ÀºêÁ§Æ®
-        // .position: °ÔÀÓ ¿ÀºêÁ§Æ®ÀÇ À§Ä¡
-        // Time.deltaTime: ÀÏ°üµÈ ¿òÁ÷ÀÓ º¸Àå
-        transform.position
-            += direction       // ¹æÇâ
-            * speed            // ÀÌµ¿ °£°İ
-            * Time.deltaTime;  // ½Ã°£´ç ÀÏ°üµÈ ÀÌµ¿
+        // ì´ë™í•˜ë ¤ëŠ” ë°©í–¥ìœ¼ë¡œ
+        // ë ˆì´ìºìŠ¤íŠ¸ë¥¼ ì˜ê³ 
+        // ë­ê°€ ì—†ìœ¼ë©´ ì´ë™
+        // test
+        if (!Physics.Raycast(origin, direction, rayDistance))
+        {
+            // ë¬¼ë¦¬ ë°©ì‹ ì´ë™
+            // í˜„ì¬ ìœ„ì¹˜
+            // + ë°©í–¥ * ì´ë™ ê°„ê²© * ì´ë™ ê°„ê²© ë³´ì •
+            rigid.MovePosition(rigid.position
+                + direction * speed * Time.deltaTime);
+        }
     }
 
-    // È¸Àü
-    // ÁøÇà ¹æÇâÀ» ¹Ù¶óº½
+    // íšŒì „
+    // ì§„í–‰ ë°©í–¥ì„ ë°”ë¼ë´„
     void Turn()
     { transform.LookAt(transform.position + direction); }
 
-    // Á¡ÇÁ
-    // À§Ä¡ += À§ÂÊ ¹æÇâ * Á¡ÇÁ³ôÀÌ
-    // ÈûÀ» °¡ÇÔ (¹°¸®È¿°ú)
+
+    // ì í”„
+    // ìœ„ì¹˜ += ìœ„ìª½ ë°©í–¥ * ì í”„ë†’ì´
+    // í˜ì„ ê°€í•¨ (ë¬¼ë¦¬íš¨ê³¼)
     void Jump()
     {
-        // Á¡ÇÁ¸¦ ÀÔ·ÂÇß´Ù¸é && ÂøÁö »óÅÂ¶ó¸é
+        // ì í”„ë¥¼ ì…ë ¥í–ˆë‹¤ë©´ && ì°©ì§€ ìƒíƒœë¼ë©´
         if (isJumpKeyDown && IsGrounded())
         {
-            // Áß·Â°¡¼Óµµ ÃÊ±âÈ­
+            // ì í”„ ì‹œ: ì¤‘ë ¥ê°€ì†ë„ ì´ˆê¸°í™”
             rigid.velocity = Vector3.zero;
-            // À§ÂÊ ¹æÇâÀ¸·Î jumpHeight¸¸Å­ ÈûÀ» °¡ÇÔ
+            // ìœ„ìª½ ë°©í–¥ìœ¼ë¡œ jumpHeightë§Œí¼ í˜ì„ ê°€í•¨
             rigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
-
     }
 
+    // ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ ì„¤ì •
+    void SetOrigin()
+    {
+        // ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ (ê°€ìš´ë°)
+        origin = transform.position;
+    }
 
+    // ì°©ì§€ ìƒíƒœì¸ì§€ íŒì •
     bool IsGrounded()
     {
-        // ¿ÀºêÁ§Æ® À§Ä¡ (°¡¿îµ¥)
-        Vector3 origin = transform.position;
-
-        // ¾Õ/°¡¿îµ¥/µÚ ·¹ÀÌÄ³½ºÆ®
+        // ì•/ê°€ìš´ë°/ë’¤ ë ˆì´ìºìŠ¤íŠ¸
         return
-            // ¾ÕÂÊ ·¹ÀÌÄ³½ºÆ®
+            // ì•ìª½ ë ˆì´ìºìŠ¤íŠ¸
             Physics.Raycast(origin + (transform.forward * raySpacing),
             Vector3.down,
-            rayDistance)||
+            rayDistance) ||
 
-            // Áß°£ ·¹ÀÌÄ³½ºÆ®
+            // ì¤‘ê°„ ë ˆì´ìºìŠ¤íŠ¸
             Physics.Raycast(origin,
             Vector3.down,
             rayDistance) ||
 
-            // µÚÂÊ ·¹ÀÌÄ³½ºÆ®
+            // ë’¤ìª½ ë ˆì´ìºìŠ¤íŠ¸
             Physics.Raycast(origin - (transform.forward * raySpacing),
             Vector3.down,
             rayDistance);
     }
-
 }
