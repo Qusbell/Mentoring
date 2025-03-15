@@ -4,27 +4,51 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    float hAxis; // ←→ 좌우이동 입력
-    float vAxis; // ↑↓ 앞뒤이동 입력
+    float hAxis;  // ←→ 좌우이동 입력
+    float vAxis;  // ↑↓ 앞뒤이동 입력
+
+    bool isJumpKeyDown;  // 점프 입력 여부
+
+
+    // 다중 레이캐스트
+    // 각 레이 사이의 간격
+    float raySpacing = 0.4f;
+    // 착지 시, 착지했는지 거리 판단
+    float rayDistance = 0.6f;
+
+    // 물리효과
+    Rigidbody rigid;
 
     // 이동할 방향(정규화 벡터)
     Vector3 direction;
 
-    // 1초당 이동할 칸 수
+    // 1초당 이동할 칸 수 (WASD)
     public float speed;
+    // 점프 높이
+    public float jumpHeight;
+
+
+    void Awake()
+    {
+        // Rigidbody 초기화
+        rigid = GetComponent<Rigidbody>();
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        // 이동 방향 결정
-        InputWASD();
-        // 정규화된(모든 방향으로 크기가 1인) 방향벡터
-        direction = GetDirection();
+        // 입력
+        SetInput();
+        // 정규화된(모든 방향으로 크기가 1인) 방향벡터 생성
+        SetDirection();
 
-        // 오브젝트 움직임
-        MoveTransform();
+        // 입력된 방향으로
+        // 오브젝트 움직임/회전/점프
+        Move();
+        Turn();
+        Jump();
     }
-
 
 
     // 이동 방향 입력
@@ -35,14 +59,28 @@ public class Player : MonoBehaviour
         vAxis = Input.GetAxisRaw("Vertical");
     }
 
-    // 방향 생성
-    Vector3 GetDirection()
-    { return new Vector3(hAxis, 0, vAxis).normalized; }
+    // 점프 여부 입력
+    void InputJump()
+    { isJumpKeyDown = Input.GetButtonDown("Jump"); }
+    
+    
+    // 각종 입력 대응
+    void SetInput()
+    {
+        InputWASD();  // WASD 방향 입력
+        InputJump();  // 점프 입력
+    }
 
 
+    // 방향 설정
+    // 정규화된 방향
+    void SetDirection()
+    { direction = new Vector3(hAxis, 0, vAxis).normalized; }
 
+
+    // 이동
     // 위치 += 방향 * 스피드
-    void MoveToDirection()
+    void Move()
     {
         // transform: 해당 게임 오브젝트
         // .position: 게임 오브젝트의 위치
@@ -53,20 +91,32 @@ public class Player : MonoBehaviour
             * Time.deltaTime;  // 시간당 일관된 이동
     }
 
+    // 회전
     // 진행 방향을 바라봄
-    void LookAtDirection()
+    void Turn()
+    { transform.LookAt(transform.position + direction); }
+
+    // 점프
+    // 위치 += 위쪽 방향 * 점프높이
+    // 힘을 가함 (물리효과)
+    void Jump()
     {
-        // 회전
-        // 진행 방향을 바라봄
-        transform.LookAt(transform.position + direction);
+        // 점프를 입력했다면 && 착지 상태라면
+        if (isJumpKeyDown && IsGrounded())
+        // 위쪽 방향으로 jumpHeight만큼 힘을 가함
+        { rigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse); }
+
     }
 
-    // transform 방식 이동/회전
-    void MoveTransform()
+    bool IsGrounded()
     {
-        // 방향을 향해서 이동
-        MoveToDirection();
-        // 방향을 향해서 회전
-        LookAtDirection();
+        // 오브젝트 위치
+        Vector3 origin = transform.position;
+
+        // 앞/중앙/뒤 레이
+        return 
+            Physics.Raycast(origin + (transform.forward * raySpacing), Vector3.down, rayDistance) ||  // 앞쪽 레이캐스트
+            Physics.Raycast(origin, Vector3.down, rayDistance) ||                                     // 중앙 레이캐스트
+            Physics.Raycast(origin - (transform.forward * raySpacing), Vector3.down, rayDistance);    // 뒤쪽 레이캐스트
     }
 }
