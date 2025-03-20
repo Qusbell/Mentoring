@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics; // <- Vector3 모호한 참조 오류
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,8 +13,10 @@ public class Player : MonoBehaviour
     float moveHorizontal;
     float moveVertical;
     // 이동할 방향(정규화 벡터)
-    Vector3 direction;
-    // 오브젝트 위치
+    Vector3 moveVec;
+    // 공격 방향(정규화 벡터/마우스 포인터 지정)
+    Vector3 attackVec;
+    // 현재 이 오브젝트의 위치
     Vector3 origin;
 
     // 점프 입력 여부
@@ -25,9 +28,11 @@ public class Player : MonoBehaviour
     float rayDistance;
 
     // 1초당 이동할 칸 수 (WASD)
-    public float moveSpeed;
+    [SerializeField] // 유니티 컴포넌트에서 수정
+    float moveSpeed;
     // 점프 높이
-    public float jumpHeight;
+    [SerializeField] // 유니티 컴포넌트에서 수정
+    float jumpHeight;
 
 
     // 생성 시 초기화
@@ -42,11 +47,10 @@ public class Player : MonoBehaviour
             enabled = false; // 생성 취소
         }
 
-
         // 레이캐스트 거리: 정육면체를 기준으로 설정됨
 
         // 바닥 레이 사이의 간격
-        // 너무 넓으면, 다른 큐브와 걸쳐있는 경우 2중 점프 등 문제 발생
+        // 너무 넓으면, 다른 큐브와 걸치는 경우 2중 점프 등 문제 발생
         raySpacing = (transform.localScale.x + transform.localScale.z) * 0.22f;
         // 착지 확인 || Move 여부 간격
         // y 길이의 0.5
@@ -82,11 +86,13 @@ public class Player : MonoBehaviour
     // 정규화된(모든 방향으로 크기가 1인) 방향벡터 생성
     {
         // 방향 입력받음
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveVertical = Input.GetAxisRaw("Vertical");
+        moveHorizontal = Input.GetAxisRaw("Horizontal"); // x축 (좌우)
+        moveVertical = Input.GetAxisRaw("Vertical");     // z축 (앞뒤)
 
         // 방향 대입
-        direction = new Vector3(moveHorizontal, 0, moveVertical).normalized;
+        // 45도(쿼터뷰) 틀어진 방향
+        moveVec = Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도) <- 하드코딩. 나중에 수정
+            * (new Vector3(moveHorizontal, 0, moveVertical).normalized); // 입력된 방향벡터
     }
 
     // 점프 여부 입력
@@ -112,25 +118,22 @@ public class Player : MonoBehaviour
     // 위치 += 방향 * 스피드
     void Move()
     {
-        // 이동하려는 방향이 있는 경우
-        // 레이캐스트를 쏘고, 뭐가 없으면 이동
-        if (direction.sqrMagnitude > 0.0001f &&  // 벡터의 크기가 아주 미약하게라도 있는 경우: 참
-            !Physics.Raycast(origin, direction, rayDistance))
+        // 레이캐스트를 쏘고, 앞에 뭐가 없으면 이동
+        if (moveVec != Vector3.zero &&
+            !Physics.Raycast(origin, moveVec, rayDistance))
         {
-            // Debug.Log("Move 실행");  // Move 횟수 디버그
-
             // 물리 방식 이동
             // 현재 위치
             // + 방향 * 이동 간격 * 이동 간격 보정
             rigid.MovePosition(rigid.position
-                + direction * moveSpeed * Time.fixedDeltaTime);
+                + moveVec * moveSpeed * Time.fixedDeltaTime);
         }
     }
 
     // 회전
     // 진행 방향을 바라봄
     void Turn()
-    { transform.LookAt(transform.position + direction); }
+    { transform.LookAt(transform.position + moveVec); }
 
     // 점프
     // 위치 += 위쪽 방향 * 점프높이

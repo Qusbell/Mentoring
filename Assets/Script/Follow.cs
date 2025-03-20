@@ -5,9 +5,9 @@ using UnityEngine;
 public class Follow : MonoBehaviour
 {
     // 따라갈 대상
-    public Transform target;
+    [SerializeField] private Transform target;
     // 대상에서의 위치
-    public Vector3 offset;
+    [SerializeField] private Vector3 offset;
 
 
 
