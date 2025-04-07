@@ -9,7 +9,8 @@ public class Follow : MonoBehaviour
     // 대상에서의 위치
     [SerializeField] private Vector3 offset;
 
-
+    private void Awake()
+    { offset = transform.position; }
 
     // Update is called once per frame
     void Update()

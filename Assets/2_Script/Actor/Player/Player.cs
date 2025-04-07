@@ -4,35 +4,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Actor
 {
     // 오브젝트에 대한 물리효과
     Rigidbody rigid;
 
-    // 방향 입력받음
-    float moveHorizontal;
-    float moveVertical;
-    // 이동할 방향(정규화 벡터)
-    Vector3 moveVec;
-    // 공격 방향(정규화 벡터/마우스 포인터 지정)
-    Vector3 attackVec;
-    // 현재 이 오브젝트의 위치
-    Vector3 origin;
+    // 입력받는 방향
+    protected float moveHorizontal;
+    protected float moveVertical;
+    // 입력 데드존
+    [SerializeField]
+    float inputDeadZone = 0.1f;
 
-    // 점프 입력 여부
-    bool isJumpKeyDown;
+    // 현재 이 오브젝트의 위치 == transform.position
+    Vector3 origin;
     // 다중 레이캐스트 (착지 판정)
     // 각 레이 사이의 간격
     float raySpacing;
     // 착지 시, 착지했는지 거리 판단
-    float rayDistance;
+    float bottomRayDistance;
+    // 앞쪽 거리 판단
+    float frontRayDistance;
 
-    // 1초당 이동할 칸 수 (WASD)
-    [SerializeField] // 유니티 컴포넌트에서 수정
-    float moveSpeed;
+    // 점프 입력 여부
+    bool isJumpKeyDown;
     // 점프 높이
-    [SerializeField] // 유니티 컴포넌트에서 수정
+    [SerializeField]
     float jumpHeight;
+
+    // 공격했는가
+    bool isAttack;
 
 
     // 생성 시 초기화
@@ -52,9 +53,12 @@ public class Player : MonoBehaviour
         // 바닥 레이 사이의 간격
         // 너무 넓으면, 다른 큐브와 걸치는 경우 2중 점프 등 문제 발생
         raySpacing = (transform.localScale.x + transform.localScale.z) * 0.22f;
-        // 착지 확인 || Move 여부 간격
-        // y 길이의 0.5
-        rayDistance = transform.localScale.y * 0.5f;
+
+        // 하드코딩. 나중에 수정
+        // 착지 확인
+        bottomRayDistance = transform.localScale.y * 1.05f;
+        // Move 여부
+        frontRayDistance = transform.localScale.z * 0.6f;
     }
 
 
@@ -72,6 +76,10 @@ public class Player : MonoBehaviour
         // 오브젝트 움직임/회전
         Move();
         Turn();
+
+        // 공격
+        Attack();
+
         // 점프
         Jump();
 
@@ -79,9 +87,8 @@ public class Player : MonoBehaviour
         SetOrigin();
     }
 
-
     // 이동 방향 입력
-    void InputWASD()
+    public void InputWASD()
     // 입력(WASD, ↑↓←→)으로 방향 지정
     // 정규화된(모든 방향으로 크기가 1인) 방향벡터 생성
     {
@@ -89,38 +96,53 @@ public class Player : MonoBehaviour
         moveHorizontal = Input.GetAxisRaw("Horizontal"); // x축 (좌우)
         moveVertical = Input.GetAxisRaw("Vertical");     // z축 (앞뒤)
 
+        if (Mathf.Abs(moveHorizontal) < inputDeadZone) { moveHorizontal = 0; }
+        if (Mathf.Abs(moveVertical) < inputDeadZone) { moveVertical = 0; }
+
         // 방향 대입
         // 45도(쿼터뷰) 틀어진 방향
-        moveVec = Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도) <- 하드코딩. 나중에 수정
-            * (new Vector3(moveHorizontal, 0, moveVertical).normalized); // 입력된 방향벡터
+        moveVec = (Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도)
+            * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // 입력된 방향벡터
     }
 
     // 점프 여부 입력
-    void InputJump()
+    public void InputJump()
     {
         if (Input.GetButtonDown("Jump"))
         { isJumpKeyDown = true; }
     }
 
+    // 공격 입력
+    public void InputAttack()
+    {
+        if (Input.GetMouseButtonDown(0) &&  // 좌클릭 누름
+            Time.time >= nextAttackTime)    // 쿨타임 끝남
+        {
+            isAttack = true;
+            nextAttackTime = Time.time + attackRate;  // 다음 공격 가능 시간 설정
+        }
+    }
+
     // 각종 입력 대응
     // WASD || ↑↓←→
     // Jump(Space Bar)
-    void SetInput()
-    { InputWASD(); InputJump(); }
+    // Attack(좌클릭)
+    public void SetInput()
+    { InputWASD(); InputJump(); InputAttack(); }
 
     // 오브젝트 위치 설정
     // 오브젝트의 중앙 위치
-    void SetOrigin()
+    public void SetOrigin()
     { origin = transform.position; }
 
 
     // 이동
     // 위치 += 방향 * 스피드
-    void Move()
+     public override void Move()
     {
         // 레이캐스트를 쏘고, 앞에 뭐가 없으면 이동
         if (moveVec != Vector3.zero &&
-            !Physics.Raycast(origin, moveVec, rayDistance))
+            !Physics.Raycast(origin, moveVec, frontRayDistance))
         {
             // 물리 방식 이동
             // 현재 위치
@@ -132,19 +154,17 @@ public class Player : MonoBehaviour
 
     // 회전
     // 진행 방향을 바라봄
-    void Turn()
+    public void Turn()
     { transform.LookAt(transform.position + moveVec); }
 
     // 점프
     // 위치 += 위쪽 방향 * 점프높이
     // 힘을 가함 (물리효과)
-    void Jump()
+    public void Jump()
     {
         // 점프를 입력했다면 && 착지 상태라면
         if (isJumpKeyDown && IsGrounded())
         {
-            Debug.Log("Jump 실행"); // 점프 횟수 디버그
-
             // 점프 시: 중력가속도 초기화
             rigid.velocity = Vector3.zero;
             // 위쪽 방향으로 jumpHeight만큼 힘을 가함
@@ -157,23 +177,32 @@ public class Player : MonoBehaviour
 
 
     // 착지 상태인지 판정
-    bool IsGrounded()
+    public bool IsGrounded()
     {
-        // 앞/중간/뒤 레이캐스트
+        // 앞/뒤 레이캐스트
         return
             // 앞쪽 레이캐스트
             Physics.Raycast(origin + (transform.forward * raySpacing),
             Vector3.down,
-            rayDistance) ||
-
-            // 중간 레이캐스트
-            Physics.Raycast(origin,
-            Vector3.down,
-            rayDistance) ||
+            bottomRayDistance) ||
 
             // 뒤쪽 레이캐스트
             Physics.Raycast(origin - (transform.forward * raySpacing),
             Vector3.down,
-            rayDistance);
+            bottomRayDistance);
     }
+
+
+
+
+    public override void Attack()
+    {
+        if (isAttack)
+        {
+            base.Attack();
+            isAttack = false;
+        }
+    }
+
+
 }
