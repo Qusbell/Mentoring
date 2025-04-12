@@ -369,7 +369,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 10
+  nowHp: 10
+  attackDamage: 1
+  attackRate: 1
+  attackRange: 10
+  attackAngle: 180
+  targetTag: 
   moveSpeed: 5
+  inputDeadZone: 0.1
   jumpHeight: 13
 --- !u!54 &70615494
 Rigidbody:
@@ -981,7 +989,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 10
+  nowHp: 10
+  attackDamage: 1
+  attackRate: 1
+  attackRange: 10
+  attackAngle: 180
+  targetTag: Monster
   moveSpeed: 3
+  inputDeadZone: 0.1
   jumpHeight: 10
 --- !u!4 &323649303 stripped
 Transform:
@@ -1732,7 +1748,8 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 5e3215bfd63d6f4488cc945131cedb7c, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 394994946788186938, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6163004039443054852, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
