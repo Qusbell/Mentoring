@@ -49,3 +49,5 @@ public class Cube : MonoBehaviour
         isMoving = false;
     }
 }
+
+//Cube 클래스가 큐브의 이동과 충돌 처리 기능
