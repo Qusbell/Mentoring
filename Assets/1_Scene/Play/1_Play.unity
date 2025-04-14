@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: -1}
   moveSpeed: 10
-  raycastDistance: 0.6
+  raycastDistance: 1
 --- !u!65 &8019794
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &907624666
 Transform:
   m_ObjectHideFlags: 0
@@ -675,7 +675,7 @@ Transform:
   m_GameObject: {fileID: 907624665}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: 1, z: 0}
+  m_LocalPosition: {x: 15, y: 2, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
   moveSpeed: 10
-  raycastDistance: 0.5
+  raycastDistance: 1
 --- !u!65 &907624668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -933,7 +933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
   moveSpeed: 10
-  raycastDistance: 0.5
+  raycastDistance: 1
 --- !u!65 &1332552039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1069,7 +1069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
   moveSpeed: 10
-  raycastDistance: 0.5
+  raycastDistance: 1
 --- !u!65 &1412878149
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1311,7 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: -1}
   moveSpeed: 10
-  raycastDistance: 0.6
+  raycastDistance: 1
 --- !u!65 &1729014908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1580,7 +1580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: -1}
   moveSpeed: 10
-  raycastDistance: 0.6
+  raycastDistance: 1
 --- !u!65 &1966739829
 BoxCollider:
   m_ObjectHideFlags: 0
