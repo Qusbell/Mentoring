@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 8019791}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 20}
+  m_LocalPosition: {x: 6, y: 1, z: 25}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: -1}
-  moveSpeed: 10
+  moveSpeed: 30
   raycastDistance: 1
 --- !u!65 &8019794
 BoxCollider:
@@ -665,7 +665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &907624666
 Transform:
   m_ObjectHideFlags: 0
@@ -675,7 +675,7 @@ Transform:
   m_GameObject: {fileID: 907624665}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15, y: 2, z: 0}
+  m_LocalPosition: {x: 35, y: 1, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
-  moveSpeed: 10
+  moveSpeed: 30
   raycastDistance: 1
 --- !u!65 &907624668
 BoxCollider:
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
-  moveSpeed: 10
+  moveSpeed: 30
   raycastDistance: 1
 --- !u!65 &1332552039
 BoxCollider:
@@ -1014,7 +1014,7 @@ Transform:
   m_GameObject: {fileID: 1332552037}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1, z: 0}
+  m_LocalPosition: {x: 35, y: 1, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1049,7 +1049,7 @@ Transform:
   m_GameObject: {fileID: 1412878146}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 1, z: 0}
+  m_LocalPosition: {x: 35, y: 1, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: -1, y: 0, z: 0}
-  moveSpeed: 10
+  moveSpeed: 30
   raycastDistance: 1
 --- !u!65 &1412878149
 BoxCollider:
@@ -1291,7 +1291,7 @@ Transform:
   m_GameObject: {fileID: 1729014905}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 10}
+  m_LocalPosition: {x: 6, y: 1, z: 25}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: -1}
-  moveSpeed: 10
+  moveSpeed: 30
   raycastDistance: 1
 --- !u!65 &1729014908
 BoxCollider:
@@ -1560,7 +1560,7 @@ Transform:
   m_GameObject: {fileID: 1966739826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 15}
+  m_LocalPosition: {x: 6, y: 1, z: 25}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: -1}
-  moveSpeed: 10
+  moveSpeed: 30
   raycastDistance: 1
 --- !u!65 &1966739829
 BoxCollider:
