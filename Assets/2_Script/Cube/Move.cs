@@ -11,20 +11,9 @@ public class Move : MonoBehaviour
     public float moveSpeed = 2f; // 이동 속도
 
     [Header("레이캐스트 거리 설정")]
-    public float raycastDistance = 0.4f; // 충돌 감지 거리
+    public float raycastDistance = 0.5f; // 충돌 감지 거리
 
     private bool isMoving = false; // 현재 이동 중인지 여부
-
-    // 레이캐스트 방향 배열 (6방향: 앞, 뒤, 좌, 우, 위, 아래)
-    private readonly Vector3[] directions = new Vector3[]
-    {
-        Vector3.forward,
-        Vector3.back,
-        Vector3.left,
-        Vector3.right,
-        Vector3.up,
-        Vector3.down
-    };
 
     void OnEnable()
     {
@@ -33,19 +22,16 @@ public class Move : MonoBehaviour
 
     void Update()
     {
-        if (!isMoving) return;
+        if (!isMoving) return;  // 이동 중이 아니면 레이캐스트를 실행하지 않음
 
-        // 모든 방향으로 Ray를 쏴서 충돌 검사
-        foreach (var dir in directions)
+        // 레이캐스트는 이동 방향으로만 감지
+        if (Physics.Raycast(transform.position, moveDirection.normalized, out RaycastHit hit, raycastDistance))
         {
-            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, raycastDistance))
+            if (hit.collider.CompareTag("CollidedCube"))
             {
-                if (hit.collider.CompareTag("CollidedCube"))
-                {
-                    isMoving = false; // 멈춤
-                    gameObject.tag = "CollidedCube"; // 자신의 태그도 변경
-                    return;
-                }
+                isMoving = false; // 멈춤
+                gameObject.tag = "CollidedCube"; // 자신의 태그도 변경
+                return;
             }
         }
 
@@ -57,9 +43,7 @@ public class Move : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        foreach (var dir in directions)
-        {
-            Gizmos.DrawLine(transform.position, transform.position + dir * raycastDistance);
-        }
+        // 레이캐스트는 이동 방향으로만 감지
+        Gizmos.DrawLine(transform.position, transform.position + moveDirection.normalized * raycastDistance);
     }
 }
