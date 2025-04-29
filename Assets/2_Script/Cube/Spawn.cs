@@ -17,9 +17,11 @@ public class spawn : MonoBehaviour
         [HideInInspector] public float timer = 0f;        // 시간 트리거 측정을 위한 타이머
         [HideInInspector] public bool hasSpawned = false; // 이미 생성되었는지 여부
     }
+    
 
     // 여러 개의 스폰 조건들을 배열로 저장
     public SpawnData[] spawnSettings;
+
 
     // 매 프레임마다 조건 확인 (시간 트리거 처리용)
     void Update()

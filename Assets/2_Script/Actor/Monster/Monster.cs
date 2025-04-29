@@ -6,13 +6,31 @@ using UnityEngine.AI;
 public class Monster : Actor
 {
     // 생성
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        // Rigidbody 초기화
+        rigid = GetComponent<Rigidbody>();
+        // null 초기화 방어
+        if (rigid == null)
+        {
+            Debug.LogError("Rigidbody 컴포넌트 누락!", gameObject);
+            enabled = false; // 생성 취소
+        }
+
+
+        //  base.Start(); // <- 아직 애니메이션 비존재
+
+
+
         // <- 이동속도 등 초기화
         nav = GetComponent<NavMeshAgent>();
+        if (nav == null)
+        {
+            Debug.LogError("NavMeshAgent 컴포넌트 누락!", gameObject);
+            enabled = false; // 생성 취소
+        }
     }
-    
+
 
     private void Update()
     {
@@ -38,6 +56,4 @@ public class Monster : Actor
     NavMeshAgent nav;
 
     #endregion
-
-
 }

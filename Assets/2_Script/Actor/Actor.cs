@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 abstract public class Actor : MonoBehaviour
@@ -11,8 +12,12 @@ abstract public class Actor : MonoBehaviour
     protected virtual void FreezeVelocity()
     { rigid.angularVelocity = Vector3.zero; }
 
-    // 생성 시 초기화
-    protected virtual void Awake()
+
+    // 애니메이터
+    protected Animator animator;
+
+
+    protected virtual void Start()
     {
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
@@ -22,7 +27,17 @@ abstract public class Actor : MonoBehaviour
             Debug.LogError("Rigidbody 컴포넌트 누락!", gameObject);
             enabled = false; // 생성 취소
         }
+
+        // 애니메이터 초기화
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator 컴포넌트 누락!", gameObject);
+            enabled = false; // 생성 취소
+        }
     }
+
+
 
     // 물리엔진과 함께 업데이트 (0.02s)
     protected virtual void FixedUpdate()
@@ -46,16 +61,19 @@ abstract public class Actor : MonoBehaviour
     // Update()에서 갱신
     public virtual void Move()
     {
-        if (moveVec != Vector3.zero)
-        {
-            // 현재위치 += 방향 * 이동 간격 * 이동 간격 보정
-            rigid.MovePosition(rigid.position
-            + moveVec * moveSpeed * Time.deltaTime);
-        }
+        // 이동 방향이 없다면: 종료
+        if (moveVec == Vector3.zero) { isMove = false; return; }
+
+        // 현재위치 += 방향 * 이동 간격 * 이동 간격 보정
+        rigid.MovePosition(rigid.position + moveVec * moveSpeed * Time.deltaTime);
+
+        // 이동
+        isMove = true;
     }
 
     // 회전
     // 진행 방향을 바라봄
+    // 공격 방향을 바라봐야 할까?
     public virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
     #endregion
@@ -102,6 +120,9 @@ abstract public class Actor : MonoBehaviour
         else
         { nowHp = 0; }
 
+        // 피격 반응
+        DamageReaction();
+
         // 체력이 0 이하로 떨어지면 처리
         if (nowHp <= 0)
         { Die(); }
@@ -119,8 +140,28 @@ abstract public class Actor : MonoBehaviour
     // 사망 처리
     protected virtual void Die()
     {
-
+        isDie = true;
     }
     #endregion
 
+
+    //==================================================
+    // 모션 메서드
+    //==================================================
+    #region 모션 메서드
+
+    protected bool isMove = false;
+    protected bool isJump = false;
+    protected bool isDie = false;
+    protected bool isAttack = false;
+
+    protected virtual void SetAnimation()
+    {
+        animator.SetBool("IsMove", isMove);
+        animator.SetBool("IsJump", isJump);
+        //  animator.SetBool("IsDie", isDie);  // <- 아직 사망모션이 없는듯?
+        animator.SetBool("IsAttack", isAttack);
+    }
+
+    #endregion
 }

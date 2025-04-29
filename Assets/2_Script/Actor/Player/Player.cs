@@ -7,10 +7,9 @@ using UnityEngine;
 public class Player : Actor
 {
     // 생성 시 초기화
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
-
+        base.Start();
 
         // 바닥 레이 사이의 간격
         // 너무 넓으면, 다른 큐브와 걸치는 경우 2중 점프 등 문제 발생
@@ -39,6 +38,9 @@ public class Player : Actor
 
         // 점프
         Jump();
+
+        // 애니메이션 적용
+        SetAnimation();
     }
 
 
@@ -120,13 +122,15 @@ public class Player : Actor
     // 앞쪽 거리 판단
     float frontRayDistance;
 
+    // <- 카메라 각도
+
     // 이동
     // 위치 += 방향 * 스피드
     public override void Move()
     {
         // 레이캐스트를 쏘고, 앞에 뭐가 없으면 이동
-        if (!Physics.Raycast(transform.position, moveVec, frontRayDistance))
-        { base.Move(); }
+        if (Physics.Raycast(transform.position, moveVec, frontRayDistance)) { return; }
+        base.Move();
     }
 
     // 회전
@@ -157,8 +161,12 @@ public class Player : Actor
     // 힘을 가함 (물리효과)
     public void Jump()
     {
-        // 점프를 입력했다면 && 착지 상태라면
-        if (isJumpKeyDown && IsGrounded())
+        // 점프 상태 확인
+        // 착지 상태가 아니라면: 점프
+        isJump = !IsGrounded();
+
+        // 점프를 입력했다면 && 점프 상태가 아니라면
+        if (isJumpKeyDown && !isJump)
         {
             // 불필요한 물리 초기화
             rigid.velocity = Vector3.zero;
