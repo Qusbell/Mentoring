@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+
 public class Monster : Actor
 {
     // 생성
-    protected override void Start()
+    protected override void Awake()
     {
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
@@ -17,9 +19,7 @@ public class Monster : Actor
             enabled = false; // 생성 취소
         }
 
-
         //  base.Start(); // <- 아직 애니메이션 비존재
-
 
 
         // <- 이동속도 등 초기화
