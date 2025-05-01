@@ -20,7 +20,10 @@ public class ActorAnimation : AnimationManager
         animator.SetBool("IsJump", isJump);
         //  animatior.SetBool("IsDie", isDie);  // <- 아직 사망모션이 없는 것 같아서 잠시 제외
 
-        animator.SetBool("IsAttack", isAttack);
-        isAttack = false;
+        if (isAttack)
+        {
+            animator.SetTrigger("IsAttack");
+            isAttack = false;
+        }
     }
 }
