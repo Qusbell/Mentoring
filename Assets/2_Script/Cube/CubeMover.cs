@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 큐브 이동을 관리하는 컴포넌트
 /// 미리 배치된 큐브가 시작 시 꺼지고, 활성화될 때 지정한 위치에서 시작하여 원래 배치된 위치로 돌아옴
-/// 이동 경로를 레이저로 시각화
+/// 이동 경로를 레이저로 시각화 (에디터에서만)
 /// </summary>
 public class CubeMover : MonoBehaviour
 {
@@ -20,8 +20,13 @@ public class CubeMover : MonoBehaviour
     [Tooltip("씬에서 이동 경로 시각화")]
     public bool showPath = true;
 
-    [Tooltip("레이저 효과로 경로 표시")]
+#if UNITY_EDITOR
+    [Tooltip("에디터에서만 레이저 효과로 경로 표시")]
     public bool showLaserPath = true;
+
+    [Tooltip("에디터에서 경로 미리보기 (씬 뷰 전용)")]
+    public bool showEditorPreview = true;
+#endif
 
     // 비공개 변수들
     private Vector3 originalPosition;      // 처음 배치된 위치
@@ -29,8 +34,10 @@ public class CubeMover : MonoBehaviour
     private bool isMovingToOriginal;       // 원래 위치로 이동 중
     private bool hasArrived;               // 원래 위치에 도착했는지 여부
 
-    // 레이저 경로용 LineRenderer
+#if UNITY_EDITOR
+    // 레이저 경로용 LineRenderer (에디터 전용)
     private LineRenderer pathLaser;
+#endif
 
     // 시작 시 초기화
     void Awake()
@@ -38,8 +45,10 @@ public class CubeMover : MonoBehaviour
         originalPosition = transform.position;
         startPosition = originalPosition + startPositionOffset;
 
-        // LineRenderer가 없으면 추가
+#if UNITY_EDITOR
+        // 에디터에서만 LineRenderer 설정
         SetupLaserRenderer();
+#endif
 
         // 시작 시 비활성화
         if (gameObject.activeSelf)
@@ -58,8 +67,10 @@ public class CubeMover : MonoBehaviour
         isMovingToOriginal = true;
         hasArrived = false;
 
-        // 레이저 경로 업데이트
+#if UNITY_EDITOR
+        // 에디터에서만 레이저 경로 업데이트
         UpdateLaserPath();
+#endif
     }
 
     // 매 프레임마다 실행
@@ -82,12 +93,15 @@ public class CubeMover : MonoBehaviour
                 hasArrived = true;                      // 도착 상태로 변경
             }
 
-            // 레이저 경로 업데이트
+#if UNITY_EDITOR
+            // 에디터에서만 레이저 경로 업데이트
             UpdateLaserPath();
+#endif
         }
     }
 
-    // 레이저 렌더러 설정
+#if UNITY_EDITOR
+    // 레이저 렌더러 설정 (에디터 전용)
     private void SetupLaserRenderer()
     {
         pathLaser = GetComponent<LineRenderer>();
@@ -113,7 +127,7 @@ public class CubeMover : MonoBehaviour
         UpdateLaserPath();
     }
 
-    // 레이저 경로 업데이트
+    // 레이저 경로 업데이트 (에디터 전용)
     private void UpdateLaserPath()
     {
         if (pathLaser != null && showLaserPath)
@@ -144,6 +158,7 @@ public class CubeMover : MonoBehaviour
             pathLaser.enabled = false;
         }
     }
+#endif
 
     // 큐브 초기화 (재사용 목적)
     public void Reset()
@@ -151,7 +166,58 @@ public class CubeMover : MonoBehaviour
         isMovingToOriginal = false;
         hasArrived = false;
 
-        // 레이저 경로 업데이트
+#if UNITY_EDITOR
+        // 에디터에서만 레이저 경로 업데이트
         UpdateLaserPath();
+#endif
     }
+
+#if UNITY_EDITOR
+    // 에디터에서 경로 미리보기 (씬 뷰에서만 표시)
+    void OnDrawGizmos()
+    {
+        if (!showEditorPreview) return;
+
+        // 원래 위치와 시작 위치 계산
+        Vector3 startPos, endPos;
+
+        if (Application.isPlaying)
+        {
+            // 실행 중일 때는 저장된 위치 사용
+            startPos = originalPosition + startPositionOffset;
+            endPos = originalPosition;
+        }
+        else
+        {
+            // 에디터에서는 현재 위치를 기준으로 계산
+            startPos = transform.position + startPositionOffset;
+            endPos = transform.position;
+        }
+
+        // 경로 선 그리기
+        Gizmos.color = new Color(0.5f, 0.5f, 1f, 0.5f); // 반투명 파란색
+        Gizmos.DrawLine(startPos, endPos);
+
+        // 시작점과 끝점에 작은 구체 표시
+        Gizmos.color = new Color(0f, 1f, 0f, 0.5f); // 반투명 초록색
+        Gizmos.DrawSphere(startPos, 0.1f);
+
+        Gizmos.color = new Color(1f, 0f, 0f, 0.5f); // 반투명 빨간색
+        Gizmos.DrawSphere(endPos, 0.1f);
+
+        // 화살표 표시 (방향 표시)
+        Vector3 direction = (endPos - startPos).normalized;
+        Vector3 arrowPos = Vector3.Lerp(startPos, endPos, 0.5f);
+
+        // 화살표 헤드 그리기
+        Vector3 right = Vector3.Cross(direction, Vector3.up).normalized * 0.2f;
+        Vector3 left = -right;
+        Vector3 back = -direction * 0.4f;
+
+        Gizmos.color = new Color(1f, 1f, 0f, 0.5f); // 반투명 노란색
+        Gizmos.DrawLine(arrowPos, arrowPos + back + right);
+        Gizmos.DrawLine(arrowPos, arrowPos + back + left);
+        Gizmos.DrawLine(arrowPos + back + right, arrowPos + back + left);
+    }
+#endif
 }
