@@ -9,8 +9,7 @@ using UnityEngine;
 //==================================================
 public class MeleeBasicAttack : AttackAction
 {
-    [SerializeField] protected float attackRange = 10f;   // 공격 거리
-    [SerializeField] protected float attackAngle = 180f;  // 공격 각도
+    [SerializeField] protected float attackAngle = 90f;  // 공격 각도
 
 
     public override void Attack()
@@ -18,8 +17,7 @@ public class MeleeBasicAttack : AttackAction
         // 재사용 대기시간 중 : 생략
         if (!attackRate.TryStartTimer()) { return; }
 
-
-        Debug.Log("공격");
+        Debug.Log("공격: " + gameObject.name);
 
         // OverlapSphere를 사용하여 공격 범위 내의 모든 콜라이더를 찾음
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
@@ -28,28 +26,28 @@ public class MeleeBasicAttack : AttackAction
         foreach (Collider hitCollider in hitColliders)
         {
             // 타겟 태그를 가진 오브젝트인지 확인
-            if (hitCollider.CompareTag(targetTag))
+            if (!hitCollider.CompareTag(targetTag)) { continue; }
+
+            // 타겟 방향 벡터 계산
+            Vector3 directionToTarget = hitCollider.transform.position - transform.position;
+            directionToTarget.y = 0;  // Y축 값을 0으로 설정 (높이 차이 무시)
+            
+            // 자신의 전방 벡터와 타겟 방향 벡터 사이의 각도 계산
+            float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+            
+            // 계산된 각도가 공격 각도의 절반보다 작은지 확인
+            if (angleToTarget <= attackAngle / 2)
             {
-                // 타겟 방향 벡터 계산
-                Vector3 directionToTarget = hitCollider.transform.position - transform.position;
-                directionToTarget.y = 0;  // Y축 값을 0으로 설정 (높이 차이 무시)
-
-                // 자신의 전방 벡터와 타겟 방향 벡터 사이의 각도 계산
-                float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
-
-                // 계산된 각도가 공격 각도의 절반보다 작은지 확인
-                if (angleToTarget <= attackAngle / 2)
+                // DamageReaction 컴포넌트가 있는지 확인하고, 데미지 처리
+                DamageReaction targetActor = hitCollider.GetComponent<DamageReaction>();
+                if (targetActor != null)
                 {
-                    // DamageReaction 컴포넌트가 있는지 확인하고, 데미지 처리
-                    DamageReaction targetActor = hitCollider.GetComponent<DamageReaction>();
-                    if (targetActor != null)
-                    {
-                        targetActor.TakeDamage(attackDamage);
-                        // 디버그 시각화: 공격이 적중한 타겟까지 빨간색 선 그리기
-                        Debug.DrawLine(transform.position, hitCollider.transform.position, Color.red, 1f);
-                    }
+                    targetActor.TakeDamage(attackDamage);
+                    // 디버그 시각화: 공격이 적중한 타겟까지 빨간색 선 그리기
+                    Debug.DrawLine(transform.position, hitCollider.transform.position, Color.red, 1f);
                 }
             }
+
         }
     } // MeleeBasicAttack
 

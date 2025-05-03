@@ -19,12 +19,6 @@ public class MoveAction : MonoBehaviour
     {
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
-        // null 초기화 방어
-        if (rigid == null)
-        {
-            Debug.LogError("Rigidbody 컴포넌트 누락!", gameObject);
-            enabled = false; // 생성 취소
-        }
     }
 
 

@@ -5,15 +5,29 @@ using UnityEngine.AI;
 
 
 
-[RequireComponent(typeof(MonsterMove))]
-[RequireComponent(typeof(MeleeBasicAttack))]
-public class Monster : Actor
+[RequireComponent(typeof(MonsterChaseAction))]
+[RequireComponent(typeof(NavMeshAgent))]
+abstract public class Monster : Actor
 {
+    // 네비게이션 ai
+    protected NavMeshAgent nav;
 
 
+    protected override void Awake()
+    {
+        base.Awake();
+        nav = GetComponent<NavMeshAgent>();
+    }
 
 
+    protected virtual void Update()
+    {
+        moveAction.Move();
+
+        if (!nav.pathPending && nav.remainingDistance <= nav.stoppingDistance) // <- 애니메이션 동안 적용 X
+        {
+            attackAction.Attack();
+            // <- 애니메이션 적용
+        }
+    }
 }
-
-
-

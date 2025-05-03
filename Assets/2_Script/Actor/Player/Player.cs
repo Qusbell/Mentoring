@@ -24,6 +24,7 @@ public class Player : Actor
     }
 
 
+
     // 프레임당 업데이트
     protected virtual void Update()
     {
@@ -45,12 +46,4 @@ public class Player : Actor
             attackAction.Attack();
         }
     }
-
-
-    // 물리엔진과 함께 업데이트 (0.02s)
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
-
 }

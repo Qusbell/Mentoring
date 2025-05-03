@@ -17,7 +17,7 @@ public class ActorAnimation : AnimationManager
     protected override void SetAnimation()
     {
         animator.SetBool("IsMove", isMove);
-        animator.SetBool("IsJump", isJump);
+        animator.SetBool("IsJump", isJump); // <- 몬스터는 점프모션 없음
         //  animatior.SetBool("IsDie", isDie);  // <- 아직 사망모션이 없는 것 같아서 잠시 제외
 
         if (isAttack)

@@ -9,7 +9,6 @@ public class PlayerMove : MoveAction
 
     // <- 레이어 마스크
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -24,7 +23,6 @@ public class PlayerMove : MoveAction
 
     // 회전
     // 진행 방향을 바라봄
-    // 공격 방향을 바라봐야 할까?
     public virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
 

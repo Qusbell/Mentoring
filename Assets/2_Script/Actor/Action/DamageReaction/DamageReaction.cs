@@ -22,6 +22,8 @@ public class DamageReaction : MonoBehaviour
         else
         { nowHp = 0; }
 
+        Debug.Log("피격: " + gameObject.name);
+
         // 피격 반응
         // DamageReaction();
 

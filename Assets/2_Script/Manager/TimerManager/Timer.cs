@@ -10,12 +10,10 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     // 활성화 후, 재활성/재사용까지의 대기 시간
-    [SerializeField]
-    protected float waitingTime = 1f;
+    public float waitingTime = 1f;
 
     // 활성 가능 여부
-    [HideInInspector]
-    public bool isCanActivate { get; protected set; } = true;
+    [HideInInspector] public bool isCanActivate { get; protected set; } = true;
 
 
     // 타이머 활성화 시도

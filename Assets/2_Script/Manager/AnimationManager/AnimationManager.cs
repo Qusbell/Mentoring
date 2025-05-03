@@ -15,13 +15,11 @@ public class AnimationManager : MonoBehaviour
     { animator = GetComponent<Animator>(); }
 
 
-
     protected virtual void LateUpdate()
     {
         // 애니메이션 적용
         SetAnimation();
     }
-
 
 
     protected virtual void SetAnimation()
