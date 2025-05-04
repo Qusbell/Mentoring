@@ -953,7 +953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b195d99573d8494889219a37db5cf66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitingTime: 1
+  waitingTime: 2
 --- !u!114 &1284974118791040895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -968,7 +968,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 1
   <attackRange>k__BackingField: 2
-  targetTag: Player
+  attackRate: {fileID: 0}
+  targetTag: 
   attackAngle: 90
 --- !u!114 &5038519080904345008
 MonoBehaviour:

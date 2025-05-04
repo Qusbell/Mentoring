@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class PlayerMove : MoveAction
 {
-    // 앞쪽 거리 판단
-    protected float frontRayDistance;
-
     // <- 레이어 마스크
 
     protected override void Awake()
@@ -16,15 +13,36 @@ public class PlayerMove : MoveAction
         frontRayDistance = transform.localScale.z * 0.6f;
     }
 
-
-    // 전방 확인
-    protected virtual bool CanMove()
-    { return Physics.Raycast(transform.position, moveVec, frontRayDistance); }
-
     // 회전
     // 진행 방향을 바라봄
     public virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
+
+
+
+    // 전방 레이캐스트
+    RaycastHit frontRayHit;
+
+    // 앞쪽 거리 판단
+    protected float frontRayDistance;
+
+    // 전방 확인 - 이동 가능하면 true 반환
+    protected virtual bool CanMove()
+    {
+        // <- 레이어마스크 : 큐브
+        if (Physics.Raycast(transform.position, moveVec, out frontRayHit, frontRayDistance))
+        {
+            // 트리거 콜라이더는 무시 (통과 가능)
+            if (frontRayHit.collider.isTrigger)
+            { return true; }
+            // 일반 콜라이더는 통과 불가
+            else
+            { return false; }
+        }
+
+        return true; // 아무것도 감지되지 않으면 이동 가능
+    }
+
 
 
     // 이동
@@ -36,10 +54,11 @@ public class PlayerMove : MoveAction
         // 회전
         Turn();
 
-        // 레이캐스트를 쏘고, 앞에 뭐가 없으면 이동
-        if (CanMove()) { return; }
+        // 이동 불가능하면 리턴
+        if (!CanMove()) { return; }
 
         // 이동
         base.Move();
     }
+
 }
