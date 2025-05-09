@@ -494,8 +494,9 @@ GameObject:
   - component: {fileID: 3979921004994361143}
   - component: {fileID: 4416695887624650988}
   - component: {fileID: 4446130530154506471}
+  - component: {fileID: 320079142018541293}
   m_Layer: 0
-  m_Name: Player_test 1 1
+  m_Name: Player_test
   m_TagString: Player
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -509,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4617787347689549732}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 1.96, y: 0.64, z: -1.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -572,7 +573,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!136 &4681345694746402325
 CapsuleCollider:
@@ -662,10 +663,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 1
+  <attackRange>k__BackingField: 3
   attackRate: {fileID: 0}
-  targetTag: Monster
-  attackRange: 10
-  attackAngle: 180
+  targetTag: 
+  attackAngle: 120
 --- !u!114 &4416695887624650988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,6 +691,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &320079142018541293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617787347689549732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4693354961025006660
