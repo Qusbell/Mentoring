@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class MonsterSpawner : Spawner
 {
     [Header("몬스터 스폰 위치 설정")]
@@ -7,29 +8,27 @@ public class MonsterSpawner : Spawner
     // [SerializeField] private LayerMask groundLayer; // 지형 레이어 (나중에 추가)
     [SerializeField] private float heightOffset = 1.0f; // 몬스터를 얼마나 위에 스폰시킬 것인가
 
+    // 생성할 몬스터 숫자
+    protected int monsterNum;
 
-    // 스폰 위치 초기화
+
     protected override void Awake()
     {
         base.Awake();
-        SetSpawnLocation();
-    }
-
-
-    // 콜라이더 트리거
-    private void OnTriggerEnter(Collider other)
-    {
-        // 예시: 플레이어가 트리거 영역에 들어오면 스폰
-        if (other.CompareTag("Player") && !isCompleted)
-        { SpawnTriggerOn(); }
+        // 생성할 몬스터 숫자
+        monsterNum = targetPrefabs.Count - 1;
     }
 
 
     // 업데이트
     protected override void Update()
     {
-        // <- trigger 조건
+        // 아래 지형 감지
+        SetSpawnLocation();
 
+        // SpawnTriggerOn(); // 디버그용 임시
+
+        // 생성 체크
         base.Update();
     }
 
@@ -55,19 +54,39 @@ public class MonsterSpawner : Spawner
     }
 
 
+    // 종료 확인
+    public override void CheckCompleted()
+    {
+        // 모든 프리펩을 생성했다면
+        if (monsterNum <= PrefabIndex++)
+        {
+            // 종료 체크
+            base.CheckCompleted();
+
+            // 스포너 비활성화
+            gameObject.SetActive(false);
+        }
+    }
+
+
     // 추가 기능: 에디터에서 레이캐스트 시각화 (디버깅용)
     private void OnDrawGizmos()
     {
         if (spawnLocation != null)
         {
+            // 레이캐스트 경로
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(spawnLocation, spawnLocation + Vector3.down * detectionDistance);
+            Gizmos.DrawLine(transform.position, spawnLocation + Vector3.down * detectionDistance);
 
+            // 스폰 위치
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(spawnLocation, 0.5f);
 
+            // 스포너 자체의 위치
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, 0.5f);
         }
     }
+
+
 }
