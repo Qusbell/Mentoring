@@ -23,7 +23,7 @@ public class CubeCollapser : MonoBehaviour
     public string playerTag = "Player";
 
     [Tooltip("플레이어 근접 트리거 거리")]
-    public float triggerDistance = 2f;
+    public float triggerDistance = 0.1f;
 
     [Tooltip("붕괴 전 대기 시간 (초)")]
     public float warningDelay = 1f;
