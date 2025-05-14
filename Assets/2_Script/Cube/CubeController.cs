@@ -45,14 +45,8 @@ public class CubeController : MonoBehaviour
     public CubeData[] activationSettings;
 
     [Header("전체 시작 설정")]
-    [Tooltip("전체 시작 전 추가 대기 시간 (초)")]
-    public float globalStartDelay = 0f;
-
-    [Tooltip("전체 시작 딜레이 사용 여부")]
-    public bool useGlobalStartDelay = true;
-
-    [Tooltip("외부 트리거 대기 여부 (체크하면 StartExecution 호출 전까지 시작하지 않음)")]
-    public bool waitForExternalTrigger = false;
+    [Tooltip("스크립트 시작 시 대기 시간 (초)")]
+    public float startDelay = 0f;
 
     [Header("연쇄 실행 설정")]
     [Tooltip("모든 큐브가 활성화된 후 트리거할 다음 컨트롤러")]
@@ -69,25 +63,23 @@ public class CubeController : MonoBehaviour
     public bool showTriggerAreas = true;
 
     // 시작 딜레이 타이머
-    private float globalStartTimer = 0f;
-    private bool globalDelayPassed = false;
-    private bool hasStartedExecution = false;
+    private float startDelayTimer = 0f;
+    private bool delayPassed = false;
     private bool hasTriggeredNextController = false;
     private int activatedCubeCount = 0;
 
     // 시작 시 모든 큐브 확인
     void Start()
     {
-        // 외부 트리거 대기 설정이 아니면 자동으로 시작 설정
-        if (!waitForExternalTrigger)
+        // 시작 딜레이가 0이면 바로 실행 상태로 설정
+        if (startDelay <= 0f)
         {
-            hasStartedExecution = true;
-
-            // 글로벌 딜레이가 0이거나 사용하지 않는 경우 바로 시작
-            if (globalStartDelay <= 0f || !useGlobalStartDelay)
-            {
-                globalDelayPassed = true;
-            }
+            delayPassed = true;
+            Debug.Log($"[{gameObject.name}] 딜레이 없이 바로 시작합니다.");
+        }
+        else
+        {
+            Debug.Log($"[{gameObject.name}] {startDelay}초 후에 시작됩니다.");
         }
 
         foreach (var data in activationSettings)
@@ -111,20 +103,17 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    // 매 프레임마다 조건 확인 (시간 트리거 처리용)
+    // 매 프레임마다 실행
     void Update()
     {
-        // 실행이 시작되지 않았으면 처리하지 않음
-        if (!hasStartedExecution) return;
-
-        // 글로벌 딜레이 체크
-        if (!globalDelayPassed && useGlobalStartDelay)
+        // 딜레이가 아직 지나지 않았다면 타이머 증가
+        if (!delayPassed)
         {
-            globalStartTimer += Time.deltaTime;
-            if (globalStartTimer >= globalStartDelay)
+            startDelayTimer += Time.deltaTime;
+            if (startDelayTimer >= startDelay)
             {
-                globalDelayPassed = true;
-                Debug.Log($"[{gameObject.name}] 전체 시작 딜레이 {globalStartDelay}초가 지났습니다. 큐브 활성화를 시작합니다.");
+                delayPassed = true;
+                Debug.Log($"[{gameObject.name}] 시작 딜레이 {startDelay}초가 지났습니다. 큐브 활성화를 시작합니다.");
             }
             else
             {
@@ -132,6 +121,7 @@ public class CubeController : MonoBehaviour
             }
         }
 
+        // 딜레이가 지났으면 큐브 활성화 로직 처리
         foreach (var data in activationSettings)
         {
             // 이미 활성화된 큐브는 스킵
@@ -203,8 +193,8 @@ public class CubeController : MonoBehaviour
     // 영역 트리거 감지 시 호출됨
     public void OnAreaTrigger(GameObject triggerArea, GameObject other)
     {
-        // 실행이 시작되지 않았거나 글로벌 딜레이가 지나지 않았으면 트리거 무시
-        if (!hasStartedExecution || (!globalDelayPassed && useGlobalStartDelay)) return;
+        // 딜레이가 지나지 않았으면 트리거 무시
+        if (!delayPassed) return;
 
         // 각 활성화 데이터를 확인
         foreach (var data in activationSettings)
@@ -239,8 +229,8 @@ public class CubeController : MonoBehaviour
     // 특정 인덱스의 큐브를 수동으로 활성화
     public void ActivateCubeByIndex(int index)
     {
-        // 실행이 시작되지 않았거나 글로벌 딜레이가 지나지 않았으면 활성화 무시
-        if (!hasStartedExecution || (!globalDelayPassed && useGlobalStartDelay)) return;
+        // 딜레이가 지나지 않았으면 활성화 무시
+        if (!delayPassed) return;
 
         if (index >= 0 && index < activationSettings.Length)
         {
@@ -251,17 +241,14 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    // 모든 큐브 상태 초기화 (테스트/재시작용)
+    // 모든 큐브 상태 초기화 
     public void ResetAll()
     {
-        // 글로벌 타이머 초기화
-        globalStartTimer = 0f;
-        globalDelayPassed = globalStartDelay <= 0f || !useGlobalStartDelay;
+        // 타이머 초기화
+        startDelayTimer = 0f;
+        delayPassed = startDelay <= 0f;
         hasTriggeredNextController = false;
         activatedCubeCount = 0;
-
-        // waitForExternalTrigger 설정에 따라 시작 상태 설정
-        hasStartedExecution = !waitForExternalTrigger;
 
         foreach (var data in activationSettings)
         {
@@ -275,29 +262,29 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    // 전체 시작 딜레이 설정 (외부에서 호출 가능)
-    public void SetGlobalStartDelay(float delayInSeconds)
+    // 시작 딜레이 설정 (외부에서 호출 가능)
+    public void SetStartDelay(float delayInSeconds)
     {
-        globalStartDelay = Mathf.Max(0f, delayInSeconds); // 음수 방지
-        useGlobalStartDelay = true;
+        startDelay = Mathf.Max(0f, delayInSeconds); // 음수 방지
         ResetAll(); // 설정을 변경했으니 초기화
     }
 
-    // 실행 시작 (외부에서 호출 가능)
+    // 실행 시작 (다른 스크립트에서 호출할 수 있는 메서드)
     public void StartExecution()
     {
-        if (!hasStartedExecution)
-        {
-            hasStartedExecution = true;
-            globalStartTimer = 0f;
-            Debug.Log($"[{gameObject.name}] 실행을 시작합니다.");
-        }
+        // 타이머 초기화하고 시작
+        startDelayTimer = 0f;
+        delayPassed = startDelay <= 0f;
+
+        Debug.Log($"[{gameObject.name}] 실행을 시작합니다." + (startDelay > 0f ? $" {startDelay}초 후 큐브 활성화가 시작됩니다." : ""));
     }
 
     // 딜레이 즉시 완료 (테스트/디버그용)
-    public void SkipGlobalDelay()
+    public void SkipDelay()
     {
-        globalDelayPassed = true;
+        startDelayTimer = startDelay;
+        delayPassed = true;
+        Debug.Log($"[{gameObject.name}] 시작 딜레이를 건너뛰었습니다.");
     }
 
     // 연쇄적 실행 즉시 트리거 (테스트/디버그용)
