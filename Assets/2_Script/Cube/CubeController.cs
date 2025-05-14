@@ -7,6 +7,8 @@ using UnityEngine.Events; // 이벤트 시스템 사용을 위해 추가
 /// 큐브 활성화와 트리거를 관리하는 컴포넌트
 /// </summary>
 public class CubeController : MonoBehaviour
+    
+        
 {
     // 트리거 조건 타입 정의
     public enum TriggerType
@@ -212,6 +214,7 @@ public class CubeController : MonoBehaviour
         }
     }
 
+    
     // 큐브 활성화
     void ActivateCube(CubeData data)
     {
