@@ -7,8 +7,6 @@ using UnityEngine.Events; // 이벤트 시스템 사용을 위해 추가
 /// 큐브 활성화와 트리거를 관리하는 컴포넌트
 /// </summary>
 public class CubeController : MonoBehaviour
-    
-        
 {
     // 트리거 조건 타입 정의
     public enum TriggerType
@@ -50,13 +48,7 @@ public class CubeController : MonoBehaviour
     [Tooltip("스크립트 시작 시 대기 시간 (초)")]
     public float startDelay = 0f;
 
-    [Header("연쇄 실행 설정")]
-    [Tooltip("모든 큐브가 활성화된 후 트리거할 다음 컨트롤러")]
-    public CubeController nextController;
-
-    [Tooltip("다음 컨트롤러로 넘어가기 전 대기 시간 (초)")]
-    public float nextControllerDelay = 0f;
-
+    [Header("완료 이벤트")]
     [Tooltip("모든 큐브가 활성화되면 발생하는 이벤트")]
     public UnityEvent onAllCubesActivated;
 
@@ -67,7 +59,7 @@ public class CubeController : MonoBehaviour
     // 시작 딜레이 타이머
     private float startDelayTimer = 0f;
     private bool delayPassed = false;
-    private bool hasTriggeredNextController = false;
+    private bool hasTriggeredEvent = false;
     private int activatedCubeCount = 0;
 
     // 시작 시 모든 큐브 확인
@@ -147,8 +139,8 @@ public class CubeController : MonoBehaviour
     // 모든 큐브가 활성화되었는지 확인
     private void CheckAllCubesActivated()
     {
-        // 이미 다음 컨트롤러를 트리거했으면 스킵
-        if (hasTriggeredNextController) return;
+        // 이미 이벤트를 트리거했으면 스킵
+        if (hasTriggeredEvent) return;
 
         // 모든 큐브가 활성화되었는지 확인
         bool allActivated = true;
@@ -164,31 +156,11 @@ public class CubeController : MonoBehaviour
         // 모든 큐브가 활성화되었으면 이벤트 발생
         if (allActivated && activationSettings.Length > 0)
         {
-            hasTriggeredNextController = true;
+            hasTriggeredEvent = true;
             Debug.Log($"[{gameObject.name}] 모든 큐브가 활성화되었습니다. 이벤트를 발생시킵니다.");
 
             // 이벤트 발생
             onAllCubesActivated?.Invoke();
-
-            // 다음 컨트롤러 트리거
-            StartCoroutine(TriggerNextController());
-        }
-    }
-
-    // 다음 컨트롤러 트리거
-    private IEnumerator TriggerNextController()
-    {
-        if (nextController != null)
-        {
-            // 대기 시간 적용
-            if (nextControllerDelay > 0)
-            {
-                Debug.Log($"[{gameObject.name}] {nextControllerDelay}초 후 다음 컨트롤러를 시작합니다.");
-                yield return new WaitForSeconds(nextControllerDelay);
-            }
-
-            Debug.Log($"[{gameObject.name}] 다음 컨트롤러 [{nextController.gameObject.name}]를 시작합니다.");
-            nextController.StartExecution();
         }
     }
 
@@ -214,7 +186,6 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    
     // 큐브 활성화
     void ActivateCube(CubeData data)
     {
@@ -244,13 +215,13 @@ public class CubeController : MonoBehaviour
         }
     }
 
-    // 모든 큐브 상태 초기화 
+    // 모든 큐브 상태 초기화 (테스트/재시작용)
     public void ResetAll()
     {
         // 타이머 초기화
         startDelayTimer = 0f;
         delayPassed = startDelay <= 0f;
-        hasTriggeredNextController = false;
+        hasTriggeredEvent = false;
         activatedCubeCount = 0;
 
         foreach (var data in activationSettings)
@@ -290,14 +261,13 @@ public class CubeController : MonoBehaviour
         Debug.Log($"[{gameObject.name}] 시작 딜레이를 건너뛰었습니다.");
     }
 
-    // 연쇄적 실행 즉시 트리거 (테스트/디버그용)
+    // 모든 큐브 활성화 이벤트 즉시 트리거 (테스트/디버그용)
     public void TriggerAllCubesActivated()
     {
-        if (!hasTriggeredNextController)
+        if (!hasTriggeredEvent)
         {
-            hasTriggeredNextController = true;
+            hasTriggeredEvent = true;
             onAllCubesActivated?.Invoke();
-            StartCoroutine(TriggerNextController());
         }
     }
 
@@ -319,23 +289,6 @@ public class CubeController : MonoBehaviour
                     Gizmos.DrawWireCube(triggerCollider.bounds.center, triggerCollider.bounds.size);
                 }
             }
-        }
-
-        // 다음 컨트롤러 연결 표시
-        if (nextController != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, nextController.transform.position);
-
-            // 화살표 표시
-            Vector3 direction = (nextController.transform.position - transform.position).normalized;
-            float distance = Vector3.Distance(transform.position, nextController.transform.position);
-            Vector3 arrowPos = transform.position + direction * (distance * 0.8f);
-
-            // 화살표 헤드 그리기
-            Vector3 right = Vector3.Cross(direction, Vector3.up).normalized * 0.5f;
-            Gizmos.DrawLine(arrowPos, arrowPos - direction * 0.5f + right);
-            Gizmos.DrawLine(arrowPos, arrowPos - direction * 0.5f - right);
         }
     }
 }

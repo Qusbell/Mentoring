@@ -6871,6 +6871,10 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
+  startDelay: 0
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   showTriggerAreas: 1
 --- !u!114 &1913670572
 MonoBehaviour:
@@ -6997,6 +7001,10 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
+  startDelay: 24
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   showTriggerAreas: 1
 --- !u!114 &1913670573
 MonoBehaviour:
@@ -7025,6 +7033,10 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
+  startDelay: 43
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   showTriggerAreas: 1
 --- !u!1 &1989214938
 GameObject:
