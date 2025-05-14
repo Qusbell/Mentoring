@@ -29,10 +29,10 @@ public class CubeCollapser : MonoBehaviour
     public float warningDelay = 1f;
 
     // 내부 고정 설정 (Inspector에서 수정 불가)
-    private const float COLLAPSE_SPEED = 5f;         // 붕괴 속도
+    private const float COLLAPSE_SPEED = 15f;         // 붕괴 속도
     private const float DEACTIVATE_DISTANCE = 10f;   // 비활성화 거리
     private const float DEACTIVATE_TIME = 2f;        // 비활성화 시간
-    private const float SHAKE_DURATION = 3.0f;       // 흔들림 지속 시간
+    private const float SHAKE_DURATION = 2.0f;       // 흔들림 지속 시간
     private const float INITIAL_SHAKE_INTENSITY = 0.05f; // 초기 흔들림 강도
     private const float MAX_SHAKE_INTENSITY = 0.2f;  // 최대 흔들림 강도
     private const float SHAKE_SPEED = 5f;           // 흔들림 속도
