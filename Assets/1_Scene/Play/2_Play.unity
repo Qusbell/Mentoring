@@ -160,6 +160,11 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!4 &848400 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+  m_PrefabInstance: {fileID: 1625465984}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &35944346 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
@@ -272,11 +277,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 574154328}
     m_Modifications:
     - target: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_Name
-      value: Cube_floor (14)
+      value: Cube_floor (14)*
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -578,6 +583,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2017407902}
   - {fileID: 1749348435}
   - {fileID: 1261972494}
   - {fileID: 1167127288}
@@ -589,11 +595,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1978564710}
     m_Modifications:
     - target: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_Name
-      value: Cube_floor (9)
+      value: Cube_floor (9)*
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -675,6 +681,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1800125568}
   - {fileID: 1084460005}
   - {fileID: 1063197809}
   - {fileID: 1500470363}
@@ -718,6 +725,11 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!4 &625416317 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+  m_PrefabInstance: {fileID: 439061969}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &672624569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -882,6 +894,9 @@ GameObject:
   m_Component:
   - component: {fileID: 793561656}
   - component: {fileID: 793561655}
+  - component: {fileID: 793561657}
+  - component: {fileID: 793561659}
+  - component: {fileID: 793561658}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -906,114 +921,27 @@ MonoBehaviour:
     triggerType: 0
     delayTime: 1
     triggerArea: {fileID: 2008481973}
-    targetTag: Player
+    targetTag: 
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1290567881}
     triggerType: 0
     delayTime: 2
     triggerArea: {fileID: 2008481973}
-    targetTag: Player
+    targetTag: 
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1358915613}
     triggerType: 0
     delayTime: 2
     triggerArea: {fileID: 2008481973}
-    targetTag: Player
+    targetTag: 
     timer: 0
     hasActivated: 0
-  - targetCube: {fileID: 2017407899}
-    triggerType: 0
-    delayTime: 7
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 1749348434}
-    triggerType: 0
-    delayTime: 8
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 1261972493}
-    triggerType: 0
-    delayTime: 8
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 1167127287}
-    triggerType: 0
-    delayTime: 8
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 848397}
-    triggerType: 0
-    delayTime: 13
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 625416314}
-    triggerType: 0
-    delayTime: 13.5
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 2026254361}
-    triggerType: 0
-    delayTime: 14
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 708268601}
-    triggerType: 0
-    delayTime: 15
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 35944346}
-    triggerType: 0
-    delayTime: 15
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 747128041}
-    triggerType: 0
-    delayTime: 15
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 1800125565}
-    triggerType: 0
-    delayTime: 15
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 747128041}
-    triggerType: 0
-    delayTime: 15
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 747128041}
-    triggerType: 0
-    delayTime: 15
-    triggerArea: {fileID: 2008481973}
-    targetTag: Player
-    timer: 0
-    hasActivated: 0
+  startDelay: 0
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   showTriggerAreas: 1
 --- !u!4 &793561656
 Transform:
@@ -1030,17 +958,169 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &793561657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793561654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activationSettings:
+  - targetCube: {fileID: 2017407899}
+    triggerType: 0
+    delayTime: 0
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1749348434}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1261972493}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1167127287}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  startDelay: 7
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  showTriggerAreas: 1
+--- !u!114 &793561658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793561654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activationSettings:
+  - targetCube: {fileID: 1800125565}
+    triggerType: 0
+    delayTime: 0
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1084460004}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1063197808}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1500470362}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  startDelay: 20
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  showTriggerAreas: 1
+--- !u!114 &793561659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793561654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activationSettings:
+  - targetCube: {fileID: 848397}
+    triggerType: 0
+    delayTime: 0
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 625416314}
+    triggerType: 0
+    delayTime: 0.5
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 2026254361}
+    triggerType: 0
+    delayTime: 1
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 708268601}
+    triggerType: 0
+    delayTime: 2
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 35944346}
+    triggerType: 0
+    delayTime: 2
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 747128041}
+    triggerType: 0
+    delayTime: 2
+    triggerArea: {fileID: 2008481973}
+    targetTag: 
+    timer: 0
+    hasActivated: 0
+  startDelay: 13
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  showTriggerAreas: 1
 --- !u!1001 &795307572
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2018547619}
     m_Modifications:
     - target: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_Name
-      value: Cube_floor (1)
+      value: Cube_floor (1)*
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1745,11 +1825,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1978564710}
     m_Modifications:
     - target: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_Name
-      value: Cube_floor (10)
+      value: Cube_floor (10)*
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1808,15 +1888,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 431145169}
     m_Modifications:
     - target: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_Name
-      value: Cube_floor (4)
+      value: Cube_floor (4)*
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1928,11 +2008,11 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1978564710}
     m_Modifications:
     - target: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_Name
-      value: Cube_floor (8)
+      value: Cube_floor (8)*
       objectReference: {fileID: 0}
     - target: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2066,6 +2146,11 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!4 &1800125568 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+  m_PrefabInstance: {fileID: 116781030}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1823021071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2293,6 +2378,11 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!4 &1937685177 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+  m_PrefabInstance: {fileID: 795307572}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1978564709
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,6 +2412,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 848400}
+  - {fileID: 625416317}
+  - {fileID: 2026254364}
   - {fileID: 708268602}
   - {fileID: 35944347}
   - {fileID: 747128042}
@@ -2432,6 +2525,11 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!4 &2017407902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+  m_PrefabInstance: {fileID: 1565260017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2018547618
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,6 +2559,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1937685177}
   - {fileID: 1290567882}
   - {fileID: 1358915614}
   m_Father: {fileID: 0}
@@ -2503,6 +2602,11 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!4 &2026254364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8588230692449568506, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+  m_PrefabInstance: {fileID: 1501802354}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6321238982617308734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2570,13 +2674,7 @@ SceneRoots:
   - {fileID: 1357349899}
   - {fileID: 793561656}
   - {fileID: 6321238982617308734}
-  - {fileID: 795307572}
   - {fileID: 2018547619}
-  - {fileID: 1565260017}
   - {fileID: 431145169}
-  - {fileID: 1625465984}
-  - {fileID: 439061969}
-  - {fileID: 1501802354}
   - {fileID: 1978564710}
-  - {fileID: 116781030}
   - {fileID: 574154328}
