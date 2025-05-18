@@ -5,6 +5,7 @@ using System.Collections;
 /// 위에서 아래로 떨어지는 큐브가 그 아래에 있는 큐브의 윗면에 빨간색 경고 표시를 보여주는 스크립트
 /// 큐브가 가까워질수록 경고 표시가 더 선명해지고, 착지 직전에 부드럽게 사라집니다.
 /// </summary>
+/// 아 왜ㅐㅐㅐㅐㅐㅐ 안돼냐ㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑㅑ
 public class WarningSystem : MonoBehaviour
 {
     [Header("기본 설정")]
