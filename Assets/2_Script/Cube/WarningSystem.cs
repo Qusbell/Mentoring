@@ -29,7 +29,6 @@ public class WarningSystem : MonoBehaviour
     [Tooltip("경고 표시 사라짐 시간 (초, 값이 클수록 천천히 사라짐)")]
     public float fadeDuration = 0.3f;
 
-    // 내부 변수 (수정할 필요 없음)
     private GameObject targetCube;          // 아래에 있는 큐브
     private GameObject warningPlane;        // 경고 표시 평면
     private Vector3 initialPosition;        // 시작 위치
@@ -39,7 +38,7 @@ public class WarningSystem : MonoBehaviour
     private bool isFading = false;          // 사라지는 중인지 여부
     private Material planeMaterial;         // 경고 표시 재질
 
-    // 고정 설정값 (수정하려면 코드 편집 필요)
+    // 고정 설정값 
     private readonly Color warningColor = Color.red;      // 경고 색상 (빨간색)
     private const float startAlpha = 0.3f;                // 초기 투명도 (0.3 = 70% 투명)
     private const float maxAlpha = 0.8f;                  // 최대 투명도 (0.8 = 20% 투명)
