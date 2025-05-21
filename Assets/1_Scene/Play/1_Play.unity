@@ -666,7 +666,10 @@ PrefabInstance:
     - {fileID: 9213004719966924289, guid: 060b00abb8e8f7b4f88488eb005e3763, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7924395305328518188, guid: 060b00abb8e8f7b4f88488eb005e3763, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1543944591}
   m_SourcePrefab: {fileID: 100100000, guid: 060b00abb8e8f7b4f88488eb005e3763, type: 3}
 --- !u!4 &42053279 stripped
 Transform:
@@ -16061,6 +16064,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
   m_PrefabInstance: {fileID: 1543504295}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1543944586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7924395305328518188, guid: 060b00abb8e8f7b4f88488eb005e3763, type: 3}
+  m_PrefabInstance: {fileID: 42053278}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1543944591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543944586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayDistance: 10
+  colorChangeStartRatio: 0.5
+  fadeStartDistance: 0.5
+  fadeDuration: 0.3
 --- !u!1001 &1556642415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19681,6 +19705,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelay: 0
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   activationSettings:
   - targetCube: {fileID: 1563341854}
     triggerType: 0
@@ -19850,10 +19878,6 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
-  startDelay: 0
-  onAllCubesActivated:
-    m_PersistentCalls:
-      m_Calls: []
   showTriggerAreas: 1
 --- !u!114 &1913670572
 MonoBehaviour:
@@ -19867,6 +19891,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelay: 24
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   activationSettings:
   - targetCube: {fileID: 1604029891}
     triggerType: 0
@@ -19938,10 +19966,6 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
-  startDelay: 24
-  onAllCubesActivated:
-    m_PersistentCalls:
-      m_Calls: []
   showTriggerAreas: 1
 --- !u!114 &1913670573
 MonoBehaviour:
@@ -19955,6 +19979,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelay: 34
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   activationSettings:
   - targetCube: {fileID: 2077276037}
     triggerType: 0
@@ -20040,10 +20068,6 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
-  startDelay: 34
-  onAllCubesActivated:
-    m_PersistentCalls:
-      m_Calls: []
   showTriggerAreas: 1
 --- !u!114 &1913670574
 MonoBehaviour:
@@ -20057,6 +20081,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelay: 58
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   activationSettings:
   - targetCube: {fileID: 358947004}
     triggerType: 0
@@ -20170,10 +20198,6 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
-  startDelay: 58
-  onAllCubesActivated:
-    m_PersistentCalls:
-      m_Calls: []
   showTriggerAreas: 1
 --- !u!114 &1913670576
 MonoBehaviour:
@@ -20187,6 +20211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelay: 81
+  onAllCubesActivated:
+    m_PersistentCalls:
+      m_Calls: []
   activationSettings:
   - targetCube: {fileID: 2045324390}
     triggerType: 0
@@ -20209,10 +20237,6 @@ MonoBehaviour:
     targetTag: Player
     timer: 0
     hasActivated: 0
-  startDelay: 81
-  onAllCubesActivated:
-    m_PersistentCalls:
-      m_Calls: []
   showTriggerAreas: 1
 --- !u!1001 &1916149381
 PrefabInstance:
