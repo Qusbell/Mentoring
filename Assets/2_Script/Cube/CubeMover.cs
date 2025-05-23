@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
 /// 큐브 이동을 관리하는 컴포넌트
 /// 미리 배치된 큐브가 시작 시 꺼지고, 활성화될 때 지정한 위치에서 시작하여 원래 배치된 위치로 돌아옴
 /// 이동 경로를 레이저로 시각화 (에디터에서만)
-/// 
+/// </summary>
 public class CubeMover : MonoBehaviour
 {
     [Header("이동 설정")]
@@ -38,6 +38,12 @@ public class CubeMover : MonoBehaviour
     // 레이저 경로용 LineRenderer (에디터 전용)
     private LineRenderer pathLaser;
 #endif
+
+    // 현재 이동 중인지 확인하는 프로퍼티 (WarningSystem에서 사용)
+    public bool IsCurrentlyMoving
+    {
+        get { return isMovingToOriginal && !hasArrived; }
+    }
 
     // 시작 시 초기화
     void Awake()

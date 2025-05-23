@@ -7,10 +7,6 @@ using System.Collections;
 /// </summary>
 public class WarningSystem : MonoBehaviour
 {
-    [Header("기본 설정")]
-    [Tooltip("아래로 확인할 거리 (숫자가 클수록 멀리 확인)")]
-    public float rayDistance = 10f;
-
     [Header("경고 표시 효과 설정")]
     [Tooltip("경고 색상 변화 시작 거리 비율 (0.5 = 절반 거리에서 시작)")]
     [Range(0.2f, 0.8f)]
@@ -63,7 +59,7 @@ public class WarningSystem : MonoBehaviour
         }
     }
 
- 
+
     private void CheckForCubeBelow()
     {
         // 자기 자신을 레이캐스트에서 제외하기 위해 임시로 레이어 변경
@@ -95,6 +91,14 @@ public class WarningSystem : MonoBehaviour
             if (hitObject.CompareTag("Player"))
             {
                 Debug.Log("플레이어 오브젝트 제외: " + hitObject.name);
+                continue;
+            }
+
+            // 현재 이동 중인 큐브 제외 (CubeMover가 있고 현재 움직이고 있는 큐브)
+            CubeMover cubeMover = hitObject.GetComponent<CubeMover>();
+            if (cubeMover != null && cubeMover.IsCurrentlyMoving)
+            {
+                Debug.Log("현재 이동 중인 큐브 제외: " + hitObject.name);
                 continue;
             }
 
@@ -141,15 +145,6 @@ public class WarningSystem : MonoBehaviour
         {
             Debug.LogWarning("아래에 적합한 큐브를 찾을 수 없습니다.");
         }
-    }
-
-    // 디버깅용: 레이캐스트 시각화
-    void OnDrawGizmos()
-    {
-        // 레이캐스트 경로를 빨간색 선으로 표시 cubeMover랑 다름
-        //게임에서는 안보임
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * rayDistance);
     }
 
     // 경고 표시 생성 
