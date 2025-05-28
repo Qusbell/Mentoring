@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 291424605779352403}
   - component: {fileID: 2140321922985364640}
   - component: {fileID: 3033905916891749512}
+  - component: {fileID: -7016859420567969904}
   m_Layer: 0
   m_Name: Cube_Ground2
   m_TagString: Untagged
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8919822449818792509}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
@@ -165,3 +166,22 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 5
+--- !u!114 &-7016859420567969904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8919822449818792509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayDistance: 10
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  colorChangeStartRatio: 0.5
+  fadeStartDistance: 0.5
+  fadeDuration: 0.3
