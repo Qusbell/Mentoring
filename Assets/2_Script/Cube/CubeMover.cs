@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
+
 /// 큐브 이동을 관리하는 컴포넌트
 /// 미리 배치된 큐브가 시작 시 꺼지고, 활성화될 때 지정한 위치에서 시작하여 원래 배치된 위치로 돌아옴
 /// 이동 경로를 레이저로 시각화 (에디터에서만)
-/// </summary>
+/// 
 public class CubeMover : MonoBehaviour
 {
     [Header("이동 설정")]
@@ -20,30 +20,12 @@ public class CubeMover : MonoBehaviour
     [Tooltip("씬에서 이동 경로 시각화")]
     public bool showPath = true;
 
-#if UNITY_EDITOR
-    [Tooltip("에디터에서만 레이저 효과로 경로 표시")]
-    public bool showLaserPath = true;
-
-    [Tooltip("에디터에서 경로 미리보기 (씬 뷰 전용)")]
-    public bool showEditorPreview = true;
-#endif
 
     // 비공개 변수들
     private Vector3 originalPosition;      // 처음 배치된 위치
     private Vector3 startPosition;         // 계산된 시작 위치
     private bool isMovingToOriginal;       // 원래 위치로 이동 중
     private bool hasArrived;               // 원래 위치에 도착했는지 여부
-
-#if UNITY_EDITOR
-    // 레이저 경로용 LineRenderer (에디터 전용)
-    private LineRenderer pathLaser;
-#endif
-
-    // 현재 이동 중인지 확인하는 프로퍼티 (WarningSystem에서 사용)
-    public bool IsCurrentlyMoving
-    {
-        get { return isMovingToOriginal && !hasArrived; }
-    }
 
     // 시작 시 초기화
     void Awake()
@@ -106,7 +88,35 @@ public class CubeMover : MonoBehaviour
         }
     }
 
+    // 큐브 초기화 (재사용 목적)
+    public void Reset()
+    {
+        isMovingToOriginal = false;
+        hasArrived = false;
+
 #if UNITY_EDITOR
+        // 에디터에서만 레이저 경로 업데이트
+        UpdateLaserPath();
+#endif
+    }
+
+
+
+
+
+
+
+#if UNITY_EDITOR
+    [Tooltip("에디터에서만 레이저 효과로 경로 표시")]
+    public bool showLaserPath = true;
+
+    [Tooltip("에디터에서 경로 미리보기 (씬 뷰 전용)")]
+    public bool showEditorPreview = true;
+
+    // 레이저 경로용 LineRenderer (에디터 전용)
+    private LineRenderer pathLaser;
+
+
     // 레이저 렌더러 설정 (에디터 전용)
     private void SetupLaserRenderer()
     {
@@ -132,6 +142,9 @@ public class CubeMover : MonoBehaviour
 
         UpdateLaserPath();
     }
+
+
+
 
     // 레이저 경로 업데이트 (에디터 전용)
     private void UpdateLaserPath()
@@ -164,21 +177,9 @@ public class CubeMover : MonoBehaviour
             pathLaser.enabled = false;
         }
     }
-#endif
 
-    // 큐브 초기화 (재사용 목적)
-    public void Reset()
-    {
-        isMovingToOriginal = false;
-        hasArrived = false;
 
-#if UNITY_EDITOR
-        // 에디터에서만 레이저 경로 업데이트
-        UpdateLaserPath();
-#endif
-    }
 
-#if UNITY_EDITOR
     // 에디터에서 경로 미리보기 (씬 뷰에서만 표시)
     void OnDrawGizmos()
     {

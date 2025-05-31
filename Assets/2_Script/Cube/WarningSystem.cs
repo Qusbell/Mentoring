@@ -35,11 +35,12 @@ public class WarningSystem : MonoBehaviour
     private const float emissionIntensity = 1f;           // 발광 강도
     private const float intensityCurve = 1f;              // 색상 변화 곡선 (1 = 일정한 속도)
 
-    void Awake()
-    {
-        // 시작 시 중요 정보 출력
-        Debug.Log("경고 시스템: 큐브 감지를 위해 Default 레이어를 사용합니다.");
-    }
+    
+    //   void Awake()
+    //   {
+    //       // 시작 시 중요 정보 출력
+    //       Debug.Log("경고 시스템: 큐브 감지를 위해 Default 레이어를 사용합니다.");
+    //   }
 
     void Start()
     {
