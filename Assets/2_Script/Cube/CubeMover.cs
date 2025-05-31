@@ -20,6 +20,11 @@ public class CubeMover : MonoBehaviour
     [Tooltip("씬에서 이동 경로 시각화")]
     public bool showPath = true;
 
+    // 이동 상태를 외부에서 확인할 수 있는 프로퍼티 (WarningSystem에서 사용)
+    public bool IsCurrentlyMoving
+    {
+        get { return isMovingToOriginal && !hasArrived; }
+    }
 
     // 비공개 변수들
     private Vector3 originalPosition;      // 처음 배치된 위치
