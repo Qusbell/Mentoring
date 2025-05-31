@@ -15,19 +15,27 @@ public class CubeController : MonoBehaviour
 
     // -------------------- 초기화 --------------------
 
-    // 시작 시 모든 큐브 확인
     void Start()
     {
-        // 큐브 컴포넌트 애드
+        // 공통 딜레이 저장용 임시 변수
+        float tempTime = 0;
+
+        // 시작 시 모든 큐브 확인
         foreach (var data in activationSettings)
         {
+            // ----- 큐브무버 컴포넌트 애드 -----
             if (data.targetCube != null)
+            { CheckAndAddMoverComponent(data.targetCube); }
+
+            // ----- 공통 시간 딜레이 부여 -----
+            if (data.triggerType == TriggerType.TimeTrigger)
             {
-                // CubeMover 컴포넌트가 없으면 추가
-                CheckAndAddMoverComponent(data.targetCube);
+                tempTime += sharingDelayTime;
+                data.delayTime += tempTime;
             }
         }
     }
+
 
     // 큐브에 CubeMover 컴포넌트가 있는지 확인하고 없으면 추가
     // MoverAdder
@@ -46,6 +54,7 @@ public class CubeController : MonoBehaviour
     // -------------------- 컨트롤러 트리거 --------------------
 
     // 이 컨트롤러가 완료된 후 활성화할 다음 큐브 컨트롤러
+    // CubeControllerManager에 의해 지정됨
     [HideInInspector] public CubeController nextController;
 
     // 다음 컨트롤러를 활성화하는 트리거 이벤트
@@ -53,7 +62,7 @@ public class CubeController : MonoBehaviour
 
     // 활성화 확인
     private bool isActivated = false;
-    
+
 
     // 다음 컨트롤러 활성화 메서드
     public void ActivateNextController()
@@ -64,9 +73,7 @@ public class CubeController : MonoBehaviour
             nextController.StartController();
         }
         else
-        {
-            Debug.Log($"[{gameObject.name}] 다음 컨트롤러가 설정되지 않았습니다.");
-        }
+        { Debug.Log($"[{gameObject.name}] 다음 컨트롤러가 설정되지 않았습니다."); }
     }
 
     // 컨트롤러 시작 메서드
@@ -111,6 +118,7 @@ public class CubeController : MonoBehaviour
         }
     }
 
+
     // 모든 큐브가 활성화되었는지 확인
     private void CheckAllCubesActivated()
     {
@@ -135,6 +143,7 @@ public class CubeController : MonoBehaviour
             nextCubeControllerActivate?.Invoke();
         }
     }
+
 
 
     // 매 프레임마다 시간 트리거 체크
@@ -162,6 +171,13 @@ public class CubeController : MonoBehaviour
         CheckAllCubesActivated();
     }
 
+
+
+
+    // -------------------- 간격 지정 --------------------
+
+    [Tooltip("각 큐브들의 공통 딜레이")]
+    public float sharingDelayTime = 0f;
 
 
 
@@ -242,70 +258,6 @@ public class CubeController : MonoBehaviour
     [Header("디버그 옵션")]
     [Tooltip("씬 에디터에서 영역 트리거를 시각화")]
     public bool showTriggerAreas = true;
-
-    /*
-
-    // 딜레이 즉시 완료 (테스트/디버그용)
-    public void SkipDelay()
-    {
-        delayTimer = startDelay;
-        delayPassed = true;
-        Debug.Log($"[{gameObject.name}] 시작 딜레이를 건너뛰었습니다.");
-    }
-
-
-    // 모든 큐브 활성화 이벤트 즉시 트리거 (테스트/디버그용)
-    public void TriggerAllCubesActivated()
-    {
-        if (!hasTriggeredEvent)
-        {
-            hasTriggeredEvent = true;
-            onAllCubesActivated?.Invoke();
-        }
-    }
-
-    // 모든 큐브 상태 초기화 (테스트/재시작용)
-    public void ResetAll()
-    {
-        // 타이머 초기화
-        delayTimer = 0f;
-        delayPassed = startDelay <= 0f;
-        hasTriggeredEvent = false;
-        activatedCubeCount = 0;
-
-        foreach (var data in activationSettings)
-        {
-            data.hasActivated = false;
-            data.timer = 0f;
-
-            if (data.targetCube != null && data.targetCube.activeSelf)
-            {
-                data.targetCube.SetActive(false);
-            }
-        }
-    }
-
-
-    // 시작 딜레이 설정 (외부에서 호출 가능)
-    public void SetStartDelay(float delayInSeconds)
-    {
-        startDelay = Mathf.Max(0f, delayInSeconds); // 음수 방지
-        ResetAll(); // 설정을 변경했으니 초기화
-    }
-
-
-    // 특정 인덱스의 큐브를 수동으로 활성화
-    public void ActivateCubeByIndex(int index)
-    {
-        // 딜레이가 지나지 않았으면 활성화 무시
-        if (!delayPassed) return;
-
-        // 인덱스 범위 체크
-        if (index >= 0 && index < activationSettings.Count)
-        { ActivateCube(activationSettings[index]); }
-    }
-
-    */
 
     // 디버그용: 씬에서 영역 트리거와 큐브를 보여줌
     void OnDrawGizmos()

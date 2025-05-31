@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+
+
 public class CubeControllerManager : MonoBehaviour
 {
     private List<CubeController> controllerSequence = new List<CubeController>();
 
+
+    // 각 큐브 컨트롤러 간 관계 설정
     void Awake()
     {
         // 모든 자식 컨트롤러 수집 (비활성 포함)
@@ -26,9 +30,11 @@ public class CubeControllerManager : MonoBehaviour
             current.nextController = next;
             // 이벤트 연결
             current.nextCubeControllerActivate.AddListener(next.StartController);
-            Debug.Log($"[{current.name}] → [{next.name}] 연결 완료");
         }
 
-        controllerSequence[0].StartController();
+        if (controllerSequence[0] != null)
+        { controllerSequence[0].StartController(); }
+        else
+        { Debug.Log("자식 오브젝트에 CubeController 컴포넌트 존재하지 않음."); }
     }
 }
