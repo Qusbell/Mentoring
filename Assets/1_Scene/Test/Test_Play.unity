@@ -25724,13 +25724,13 @@ MonoBehaviour:
   nextCubeControllerActivate:
     m_PersistentCalls:
       m_Calls: []
-  sharingDelayTime: 1
+  sharingDelayTime: 0.5
   activationSettings:
   - targetCube: {fileID: 1563341854}
     triggerType: 0
     targetTag: Player
     triggerArea: {fileID: 1857891032}
-    delayTime: 0
+    delayTime: 1
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1618167192}
