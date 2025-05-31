@@ -18,7 +18,9 @@ public class CubeController : MonoBehaviour
     void Start()
     {
         // 공통 딜레이 저장용 임시 변수
-        float tempTime = 0;
+        if (baseDelayTime < 0) { baseDelayTime = 0; }
+        float tempTime = baseDelayTime;
+
 
         // 시작 시 모든 큐브 확인
         foreach (var data in activationSettings)
@@ -27,12 +29,18 @@ public class CubeController : MonoBehaviour
             if (data.targetCube != null)
             { CheckAndAddMoverComponent(data.targetCube); }
 
+
             // ----- 공통 시간 딜레이 부여 -----
-            if (data.triggerType == TriggerType.TimeTrigger)
+            if (0 < sharingDelayTime)
             {
-                tempTime += sharingDelayTime;
-                data.delayTime += tempTime;
+                if (data.triggerType == TriggerType.TimeTrigger)
+                {
+                    data.delayTime = 0; // 기존 설정한 딜레이 무시
+                    data.delayTime += tempTime;
+                    tempTime += sharingDelayTime;
+                }
             }
+
         }
     }
 
@@ -174,9 +182,13 @@ public class CubeController : MonoBehaviour
 
 
 
-    // -------------------- 간격 지정 --------------------
+    // -------------------- 공통 간격 지정 --------------------
 
-    [Tooltip("각 큐브들의 공통 딜레이")]
+
+    [Tooltip("모든 큐브들의 일괄 대기 시간")]
+    public float baseDelayTime = 0f;
+
+    [Tooltip("큐브와 큐브 간의 대기 간격")]
     public float sharingDelayTime = 0f;
 
 
