@@ -42,7 +42,7 @@ public class Player : Actor
         // 공격
         if (input.isAttackKeyDown)
         {
-            animatior.isAttack = attackAction.attackRate.isCanActivate;
+            animatior.isAttack = attackAction.isCanAttack;
             attackAction.Attack();
         }
     }

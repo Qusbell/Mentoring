@@ -14,8 +14,10 @@ public class MeleeBasicAttack : AttackAction
 
     public override void Attack()
     {
+        base.Attack();
         // 재사용 대기시간 중 : 생략
-        if (!attackRate.TryStartTimer()) { return; }
+        if (isCanAttack == false) { return; }
+
 
         Debug.Log("공격: " + gameObject.name);
 
