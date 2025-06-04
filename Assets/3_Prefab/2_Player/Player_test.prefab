@@ -490,7 +490,6 @@ GameObject:
   - component: {fileID: 8396723893527390317}
   - component: {fileID: 5577903861327795404}
   - component: {fileID: 634061524530630060}
-  - component: {fileID: 6310753504319651242}
   - component: {fileID: 3979921004994361143}
   - component: {fileID: 4416695887624650988}
   - component: {fileID: 4446130530154506471}
@@ -637,19 +636,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 13
---- !u!114 &6310753504319651242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4617787347689549732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b195d99573d8494889219a37db5cf66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitingTime: 1
 --- !u!114 &3979921004994361143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,7 +650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 1
   <attackRange>k__BackingField: 3
-  attackRate: {fileID: 0}
+  attackRate: 1
   targetTag: 
   attackAngle: 120
 --- !u!114 &4416695887624650988

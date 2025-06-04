@@ -27,22 +27,6 @@ abstract public class Spawner : MonoBehaviour
     }
 
 
-    // ===== 스폰 체크 =====
-    protected virtual void Update()
-    {
-        // ----- 조건 체크 -----
-        // 스폰 완료 || 스폰 조건이 만족되지 않으면 : 실행 X
-        if (isCompleted || !spawnTrigger) { return; }
-
-        // ----- 생성 -----
-        SpawnObject(); // 오브젝트 생성
-
-        // ----- 완료 확인 -----
-        CheckCompleted();
-    }
-
-
-
     // ===== 생성 조건 충족 여부 =====
 
     // 스폰 조건 만족 여부 (true로 만들면 == 생성)
