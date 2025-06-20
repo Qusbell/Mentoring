@@ -31,13 +31,11 @@ public class Player : Actor
         // 이동
         moveAction.moveVec = input.moveVec;
         moveAction.Move();
-        animatior.isMove = (moveAction.moveVec != Vector3.zero);
-
+        animatior.isMove = moveAction.isMove;
 
         // 점프
         if (input.isJumpKeyDown) { jumpAction.Jump(); }
-        animatior.isJump = !jumpAction.IsGrounded();
-
+        animatior.isJump = jumpAction.isJump;
 
         // 공격
         if (input.isAttackKeyDown)

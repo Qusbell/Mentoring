@@ -15,6 +15,13 @@ public class InputManager : MonoBehaviour
     protected float moveHorizontal;
     protected float moveVertical;
     public Vector3 moveVec { get; protected set; }
+    
+    // moveKey 입력
+    public bool isMoveKeyDown
+    {
+        get
+        { return moveVec != Vector3.zero; }
+    }
 
     // 입력 데드존
     [SerializeField] protected float inputDeadZone = 0.1f;
@@ -34,6 +41,7 @@ public class InputManager : MonoBehaviour
 
         // 방향 대입
         // 45도(쿼터뷰) 틀어진 방향
+        // <- 실제 카메라 각도에 대응하도록 바꿀 것
         moveVec = (Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도)
             * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // 입력된 방향벡터
     }

@@ -11,9 +11,11 @@ public class MonsterSpawner : Spawner
 
         if (targetCollider == null)
         {
-            Debug.LogError("Collider component missing!");
+            Debug.LogError("콜라이더 존재하지 않음 : " + gameObject.name);
             return;
         }
+
+        SpawnTriggerOn();
     }
 
 
@@ -21,6 +23,7 @@ public class MonsterSpawner : Spawner
 
     // 현재 오브젝트의 콜라이더
     protected Collider targetCollider;
+
 
     // 윗면 중앙 계산
     public override void SetSpawnLocation()
@@ -36,6 +39,9 @@ public class MonsterSpawner : Spawner
     }
 
 
+
+    // ===== 트리거 / 생성 / 완료 =====
+
     // 생성 주기
     [SerializeField] protected float spawnRate = 2f;
 
@@ -49,6 +55,7 @@ public class MonsterSpawner : Spawner
         SpawnObject();
     }
 
+
     // 생성
     protected override void SpawnObject()
     {
@@ -58,7 +65,9 @@ public class MonsterSpawner : Spawner
         // ----- 조건 체크 -----
         // 미완료 && 스폰 트리거 On
         if (!isCompleted && spawnTrigger)
-        { StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject)); }
+        {
+            StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject));
+        }
     }
 
 
@@ -68,6 +77,7 @@ public class MonsterSpawner : Spawner
         // 모든 프리펩을 생성했다면
         if (targetPrefabs.Count <= PrefabIndex++ + 1)
         {
+            Debug.Log("생성 완료");
             base.CheckCompleted();
             // <- 주기적 스포너라면: 리셋 발생
         }

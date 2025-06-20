@@ -1,22 +1,26 @@
-using System.Collections;   
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 
-
-[RequireComponent(typeof(MonsterChaseAction))]
+[RequireComponent(typeof(ChaseAction))]
 [RequireComponent(typeof(NavMeshAgent))]
 abstract public class Monster : Actor
 {
     // 네비게이션 ai
     protected NavMeshAgent nav;
 
+    // 타겟 위치
+    protected Transform target;
+
 
     protected override void Awake()
     {
         base.Awake();
         nav = GetComponent<NavMeshAgent>();
+
+        // <- 타겟 (플레이어) 감지
     }
 
 

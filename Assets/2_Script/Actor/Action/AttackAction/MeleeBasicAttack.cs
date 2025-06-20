@@ -20,6 +20,7 @@ public class MeleeBasicAttack : AttackAction
         // Debug.Log("공격: " + gameObject.name);
 
         // OverlapSphere를 사용하여 공격 범위 내의 모든 콜라이더를 찾음
+        // <- 대상의 레이어를 탐지
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
 
         // 감지한 모든 콜라이더에 대해서 판정

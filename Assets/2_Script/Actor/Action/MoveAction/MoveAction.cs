@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -20,7 +21,7 @@ public class MoveAction : MonoBehaviour
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
     }
-
+    
 
     //==================================================
     // 이동 메서드
@@ -30,6 +31,9 @@ public class MoveAction : MonoBehaviour
     public Vector3 moveVec { get; set; }
     // 이동 속도
     [SerializeField] protected float moveSpeed = 5;
+
+    // 이동 상태 여부
+    public bool isMove { get; protected set; } = false;
 
 
     // 이동 메서드
