@@ -1,56 +1,73 @@
 using UnityEngine;
+using System.Collections;
 
 
 public class MonsterSpawner : Spawner
 {
-    [Header("몬스터 스폰 위치 설정")]
-    [SerializeField] private float detectionDistance = 10f; // 아래 방향으로 검사할 거리
-    // [SerializeField] private LayerMask groundLayer; // 지형 레이어 (나중에 추가)
-    [SerializeField] private float heightOffset = 1.0f; // 몬스터를 얼마나 위에 스폰시킬 것인가
-
-    // 생성할 몬스터 숫자
-    protected int monsterNum;
-
-
-    protected override void Awake()
+    // 초기화
+    protected void Start()
     {
-        base.Awake();
-        // 생성할 몬스터 숫자
-        monsterNum = targetPrefabs.Count - 1;
+        targetCollider = GetComponent<Collider>();
+
+        if (targetCollider == null)
+        {
+            Debug.LogError("콜라이더 존재하지 않음 : " + gameObject.name);
+            return;
+        }
+
+        SpawnTriggerOn();
     }
 
 
-    // 업데이트
-    protected override void Update()
-    {
-        // 아래 지형 감지
-        SetSpawnLocation();
+    // ===== 스폰 위치 =====
 
-        // SpawnTriggerOn(); // 디버그용 임시
-
-        // 생성 체크
-        base.Update();
-    }
+    // 현재 오브젝트의 콜라이더
+    protected Collider targetCollider;
 
 
-    // 스폰 위치 지정
+    // 윗면 중앙 계산
     public override void SetSpawnLocation()
     {
-        // 레이캐스트로 아래 지형 감지
-        RaycastHit hit;
+        Bounds bounds = targetCollider.bounds;
+        Vector3 topCenter = bounds.center + Vector3.up * bounds.extents.y;  // 윗면 중앙 위치 계산
+        spawnLocation = topCenter;
 
-        // 나중에 레이어 추가 시: Physics.Raycast(spawnLocation.position, Vector3.down, out hit, detectionDistance, groundLayer)
-        if (Physics.Raycast(spawnLocation, Vector3.down, out hit, detectionDistance))
+        // 이후 파묻힘 현상 등 발생 시, 이하 부분 적용
+        //    // 필요하다면 추가 오프셋 적용 (예: 살짝 띄우기)
+        //    float heightOffset = 0.5f; // 필요에 따라 조정
+        //    spawnLocation = topCenter + Vector3.up * heightOffset;
+    }
+
+
+
+    // ===== 트리거 / 생성 / 완료 =====
+
+    // 생성 주기
+    [SerializeField] protected float spawnRate = 2f;
+
+    // 1. 스포너 활성화
+    // 2. 스폰 위치 지정
+    // 3. 생성 시작
+    public override void SpawnTriggerOn()
+    {
+        base.SpawnTriggerOn();
+        SetSpawnLocation();
+        SpawnObject();
+    }
+
+
+    // 생성
+    protected override void SpawnObject()
+    {
+        base.SpawnObject();
+        CheckCompleted();
+
+        // ----- 조건 체크 -----
+        // 미완료 && 스폰 트리거 On
+        if (!isCompleted && spawnTrigger)
         {
-            // 스폰 위치를 지형 위로 변경
-            spawnLocation = new Vector3(
-                hit.point.x,
-                hit.point.y + heightOffset,
-                hit.point.z
-            );
+            StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject));
         }
-        else
-        { base.SetSpawnLocation(); }
     }
 
 
@@ -58,35 +75,11 @@ public class MonsterSpawner : Spawner
     public override void CheckCompleted()
     {
         // 모든 프리펩을 생성했다면
-        if (monsterNum <= PrefabIndex++)
+        if (targetPrefabs.Count <= PrefabIndex++ + 1)
         {
-            // 종료 체크
+            Debug.Log("생성 완료");
             base.CheckCompleted();
-
-            // 스포너 비활성화
-            gameObject.SetActive(false);
+            // <- 주기적 스포너라면: 리셋 발생
         }
     }
-
-
-    // 추가 기능: 에디터에서 레이캐스트 시각화 (디버깅용)
-    private void OnDrawGizmos()
-    {
-        if (spawnLocation != null)
-        {
-            // 레이캐스트 경로
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, spawnLocation + Vector3.down * detectionDistance);
-
-            // 스폰 위치
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(spawnLocation, 0.5f);
-
-            // 스포너 자체의 위치
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, 0.5f);
-        }
-    }
-
-
 }

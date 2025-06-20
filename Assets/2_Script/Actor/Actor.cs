@@ -22,7 +22,6 @@ abstract public class Actor : MonoBehaviour
     // 애니메이션
     protected ActorAnimation animatior;
 
-
     // 생성 초기화
     protected virtual void Awake()
     {

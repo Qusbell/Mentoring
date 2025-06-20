@@ -14,12 +14,13 @@ public class MeleeBasicAttack : AttackAction
 
     public override void Attack()
     {
-        // 재사용 대기시간 중 : 생략
-        if (!attackRate.TryStartTimer()) { return; }
+        // 공격 가능 확인
+        if (!CheckCanAttack()) { return; }
 
-        Debug.Log("공격: " + gameObject.name);
+        // Debug.Log("공격: " + gameObject.name);
 
         // OverlapSphere를 사용하여 공격 범위 내의 모든 콜라이더를 찾음
+        // <- 대상의 레이어를 탐지
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
 
         // 감지한 모든 콜라이더에 대해서 판정

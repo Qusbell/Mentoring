@@ -33,29 +33,27 @@ public class PlayerMove : MoveAction
         if (Physics.Raycast(transform.position, moveVec, out frontRayHit, frontRayDistance))
         {
             // 트리거 콜라이더는 무시 (통과 가능)
-            if (frontRayHit.collider.isTrigger)
-            { return true; }
+            if (frontRayHit.collider.isTrigger) { return true; }
             // 일반 콜라이더는 통과 불가
-            else
-            { return false; }
+            else { return false; }
         }
 
         return true; // 아무것도 감지되지 않으면 이동 가능
     }
 
 
-
     // 이동
     public override void Move()
     {
         // 이동 방향이 없다면 : 업데이트 X
-        if (moveVec == Vector3.zero) { return; }
+        if (moveVec == Vector3.zero) { isMove = false; return; }
 
         // 회전
         Turn();
 
         // 이동 불가능하면 리턴
-        if (!CanMove()) { return; }
+        isMove = CanMove();
+        if (!isMove) { return; }
 
         // 이동
         base.Move();

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ActorAnimation : AnimationManager
 {
-    public bool isMove { get; set; } = false;
-    public bool isJump { get; set; } = false;
-    public bool isDie { get; set; } = false;
-    public bool isAttack { get; set; } = false;
+    // 어떤 Animation을 재생할지 체크
+    public bool isMove { protected get; set; } = false;
+    public bool isJump { protected get; set; } = false;
+    public bool isAttack { protected get; set; } = false;
+
+    public bool isDie { protected get; set; } = false;
 
 
     protected override void Awake()

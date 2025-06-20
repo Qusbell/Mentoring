@@ -8,7 +8,6 @@ using UnityEngine;
 //==================================================
 // 공격 행동
 //==================================================
-[RequireComponent(typeof(Timer))]
 abstract public class AttackAction : MonoBehaviour
 {
     // 공격력
@@ -18,18 +17,19 @@ abstract public class AttackAction : MonoBehaviour
     [field: SerializeField] public float attackRange { get; protected set; } = 3f;
 
     // 공격 간격 (== 공격 속도)
-    [SerializeField] public Timer attackRate;
+    [SerializeField] protected float attackRate = 0.5f;
+
+    // 공격 가능 여부
+    public bool isCanAttack { get; protected set; } = true;
 
     // 공격 대상 태그 (해당 태그를 가진 오브젝트만 공격)
     [SerializeField] protected string targetTag = "";
 
-    // <- 공격 대상 레이어
+    // <- 공격 대상의 레이어
 
 
     protected virtual void Awake()
     {
-        attackRate = GetComponent<Timer>();
-
         // 타겟태그 검사
         // 배정되지 않은 경우 : 기초적인 재배정
         if (targetTag == "")
@@ -41,8 +41,21 @@ abstract public class AttackAction : MonoBehaviour
 
 
     // 공격
-    public virtual void Attack()
+    // 공격 시간 체크
+    public virtual void Attack() { }
+
+
+    // 공격 가능한 상태 확인
+    // 공격 가능 : true
+    // 공격 불가 : false
+    protected bool CheckCanAttack()
     {
-        // <- 파생 클래스에서 구현
+        if (isCanAttack == true)
+        {
+            isCanAttack = false;
+            StartCoroutine(Timer.StartTimer(attackRate, () => { isCanAttack = true; }));
+            return true;
+        }
+        else { return false; }
     }
 }

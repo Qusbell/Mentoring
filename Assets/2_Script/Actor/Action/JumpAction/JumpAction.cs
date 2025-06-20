@@ -43,11 +43,18 @@ public class JumpAction : MonoBehaviour
     [SerializeField] float jumpHeight = 13;
 
     // 착지했는가에 대한 거리 기준
-    float bottomRayDistance;
+    protected float bottomRayDistance;
 
     // 다중 레이캐스트 (착지 판정)
     // 각 레이 사이의 간격
-    float raySpacing;
+    protected float raySpacing;
+
+
+    private void Update()
+    {
+        isJump = IsJump();
+        // <- 애니메이션 변경? 아니면 Actor 쪽에서 직접 애니메이션 제어?
+    }
 
 
     // 점프
@@ -56,7 +63,7 @@ public class JumpAction : MonoBehaviour
     public virtual void Jump()
     {
         // 점프 상태가 아니라면
-        if (IsGrounded())
+        if (!isJump)
         {
             // 불필요한 물리 초기화
             rigid.velocity = Vector3.zero;
@@ -65,12 +72,19 @@ public class JumpAction : MonoBehaviour
         }
     }
 
+    // 점프 상태 확인
+    private bool _isJump = false;
+    public bool isJump
+    {
+        get { return _isJump; }
+        protected set { _isJump = value; }
+    }
 
     // 착지 상태인지 판정
-    public bool IsGrounded()
+    protected bool IsJump()
     {
         // 앞/뒤 레이캐스트
-        return
+        return !(
             // 앞쪽 레이캐스트
             Physics.Raycast(transform.position + (transform.forward * raySpacing),
             Vector3.down,
@@ -79,7 +93,7 @@ public class JumpAction : MonoBehaviour
             // 뒤쪽 레이캐스트
             Physics.Raycast(transform.position - (transform.forward * raySpacing),
             Vector3.down,
-            bottomRayDistance);
+            bottomRayDistance)
+            );
     }
-
 }
