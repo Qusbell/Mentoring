@@ -19,8 +19,13 @@ abstract public class AttackAction : MonoBehaviour
     // 공격 간격 (== 공격 속도)
     [SerializeField] protected float attackRate = 0.5f;
 
+    // 공격 딜레이 (공격 시작 시점으로부터, 행동 불가능한 시간)
+    [SerializeField] protected float attackDelay = 1f; // <- 임시, 아직 미적용
+
+
     // 공격 가능 여부
     public bool isCanAttack { get; protected set; } = true;
+
 
     // 공격 대상 태그 (해당 태그를 가진 오브젝트만 공격)
     [SerializeField] protected string targetTag = "";

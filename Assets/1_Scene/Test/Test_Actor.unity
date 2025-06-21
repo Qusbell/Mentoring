@@ -332,6 +332,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116149648}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &243590746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243590748}
+  - component: {fileID: 243590747}
+  m_Layer: 0
+  m_Name: TargetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &243590747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243590746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03cbf711dfe0a2644bf7402b752787f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Player
+  targetLayerName: Player
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!4 &243590748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243590746}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8598107, y: 5.9379473, z: -1.6238829}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &456024278
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +395,7 @@ GameObject:
   - component: {fileID: 456024280}
   - component: {fileID: 456024283}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: "Cube (\uC2A4\uD3EC\uB108)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +410,7 @@ Transform:
   m_GameObject: {fileID: 456024278}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.55, y: 4, z: -5}
+  m_LocalPosition: {x: 0, y: 4, z: -5}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1008,16 +1057,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3979921004994361143, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: attackRate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4617787347689549732, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
       propertyPath: m_Name
       value: Player_test 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6310753504319651242, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1036,3 +1080,4 @@ SceneRoots:
   - {fileID: 1866683702}
   - {fileID: 7478160600958438721}
   - {fileID: 1914336733}
+  - {fileID: 243590748}

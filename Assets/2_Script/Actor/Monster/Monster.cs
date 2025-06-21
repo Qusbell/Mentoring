@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,31 +9,38 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 abstract public class Monster : Actor
 {
-    // 네비게이션 ai
-    protected NavMeshAgent nav;
+    // 현재 수행 중인 행동
+    protected Action actionStatus;
 
-    // 타겟 위치
-    protected Transform target;
+    // <- 스폰 애니메이션 재생 메서드
 
 
     protected override void Awake()
     {
         base.Awake();
-        nav = GetComponent<NavMeshAgent>();
-
-        // <- 타겟 (플레이어) 감지
+        // <- actionStatus = Spawn (스폰 애니메이션 메서드 대입)
     }
 
 
-    protected virtual void Update()
+    private void Update()
+    {
+        actionStatus();
+    }
+
+    // 이동 상태
+    private void MoveStatus()
     {
         moveAction.Move();
+        if (!moveAction.isMove &&
+            attackAction.isCanAttack)
+        { actionStatus = AttackStatus; }
+    }
 
-        // <- target이 존재하지 않는 동안, 무한 공격하는 문제
-        if (!nav.pathPending && nav.remainingDistance <= nav.stoppingDistance) // <- 애니메이션 동안 적용 X
-        {
-            attackAction.Attack();
-            // <- 애니메이션 적용
-        }
+    // 공격 상태
+    private void AttackStatus()
+    {
+        attackAction.Attack();
+        if (attackAction.isCanAttack) // 공격 쿨타임 이후부터 다시 이동 가능 (임시 조치)
+        { actionStatus = MoveStatus; }
     }
 }
