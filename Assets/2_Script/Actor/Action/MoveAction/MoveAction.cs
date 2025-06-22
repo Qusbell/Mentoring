@@ -29,6 +29,7 @@ public class MoveAction : MonoBehaviour
 
     // 이동할 방향
     public Vector3 moveVec { get; set; }
+
     // 이동 속도
     [SerializeField] protected float moveSpeed = 5;
 

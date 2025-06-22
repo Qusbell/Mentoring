@@ -22,6 +22,10 @@ public class TargetManager : MonoBehaviour
     }
 
     void Start()
+    { Targeting(); }
+
+    // 타겟팅
+    public Transform Targeting()
     {
         // string으로 입력받은 레이어 이름을 int로 변환
         int targetLayer = LayerMask.NameToLayer(targetLayerName);
@@ -42,5 +46,7 @@ public class TargetManager : MonoBehaviour
                 break;
             }
         }
+
+        return target;
     }
 }
