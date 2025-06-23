@@ -66,5 +66,10 @@ abstract public class Monster : Actor
     }
 
 
-    // <- 공격 모션
+
+    // <- SpawnStatus
+
+    // <- IdleStatus
+
+    // <- ReloadStatus
 }
