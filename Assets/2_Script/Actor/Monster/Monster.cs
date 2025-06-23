@@ -35,6 +35,7 @@ abstract public class Monster : Actor
 
 
     // 공격 범위 내부라면
+    // <- 정밀계산 필요 X. 이후 제곱 >= 제곱 비교 형태로 최적화 가능
     bool InAttackRange()
     { return attackAction.attackRange >= Vector3.Distance(target.position, this.transform.position); }
 

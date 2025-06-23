@@ -10,6 +10,9 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(NavMeshAgent))]
 public class ChaseAction : MoveAction
 {
+
+    // ----- ai 부분 -----
+
     // 네비게이션 AI
     protected NavMeshAgent nav;
 
@@ -36,7 +39,6 @@ public class ChaseAction : MoveAction
         target = TargetManager.instance.Targeting();
     }
 
-
     // 목적지 갱신
     void UpdateDestination()
     { if (target != null) { nav.SetDestination(target.position); } }
@@ -53,11 +55,16 @@ public class ChaseAction : MoveAction
     void UpdateMyPositionOnNav()
     { if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; } }
 
+
+
+
+
+
     // 회전 속도
     [SerializeField] protected float rotationSpeed = 3f;
 
     // 다음 진행 방향을 향해 회전 (느리게)
-    protected void Turn()
+    protected override void Turn()
     {
         Vector3 direction = moveVec;
         if (moveVec == Vector3.zero)

@@ -41,4 +41,8 @@ public class MoveAction : MonoBehaviour
     // 현재위치 += 방향 * 이동 간격 * 이동 간격 보정
     public virtual void Move()
     { rigid.MovePosition(rigid.position + moveVec * moveSpeed * Time.deltaTime); }
+
+    // 회전
+    protected virtual void Turn()
+    { transform.LookAt(transform.position + moveVec); }
 }

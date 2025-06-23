@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,8 +17,9 @@ abstract public class AttackAction : MonoBehaviour
     // 공격 사거리
     [field: SerializeField] public float attackRange { get; protected set; } = 3f;
 
+
     // 공격 딜레이 (공격 시작 시점으로부터, 행동 불가능한 시간)
-    [SerializeField] protected float attackDelay = 1f; // <- 임시, 아직 미적용
+    //  [SerializeField] protected float attackDelay = 1f; // <- 임시, 아직 미적용
 
 
     // 공격 대상 태그 (해당 태그를 가진 오브젝트만 공격)
@@ -38,12 +40,19 @@ abstract public class AttackAction : MonoBehaviour
     }
 
 
+
+    // 어떤 공격인지
+    protected Action doAttack;
+
     // 공격
-    // 공격 시간 체크
-    public virtual void Attack() { }
+    public void Attack()
+    {
+        // 공격 가능 확인
+        if (!CheckCanAttack()) { return; }
 
-
-
+        // 공격
+        doAttack();
+    }
 
 
 
