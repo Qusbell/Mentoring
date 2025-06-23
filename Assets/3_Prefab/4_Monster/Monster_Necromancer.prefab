@@ -1597,6 +1597,7 @@ GameObject:
   - component: {fileID: 3461214316779425431}
   - component: {fileID: 4959992433024184120}
   - component: {fileID: 6262108637263422517}
+  - component: {fileID: 660031995422869426}
   m_Layer: 0
   m_Name: Monster_Necromancer
   m_TagString: Untagged
@@ -1637,7 +1638,7 @@ Animator:
   m_GameObject: {fileID: 8570418276746054535}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0b3da1f3c3be7b14bbbc3e7c0295b0b4, type: 2}
-  m_Controller: {fileID: 9100000, guid: 02f5dfb2d4ffd634190ac7e370eec2df, type: 2}
+  m_Controller: {fileID: 9100000, guid: c35df7960756ce643be14354853a951b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1675,6 +1676,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &660031995422869426
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8570418276746054535}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.68
+  m_Height: 2.6826663
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.2575679, z: 0}
 --- !u!1 &8715383451549098851
 GameObject:
   m_ObjectHideFlags: 0

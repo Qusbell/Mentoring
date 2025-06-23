@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4858443625655361769}
   - component: {fileID: 8120744351410482297}
   - component: {fileID: 887352306788185098}
+  - component: {fileID: 247700390812514796}
   m_Layer: 0
   m_Name: Monster_Golem
   m_TagString: Untagged
@@ -84,7 +85,7 @@ Animator:
   m_GameObject: {fileID: 1008570438300534873}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ed67a81e5d9a0854696eb349ce5609c0, type: 3}
-  m_Controller: {fileID: 9100000, guid: edad248955aa7ab49976bf271796d398, type: 2}
+  m_Controller: {fileID: 9100000, guid: c35df7960756ce643be14354853a951b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -122,6 +123,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &247700390812514796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008570438300534873}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7215998, y: 4.22634, z: 1.574861}
+  m_Center: {x: -0.08253312, y: 2.0795524, z: 0.060226202}
 --- !u!1 &1031626244474614956
 GameObject:
   m_ObjectHideFlags: 0
