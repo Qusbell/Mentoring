@@ -1001,6 +1001,30 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!1 &59849830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5628392651492190630, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
+  m_PrefabInstance: {fileID: 2676246616708540547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &59849831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59849830}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d9514128b8b694b96070551d288414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 448794975}
+  offset: {x: 100, y: 100, z: 100}
+  smoothFactor: 1
+  minValues: {x: 0, y: 0, z: 0}
+  maxValue: {x: 0, y: 0, z: 0}
+  setupComplete: 0
+  ss: 0
 --- !u!1001 &61265930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4190,7 +4214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -6373,7 +6396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -6688,7 +6710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -9493,7 +9514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -9998,7 +10018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -10401,7 +10420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -12658,7 +12676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -12866,7 +12883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -14508,7 +14524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -16674,7 +16689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -16811,7 +16825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -18787,7 +18800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -20903,7 +20915,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -21941,7 +21952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -24094,7 +24104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -24208,7 +24217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -24455,7 +24463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -25318,7 +25325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -26275,7 +26281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -26859,7 +26864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -27997,7 +28001,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -28101,7 +28104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -28122,7 +28124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -29851,7 +29852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3
@@ -30604,21 +30604,25 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 448794975}
+    - target: {fileID: 2079829270940065889, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5628392651492190630, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7
+      value: 104.77
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: 60.3
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30651,7 +30655,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5628392651492190630, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 59849831}
   m_SourcePrefab: {fileID: 100100000, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
 --- !u!1001 &4866142820717908070
 PrefabInstance:

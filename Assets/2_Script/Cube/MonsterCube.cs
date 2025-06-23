@@ -71,7 +71,7 @@ public class MonsterCube : MonoBehaviour
         {
             if (showDebugLog)
             {
-                Debug.Log($"[{gameObject.name}] 몬스터 스폰을 시작합니다.");
+                Debug.Log($"[{gameObject.name}] 큐브 도착 감지! 몬스터 스폰을 시작합니다.");
             }
 
             TriggerSpawn();
@@ -105,7 +105,7 @@ public class MonsterCube : MonoBehaviour
     {
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] {delayBeforeSpawn}초 대기 후 스폰 시작");
+            Debug.Log($"[{gameObject.name}] {delayBeforeSpawn}초 대기 후 스폰 시작...");
         }
 
         yield return new WaitForSeconds(delayBeforeSpawn);
@@ -122,7 +122,7 @@ public class MonsterCube : MonoBehaviour
 
             if (showDebugLog)
             {
-                Debug.Log($"[{gameObject.name}] 몬스터 스포너 활성화 완료");
+                Debug.Log($"[{gameObject.name}] 몬스터 스포너 활성화 완료!");
             }
         }
     }
