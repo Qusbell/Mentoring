@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 public class MonsterSpawner : Spawner
 {
+    [Header("스폰 위치 설정")]
+    [Tooltip("큐브 위에서 추가로 높일 거리 (기본: 0.5유닛)")]
+    public float heightOffset = 0.5f;
+
     // 초기화
     protected void Start()
     {
@@ -11,29 +15,55 @@ public class MonsterSpawner : Spawner
             Debug.LogError("콜라이더 존재하지 않음 : " + gameObject.name);
             return;
         }
-
         // 스폰 위치 미리 설정
         SetSpawnLocation();
-
         // 자동 시작 제거 - MonsterCube에서 호출할 때까지 대기
         Debug.Log($"[{gameObject.name}] MonsterSpawner 초기화 완료. 외부 호출 대기 중...");
     }
     // ===== 스폰 위치 =====
     // 현재 오브젝트의 콜라이더
     protected Collider targetCollider;
-    // 윗면 중앙 계산
+
+    // 윗면 중앙 계산 (하위 콜라이더들 포함)
     public override void SetSpawnLocation()
     {
-        if (targetCollider == null) return;
+        // 하위 콜라이더들을 모두 포함해서 윗면 정중앙 계산
+        Bounds combinedBounds = GetCombinedBoundsFromChildren();
+        Vector3 topCenter = combinedBounds.center + Vector3.up * combinedBounds.extents.y;
 
-        Bounds bounds = targetCollider.bounds;
-        Vector3 topCenter = bounds.center + Vector3.up * bounds.extents.y;  // 윗면 중앙 위치 계산
-        spawnLocation = topCenter;
-        // 이후 파묻힘 현상 등 발생 시, 이하 부분 적용
-        //    // 필요하다면 추가 오프셋 적용 (예: 살짝 띄우기)
-        //    float heightOffset = 0.5f; // 필요에 따라 조정
-        //    spawnLocation = topCenter + Vector3.up * heightOffset;
+        // 추가 높이 오프셋 적용
+        spawnLocation = topCenter + Vector3.up * heightOffset;
+
+        Debug.Log($"[{gameObject.name}] 하위 콜라이더 기반 스폰 위치 설정: {spawnLocation}");
     }
+
+    // 하위 오브젝트들의 모든 콜라이더 범위를 합쳐서 계산
+    private Bounds GetCombinedBoundsFromChildren()
+    {
+        // 모든 하위 콜라이더 가져오기 (자기 자신 포함)
+        Collider[] allColliders = GetComponentsInChildren<Collider>();
+
+        if (allColliders.Length == 0)
+        {
+            // 콜라이더가 없으면 Transform 기준으로 기본 크기 사용
+            Debug.LogWarning($"[{gameObject.name}] 하위 콜라이더를 찾을 수 없습니다. Transform 크기를 사용합니다.");
+            return new Bounds(transform.position, transform.lossyScale);
+        }
+
+        // 첫 번째 콜라이더로 초기 범위 설정
+        Bounds combinedBounds = allColliders[0].bounds;
+
+        // 나머지 콜라이더들 범위 모두 합치기
+        for (int i = 1; i < allColliders.Length; i++)
+        {
+            combinedBounds.Encapsulate(allColliders[i].bounds);
+        }
+
+        Debug.Log($"[{gameObject.name}] 하위 콜라이더 {allColliders.Length}개의 범위 계산 완료. 크기: {combinedBounds.size}");
+
+        return combinedBounds;
+    }
+
     // ===== 트리거 / 생성 / 완료 =====
     // 생성 주기
     [SerializeField] protected float spawnRate = 2f;
@@ -43,9 +73,8 @@ public class MonsterSpawner : Spawner
     public override void SpawnTriggerOn()
     {
         Debug.Log($"[{gameObject.name}] MonsterSpawner 활성화됨! 스폰을 시작합니다.");
-
         base.SpawnTriggerOn();
-        SetSpawnLocation(); // 스폰 위치 재설정
+        SetSpawnLocation(); // 스폰 위치 재설정 (하위 콜라이더 기반)
         SpawnObject();
     }
     // 생성
