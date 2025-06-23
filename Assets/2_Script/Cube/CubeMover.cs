@@ -26,6 +26,12 @@ public class CubeMover : MonoBehaviour
         get { return isMovingToOriginal && !hasArrived; }
     }
 
+    // 도착 여부를 외부에서 확인할 수 있는 프로퍼티 (CubeSpawnerController에서 사용)
+    public bool HasArrived
+    {
+        get { return hasArrived; }
+    }
+
     // 비공개 변수들
     private Vector3 originalPosition;      // 처음 배치된 위치
     private Vector3 startPosition;         // 계산된 시작 위치
