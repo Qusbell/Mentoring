@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: daf354dc3ff0df7408cb3161e8cff2a4, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &88711223
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,12 +134,12 @@ GameObject:
   - component: {fileID: 88711227}
   - component: {fileID: 88711226}
   - component: {fileID: 88711225}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &88711224
 Transform:
@@ -239,12 +239,12 @@ GameObject:
   - component: {fileID: 116149653}
   - component: {fileID: 116149652}
   - component: {fileID: 116149651}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &116149649
 Transform:
@@ -375,11 +375,11 @@ Transform:
   m_GameObject: {fileID: 243590746}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.0905843, y: 8.234485, z: 1.5351161}
+  m_LocalPosition: {x: 10.3292265, y: 5.9379473, z: -1.6238829}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1866683702}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &376964826
 PrefabInstance:
@@ -458,12 +458,12 @@ GameObject:
   - component: {fileID: 575724504}
   - component: {fileID: 575724503}
   - component: {fileID: 575724502}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!65 &575724502
 BoxCollider:
@@ -563,12 +563,12 @@ GameObject:
   - component: {fileID: 1775750099}
   - component: {fileID: 1775750098}
   - component: {fileID: 1775750097}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1775750096
 Transform:
@@ -665,12 +665,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1866683702}
-  m_Layer: 0
+  - component: {fileID: 1866683704}
+  - component: {fileID: 1866683703}
+  m_Layer: 9
   m_Name: TestMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1866683702
 Transform:
@@ -689,9 +691,51 @@ Transform:
   - {fileID: 88711224}
   - {fileID: 1775750096}
   - {fileID: 116149649}
-  - {fileID: 243590748}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1866683703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866683701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe062ae3153fb5e41b3734facc7c0187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1866683704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866683701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1001 &1936396678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1023,3 +1067,4 @@ SceneRoots:
   - {fileID: 7478160600958438721}
   - {fileID: 376964826}
   - {fileID: 1936396678}
+  - {fileID: 243590748}
