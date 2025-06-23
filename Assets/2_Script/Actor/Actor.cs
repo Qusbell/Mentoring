@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-// RequireComponent : attack / move
+// RequireComponent : DoAttack / move
 [RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(DamageReaction))]
 abstract public class Actor : MonoBehaviour

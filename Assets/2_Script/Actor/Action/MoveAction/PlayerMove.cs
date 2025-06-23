@@ -13,11 +13,6 @@ public class PlayerMove : MoveAction
         frontRayDistance = transform.localScale.z * 0.6f;
     }
 
-    // 회전
-    // 진행 방향을 바라봄
-    public virtual void Turn()
-    { transform.LookAt(transform.position + moveVec); }
-
 
 
     // 전방 레이캐스트

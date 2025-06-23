@@ -11,14 +11,16 @@ public class MeleeBasicAttack : AttackAction
 {
     [SerializeField] protected float attackAngle = 90f;  // 공격 각도
 
-
-    public override void Attack()
+    protected override void Awake()
     {
-        // 공격 가능 확인
-        if (!CheckCanAttack()) { return; }
+        base.Awake();
+        doAttack = DoAttack;
+    }
 
-        // Debug.Log("공격: " + gameObject.name);
 
+
+    protected void DoAttack()
+    {
         // OverlapSphere를 사용하여 공격 범위 내의 모든 콜라이더를 찾음
         // <- 대상의 레이어를 탐지
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
@@ -51,8 +53,6 @@ public class MeleeBasicAttack : AttackAction
 
         }
     } // MeleeBasicAttack
-
-
 
 
     // 공격 범위 시각화

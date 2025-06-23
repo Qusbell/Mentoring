@@ -10,53 +10,81 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(NavMeshAgent))]
 public class ChaseAction : MoveAction
 {
-    // 추적할 대상
-    [SerializeField] protected Transform target;
 
-    // 회전 속도
-    [SerializeField] protected float rotationSpeed = 3f;
+    // ----- ai 부분 -----
 
     // 네비게이션 AI
     protected NavMeshAgent nav;
 
+    // 추적할 대상
+    protected Transform target;
 
     // 생성
     protected override void Awake()
     {
         base.Awake();
-
         // 네비게이션 초기화
         nav = GetComponent<NavMeshAgent>();
         // 이동속도 설정
         nav.speed = moveSpeed;
 
-        // <- 공격 사거리 : AttackAction 쪽에서 설정
-        //  nav.stoppingDistance = GetComponent<AttackAction>().attackRange;
+        // 위치, 회전 자동 업데이트 비활성
+        nav.updatePosition = false;
+        nav.updateRotation = false;
     }
 
-
-    // 목표를 향해 이동
-    public override void Move()
+    private void Start()
     {
-        // target 존재하지 않음 예외
-        if (target == null) { nav.isStopped = true; return; }
+        // 타겟 설정
+        target = TargetManager.instance.Targeting();
+    }
 
-        // 목표물 설정
-        nav.SetDestination(target.position);
+    // 목적지 갱신
+    void UpdateDestination()
+    { if (target != null) { nav.SetDestination(target.position); } }
 
-        // 제자리 상태일 때 회전
-        if (!nav.pathPending && nav.remainingDistance <= nav.stoppingDistance)
+    // 다음 이동 방향
+    void UpdateNextMoveDirection()
+    { moveVec = nav.desiredVelocity.normalized; }
+
+    // 이동 중인 경우 참 반환
+    void UpdateIsMove()
+    { isMove = moveVec != Vector3.zero; }
+
+    // 네비게이션 위치와 자신 위치 동기화
+    void UpdateMyPositionOnNav()
+    { if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; } }
+
+
+
+
+
+
+    // 회전 속도
+    [SerializeField] protected float rotationSpeed = 3f;
+
+    // 다음 진행 방향을 향해 회전 (느리게)
+    protected override void Turn()
+    {
+        Vector3 direction = moveVec;
+        if (moveVec == Vector3.zero)
         {
-            TurnToTarget();
+            direction = target.position - transform.position;
+            direction.y = 0;
         }
-    }
+        else
+        { direction = moveVec; }
 
-
-    // 대상을 향해 회전
-    protected void TurnToTarget()
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    private void Update()
+    {
+        UpdateDestination();       // 목적지 설정
+        UpdateNextMoveDirection(); // 다음 방향 설정
+        UpdateIsMove();            // 이동 중인지 판정
+        UpdateMyPositionOnNav();   // 네비게이션 갱신
+        Turn();                    // 회전
     }
 }
