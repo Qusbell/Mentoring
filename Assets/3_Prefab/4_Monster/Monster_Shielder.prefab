@@ -842,7 +842,7 @@ Animator:
   m_GameObject: {fileID: 2384884184112096675}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0b3da1f3c3be7b14bbbc3e7c0295b0b4, type: 2}
-  m_Controller: {fileID: 9100000, guid: 5e3215bfd63d6f4488cc945131cedb7c, type: 2}
+  m_Controller: {fileID: 22100000, guid: 512f6ca4b5c6d07489aea99040b8c4fd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -899,10 +899,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.9631166
+  m_Radius: 0.65
+  m_Height: 2.463179
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9815583, z: 0}
+  m_Center: {x: 0, y: 1.2315271, z: 0}
 --- !u!195 &4788860662003758590
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -938,7 +938,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  target: {fileID: 0}
   rotationSpeed: 5
 --- !u!114 &1284974118791040895
 MonoBehaviour:
@@ -954,8 +953,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 1
   <attackRange>k__BackingField: 2
-  attackRate: 1
   targetTag: 
+  attackRate: 1
   attackAngle: 90
 --- !u!114 &5038519080904345008
 MonoBehaviour:
