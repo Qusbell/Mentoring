@@ -10,8 +10,8 @@ public class TargetManager : MonoBehaviour
     public Transform target { get; private set; }
 
     [Header("Å¸°Ù Á¶°Ç")]
-    [SerializeField] private string targetTag = "Player";
-    [SerializeField] private string targetLayerName = "Player";
+    [SerializeField] private string targetTag = "Target";
+    [SerializeField] private string targetLayerName = "Target";
     [SerializeField] private LayerMask targetLayerMask;
 
 

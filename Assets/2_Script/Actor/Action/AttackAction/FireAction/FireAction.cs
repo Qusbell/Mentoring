@@ -23,11 +23,13 @@ public class FireAction : AttackAction
     // 임시 타겟
     public Transform target; // <- 반드시 player만을 지정하게 됨
 
+    // 발사 위치
+    public Transform firePos;
 
     protected void DoAttack()
     {
         // 투사체 생성하기
-        GameObject instantProjectile = Instantiate(projectile, this.transform.position, this.transform.rotation); // <- 발사 position 조절
+        GameObject instantProjectile = Instantiate(projectile, firePos.position, this.transform.rotation); // <- 발사 position 조절
 
         // 투사체 이동 방식 가져옴
         // <- 여기 MoveAction을 GetComponent한 다음, as 키워드로 바꿔끼우는 게 좋을 것 같기도 함
