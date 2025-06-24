@@ -1544,6 +1544,39 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!114 &1290567889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290567881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecc8adeef0cedd419acfe7a8969fecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPrefabs:
+  - {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
+  heightOffset: 0.5
+  spawnRate: 2
+  isEndlessSpawn: 0
+--- !u!114 &1290567890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290567881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bd483ca3021b44f8ac49ad3a6a2961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubeMover: {fileID: 0}
+  monsterSpawner: {fileID: 0}
+  delayBeforeSpawn: 0
+  showDebugLog: 1
 --- !u!1001 &1317163535
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1744,6 +1777,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1290567883}
+    - targetCorrespondingSourceObject: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1290567890}
+    - targetCorrespondingSourceObject: {fileID: 7326587895188766203, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1290567889}
   m_SourcePrefab: {fileID: 100100000, guid: 80f1dbd08a5260d48ac51cccc3b3d1a4, type: 3}
 --- !u!1 &1500470362 stripped
 GameObject:
