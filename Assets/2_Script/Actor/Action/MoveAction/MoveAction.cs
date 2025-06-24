@@ -34,7 +34,7 @@ public class MoveAction : MonoBehaviour
     [SerializeField] protected float moveSpeed = 5;
 
     // 이동 상태 여부
-    public bool isMove { get; protected set; } = false;
+    public bool isMove { get; set; } = false;
 
 
     // 이동 메서드

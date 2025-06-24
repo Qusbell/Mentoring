@@ -10,7 +10,6 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(NavMeshAgent))]
 public class ChaseAction : MoveAction
 {
-
     // ----- ai 부분 -----
 
     // 네비게이션 AI
@@ -47,16 +46,9 @@ public class ChaseAction : MoveAction
     void UpdateNextMoveDirection()
     { moveVec = nav.desiredVelocity.normalized; }
 
-    // 이동 중인 경우 참 반환
-    void UpdateIsMove()
-    { isMove = moveVec != Vector3.zero; }
-
     // 네비게이션 위치와 자신 위치 동기화
     void UpdateMyPositionOnNav()
     { if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; } }
-
-
-
 
 
 
@@ -83,7 +75,6 @@ public class ChaseAction : MoveAction
     {
         UpdateDestination();       // 목적지 설정
         UpdateNextMoveDirection(); // 다음 방향 설정
-        UpdateIsMove();            // 이동 중인지 판정
         UpdateMyPositionOnNav();   // 네비게이션 갱신
         Turn();                    // 회전
     }
