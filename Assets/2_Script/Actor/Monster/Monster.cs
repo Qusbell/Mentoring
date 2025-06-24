@@ -5,7 +5,7 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+[RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(ChaseAction))]
 [RequireComponent(typeof(NavMeshAgent))]
 abstract public class Monster : Actor
@@ -16,15 +16,11 @@ abstract public class Monster : Actor
     // 타겟
     Transform target;
 
-    // <- 스폰 애니메이션 재생 메서드
-    // 애니메이션 재생이 끝난 후, MoveStatus로 전환
-
 
     protected override void Awake()
     {
         base.Awake();
-        actionStatus = MoveStatus;
-        // <- actionStatus = SpawnStatus (스폰 애니메이션 메서드 대입, 임시로 MoveStatus 대입 중)
+        actionStatus = SpawnState; // 생성부터 시작
     }
 
     private void Start()
@@ -34,37 +30,81 @@ abstract public class Monster : Actor
     { actionStatus(); }
 
 
-    // 공격 범위 내부라면
-    // <- 정밀계산 필요 X. 이후 제곱 >= 제곱 비교 형태로 최적화 가능
+    // 공격 사거리 계산
     bool InAttackRange()
-    { return attackAction.attackRange >= Vector3.Distance(target.position, this.transform.position); }
+    { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
+
+
+    // 생성 상태
+    private void SpawnState()
+    {
+        if (!animatior.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
+        { actionStatus = IdleStatus; } // 대기
+    }
+
+    // 대기 상태
+    private void IdleStatus()
+    {
+        if (InAttackRange())  // 공격 가능 상태라면
+        { actionStatus = AttackStatus; } // 공격으로
+        else
+        { actionStatus = MoveStatus; }  // 아니면 이동
+    }
 
 
     // 이동 상태
     private void MoveStatus()
     {
-        moveAction.Move();
-        if (InAttackRange() && // <- InAttackRange 판정으로 바꾸기
-            attackAction.isCanAttack)
-        { actionStatus = AttackStatus; }
+        if (InAttackRange())
+        {
+            animatior.isMove = false;
+            moveAction.isMove = false;
+            actionStatus = AttackStatus;
+        }
+        else
+        {
+            animatior.isMove = true;
+            moveAction.isMove = true;
+            moveAction.Move();
+        }
     }
+
+
+    // 공격, 리로드 애니메이션 재생 추가 확인
+    bool doAttack = false;
+    bool doReload = false;
 
     // 공격 상태
     private void AttackStatus()
     {
-        // 공격 범위 내에 있다면
-        if (InAttackRange())
+        // 공격 가능하다면
+        if (InAttackRange() && attackAction.isCanAttack)
         {
-            attackAction.Attack(); // 공격
-            // <- 공격 후딜레이 상태로 전환
+            attackAction.Attack();
+            animatior.isAttack = true; // 어택 애니메이션 재생
         }
 
-        // 공격 범위 내에 없고
-        // <- attackAfterDelay 등 추가 조건
-        else if (attackAction.isCanAttack) // 공격 쿨타임 이후부터 다시 이동 가능 (임시 조치)
-        { actionStatus = MoveStatus; } // <- 다시 이동
+        if (animatior.CheckAnimationName("Attack"))
+        { doAttack = true; }
+
+        if (doAttack && !animatior.CheckAnimationName("Attack"))
+        {
+            doAttack = false;
+            actionStatus = ReloadStatus; // 공격 후딜레이로 이행 }
+        }
     }
 
 
-    // <- 공격 모션
+    // 공격 후딜레이 애니메이션 재생
+    private void ReloadStatus()
+    {
+        if (animatior.CheckAnimationName("Reload"))
+        { doReload = true; }
+        
+        if (doReload && !animatior.CheckAnimationName("Reload"))
+        {
+            doReload = false;
+            actionStatus = IdleStatus;
+        }
+    }
 }
