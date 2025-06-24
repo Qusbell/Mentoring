@@ -17,8 +17,6 @@ abstract public class Monster : Actor
     Transform target;
 
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -58,8 +56,6 @@ abstract public class Monster : Actor
     // 이동 상태
     private void MoveStatus()
     {
-        Debug.Log("Move 상태");
-
         if (InAttackRange())
         {
             animatior.isMove = false;
@@ -81,14 +77,15 @@ abstract public class Monster : Actor
         // 공격 가능하다면
         if (attackAction.isCanAttack)
         {
-            attackAction.Attack(); // 공격
+            attackAction.Attack();
             animatior.isAttack = true; // 어택 애니메이션 재생
         }
-
         // 공격 가능한 상태가 아니고
         // 공격 애니메이션 재생 중이 아니라면
         else if (!animatior.CheckAnimationName("Attack"))
-        { actionStatus = ReloadStatus; } // 공격 후딜레이로 이행
+        {
+            actionStatus = ReloadStatus; // 공격 후딜레이로 이행
+        }
     }
 
 
