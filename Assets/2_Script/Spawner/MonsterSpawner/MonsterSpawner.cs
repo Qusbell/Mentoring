@@ -15,11 +15,12 @@ public class MonsterSpawner : Spawner
             Debug.LogError("콜라이더 존재하지 않음 : " + gameObject.name);
             return;
         }
-        // 스폰 위치 미리 설정
-        SetSpawnLocation();
+
         // 자동 시작 제거 - MonsterCube에서 호출할 때까지 대기
         Debug.Log($"[{gameObject.name}] MonsterSpawner 초기화 완료. 외부 호출 대기 중...");
     }
+
+
     // ===== 스폰 위치 =====
     // 현재 오브젝트의 콜라이더
     protected Collider targetCollider;
@@ -77,18 +78,28 @@ public class MonsterSpawner : Spawner
         SetSpawnLocation(); // 스폰 위치 재설정 (하위 콜라이더 기반)
         SpawnObject();
     }
+
+
+    // 끝없이 스폰시킬지 설정
+    [SerializeField] bool isEndlessSpawn = false;
+
     // 생성
     protected override void SpawnObject()
     {
-        base.SpawnObject();
-        CheckCompleted();
-        // ----- 조건 체크 -----
-        // 미완료 && 스폰 트리거 On
-        if (!isCompleted && spawnTrigger)
+        // 스폰 트리거가 켜져있다면
+        if (spawnTrigger)
         {
-            StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject));
+            // 오브젝트 생성
+            base.SpawnObject();
+
+            // 종료 체크
+            CheckCompleted();
+
+            // 종료되지 않았다면 : 다음 스폰 예약
+            if (!isCompleted) { StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject)); }
         }
     }
+
     // 종료 확인
     public override void CheckCompleted()
     {
@@ -97,7 +108,9 @@ public class MonsterSpawner : Spawner
         {
             Debug.Log($"[{gameObject.name}] 몬스터 스폰 완료");
             base.CheckCompleted();
-            // <- 주기적 스포너라면: 리셋 발생
+
+            // 주기적 스포너라면: 리셋 발생
+            if (isEndlessSpawn) { ResetSpawner();}
         }
     }
 }
