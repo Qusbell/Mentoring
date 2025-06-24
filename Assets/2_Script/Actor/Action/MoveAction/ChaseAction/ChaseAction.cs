@@ -51,7 +51,6 @@ public class ChaseAction : MoveAction
     { if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; } }
 
 
-
     // 회전 속도
     [SerializeField] protected float rotationSpeed = 3f;
 
