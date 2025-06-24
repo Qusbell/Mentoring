@@ -71,6 +71,10 @@ abstract public class Monster : Actor
     }
 
 
+    // 공격, 리로드 상태 확인
+    bool doAttack = false;
+    bool doReload = false;
+
     // 공격 상태
     private void AttackStatus()
     {
@@ -80,11 +84,15 @@ abstract public class Monster : Actor
             attackAction.Attack();
             animatior.isAttack = true; // 어택 애니메이션 재생
         }
-        // 공격 가능한 상태가 아니고
-        // 공격 애니메이션 재생 중이 아니라면
-        else if (!animatior.CheckAnimationName("Attack"))
+
+
+        if (animatior.CheckAnimationName("Attack"))
+        { doAttack = true; }
+        else if (doAttack)
         {
-            actionStatus = ReloadStatus; // 공격 후딜레이로 이행
+            doAttack = false;
+            Debug.Log("Attack 재생 중 아님");
+            actionStatus = ReloadStatus; // 공격 후딜레이로 이행 }
         }
     }
 
@@ -92,7 +100,13 @@ abstract public class Monster : Actor
     // 공격 후딜레이 애니메이션 재생
     private void ReloadStatus()
     {
-        if (!animatior.CheckAnimationName("Reload"))
-        { actionStatus = IdleStatus; }
+        if (animatior.CheckAnimationName("Reload"))
+        { doReload = true; }
+        else if (doReload)
+        {
+            doReload = false;
+            Debug.Log("Reload 재생 중 아님");
+            actionStatus = IdleStatus;
+        }
     }
 }
