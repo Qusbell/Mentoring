@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-
+[RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(PlayerMove))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(JumpAction))]

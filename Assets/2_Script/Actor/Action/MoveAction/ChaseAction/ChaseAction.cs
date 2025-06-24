@@ -32,15 +32,30 @@ public class ChaseAction : MoveAction
         nav.updateRotation = false;
     }
 
-    private void Start()
-    {
-        // 타겟 설정
-        target = TargetManager.instance.Targeting();
-    }
+    protected virtual void Start()
+    { SetTarget(TargetManager.instance.Targeting()); }
+
+
+    // 타겟 설정
+    public void SetTarget(Transform p_target)
+    { target = p_target; }
+
+
+    // target이 입력한 거리 이내에 있는지 확인
+    public bool InDistance(int distance)
+    { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
+
 
     // 목적지 갱신
     void UpdateDestination()
-    { if (target != null) { nav.SetDestination(target.position); } }
+    {
+        if (target != null) { nav.SetDestination(target.position); }
+        else
+        {
+            Debug.Log("target 부재 중 : " + gameObject.name);
+            nav.SetDestination(this.transform.position);
+        }
+    }
 
     // 다음 이동 방향
     void UpdateNextMoveDirection()
@@ -72,7 +87,7 @@ public class ChaseAction : MoveAction
 
     private void Update()
     {
-        UpdateDestination();       // 목적지 설정
+        UpdateDestination();
         UpdateNextMoveDirection(); // 다음 방향 설정
         UpdateMyPositionOnNav();   // 네비게이션 갱신
         Turn();                    // 회전

@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-
-public class CubeControllerManager : MonoBehaviour
+// CubeController끼리 연결시키는 커넥터
+public class CubeControllerConnector : MonoBehaviour
 {
     private List<CubeController> controllerSequence = new List<CubeController>();
-
 
     // 각 큐브 컨트롤러 간 관계 설정
     void Awake()
