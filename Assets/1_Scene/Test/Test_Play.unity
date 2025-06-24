@@ -855,6 +855,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &42053278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1166,6 +1169,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 100
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &62134708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2946,6 +2952,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 7
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &157875263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3120,6 +3129,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &179271691
 GameObject:
   m_ObjectHideFlags: 0
@@ -6967,6 +6979,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &430513524
 GameObject:
   m_ObjectHideFlags: 0
@@ -7250,6 +7265,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 62
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &435386850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7999,6 +8017,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &501646524 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -10840,6 +10861,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &731462729
 GameObject:
   m_ObjectHideFlags: 0
@@ -11336,6 +11360,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &748890028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11727,6 +11754,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &778720685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11875,6 +11905,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 7
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &787726975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12147,6 +12180,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &808459409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13393,6 +13429,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &937323140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15486,6 +15525,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1064062552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16052,6 +16094,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &1100606390
 GameObject:
   m_ObjectHideFlags: 0
@@ -16403,6 +16448,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1115255288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16880,6 +16928,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &1147726977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18154,7 +18205,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18227,6 +18278,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1240735867}
+    - targetCorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1240735870}
   m_SourcePrefab: {fileID: 100100000, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
 --- !u!4 &1240735865 stripped
 Transform:
@@ -18254,6 +18308,7 @@ MonoBehaviour:
   - {fileID: 0}
   heightOffset: 0.5
   spawnRate: 0
+  isEndlessSpawn: 0
 --- !u!114 &1240735868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18287,6 +18342,25 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
+--- !u!114 &1240735870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240735866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 1
+  playerTag: Player
+  triggerDistance: 0.1
+  warningDelay: 1
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1244520553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18665,6 +18739,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1265880735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19296,6 +19373,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1288745541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19434,6 +19514,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1294522192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19857,6 +19940,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1316969105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20174,6 +20260,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 62
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &1345459928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21436,6 +21525,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &1429476266
 GameObject:
   m_ObjectHideFlags: 0
@@ -23100,6 +23192,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1001 &1567251731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24114,6 +24209,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &1623681738
 GameObject:
   m_ObjectHideFlags: 0
@@ -24597,6 +24695,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!4 &1722037536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -28630,6 +28731,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!114 &1958225584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28715,6 +28819,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &1968764598
 GameObject:
   m_ObjectHideFlags: 0
@@ -28783,6 +28890,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &1979496832
 GameObject:
   m_ObjectHideFlags: 0
@@ -28851,6 +28961,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  additionalCubes: []
+  collapseInterval: 0.1
+  oneTimeUse: 1
 --- !u!1 &1989214938
 GameObject:
   m_ObjectHideFlags: 0
