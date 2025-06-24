@@ -1558,9 +1558,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 1
-  <attackRange>k__BackingField: 1
+  <attackRange>k__BackingField: 2.5
   targetTag: 
-  attackRate: 1
+  attackRate: 1.5
   attackAngle: 90
 --- !u!195 &-9184585946787287395
 NavMeshAgent:
@@ -1596,7 +1596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbba28b69903264cbebb911fd9e5bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 3
   rotationSpeed: 3
 --- !u!114 &-4275034679557372163
 MonoBehaviour:
@@ -2122,6 +2122,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6163004039443054852}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6028f5ddcde2fb54eb003c87fe1830be, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6028f5ddcde2fb54eb003c87fe1830be, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6028f5ddcde2fb54eb003c87fe1830be, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6028f5ddcde2fb54eb003c87fe1830be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.06
