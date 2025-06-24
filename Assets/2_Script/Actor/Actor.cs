@@ -5,7 +5,6 @@ using UnityEngine;
 
 
 // RequireComponent : DoAttack / move
-[RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(DamageReaction))]
 abstract public class Actor : MonoBehaviour
 {

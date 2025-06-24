@@ -5,7 +5,7 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+[RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(ChaseAction))]
 [RequireComponent(typeof(NavMeshAgent))]
 abstract public class Monster : Actor
@@ -29,11 +29,10 @@ abstract public class Monster : Actor
     private void Update()
     { actionStatus(); }
 
-    // 공격 범위 내부 계산
-    // <- 정밀계산 필요 X. 이후 제곱 >= 제곱 비교 형태로 최적화 가능
-    bool InAttackRange()
-    { return attackAction.attackRange >= Vector3.Distance(target.position, this.transform.position); }
 
+    // 공격 사거리 계산
+    bool InAttackRange()
+    { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
     // 생성 상태
