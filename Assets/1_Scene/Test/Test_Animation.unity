@@ -151,13 +151,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 162982405}
   - {fileID: 1631788339}
   - {fileID: 1744850047}
   - {fileID: 1331605798}
   - {fileID: 253506369}
   - {fileID: 600022022}
   - {fileID: 1358283137}
-  - {fileID: 162982405}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &162982404
@@ -448,10 +448,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 159556337}
     m_Modifications:
-    - target: {fileID: 865751346710276972, guid: d0439793edeb04c4589d4bc499d4dcbb, type: 3}
-      propertyPath: projectile
-      value: 
-      objectReference: {fileID: 2336828060849677753, guid: 4ab66f9db6bf98f42a28d46a2f4a6611, type: 3}
     - target: {fileID: 2299299225365109511, guid: d0439793edeb04c4589d4bc499d4dcbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.79
