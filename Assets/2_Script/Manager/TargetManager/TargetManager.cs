@@ -18,7 +18,12 @@ public class TargetManager : MonoBehaviour
     void Awake()
     {
         if (instance == null) { instance = this; }
-        else { Destroy(gameObject); return; }
+        else
+        {
+            Destroy(gameObject);
+            Debug.Log("TargetManager 다수 존재");
+            return;
+        }
     }
 
     void Start()

@@ -28,10 +28,4 @@ public class ProjectileMove : MoveAction
 
         Turn(); // <- 딱 1회, 해당 방향 바라봄
     }
-
-    // 매 프레임 이동
-    private void Update()
-    {
-        if (isMove) { Move(); }
-    }
 }

@@ -8,6 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(ChaseAction))]
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(DamageReaction))]
 abstract public class Monster : Actor
 {
     // 현재 수행 중인 행동

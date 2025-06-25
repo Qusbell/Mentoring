@@ -5,10 +5,10 @@ using UnityEngine;
 
 
 // 호위 큐브의 목적지를 순서대로 입력받음
-public class DestinationManager : MonoBehaviour
+public class CargoDestinationManager : MonoBehaviour
 {
     // 목적지 목록
-    private List<Destination> destinations = new List<Destination>();
+    private List<CargoDestination> destinations = new List<CargoDestination>();
 
     // 현재 몇 번째 목적지 차례인지
     private int indexCount = 0;
@@ -17,13 +17,12 @@ public class DestinationManager : MonoBehaviour
     private Cargo cargo;
 
     
-
     // 각 큐브 컨트롤러 간 관계 설정
     void Awake()
     {
         // 모든 자식 오브젝트로부터
         // Destination 오브젝트 추출 후 저장
-        GetComponentsInChildren<Destination>(true, destinations);
+        GetComponentsInChildren<CargoDestination>(true, destinations);
     }
 
     void Start()
@@ -34,6 +33,7 @@ public class DestinationManager : MonoBehaviour
         { cargo = tempCargo; }
 
         cargo.setNextDestination = SetNextDestination;
+        SetNextDestination();
     }
 
     // 메서드 : 다음 Destination으로 target 변경
@@ -42,8 +42,7 @@ public class DestinationManager : MonoBehaviour
     void SetNextDestination()
     {
         if (indexCount < destinations.Count)
-        { cargo.SetDestination(destinations[indexCount++].transform); }
+        { cargo.SetDestination(destinations[indexCount++].GetTransform()); }
         // <- else 종료 처리
     }
-
 }

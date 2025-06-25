@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(JumpAction))]
 [RequireComponent(typeof(MeleeBasicAttack))]
+[RequireComponent(typeof(DamageReaction))]
 public class Player : Actor
 {
     protected InputManager input;

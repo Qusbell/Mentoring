@@ -4,8 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-// RequireComponent : DoAttack / move
-[RequireComponent(typeof(DamageReaction))]
+[RequireComponent (typeof (Rigidbody))]
 abstract public class Actor : MonoBehaviour
 {
     // 오브젝트에 대한 물리효과

@@ -13,14 +13,14 @@ public class Cargo : Actor
     // 이동 메커니즘
     CargoMoveAction cargoMoveAction;
 
-    // <- 목적지 도착 distance
-    [SerializeField] protected int distance = 3;
-    
+    // 목적지 도착을 판정할 distance
+    [SerializeField] protected int distance = 2;
+
+    // 목적지 도착 후, 다음 목적지 출발까지 시간 // <- 미구현
+    [SerializeField] protected float nextStartTimer = 2f;
+
     // 다음 목적지 이벤트
     public Action setNextDestination;
-
-    // 목적지 도착 후, 다음 목적지 출발까지 시간
-    [SerializeField] protected float nextStartTimer = 2f;
 
 
     protected override void Awake()
@@ -33,21 +33,22 @@ public class Cargo : Actor
     }
 
 
-
     // 목적지 설정
+    // CargoDestinationManager::SetNextDestination()에서 필요
     public void SetDestination(Transform destination)
     { cargoMoveAction.SetTarget(destination); }
 
 
     private void Update()
     {
-        // 현재는 단순 이동만 하도록 설정
-        cargoMoveAction.Move();
-
         // 목적지 도착 시
         // 다음 목적지 설정
         if (cargoMoveAction.InDistance(distance))
-        { setNextDestination(); } // <- 일정 시간 후 스타트
+        { setNextDestination(); }
+
+        // 도착하지 않은 경우 : Move
+        else
+        { cargoMoveAction.Move(); }
     }
 
 
