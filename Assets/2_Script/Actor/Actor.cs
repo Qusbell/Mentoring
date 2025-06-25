@@ -4,28 +4,29 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
+
 [RequireComponent (typeof (Rigidbody))]
 abstract public class Actor : MonoBehaviour
 {
-    // ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ ¹°¸®È¿°ú
+    // ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•œ ë¬¼ë¦¬íš¨ê³¼
     protected Rigidbody rigid;
 
-    // ÀÌµ¿
+    // ì´ë™
     protected MoveAction moveAction;
-    // °ø°İ
+    // ê³µê²©
     protected AttackAction attackAction;
-    // ÇÇ°İ
+    // í”¼ê²©
     protected DamageReaction damageReaction;
 
-    // ¾Ö´Ï¸ŞÀÌ¼Ç
+    // ì• ë‹ˆë©”ì´ì…˜
     protected ActorAnimation animatior;
 
-    // »ı¼º ÃÊ±âÈ­
+    // ìƒì„± ì´ˆê¸°í™”
     protected virtual void Awake()
     {
-        // ¹°¸®¿¬»ê Æ÷ÇÔ
+        // ë¬¼ë¦¬ì—°ì‚° í¬í•¨
         rigid = GetComponent<Rigidbody>();
-        // ¹°¸®È¸Àü Á¦°Å
+        // ë¬¼ë¦¬íšŒì „ ì œê±°
         rigid.freezeRotation = true;
 
         animatior = GetComponent<ActorAnimation>();

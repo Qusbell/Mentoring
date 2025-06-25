@@ -7,50 +7,49 @@ using UnityEngine;
 
 [RequireComponent(typeof(DamageReaction))]
 [RequireComponent(typeof(CargoMoveAction))]
-// È£À§ Å¥ºê (È­¹°)
+// í˜¸ìœ„ íë¸Œ (í™”ë¬¼)
 public class Cargo : Actor
 {
-    // ÀÌµ¿ ¸ŞÄ¿´ÏÁò
+    // ì´ë™ ë©”ì»¤ë‹ˆì¦˜
     CargoMoveAction cargoMoveAction;
 
-    // ¸ñÀûÁö µµÂøÀ» ÆÇÁ¤ÇÒ distance
+    // ëª©ì ì§€ ë„ì°©ì„ íŒì •í•  distance
     [SerializeField] protected int distance = 2;
 
-    // ¸ñÀûÁö µµÂø ÈÄ, ´ÙÀ½ ¸ñÀûÁö Ãâ¹ß±îÁö ½Ã°£ // <- ¹Ì±¸Çö
+    // ëª©ì ì§€ ë„ì°© í›„, ë‹¤ìŒ ëª©ì ì§€ ì¶œë°œê¹Œì§€ ì‹œê°„ // <- ë¯¸êµ¬í˜„
     [SerializeField] protected float nextStartTimer = 2f;
 
-    // ´ÙÀ½ ¸ñÀûÁö ÀÌº¥Æ®
+    // ë‹¤ìŒ ëª©ì ì§€ ì´ë²¤íŠ¸
     public Action setNextDestination;
 
 
     protected override void Awake()
     {
         base.Awake();
-        // ´Ù¿îÄ³½ºÆ®
+        // ë‹¤ìš´ìºìŠ¤íŠ¸
         cargoMoveAction = moveAction as CargoMoveAction;
         if (cargoMoveAction == null)
-        { Debug.Log("CargoMoveAction ÇÒ´çµÇÁö ¾ÊÀ½ : " + gameObject.name); }
+        { Debug.Log("CargoMoveAction í• ë‹¹ë˜ì§€ ì•ŠìŒ : " + gameObject.name); }
     }
 
 
-    // ¸ñÀûÁö ¼³Á¤
-    // CargoDestinationManager::SetNextDestination()¿¡¼­ ÇÊ¿ä
+    // ëª©ì ì§€ ì„¤ì •
+    // CargoDestinationManager::SetNextDestination()ì—ì„œ í•„ìš”
     public void SetDestination(Transform destination)
     { cargoMoveAction.SetTarget(destination); }
 
 
     private void Update()
     {
-        // ¸ñÀûÁö µµÂø ½Ã
-        // ´ÙÀ½ ¸ñÀûÁö ¼³Á¤
+        // ëª©ì ì§€ ë„ì°© ì‹œ
+        // ë‹¤ìŒ ëª©ì ì§€ ì„¤ì •
         if (cargoMoveAction.InDistance(distance))
         { setNextDestination(); }
 
-        // µµÂøÇÏÁö ¾ÊÀº °æ¿ì : Move
+        // ë„ì°©í•˜ì§€ ì•Šì€ ê²½ìš° : Move
         else
         { cargoMoveAction.Move(); }
     }
-
 
 
 }

@@ -10,24 +10,25 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(NavMeshAgent))]
 public class ChaseAction : MoveAction
 {
-    // ----- ai ºÎºĞ -----
+    // ----- ai ë¶€ë¶„ -----
 
-    // ³×ºñ°ÔÀÌ¼Ç AI
+    // ë„¤ë¹„ê²Œì´ì…˜ AI
     protected NavMeshAgent nav;
 
-    // ÃßÀûÇÒ ´ë»ó
+    // ì¶”ì í•  ëŒ€ìƒ
     protected Transform target;
 
-    // »ı¼º
+
+    // ìƒì„±
     protected override void Awake()
     {
         base.Awake();
-        // ³×ºñ°ÔÀÌ¼Ç ÃÊ±âÈ­
+        // ë„¤ë¹„ê²Œì´ì…˜ ì´ˆê¸°í™”
         nav = GetComponent<NavMeshAgent>();
-        // ÀÌµ¿¼Óµµ ¼³Á¤
+        // ì´ë™ì†ë„ ì„¤ì •
         nav.speed = moveSpeed;
 
-        // À§Ä¡, È¸Àü ÀÚµ¿ ¾÷µ¥ÀÌÆ® ºñÈ°¼º
+        // ìœ„ì¹˜, íšŒì „ ìë™ ì—…ë°ì´íŠ¸ ë¹„í™œì„±
         nav.updatePosition = false;
         nav.updateRotation = false;
     }
@@ -36,40 +37,40 @@ public class ChaseAction : MoveAction
     { SetTarget(TargetManager.instance.Targeting()); }
 
 
-    // Å¸°Ù ¼³Á¤
+    // íƒ€ê²Ÿ ì„¤ì •
     public void SetTarget(Transform p_target)
     { target = p_target; }
 
 
-    // targetÀÌ ÀÔ·ÂÇÑ °Å¸® ÀÌ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+    // targetì´ ì…ë ¥í•œ ê±°ë¦¬ ì´ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
     public bool InDistance(int distance)
     { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
 
 
-    // ¸ñÀûÁö °»½Å
+    // ëª©ì ì§€ ê°±ì‹ 
     void UpdateDestination()
     {
         if (target != null) { nav.SetDestination(target.position); }
         else
         {
-            Debug.Log("target ºÎÀç Áß : " + gameObject.name);
+            Debug.Log("target ë¶€ì¬ ì¤‘ : " + gameObject.name);
             nav.SetDestination(this.transform.position);
         }
     }
 
-    // ´ÙÀ½ ÀÌµ¿ ¹æÇâ
+    // ë‹¤ìŒ ì´ë™ ë°©í–¥
     void UpdateNextMoveDirection()
     { moveVec = nav.desiredVelocity.normalized; }
 
-    // ³×ºñ°ÔÀÌ¼Ç À§Ä¡¿Í ÀÚ½Å À§Ä¡ µ¿±âÈ­
+    // ë„¤ë¹„ê²Œì´ì…˜ ìœ„ì¹˜ì™€ ìì‹  ìœ„ì¹˜ ë™ê¸°í™”
     void UpdateMyPositionOnNav()
     { if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; } }
 
 
-    // È¸Àü ¼Óµµ
+    // íšŒì „ ì†ë„
     [SerializeField] protected float rotationSpeed = 3f;
 
-    // ´ÙÀ½ ÁøÇà ¹æÇâÀ» ÇâÇØ È¸Àü (´À¸®°Ô)
+    // ë‹¤ìŒ ì§„í–‰ ë°©í–¥ì„ í–¥í•´ íšŒì „ (ëŠë¦¬ê²Œ)
     protected override void Turn()
     {
         Vector3 direction = moveVec;
@@ -88,8 +89,8 @@ public class ChaseAction : MoveAction
     private void Update()
     {
         UpdateDestination();
-        UpdateNextMoveDirection(); // ´ÙÀ½ ¹æÇâ ¼³Á¤
-        UpdateMyPositionOnNav();   // ³×ºñ°ÔÀÌ¼Ç °»½Å
-        Turn();                    // È¸Àü
+        UpdateNextMoveDirection(); // ë‹¤ìŒ ë°©í–¥ ì„¤ì •
+        UpdateMyPositionOnNav();   // ë„¤ë¹„ê²Œì´ì…˜ ê°±ì‹ 
+        Turn();                    // íšŒì „
     }
 }

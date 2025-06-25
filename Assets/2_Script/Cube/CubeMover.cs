@@ -3,110 +3,122 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-/// Å¥ºê ÀÌµ¿À» °ü¸®ÇÏ´Â ÄÄÆ÷³ÍÆ®
-/// ¹Ì¸® ¹èÄ¡µÈ Å¥ºê°¡ ½ÃÀÛ ½Ã ²¨Áö°í, È°¼ºÈ­µÉ ¶§ ÁöÁ¤ÇÑ À§Ä¡¿¡¼­ ½ÃÀÛÇÏ¿© ¿ø·¡ ¹èÄ¡µÈ À§Ä¡·Î µ¹¾Æ¿È
-/// ÀÌµ¿ °æ·Î¸¦ ·¹ÀÌÀú·Î ½Ã°¢È­ (¿¡µğÅÍ¿¡¼­¸¸)
+/// íë¸Œ ì´ë™ì„ ê´€ë¦¬í•˜ëŠ” ì»´í¬ë„ŒíŠ¸
+/// ë¯¸ë¦¬ ë°°ì¹˜ëœ íë¸Œê°€ ì‹œì‘ ì‹œ êº¼ì§€ê³ , í™œì„±í™”ë  ë•Œ ì§€ì •í•œ ìœ„ì¹˜ì—ì„œ ì‹œì‘í•˜ì—¬ ì›ë˜ ë°°ì¹˜ëœ ìœ„ì¹˜ë¡œ ëŒì•„ì˜´
+/// ì´ë™ ê²½ë¡œë¥¼ ë ˆì´ì €ë¡œ ì‹œê°í™” (ì—ë””í„°ì—ì„œë§Œ)
 /// 
 public class CubeMover : MonoBehaviour
 {
-    [Header("ÀÌµ¿ ¼³Á¤")]
-    [Tooltip("½ÃÀÛ À§Ä¡ (¹èÄ¡µÈ À§Ä¡ ±âÁØÀ¸·Î ´õÇØÁü)")]
+    [Header("ì´ë™ ì„¤ì •")]
+    [Tooltip("ì‹œì‘ ìœ„ì¹˜ (ë°°ì¹˜ëœ ìœ„ì¹˜ ê¸°ì¤€ìœ¼ë¡œ ë”í•´ì§)")]
     public Vector3 startPositionOffset = new Vector3(10, 0, 0);
 
-    [Tooltip("ÀÌµ¿ ¼Óµµ (ÃÊ´ç À¯´Ö)")]
+    [Tooltip("ì´ë™ ì†ë„ (ì´ˆë‹¹ ìœ ë‹›)")]
     public float moveSpeed = 3f;
 
-    [Header("½Ã°¢È­ ¼³Á¤")]
-    [Tooltip("¾À¿¡¼­ ÀÌµ¿ °æ·Î ½Ã°¢È­")]
+    [Header("ì‹œê°í™” ì„¤ì •")]
+    [Tooltip("ì”¬ì—ì„œ ì´ë™ ê²½ë¡œ ì‹œê°í™”")]
     public bool showPath = true;
 
-    // ÀÌµ¿ »óÅÂ¸¦ ¿ÜºÎ¿¡¼­ È®ÀÎÇÒ ¼ö ÀÖ´Â ÇÁ·ÎÆÛÆ¼ (WarningSystem¿¡¼­ »ç¿ë)
+    // ì´ë™ ìƒíƒœë¥¼ ì™¸ë¶€ì—ì„œ í™•ì¸í•  ìˆ˜ ìˆëŠ” í”„ë¡œí¼í‹° (WarningSystemì—ì„œ ì‚¬ìš©)
     public bool IsCurrentlyMoving
     {
         get { return isMovingToOriginal && !hasArrived; }
     }
 
-    // µµÂø ¿©ºÎ¸¦ ¿ÜºÎ¿¡¼­ È®ÀÎÇÒ ¼ö ÀÖ´Â ÇÁ·ÎÆÛÆ¼ (CubeSpawnerController¿¡¼­ »ç¿ë)
+    // ë„ì°© ì—¬ë¶€ë¥¼ ì™¸ë¶€ì—ì„œ í™•ì¸í•  ìˆ˜ ìˆëŠ” í”„ë¡œí¼í‹° (CubeSpawnerControllerì—ì„œ ì‚¬ìš©)
     public bool HasArrived
     {
         get { return hasArrived; }
     }
 
-    // ºñ°ø°³ º¯¼öµé
-    private Vector3 originalPosition;      // Ã³À½ ¹èÄ¡µÈ À§Ä¡
-    private Vector3 startPosition;         // °è»êµÈ ½ÃÀÛ À§Ä¡
-    private bool isMovingToOriginal;       // ¿ø·¡ À§Ä¡·Î ÀÌµ¿ Áß
-    private bool hasArrived;               // ¿ø·¡ À§Ä¡¿¡ µµÂøÇß´ÂÁö ¿©ºÎ
+    // ë¹„ê³µê°œ ë³€ìˆ˜ë“¤
+    private Vector3 originalPosition;      // ì²˜ìŒ ë°°ì¹˜ëœ ìœ„ì¹˜
+    private Vector3 startPosition;         // ê³„ì‚°ëœ ì‹œì‘ ìœ„ì¹˜
+    private bool isMovingToOriginal;       // ì›ë˜ ìœ„ì¹˜ë¡œ ì´ë™ ì¤‘
+    private bool hasArrived;               // ì›ë˜ ìœ„ì¹˜ì— ë„ì°©í–ˆëŠ”ì§€ ì—¬ë¶€
 
-    // ½ÃÀÛ ½Ã ÃÊ±âÈ­
+
+
+
+
+
+    
+
+    // ì‹œì‘ ì‹œ ì´ˆê¸°í™”
     void Awake()
     {
         originalPosition = transform.position;
         startPosition = originalPosition + startPositionOffset;
 
 #if UNITY_EDITOR
-        // ¿¡µğÅÍ¿¡¼­¸¸ LineRenderer ¼³Á¤
+        // ì—ë””í„°ì—ì„œë§Œ LineRenderer ì„¤ì •
         SetupLaserRenderer();
 #endif
 
-        // ½ÃÀÛ ½Ã ºñÈ°¼ºÈ­
+        // ì‹œì‘ ì‹œ ë¹„í™œì„±í™”
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
         }
     }
 
-    // È°¼ºÈ­µÉ ¶§ È£ÃâµÊ
+    // í™œì„±í™”ë  ë•Œ í˜¸ì¶œë¨
     void OnEnable()
     {
-        // ½ÃÀÛ À§Ä¡·Î ÀÌµ¿
+        // ì‹œì‘ ìœ„ì¹˜ë¡œ ì´ë™
         transform.position = startPosition;
 
-        // ÀÌµ¿ ½ÃÀÛ
+        // ì´ë™ ì‹œì‘
         isMovingToOriginal = true;
         hasArrived = false;
 
 #if UNITY_EDITOR
-        // ¿¡µğÅÍ¿¡¼­¸¸ ·¹ÀÌÀú °æ·Î ¾÷µ¥ÀÌÆ®
+        // ì—ë””í„°ì—ì„œë§Œ ë ˆì´ì € ê²½ë¡œ ì—…ë°ì´íŠ¸
         UpdateLaserPath();
 #endif
     }
 
-    // ¸Å ÇÁ·¹ÀÓ¸¶´Ù ½ÇÇà
+    // ë§¤ í”„ë ˆì„ë§ˆë‹¤ ì‹¤í–‰
     void Update()
     {
-        // ¿ø·¡ À§Ä¡·Î ÀÌµ¿ ÁßÀÏ ¶§
+
+        // <- dotween
+
+
+
+        // ì›ë˜ ìœ„ì¹˜ë¡œ ì´ë™ ì¤‘ì¼ ë•Œ
         if (isMovingToOriginal && !hasArrived)
         {
-            // ÇöÀç À§Ä¡¿¡¼­ ¸ñÇ¥ À§Ä¡·Î ÀÌµ¿
+            // í˜„ì¬ ìœ„ì¹˜ì—ì„œ ëª©í‘œ ìœ„ì¹˜ë¡œ ì´ë™
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 originalPosition,
                 moveSpeed * Time.deltaTime
             );
 
-            // ¸ñÇ¥ À§Ä¡¿¡ µµ´ŞÇß´ÂÁö È®ÀÎ
+            // ëª©í‘œ ìœ„ì¹˜ì— ë„ë‹¬í–ˆëŠ”ì§€ í™•ì¸
             if (Vector3.Distance(transform.position, originalPosition) < 0.01f)
             {
-                transform.position = originalPosition;  // Á¤È®ÇÑ À§Ä¡·Î ¼³Á¤
-                hasArrived = true;                      // µµÂø »óÅÂ·Î º¯°æ
+                transform.position = originalPosition;  // ì •í™•í•œ ìœ„ì¹˜ë¡œ ì„¤ì •
+                hasArrived = true;                      // ë„ì°© ìƒíƒœë¡œ ë³€ê²½
             }
 
 #if UNITY_EDITOR
-            // ¿¡µğÅÍ¿¡¼­¸¸ ·¹ÀÌÀú °æ·Î ¾÷µ¥ÀÌÆ®
+            // ì—ë””í„°ì—ì„œë§Œ ë ˆì´ì € ê²½ë¡œ ì—…ë°ì´íŠ¸
             UpdateLaserPath();
 #endif
         }
     }
 
-    // Å¥ºê ÃÊ±âÈ­ (Àç»ç¿ë ¸ñÀû)
+    // íë¸Œ ì´ˆê¸°í™” (ì¬ì‚¬ìš© ëª©ì )
     public void Reset()
     {
         isMovingToOriginal = false;
         hasArrived = false;
 
 #if UNITY_EDITOR
-        // ¿¡µğÅÍ¿¡¼­¸¸ ·¹ÀÌÀú °æ·Î ¾÷µ¥ÀÌÆ®
+        // ì—ë””í„°ì—ì„œë§Œ ë ˆì´ì € ê²½ë¡œ ì—…ë°ì´íŠ¸
         UpdateLaserPath();
 #endif
     }
@@ -118,17 +130,17 @@ public class CubeMover : MonoBehaviour
 
 
 #if UNITY_EDITOR
-    [Tooltip("¿¡µğÅÍ¿¡¼­¸¸ ·¹ÀÌÀú È¿°ú·Î °æ·Î Ç¥½Ã")]
+    [Tooltip("ì—ë””í„°ì—ì„œë§Œ ë ˆì´ì € íš¨ê³¼ë¡œ ê²½ë¡œ í‘œì‹œ")]
     public bool showLaserPath = true;
 
-    [Tooltip("¿¡µğÅÍ¿¡¼­ °æ·Î ¹Ì¸®º¸±â (¾À ºä Àü¿ë)")]
+    [Tooltip("ì—ë””í„°ì—ì„œ ê²½ë¡œ ë¯¸ë¦¬ë³´ê¸° (ì”¬ ë·° ì „ìš©)")]
     public bool showEditorPreview = true;
 
-    // ·¹ÀÌÀú °æ·Î¿ë LineRenderer (¿¡µğÅÍ Àü¿ë)
+    // ë ˆì´ì € ê²½ë¡œìš© LineRenderer (ì—ë””í„° ì „ìš©)
     private LineRenderer pathLaser;
 
 
-    // ·¹ÀÌÀú ·»´õ·¯ ¼³Á¤ (¿¡µğÅÍ Àü¿ë)
+    // ë ˆì´ì € ë Œë”ëŸ¬ ì„¤ì • (ì—ë””í„° ì „ìš©)
     private void SetupLaserRenderer()
     {
         pathLaser = GetComponent<LineRenderer>();
@@ -136,17 +148,17 @@ public class CubeMover : MonoBehaviour
         {
             pathLaser = gameObject.AddComponent<LineRenderer>();
 
-            // ·¹ÀÌÀú ±âº» ¼³Á¤
-            pathLaser.positionCount = 2; // ½ÃÀÛÁ¡°ú ³¡Á¡
+            // ë ˆì´ì € ê¸°ë³¸ ì„¤ì •
+            pathLaser.positionCount = 2; // ì‹œì‘ì ê³¼ ëì 
 
-            // ·¹ÀÌÀúÀÇ ÀçÁú ¼³Á¤
+            // ë ˆì´ì €ì˜ ì¬ì§ˆ ì„¤ì •
             pathLaser.material = new Material(Shader.Find("Sprites/Default"));
 
-            // ·¹ÀÌÀú ³Êºñ ¼³Á¤
+            // ë ˆì´ì € ë„ˆë¹„ ì„¤ì •
             pathLaser.startWidth = 0.1f;
             pathLaser.endWidth = 0.1f;
 
-            // ·¹ÀÌÀú »ö»ó ¼³Á¤ (±âº»: ÆÄ¶õ»ö)
+            // ë ˆì´ì € ìƒ‰ìƒ ì„¤ì • (ê¸°ë³¸: íŒŒë€ìƒ‰)
             pathLaser.startColor = Color.blue;
             pathLaser.endColor = Color.blue;
         }
@@ -157,28 +169,28 @@ public class CubeMover : MonoBehaviour
 
 
 
-    // ·¹ÀÌÀú °æ·Î ¾÷µ¥ÀÌÆ® (¿¡µğÅÍ Àü¿ë)
+    // ë ˆì´ì € ê²½ë¡œ ì—…ë°ì´íŠ¸ (ì—ë””í„° ì „ìš©)
     private void UpdateLaserPath()
     {
         if (pathLaser != null && showLaserPath)
         {
             pathLaser.enabled = true;
 
-            // ÇöÀç »óÅÂ¿¡ µû¶ó ·¹ÀÌÀú °æ·Î ¼³Á¤
+            // í˜„ì¬ ìƒíƒœì— ë”°ë¼ ë ˆì´ì € ê²½ë¡œ ì„¤ì •
             if (isMovingToOriginal && !hasArrived)
             {
-                // ÇöÀç À§Ä¡¿¡¼­ ¿ø·¡ À§Ä¡±îÁö
+                // í˜„ì¬ ìœ„ì¹˜ì—ì„œ ì›ë˜ ìœ„ì¹˜ê¹Œì§€
                 pathLaser.SetPosition(0, transform.position);
                 pathLaser.SetPosition(1, originalPosition);
             }
             else if (hasArrived)
             {
-                // µµÂø ÈÄ¿¡´Â ·¹ÀÌÀú ºñÈ°¼ºÈ­
+                // ë„ì°© í›„ì—ëŠ” ë ˆì´ì € ë¹„í™œì„±í™”
                 pathLaser.enabled = false;
             }
             else
             {
-                // Á¤Áö »óÅÂÀÏ ¶§´Â ÀüÃ¼ °æ·Î Ç¥½Ã
+                // ì •ì§€ ìƒíƒœì¼ ë•ŒëŠ” ì „ì²´ ê²½ë¡œ í‘œì‹œ
                 pathLaser.SetPosition(0, startPosition);
                 pathLaser.SetPosition(1, originalPosition);
             }
@@ -191,48 +203,48 @@ public class CubeMover : MonoBehaviour
 
 
 
-    // ¿¡µğÅÍ¿¡¼­ °æ·Î ¹Ì¸®º¸±â (¾À ºä¿¡¼­¸¸ Ç¥½Ã)
+    // ì—ë””í„°ì—ì„œ ê²½ë¡œ ë¯¸ë¦¬ë³´ê¸° (ì”¬ ë·°ì—ì„œë§Œ í‘œì‹œ)
     void OnDrawGizmos()
     {
         if (!showEditorPreview) return;
 
-        // ¿ø·¡ À§Ä¡¿Í ½ÃÀÛ À§Ä¡ °è»ê
+        // ì›ë˜ ìœ„ì¹˜ì™€ ì‹œì‘ ìœ„ì¹˜ ê³„ì‚°
         Vector3 startPos, endPos;
 
         if (Application.isPlaying)
         {
-            // ½ÇÇà ÁßÀÏ ¶§´Â ÀúÀåµÈ À§Ä¡ »ç¿ë
+            // ì‹¤í–‰ ì¤‘ì¼ ë•ŒëŠ” ì €ì¥ëœ ìœ„ì¹˜ ì‚¬ìš©
             startPos = originalPosition + startPositionOffset;
             endPos = originalPosition;
         }
         else
         {
-            // ¿¡µğÅÍ¿¡¼­´Â ÇöÀç À§Ä¡¸¦ ±âÁØÀ¸·Î °è»ê
+            // ì—ë””í„°ì—ì„œëŠ” í˜„ì¬ ìœ„ì¹˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ê³„ì‚°
             startPos = transform.position + startPositionOffset;
             endPos = transform.position;
         }
 
-        // °æ·Î ¼± ±×¸®±â
-        Gizmos.color = new Color(0.5f, 0.5f, 1f, 0.5f); // ¹İÅõ¸í ÆÄ¶õ»ö
+        // ê²½ë¡œ ì„  ê·¸ë¦¬ê¸°
+        Gizmos.color = new Color(0.5f, 0.5f, 1f, 0.5f); // ë°˜íˆ¬ëª… íŒŒë€ìƒ‰
         Gizmos.DrawLine(startPos, endPos);
 
-        // ½ÃÀÛÁ¡°ú ³¡Á¡¿¡ ÀÛÀº ±¸Ã¼ Ç¥½Ã
-        Gizmos.color = new Color(0f, 1f, 0f, 0.5f); // ¹İÅõ¸í ÃÊ·Ï»ö
+        // ì‹œì‘ì ê³¼ ëì ì— ì‘ì€ êµ¬ì²´ í‘œì‹œ
+        Gizmos.color = new Color(0f, 1f, 0f, 0.5f); // ë°˜íˆ¬ëª… ì´ˆë¡ìƒ‰
         Gizmos.DrawSphere(startPos, 0.1f);
 
-        Gizmos.color = new Color(1f, 0f, 0f, 0.5f); // ¹İÅõ¸í »¡°£»ö
+        Gizmos.color = new Color(1f, 0f, 0f, 0.5f); // ë°˜íˆ¬ëª… ë¹¨ê°„ìƒ‰
         Gizmos.DrawSphere(endPos, 0.1f);
 
-        // È­»ìÇ¥ Ç¥½Ã (¹æÇâ Ç¥½Ã)
+        // í™”ì‚´í‘œ í‘œì‹œ (ë°©í–¥ í‘œì‹œ)
         Vector3 direction = (endPos - startPos).normalized;
         Vector3 arrowPos = Vector3.Lerp(startPos, endPos, 0.5f);
 
-        // È­»ìÇ¥ Çìµå ±×¸®±â
+        // í™”ì‚´í‘œ í—¤ë“œ ê·¸ë¦¬ê¸°
         Vector3 right = Vector3.Cross(direction, Vector3.up).normalized * 0.2f;
         Vector3 left = -right;
         Vector3 back = -direction * 0.4f;
 
-        Gizmos.color = new Color(1f, 1f, 0f, 0.5f); // ¹İÅõ¸í ³ë¶õ»ö
+        Gizmos.color = new Color(1f, 1f, 0f, 0.5f); // ë°˜íˆ¬ëª… ë…¸ë€ìƒ‰
         Gizmos.DrawLine(arrowPos, arrowPos + back + right);
         Gizmos.DrawLine(arrowPos, arrowPos + back + left);
         Gizmos.DrawLine(arrowPos + back + right, arrowPos + back + left);

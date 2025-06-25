@@ -4,75 +4,76 @@ using UnityEngine;
 
 
 
+
 //==================================================
-// µµ¾à / Á¡ÇÁ
+// ë„ì•½ / ì í”„
 //==================================================
 [RequireComponent(typeof(Rigidbody))]
 public class JumpAction : MonoBehaviour
 {
-    // ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ ¹°¸®È¿°ú
+    // ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•œ ë¬¼ë¦¬íš¨ê³¼
     protected Rigidbody rigid;
 
-    // »ı¼º ½Ã ÃÊ±âÈ­
+    // ìƒì„± ì‹œ ì´ˆê¸°í™”
     protected virtual void Awake()
     {
-        // Rigidbody ÃÊ±âÈ­
+        // Rigidbody ì´ˆê¸°í™”
         rigid = GetComponent<Rigidbody>();
-        // null ÃÊ±âÈ­ ¹æ¾î
+        // null ì´ˆê¸°í™” ë°©ì–´
         if (rigid == null)
         {
-            Debug.LogError("Rigidbody ÄÄÆ÷³ÍÆ® ´©¶ô!", gameObject);
-            enabled = false; // »ı¼º Ãë¼Ò
+            Debug.LogError("Rigidbody ì»´í¬ë„ŒíŠ¸ ëˆ„ë½!", gameObject);
+            enabled = false; // ìƒì„± ì·¨ì†Œ
         }
 
-        // ¹Ù´Ú ·¹ÀÌ »çÀÌÀÇ °£°İ
-        // ³Ê¹« ³ĞÀ¸¸é, ´Ù¸¥ Å¥ºê¿Í °ÉÄ¡´Â °æ¿ì 2Áß Á¡ÇÁ µî ¹®Á¦ ¹ß»ı
-        // ³Ê¹« Á¼À¸¸é, ²ôÆ®¸Ó¸®¿¡ °ÉÃÆÀ» ¶§ Á¡ÇÁ ºÒ°¡´ÉÇÑ ¹®Á¦ ¹ß»ı
+        // ë°”ë‹¥ ë ˆì´ ì‚¬ì´ì˜ ê°„ê²©
+        // ë„ˆë¬´ ë„“ìœ¼ë©´, ë‹¤ë¥¸ íë¸Œì™€ ê±¸ì¹˜ëŠ” ê²½ìš° 2ì¤‘ ì í”„ ë“± ë¬¸ì œ ë°œìƒ
+        // ë„ˆë¬´ ì¢ìœ¼ë©´, ë„íŠ¸ë¨¸ë¦¬ì— ê±¸ì³¤ì„ ë•Œ ì í”„ ë¶ˆê°€ëŠ¥í•œ ë¬¸ì œ ë°œìƒ
         raySpacing = (transform.localScale.x + transform.localScale.z) * 0.22f;
 
-        // ÂøÁö È®ÀÎ
+        // ì°©ì§€ í™•ì¸
         bottomRayDistance = transform.localScale.y * 1.05f;
     }
 
 
     //==================================================
-    // Á¡ÇÁ ¸Ş¼­µå
+    // ì í”„ ë©”ì„œë“œ
     //==================================================
 
-    // Á¡ÇÁ ³ôÀÌ
+    // ì í”„ ë†’ì´
     [SerializeField] float jumpHeight = 13;
 
-    // ÂøÁöÇß´Â°¡¿¡ ´ëÇÑ °Å¸® ±âÁØ
+    // ì°©ì§€í–ˆëŠ”ê°€ì— ëŒ€í•œ ê±°ë¦¬ ê¸°ì¤€
     protected float bottomRayDistance;
 
-    // ´ÙÁß ·¹ÀÌÄ³½ºÆ® (ÂøÁö ÆÇÁ¤)
-    // °¢ ·¹ÀÌ »çÀÌÀÇ °£°İ
+    // ë‹¤ì¤‘ ë ˆì´ìºìŠ¤íŠ¸ (ì°©ì§€ íŒì •)
+    // ê° ë ˆì´ ì‚¬ì´ì˜ ê°„ê²©
     protected float raySpacing;
 
 
     private void Update()
     {
         isJump = IsJump();
-        // <- ¾Ö´Ï¸ŞÀÌ¼Ç º¯°æ? ¾Æ´Ï¸é Actor ÂÊ¿¡¼­ Á÷Á¢ ¾Ö´Ï¸ŞÀÌ¼Ç Á¦¾î?
+        // <- ì• ë‹ˆë©”ì´ì…˜ ë³€ê²½? ì•„ë‹ˆë©´ Actor ìª½ì—ì„œ ì§ì ‘ ì• ë‹ˆë©”ì´ì…˜ ì œì–´?
     }
 
 
-    // Á¡ÇÁ
-    // À§Ä¡ += À§ÂÊ ¹æÇâ * Á¡ÇÁ³ôÀÌ
-    // ÈûÀ» °¡ÇÔ (¹°¸®È¿°ú)
+    // ì í”„
+    // ìœ„ì¹˜ += ìœ„ìª½ ë°©í–¥ * ì í”„ë†’ì´
+    // í˜ì„ ê°€í•¨ (ë¬¼ë¦¬íš¨ê³¼)
     public virtual void Jump()
     {
-        // Á¡ÇÁ »óÅÂ°¡ ¾Æ´Ï¶ó¸é
+        // ì í”„ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´
         if (!isJump)
         {
-            // ºÒÇÊ¿äÇÑ ¹°¸® ÃÊ±âÈ­
+            // ë¶ˆí•„ìš”í•œ ë¬¼ë¦¬ ì´ˆê¸°í™”
             rigid.velocity = Vector3.zero;
-            // À§ÂÊ ¹æÇâÀ¸·Î jumpHeight¸¸Å­ ÈûÀ» °¡ÇÔ
+            // ìœ„ìª½ ë°©í–¥ìœ¼ë¡œ jumpHeightë§Œí¼ í˜ì„ ê°€í•¨
             rigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }
     }
 
-    // Á¡ÇÁ »óÅÂ È®ÀÎ
+    // ì í”„ ìƒíƒœ í™•ì¸
     private bool _isJump = false;
     public bool isJump
     {
@@ -80,17 +81,17 @@ public class JumpAction : MonoBehaviour
         protected set { _isJump = value; }
     }
 
-    // ÂøÁö »óÅÂÀÎÁö ÆÇÁ¤
+    // ì°©ì§€ ìƒíƒœì¸ì§€ íŒì •
     protected bool IsJump()
     {
-        // ¾Õ/µÚ ·¹ÀÌÄ³½ºÆ®
+        // ì•/ë’¤ ë ˆì´ìºìŠ¤íŠ¸
         return !(
-            // ¾ÕÂÊ ·¹ÀÌÄ³½ºÆ®
+            // ì•ìª½ ë ˆì´ìºìŠ¤íŠ¸
             Physics.Raycast(transform.position + (transform.forward * raySpacing),
             Vector3.down,
             bottomRayDistance) ||
 
-            // µÚÂÊ ·¹ÀÌÄ³½ºÆ®
+            // ë’¤ìª½ ë ˆì´ìºìŠ¤íŠ¸
             Physics.Raycast(transform.position - (transform.forward * raySpacing),
             Vector3.down,
             bottomRayDistance)

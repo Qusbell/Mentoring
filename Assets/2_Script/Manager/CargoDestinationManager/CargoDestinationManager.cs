@@ -4,30 +4,30 @@ using UnityEngine;
 
 
 
-// È£À§ Å¥ºêÀÇ ¸ñÀûÁö¸¦ ¼ø¼­´ë·Î ÀÔ·Â¹ŞÀ½
+// í˜¸ìœ„ íë¸Œì˜ ëª©ì ì§€ë¥¼ ìˆœì„œëŒ€ë¡œ ì…ë ¥ë°›ìŒ
 public class CargoDestinationManager : MonoBehaviour
 {
-    // ¸ñÀûÁö ¸ñ·Ï
+    // ëª©ì ì§€ ëª©ë¡
     private List<CargoDestination> destinations = new List<CargoDestination>();
 
-    // ÇöÀç ¸î ¹øÂ° ¸ñÀûÁö Â÷·ÊÀÎÁö
+    // í˜„ì¬ ëª‡ ë²ˆì§¸ ëª©ì ì§€ ì°¨ë¡€ì¸ì§€
     private int indexCount = 0;
 
-    // È£À§ Å¥ºê
+    // í˜¸ìœ„ íë¸Œ
     private Cargo cargo;
 
     
-    // °¢ Å¥ºê ÄÁÆ®·Ñ·¯ °£ °ü°è ¼³Á¤
+    // ê° íë¸Œ ì»¨íŠ¸ë¡¤ëŸ¬ ê°„ ê´€ê³„ ì„¤ì •
     void Awake()
     {
-        // ¸ğµç ÀÚ½Ä ¿ÀºêÁ§Æ®·ÎºÎÅÍ
-        // Destination ¿ÀºêÁ§Æ® ÃßÃâ ÈÄ ÀúÀå
+        // ëª¨ë“  ìì‹ ì˜¤ë¸Œì íŠ¸ë¡œë¶€í„°
+        // Destination ì˜¤ë¸Œì íŠ¸ ì¶”ì¶œ í›„ ì €ì¥
         GetComponentsInChildren<CargoDestination>(true, destinations);
     }
 
     void Start()
     {
-        // È£À§ Å¥ºê¸¦ °¡Á®¿Í¼­ ÀúÀå
+        // í˜¸ìœ„ íë¸Œë¥¼ ê°€ì ¸ì™€ì„œ ì €ì¥
         Cargo[] cargos = FindObjectsOfType<Cargo>();
         foreach (var tempCargo in cargos)
         { cargo = tempCargo; }
@@ -36,13 +36,13 @@ public class CargoDestinationManager : MonoBehaviour
         SetNextDestination();
     }
 
-    // ¸Ş¼­µå : ´ÙÀ½ DestinationÀ¸·Î target º¯°æ
+    // ë©”ì„œë“œ : ë‹¤ìŒ Destinationìœ¼ë¡œ target ë³€ê²½
     // if (indexCount < destinations.Count)
-    // È£À§Å¥ºê.target = destinations[indexCount++]
+    // í˜¸ìœ„íë¸Œ.target = destinations[indexCount++]
     void SetNextDestination()
     {
         if (indexCount < destinations.Count)
         { cargo.SetDestination(destinations[indexCount++].GetTransform()); }
-        // <- else Á¾·á Ã³¸®
+        // <- else ì¢…ë£Œ ì²˜ë¦¬
     }
 }

@@ -4,53 +4,53 @@ using UnityEngine;
 
 public class PlayerMove : MoveAction
 {
-    // <- ·¹ÀÌ¾î ¸¶½ºÅ©
+    // <- ë ˆì´ì–´ ë§ˆìŠ¤í¬
 
     protected override void Awake()
     {
         base.Awake();
-        // Àü¹æ ÁÖ½Ã °Å¸®
+        // ì „ë°© ì£¼ì‹œ ê±°ë¦¬
         frontRayDistance = transform.localScale.z * 0.6f;
     }
 
 
 
-    // Àü¹æ ·¹ÀÌÄ³½ºÆ®
+    // ì „ë°© ë ˆì´ìºìŠ¤íŠ¸
     RaycastHit frontRayHit;
 
-    // ¾ÕÂÊ °Å¸® ÆÇ´Ü
+    // ì•žìª½ ê±°ë¦¬ íŒë‹¨
     protected float frontRayDistance;
 
-    // Àü¹æ È®ÀÎ - ÀÌµ¿ °¡´ÉÇÏ¸é true ¹ÝÈ¯
+    // ì „ë°© í™•ì¸ - ì´ë™ ê°€ëŠ¥í•˜ë©´ true ë°˜í™˜
     protected virtual bool CanMove()
     {
-        // <- ·¹ÀÌ¾î¸¶½ºÅ© : Å¥ºê
+        // <- ë ˆì´ì–´ë§ˆìŠ¤í¬ : íë¸Œ
         if (Physics.Raycast(transform.position, moveVec, out frontRayHit, frontRayDistance))
         {
-            // Æ®¸®°Å ÄÝ¶óÀÌ´õ´Â ¹«½Ã (Åë°ú °¡´É)
+            // íŠ¸ë¦¬ê±° ì½œë¼ì´ë”ëŠ” ë¬´ì‹œ (í†µê³¼ ê°€ëŠ¥)
             if (frontRayHit.collider.isTrigger) { return true; }
-            // ÀÏ¹Ý ÄÝ¶óÀÌ´õ´Â Åë°ú ºÒ°¡
+            // ì¼ë°˜ ì½œë¼ì´ë”ëŠ” í†µê³¼ ë¶ˆê°€
             else { return false; }
         }
 
-        return true; // ¾Æ¹«°Íµµ °¨ÁöµÇÁö ¾ÊÀ¸¸é ÀÌµ¿ °¡´É
+        return true; // ì•„ë¬´ê²ƒë„ ê°ì§€ë˜ì§€ ì•Šìœ¼ë©´ ì´ë™ ê°€ëŠ¥
     }
 
 
-    // ÀÌµ¿
+    // ì´ë™
     public override void Move()
     {
-        // ÀÌµ¿ ¹æÇâÀÌ ¾ø´Ù¸é : ¾÷µ¥ÀÌÆ® X
+        // ì´ë™ ë°©í–¥ì´ ì—†ë‹¤ë©´ : ì—…ë°ì´íŠ¸ X
         if (moveVec == Vector3.zero) { isMove = false; return; }
 
-        // È¸Àü
+        // íšŒì „
         Turn();
 
-        // ÀÌµ¿ ºÒ°¡´ÉÇÏ¸é ¸®ÅÏ
+        // ì´ë™ ë¶ˆê°€ëŠ¥í•˜ë©´ ë¦¬í„´
         isMove = CanMove();
         if (!isMove) { return; }
 
-        // ÀÌµ¿
+        // ì´ë™
         base.Move();
     }
 
