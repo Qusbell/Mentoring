@@ -46,6 +46,9 @@ public class ChaseAction : MoveAction
     public bool InDistance(int distance)
     { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
 
+    public bool InDistance(float distance)
+    { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
+
 
     // 목적지 갱신
     void UpdateDestination()
@@ -56,6 +59,13 @@ public class ChaseAction : MoveAction
             Debug.Log("target 부재 중 : " + gameObject.name);
             nav.SetDestination(this.transform.position);
         }
+    }
+
+    public override void Move()
+    {
+        // 타겟이 존재하는 경우에만 move
+        if(target != null)
+        { base.Move(); }
     }
 
     // 다음 이동 방향

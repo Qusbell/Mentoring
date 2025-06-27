@@ -2,38 +2,39 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-// CubeController³¢¸® ¿¬°á½ÃÅ°´Â Ä¿³ØÅÍ
+// CubeControllerë¼ë¦¬ ì—°ê²°ì‹œí‚¤ëŠ” ì»¤ë„¥í„°
 public class CubeControllerConnector : MonoBehaviour
 {
     private List<CubeController> controllerSequence = new List<CubeController>();
 
-    // °¢ Å¥ºê ÄÁÆ®·Ñ·¯ °£ °ü°è ¼³Á¤
+    // ê° íë¸Œ ì»¨íŠ¸ë¡¤ëŸ¬ ê°„ ê´€ê³„ ì„¤ì •
     void Awake()
     {
-        // ¸ğµç ÀÚ½Ä ÄÁÆ®·Ñ·¯ ¼öÁı (ºñÈ°¼º Æ÷ÇÔ)
+        // ëª¨ë“  ìì‹ ì»¨íŠ¸ë¡¤ëŸ¬ ìˆ˜ì§‘ (ë¹„í™œì„± í¬í•¨)
         GetComponentsInChildren<CubeController>(true, controllerSequence);
 
-        // µğ¹ö±×: Ã£Àº ÄÁÆ®·Ñ·¯ ¼ö Ãâ·Â
+        // ë””ë²„ê·¸: ì°¾ì€ ì»¨íŠ¸ë¡¤ëŸ¬ ìˆ˜ ì¶œë ¥
         Debug.Log($"Found {controllerSequence.Count} controllers.");
 
-        // ¼ø¼­ º¸Á¤ (¿¹: ÀÌ¸§ ±âÁØ Á¤·Ä)
-        //  controllerSequence.Sort((a, b) => a.gameObject.name.CompareTo(b.gameObject.name));
+        // <- (í•„ìš”í•˜ë‹¤ë©´) ìˆœì„œ ë³´ì • (ì˜ˆ: ì´ë¦„ ê¸°ì¤€ ì •ë ¬)
+        // controllerSequence.Sort((a, b) => a.gameObject.name.CompareTo(b.gameObject.name));
 
-        // ÄÁÆ®·Ñ·¯ ¿¬°á
+        // ì»¨íŠ¸ë¡¤ëŸ¬ ì—°ê²°
         for (int i = 0; i < controllerSequence.Count - 1; i++)
         {
             CubeController current = controllerSequence[i];
             CubeController next = controllerSequence[i + 1];
 
-            // ´ÙÀ½ ÄÁÆ®·Ñ·¯ ÂüÁ¶ ¼³Á¤
-            current.nextController = next;
-            // ÀÌº¥Æ® ¿¬°á
+            // ë‹¤ìŒ ì»¨íŠ¸ë¡¤ëŸ¬ ì°¸ì¡° ì„¤ì •
+            current.nextController = next; // <- ì´ë²¤íŠ¸ì™€ 2ì¤‘ìœ¼ë¡œ ì—°ê²°ë˜ì–´ ìˆìŒ. ì œê±° ê³ ë ¤ ê°€ëŠ¥
+
+            // ì´ë²¤íŠ¸ ì—°ê²°
             current.nextCubeControllerActivate.AddListener(next.StartController);
         }
 
         if (controllerSequence[0] != null)
         { controllerSequence[0].StartController(); }
         else
-        { Debug.Log("ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡ CubeController ÄÄÆ÷³ÍÆ® Á¸ÀçÇÏÁö ¾ÊÀ½."); }
+        { Debug.Log("ìì‹ ì˜¤ë¸Œì íŠ¸ì— CubeController ì»´í¬ë„ŒíŠ¸ ì¡´ì¬í•˜ì§€ ì•ŠìŒ."); }
     }
 }

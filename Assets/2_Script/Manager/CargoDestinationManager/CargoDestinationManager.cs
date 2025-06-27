@@ -3,46 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
-// 호위 큐브의 목적지를 순서대로 입력받음
+// 호위 큐브의 목적지를 순서대로 정렬
 public class CargoDestinationManager : MonoBehaviour
 {
-    // 목적지 목록
-    private List<CargoDestination> destinations = new List<CargoDestination>();
-
-    // 현재 몇 번째 목적지 차례인지
-    private int indexCount = 0;
-
     // 호위 큐브
-    private Cargo cargo;
-
-    
-    // 각 큐브 컨트롤러 간 관계 설정
-    void Awake()
-    {
-        // 모든 자식 오브젝트로부터
-        // Destination 오브젝트 추출 후 저장
-        GetComponentsInChildren<CargoDestination>(true, destinations);
-    }
+    Cargo cargo;
 
     void Start()
     {
-        // 호위 큐브를 가져와서 저장
+        // ----- 호위 화물 저장 -----
+
+        // 호위 화물을 가져와서 저장
         Cargo[] cargos = FindObjectsOfType<Cargo>();
         foreach (var tempCargo in cargos)
         { cargo = tempCargo; }
 
-        cargo.setNextDestination = SetNextDestination;
-        SetNextDestination();
-    }
 
-    // 메서드 : 다음 Destination으로 target 변경
-    // if (indexCount < destinations.Count)
-    // 호위큐브.target = destinations[indexCount++]
-    void SetNextDestination()
-    {
-        if (indexCount < destinations.Count)
-        { cargo.SetDestination(destinations[indexCount++].GetTransform()); }
-        // <- else 종료 처리
+        // ----- 목적지 간 관계 설정 -----
+        
+        // 모든 자식 오브젝트로부터
+        // Destination 오브젝트 추출 후 저장
+        // 위 -> 아래 순서
+        List<CargoDestination> destinations = new List<CargoDestination>();
+        GetComponentsInChildren<CargoDestination>(true, destinations);
+
+        // 각 CargoDestination 간에 연결
+        for (int i = 0; i < destinations.Count - 1; i++)
+        { destinations[i].nextDestination = destinations[i + 1]; }
+
+        // ----- 첫 번째 목적지를 입력 -----
+        cargo.nowDestination = destinations[0];
     }
 }

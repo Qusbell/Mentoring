@@ -2,27 +2,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 
 [RequireComponent(typeof(DamageReaction))]
 [RequireComponent(typeof(CargoMoveAction))]
 // 호위 큐브 (화물)
+// Player 레이어, Player 태그 필요
 public class Cargo : Actor
 {
     // 이동 메커니즘
     CargoMoveAction cargoMoveAction;
 
+    // 현재 목적지
+    private CargoDestination _nowDestination;
+    public CargoDestination nowDestination
+    {
+        get // 목적지 확인
+        { return _nowDestination; }
+
+        set // 목적지 지정
+        {
+            _nowDestination = value;
+
+            // 만약 cargoMoveAction이 null상태라면, 초기화
+            if (cargoMoveAction == null)
+            { cargoMoveAction = moveAction as CargoMoveAction; }
+
+            cargoMoveAction.SetTarget(value.transform);
+        }
+    }
+
     // 목적지 도착을 판정할 distance
-    [SerializeField] protected int distance = 2;
-
-    // 목적지 도착 후, 다음 목적지 출발까지 시간 // <- 미구현
-    [SerializeField] protected float nextStartTimer = 2f;
-
-    // 다음 목적지 이벤트
-    public Action setNextDestination;
+    [SerializeField] protected float distance = 2f;
 
 
+
+    // 실행 시 초기화
     protected override void Awake()
     {
         base.Awake();
@@ -30,13 +47,19 @@ public class Cargo : Actor
         cargoMoveAction = moveAction as CargoMoveAction;
         if (cargoMoveAction == null)
         { Debug.Log("CargoMoveAction 할당되지 않음 : " + gameObject.name); }
+
+        // 목적지까지의 거리 검증
+        if (distance < 0)
+        {
+            Debug.Log(gameObject.name + " : 목적지 도착 판정 거리가 음수");
+            distance = 1;
+        }
     }
 
 
-    // 목적지 설정
-    // CargoDestinationManager::SetNextDestination()에서 필요
-    public void SetDestination(Transform destination)
-    { cargoMoveAction.SetTarget(destination); }
+    // 다음 목적지 지정
+    protected void SetNext()
+    { nowDestination = nowDestination.nextDestination; }
 
 
     private void Update()
@@ -44,12 +67,10 @@ public class Cargo : Actor
         // 목적지 도착 시
         // 다음 목적지 설정
         if (cargoMoveAction.InDistance(distance))
-        { setNextDestination(); }
-
+        { SetNext(); }
+        
         // 도착하지 않은 경우 : Move
         else
-        { cargoMoveAction.Move(); }
+        { cargoMoveAction.Move();}
     }
-
-
 }
