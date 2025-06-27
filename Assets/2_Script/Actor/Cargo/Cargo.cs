@@ -59,18 +59,29 @@ public class Cargo : Actor
 
     // 다음 목적지 지정
     protected void SetNext()
-    { nowDestination = nowDestination.nextDestination; }
+    {
+        nowDestination = nowDestination.nextDestination;
+    }
 
+    // 일시 정지
+    bool isLoopStop = false;
 
     private void Update()
     {
+        // 일시 정지
+        if (isLoopStop) { return; }
+
+        // 도착하지 않은 경우 : Move
+        if (!cargoMoveAction.InDistance(distance))
+        { cargoMoveAction.Move(); }
+
         // 목적지 도착 시
         // 다음 목적지 설정
-        if (cargoMoveAction.InDistance(distance))
-        { SetNext(); }
-        
-        // 도착하지 않은 경우 : Move
         else
-        { cargoMoveAction.Move();}
+        {
+            isLoopStop = true; // 일시 정지
+            StartCoroutine(Timer.StartTimer(nowDestination.nextStartTimer, () => { isLoopStop = false; })); // n초후 시작
+            SetNext();
+        }
     }
 }
