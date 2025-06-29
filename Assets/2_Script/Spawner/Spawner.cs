@@ -5,53 +5,53 @@ using UnityEngine;
 
 
 //====================
-// ´Ù¾çÇÑ ½ºÆù Á¶°Ç°ú ¹æ½ÄÀ» ±¸ÇöÇÒ ¼ö ÀÖ´Â Ãß»ó Å¬·¡½º
-// ÀÚ½Ä Å¬·¡½º¿¡¼­ SpawnTrigger()¸¦ ¿À¹ö¶óÀÌµåÇÏ¿© ½ºÆù Á¶°Ç ±¸Çö
+// ë‹¤ì–‘í•œ ìŠ¤í° ì¡°ê±´ê³¼ ë°©ì‹ì„ êµ¬í˜„í•  ìˆ˜ ìˆëŠ” ì¶”ìƒ í´ë˜ìŠ¤
+// ìì‹ í´ë˜ìŠ¤ì—ì„œ SpawnTrigger()ë¥¼ ì˜¤ë²„ë¼ì´ë“œí•˜ì—¬ ìŠ¤í° ì¡°ê±´ êµ¬í˜„
 //====================
 abstract public class Spawner : MonoBehaviour
 {
-    // ÁöÁ¤ÇÑ ¿ÀºêÁ§Æ® (»ı¼ºÇÒ ÇÁ¸®ÆÕµé°ú À§Ä¡ ÁöÁ¤)
-    [SerializeField] protected List<GameObject> targetPrefabs = new List<GameObject>(); // ¼øÂ÷ÀûÀ¸·Î »ı¼ºÇÒ ÇÁ¸®ÆÕ ¸ñ·Ï
+    // ì§€ì •í•œ ì˜¤ë¸Œì íŠ¸ (ìƒì„±í•  í”„ë¦¬íŒ¹ë“¤ê³¼ ìœ„ì¹˜ ì§€ì •)
+    [SerializeField] protected List<GameObject> targetPrefabs = new List<GameObject>(); // ìˆœì°¨ì ìœ¼ë¡œ ìƒì„±í•  í”„ë¦¬íŒ¹ ëª©ë¡
 
-    // »ı¼ºÇÒ ÇÁ¸®ÆÕÀÇ ÀÎµ¦½º (¸î ¹øÂ° ÇÁ¸®ÆÕÀÎÁö)
+    // ìƒì„±í•  í”„ë¦¬íŒ¹ì˜ ì¸ë±ìŠ¤ (ëª‡ ë²ˆì§¸ í”„ë¦¬íŒ¹ì¸ì§€)
     private int _prefabIndex = 0;
     public int PrefabIndex
     {
         get { return _prefabIndex; }
         protected set
         {
-            // null °Ë»ç && ÀÎµ¦½º °Ë»ç
+            // null ê²€ì‚¬ && ì¸ë±ìŠ¤ ê²€ì‚¬
             if (targetPrefabs != null && 0 <= value && value < targetPrefabs.Count)
             { _prefabIndex = value; }
         }
     }
 
 
-    // ===== »ı¼º Á¶°Ç ÃæÁ· ¿©ºÎ =====
+    // ===== ìƒì„± ì¡°ê±´ ì¶©ì¡± ì—¬ë¶€ =====
 
-    // ½ºÆù Á¶°Ç ¸¸Á· ¿©ºÎ (true·Î ¸¸µé¸é == »ı¼º)
+    // ìŠ¤í° ì¡°ê±´ ë§Œì¡± ì—¬ë¶€ (trueë¡œ ë§Œë“¤ë©´ == ìƒì„±)
     protected bool spawnTrigger = false;
 
-    // »ı¼º Á¶°Ç ¸¸Á· / Æ®¸®°Å ÄÑ±â
+    // ìƒì„± ì¡°ê±´ ë§Œì¡± / íŠ¸ë¦¬ê±° ì¼œê¸°
     public virtual void SpawnTriggerOn()
     { spawnTrigger = true; }
 
-    // »ı¼º Æ®¸®°Å ²ô±â
+    // ìƒì„± íŠ¸ë¦¬ê±° ë„ê¸°
     public virtual void SpawnTriggerOFF()
     { spawnTrigger = false; }
 
 
 
-    // ===== ¿Ï·á / ÀçÈ°¼º =====
+    // ===== ì™„ë£Œ / ì¬í™œì„± =====
 
-    // ½ºÆ÷³Ê ¿Ï·á »óÅÂ È®ÀÎ
+    // ìŠ¤í¬ë„ˆ ì™„ë£Œ ìƒíƒœ í™•ì¸
     protected bool isCompleted = false;
 
-    // ½ºÆ÷³Ê ¿Ï·á Á¶°Ç
+    // ìŠ¤í¬ë„ˆ ì™„ë£Œ ì¡°ê±´
     public virtual void CheckCompleted()
     { isCompleted = true; }
 
-    // ½ºÆ÷³Ê ÃÊ±âÈ­ (ÀçÈ°¼ºÈ­)
+    // ìŠ¤í¬ë„ˆ ì´ˆê¸°í™” (ì¬í™œì„±í™”)
     public virtual void ResetSpawner()
     {
         PrefabIndex = 0;
@@ -60,23 +60,39 @@ abstract public class Spawner : MonoBehaviour
 
 
 
-    // ===== »ı¼º / À§Ä¡ ÁöÁ¤ =====
+    // ===== ìƒì„± / ìœ„ì¹˜ ì§€ì • =====
 
-    // ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÒ À§Ä¡
-    protected Vector3 spawnLocation;
+    // ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•  ìœ„ì¹˜
+    protected Vector3 _spawnLocation;
 
-    // ¿ÀºêÁ§Æ® »ı¼º
+    protected Vector3 spawnLocation
+    {
+        get
+        { 
+            // x, zì¶•ìœ¼ë¡œ ì•½ê°„ì˜ ë‚œìˆ˜ê°’ ì¶”ê°€
+            float offsetX = UnityEngine.Random.Range(-0.2f, 0.2f);
+            float offsetZ = UnityEngine.Random.Range(-0.2f, 0.2f);
+            return new Vector3(
+                _spawnLocation.x + offsetX,
+                _spawnLocation.y,
+                _spawnLocation.z + offsetZ
+            );
+        }
+        set { _spawnLocation = value; }
+    }
+
+    // ì˜¤ë¸Œì íŠ¸ ìƒì„±
     protected virtual void SpawnObject()
     {
-        if (targetPrefabs.Count < 0) { Debug.Log("½ºÆ÷³Ê ÇÁ¸®Æé ÀÎµ¦½º ºñ¾îÀÖÀ½"); return; }
-        // ÇöÀç ÀÎµ¦½ºÀÇ ÇÁ¸®ÆÕ, ÁöÁ¤µÈ À§Ä¡, ±âº» È¸Àü°ªÀ¸·Î »ı¼º
+        if (targetPrefabs.Count < 0) { Debug.Log("ìŠ¤í¬ë„ˆ í”„ë¦¬í© ì¸ë±ìŠ¤ ë¹„ì–´ìˆìŒ"); return; }
+        // í˜„ì¬ ì¸ë±ìŠ¤ì˜ í”„ë¦¬íŒ¹, ì§€ì •ëœ ìœ„ì¹˜, ê¸°ë³¸ íšŒì „ê°’ìœ¼ë¡œ ìƒì„±
         Instantiate(targetPrefabs[PrefabIndex], spawnLocation, Quaternion.identity);
 
-        // ´ÙÀ½ ÇÁ¸®Æé ÀÎµ¦½º ÁöÁ¤
+        // ë‹¤ìŒ í”„ë¦¬í© ì¸ë±ìŠ¤ ì§€ì •
         PrefabIndex += 1;
     }
 
-    // ½ºÆù À§Ä¡ ÁöÁ¤
+    // ìŠ¤í° ìœ„ì¹˜ ì§€ì •
     public virtual void SetSpawnLocation()
     { spawnLocation = transform.position; }
 }

@@ -11,17 +11,17 @@ using UnityEngine.AI;
 [RequireComponent(typeof(DamageReaction))]
 abstract public class Monster : Actor
 {
-    // ÇöÀç ¼öÇà ÁßÀÎ Çàµ¿
+    // í˜„ì¬ ìˆ˜í–‰ ì¤‘ì¸ í–‰ë™
     protected Action actionStatus;
 
-    // Å¸°Ù
+    // íƒ€ê²Ÿ
     Transform target;
 
 
     protected override void Awake()
     {
         base.Awake();
-        actionStatus = SpawnState; // »ı¼ººÎÅÍ ½ÃÀÛ
+        actionStatus = SpawnState; // ìƒì„±ë¶€í„° ì‹œì‘
     }
 
     private void Start()
@@ -31,29 +31,29 @@ abstract public class Monster : Actor
     { actionStatus(); }
 
 
-    // °ø°İ »ç°Å¸® °è»ê
+    // ê³µê²© ì‚¬ê±°ë¦¬ ê³„ì‚°
     bool InAttackRange()
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
-    // »ı¼º »óÅÂ
+    // ìƒì„± ìƒíƒœ
     private void SpawnState()
     {
-        if (!animatior.CheckAnimationName("Spawn")) // ½ºÆù ¾Ö´Ï¸ŞÀÌ¼Ç Á¾·á ½Ã
-        { actionStatus = IdleStatus; } // ´ë±â
+        if (!animatior.CheckAnimationName("Spawn")) // ìŠ¤í° ì• ë‹ˆë©”ì´ì…˜ ì¢…ë£Œ ì‹œ
+        { actionStatus = IdleStatus; } // ëŒ€ê¸°
     }
 
-    // ´ë±â »óÅÂ
+    // ëŒ€ê¸° ìƒíƒœ
     private void IdleStatus()
     {
-        if (InAttackRange())  // °ø°İ °¡´É »óÅÂ¶ó¸é
-        { actionStatus = AttackStatus; } // °ø°İÀ¸·Î
+        if (InAttackRange())  // ê³µê²© ê°€ëŠ¥ ìƒíƒœë¼ë©´
+        { actionStatus = AttackStatus; } // ê³µê²©ìœ¼ë¡œ
         else
-        { actionStatus = MoveStatus; }  // ¾Æ´Ï¸é ÀÌµ¿
+        { actionStatus = MoveStatus; }  // ì•„ë‹ˆë©´ ì´ë™
     }
 
 
-    // ÀÌµ¿ »óÅÂ
+    // ì´ë™ ìƒíƒœ
     private void MoveStatus()
     {
         if (InAttackRange())
@@ -71,18 +71,18 @@ abstract public class Monster : Actor
     }
 
 
-    // °ø°İ, ¸®·Îµå ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı Ãß°¡ È®ÀÎ
+    // ê³µê²©, ë¦¬ë¡œë“œ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ ì¶”ê°€ í™•ì¸
     bool doAttack = false;
     bool doReload = false;
 
-    // °ø°İ »óÅÂ
+    // ê³µê²© ìƒíƒœ
     private void AttackStatus()
     {
-        // °ø°İ °¡´ÉÇÏ´Ù¸é
+        // ê³µê²© ê°€ëŠ¥í•˜ë‹¤ë©´
         if (InAttackRange() && attackAction.isCanAttack)
         {
             attackAction.Attack();
-            animatior.isAttack = true; // ¾îÅÃ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+            animatior.isAttack = true; // ì–´íƒ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
         }
 
         if (animatior.CheckAnimationName("Attack"))
@@ -91,12 +91,12 @@ abstract public class Monster : Actor
         if (doAttack && !animatior.CheckAnimationName("Attack"))
         {
             doAttack = false;
-            actionStatus = ReloadStatus; // °ø°İ ÈÄµô·¹ÀÌ·Î ÀÌÇà }
+            actionStatus = ReloadStatus; // ê³µê²© í›„ë”œë ˆì´ë¡œ ì´í–‰ }
         }
     }
 
 
-    // °ø°İ ÈÄµô·¹ÀÌ ¾Ö´Ï¸ŞÀÌ¼Ç Àç»ı
+    // ê³µê²© í›„ë”œë ˆì´ ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ
     private void ReloadStatus()
     {
         if (animatior.CheckAnimationName("Reload"))

@@ -10,7 +10,7 @@ public class CargoDestinationManager : MonoBehaviour
     Cargo cargo;
 
     // 공통 시작 시간
-    [Header("각 CargoDestination의 nextStartTimer가 0 미만인 경우, 해당 값으로 재조정")]
+    [Header("각 CargoDestination의 nextStartTimer를 미설정 시, 해당 값으로 재조정")]
     [SerializeField] float nextStartTimer = 0;
 
     void Start()

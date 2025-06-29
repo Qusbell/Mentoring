@@ -9,8 +9,8 @@ public class MonsterSpawner : Spawner
     // 생성 주기
     [SerializeField] protected float spawnRate = 2f;
 
-    // 테스트용 트리거
-    public bool testTrigger = false;
+    // 시작과 함께 트리거 작동시킬지 설정
+    [SerializeField] bool startTrigger = false;
 
     // 끝없이 스폰시킬지 설정
     [SerializeField] bool isEndlessSpawn = false;
@@ -26,12 +26,8 @@ public class MonsterSpawner : Spawner
             return;
         }
 
-
-        if (testTrigger)
+        if (startTrigger)
         { SpawnTriggerOn(); }
-
-
-        Debug.Log($"[{gameObject.name}] MonsterSpawner 초기화 완료. 외부 호출 대기 중...");
     }
 
 
