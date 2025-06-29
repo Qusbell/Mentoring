@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 // using System.Numerics; // <- Vector3 모호한 참조 오류
 using Unity.VisualScripting;
@@ -23,7 +23,6 @@ public class Player : Actor
         input = GetComponent<InputManager>();
         jumpAction = GetComponent<JumpAction>();
     }
-
 
 
     // 프레임당 업데이트

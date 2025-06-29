@@ -2,114 +2,123 @@ using UnityEngine;
 using System.Collections;
 public class MonsterSpawner : Spawner
 {
-    [Header("½ºÆù À§Ä¡ ¼³Á¤")]
-    [Tooltip("Å¥ºê À§¿¡¼­ Ãß°¡·Î ³ôÀÏ °Å¸® (±âº»: 0.5À¯´Ö)")]
+    [Header("ìŠ¤í° ìœ„ì¹˜ ì„¤ì •")]
+    [Tooltip("íë¸Œ ìœ„ì—ì„œ ì¶”ê°€ë¡œ ë†’ì¼ ê±°ë¦¬ (ê¸°ë³¸: 0.5ìœ ë‹›)")]
     public float heightOffset = 0.5f;
 
-    // ÃÊ±âÈ­
+    // ìƒì„± ì£¼ê¸°
+    [SerializeField] protected float spawnRate = 2f;
+
+    // í…ŒìŠ¤íŠ¸ìš© íŠ¸ë¦¬ê±°
+    public bool testTrigger = false;
+
+    // ëì—†ì´ ìŠ¤í°ì‹œí‚¬ì§€ ì„¤ì •
+    [SerializeField] bool isEndlessSpawn = false;
+
+
+    // ì´ˆê¸°í™”
     protected void Start()
     {
         targetCollider = GetComponent<Collider>();
         if (targetCollider == null)
         {
-            Debug.LogError("Äİ¶óÀÌ´õ Á¸ÀçÇÏÁö ¾ÊÀ½ : " + gameObject.name);
+            Debug.LogError("ì½œë¼ì´ë” ì¡´ì¬í•˜ì§€ ì•ŠìŒ : " + gameObject.name);
             return;
         }
 
-        // ÀÚµ¿ ½ÃÀÛ Á¦°Å - MonsterCube¿¡¼­ È£ÃâÇÒ ¶§±îÁö ´ë±â
-        Debug.Log($"[{gameObject.name}] MonsterSpawner ÃÊ±âÈ­ ¿Ï·á. ¿ÜºÎ È£Ãâ ´ë±â Áß...");
+
+        if (testTrigger)
+        { SpawnTriggerOn(); }
+
+
+        Debug.Log($"[{gameObject.name}] MonsterSpawner ì´ˆê¸°í™” ì™„ë£Œ. ì™¸ë¶€ í˜¸ì¶œ ëŒ€ê¸° ì¤‘...");
     }
 
 
-    // ===== ½ºÆù À§Ä¡ =====
-    // ÇöÀç ¿ÀºêÁ§Æ®ÀÇ Äİ¶óÀÌ´õ
+    // ===== ìŠ¤í° ìœ„ì¹˜ =====
+    // í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ ì½œë¼ì´ë”
     protected Collider targetCollider;
 
-    // À­¸é Áß¾Ó °è»ê (ÇÏÀ§ Äİ¶óÀÌ´õµé Æ÷ÇÔ)
+    // ìœ—ë©´ ì¤‘ì•™ ê³„ì‚° (í•˜ìœ„ ì½œë¼ì´ë”ë“¤ í¬í•¨)
     public override void SetSpawnLocation()
     {
-        // ÇÏÀ§ Äİ¶óÀÌ´õµéÀ» ¸ğµÎ Æ÷ÇÔÇØ¼­ À­¸é Á¤Áß¾Ó °è»ê
+        // í•˜ìœ„ ì½œë¼ì´ë”ë“¤ì„ ëª¨ë‘ í¬í•¨í•´ì„œ ìœ—ë©´ ì •ì¤‘ì•™ ê³„ì‚°
         Bounds combinedBounds = GetCombinedBoundsFromChildren();
         Vector3 topCenter = combinedBounds.center + Vector3.up * combinedBounds.extents.y;
 
-        // Ãß°¡ ³ôÀÌ ¿ÀÇÁ¼Â Àû¿ë
+        // ì¶”ê°€ ë†’ì´ ì˜¤í”„ì…‹ ì ìš©
         spawnLocation = topCenter + Vector3.up * heightOffset;
 
-        Debug.Log($"[{gameObject.name}] ÇÏÀ§ Äİ¶óÀÌ´õ ±â¹İ ½ºÆù À§Ä¡ ¼³Á¤: {spawnLocation}");
+        Debug.Log($"[{gameObject.name}] í•˜ìœ„ ì½œë¼ì´ë” ê¸°ë°˜ ìŠ¤í° ìœ„ì¹˜ ì„¤ì •: {spawnLocation}");
     }
 
-    // ÇÏÀ§ ¿ÀºêÁ§Æ®µéÀÇ ¸ğµç Äİ¶óÀÌ´õ ¹üÀ§¸¦ ÇÕÃÄ¼­ °è»ê
+    // í•˜ìœ„ ì˜¤ë¸Œì íŠ¸ë“¤ì˜ ëª¨ë“  ì½œë¼ì´ë” ë²”ìœ„ë¥¼ í•©ì³ì„œ ê³„ì‚°
     private Bounds GetCombinedBoundsFromChildren()
     {
-        // ¸ğµç ÇÏÀ§ Äİ¶óÀÌ´õ °¡Á®¿À±â (ÀÚ±â ÀÚ½Å Æ÷ÇÔ)
+        // ëª¨ë“  í•˜ìœ„ ì½œë¼ì´ë” ê°€ì ¸ì˜¤ê¸° (ìê¸° ìì‹  í¬í•¨)
         Collider[] allColliders = GetComponentsInChildren<Collider>();
 
         if (allColliders.Length == 0)
         {
-            // Äİ¶óÀÌ´õ°¡ ¾øÀ¸¸é Transform ±âÁØÀ¸·Î ±âº» Å©±â »ç¿ë
-            Debug.LogWarning($"[{gameObject.name}] ÇÏÀ§ Äİ¶óÀÌ´õ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. Transform Å©±â¸¦ »ç¿ëÇÕ´Ï´Ù.");
+            // ì½œë¼ì´ë”ê°€ ì—†ìœ¼ë©´ Transform ê¸°ì¤€ìœ¼ë¡œ ê¸°ë³¸ í¬ê¸° ì‚¬ìš©
+            Debug.LogWarning($"[{gameObject.name}] í•˜ìœ„ ì½œë¼ì´ë”ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. Transform í¬ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.");
             return new Bounds(transform.position, transform.lossyScale);
         }
 
-        // Ã¹ ¹øÂ° Äİ¶óÀÌ´õ·Î ÃÊ±â ¹üÀ§ ¼³Á¤
+        // ì²« ë²ˆì§¸ ì½œë¼ì´ë”ë¡œ ì´ˆê¸° ë²”ìœ„ ì„¤ì •
         Bounds combinedBounds = allColliders[0].bounds;
 
-        // ³ª¸ÓÁö Äİ¶óÀÌ´õµé ¹üÀ§ ¸ğµÎ ÇÕÄ¡±â
+        // ë‚˜ë¨¸ì§€ ì½œë¼ì´ë”ë“¤ ë²”ìœ„ ëª¨ë‘ í•©ì¹˜ê¸°
         for (int i = 1; i < allColliders.Length; i++)
         {
             combinedBounds.Encapsulate(allColliders[i].bounds);
         }
 
-        Debug.Log($"[{gameObject.name}] ÇÏÀ§ Äİ¶óÀÌ´õ {allColliders.Length}°³ÀÇ ¹üÀ§ °è»ê ¿Ï·á. Å©±â: {combinedBounds.size}");
+        Debug.Log($"[{gameObject.name}] í•˜ìœ„ ì½œë¼ì´ë” {allColliders.Length}ê°œì˜ ë²”ìœ„ ê³„ì‚° ì™„ë£Œ. í¬ê¸°: {combinedBounds.size}");
 
         return combinedBounds;
     }
 
-    // ===== Æ®¸®°Å / »ı¼º / ¿Ï·á =====
-    // »ı¼º ÁÖ±â
-    [SerializeField] protected float spawnRate = 2f;
-    // 1. ½ºÆ÷³Ê È°¼ºÈ­ (MonsterCube¿¡¼­ È£Ãâ)
-    // 2. ½ºÆù À§Ä¡ ÁöÁ¤
-    // 3. »ı¼º ½ÃÀÛ
+    // ===== íŠ¸ë¦¬ê±° / ìƒì„± / ì™„ë£Œ =====
+    // 1. ìŠ¤í¬ë„ˆ í™œì„±í™” (MonsterCubeì—ì„œ í˜¸ì¶œ)
+    // 2. ìŠ¤í° ìœ„ì¹˜ ì§€ì •
+    // 3. ìƒì„± ì‹œì‘
     public override void SpawnTriggerOn()
     {
-        Debug.Log($"[{gameObject.name}] MonsterSpawner È°¼ºÈ­µÊ! ½ºÆùÀ» ½ÃÀÛÇÕ´Ï´Ù.");
+        Debug.Log($"[{gameObject.name}] MonsterSpawner í™œì„±í™”ë¨! ìŠ¤í°ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
         base.SpawnTriggerOn();
-        SetSpawnLocation(); // ½ºÆù À§Ä¡ Àç¼³Á¤ (ÇÏÀ§ Äİ¶óÀÌ´õ ±â¹İ)
+        SetSpawnLocation(); // ìŠ¤í° ìœ„ì¹˜ ì¬ì„¤ì • (í•˜ìœ„ ì½œë¼ì´ë” ê¸°ë°˜)
         SpawnObject();
     }
 
 
-    // ³¡¾øÀÌ ½ºÆù½ÃÅ³Áö ¼³Á¤
-    [SerializeField] bool isEndlessSpawn = false;
-
-    // »ı¼º
+    // ìƒì„±
     protected override void SpawnObject()
     {
-        // ½ºÆù Æ®¸®°Å°¡ ÄÑÁ®ÀÖ´Ù¸é
+        // ìŠ¤í° íŠ¸ë¦¬ê±°ê°€ ì¼œì ¸ìˆë‹¤ë©´
         if (spawnTrigger)
         {
-            // ¿ÀºêÁ§Æ® »ı¼º
+            // ì˜¤ë¸Œì íŠ¸ ìƒì„±
             base.SpawnObject();
 
-            // Á¾·á Ã¼Å©
+            // ì¢…ë£Œ ì²´í¬
             CheckCompleted();
 
-            // Á¾·áµÇÁö ¾Ê¾Ò´Ù¸é : ´ÙÀ½ ½ºÆù ¿¹¾à
+            // ì¢…ë£Œë˜ì§€ ì•Šì•˜ë‹¤ë©´ : ë‹¤ìŒ ìŠ¤í° ì˜ˆì•½
             if (!isCompleted) { StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject)); }
         }
     }
 
-    // Á¾·á È®ÀÎ
+    // ì¢…ë£Œ í™•ì¸
     public override void CheckCompleted()
     {
-        // ¸ğµç ÇÁ¸®ÆéÀ» »ı¼ºÇß´Ù¸é
+        // ëª¨ë“  í”„ë¦¬í©ì„ ìƒì„±í–ˆë‹¤ë©´
         if (targetPrefabs.Count <= PrefabIndex + 1)
         {
-            Debug.Log($"[{gameObject.name}] ¸ó½ºÅÍ ½ºÆù ¿Ï·á");
+            Debug.Log($"[{gameObject.name}] ëª¬ìŠ¤í„° ìŠ¤í° ì™„ë£Œ");
             base.CheckCompleted();
 
-            // ÁÖ±âÀû ½ºÆ÷³Ê¶ó¸é: ¸®¼Â ¹ß»ı
+            // ì£¼ê¸°ì  ìŠ¤í¬ë„ˆë¼ë©´: ë¦¬ì…‹ ë°œìƒ
             if (isEndlessSpawn) { ResetSpawner();}
         }
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class CargoDestination : MonoBehaviour
 {
     // 목적지 도착 후, 다음 목적지 출발까지 시간
-    [SerializeField] public float nextStartTimer = 2f;
+    [SerializeField] public float nextStartTimer = 0;
 
     // 다음 목적지
     public CargoDestination nextDestination { get; set; }

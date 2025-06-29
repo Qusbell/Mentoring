@@ -9,6 +9,10 @@ public class CargoDestinationManager : MonoBehaviour
     // 호위 큐브
     Cargo cargo;
 
+    // 공통 시작 시간
+    [Header("각 CargoDestination의 nextStartTimer가 0 미만인 경우, 해당 값으로 재조정")]
+    [SerializeField] float nextStartTimer = 0;
+
     void Start()
     {
         // ----- 호위 화물 저장 -----
@@ -27,9 +31,16 @@ public class CargoDestinationManager : MonoBehaviour
         List<CargoDestination> destinations = new List<CargoDestination>();
         GetComponentsInChildren<CargoDestination>(true, destinations);
 
-        // 각 CargoDestination 간에 연결
+
         for (int i = 0; i < destinations.Count - 1; i++)
-        { destinations[i].nextDestination = destinations[i + 1]; }
+        {
+            // 각 CargoDestination 간에 연결
+            destinations[i].nextDestination = destinations[i + 1];
+
+            // 각 목적지의 재출발 대기시간 (공통) 설정
+            if (destinations[i].nextStartTimer < 0)
+            { destinations[i].nextStartTimer = nextStartTimer; }
+        }
 
         // ----- 첫 번째 목적지를 입력 -----
         cargo.nowDestination = destinations[0];
