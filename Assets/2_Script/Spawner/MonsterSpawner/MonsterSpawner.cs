@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+
+
 public class MonsterSpawner : Spawner
 {
     [Header("스폰 위치 설정")]
@@ -36,7 +38,7 @@ public class MonsterSpawner : Spawner
     protected Collider targetCollider;
 
     // 윗면 중앙 계산 (하위 콜라이더들 포함)
-    public override void SetSpawnLocation()
+    protected override void SetSpawnLocation()
     {
         // 하위 콜라이더들을 모두 포함해서 윗면 정중앙 계산
         Bounds combinedBounds = GetCombinedBoundsFromChildren();
@@ -44,8 +46,6 @@ public class MonsterSpawner : Spawner
 
         // 추가 높이 오프셋 적용
         spawnLocation = topCenter + Vector3.up * heightOffset;
-
-        Debug.Log($"[{gameObject.name}] 하위 콜라이더 기반 스폰 위치 설정: {spawnLocation}");
     }
 
 
@@ -72,7 +72,7 @@ public class MonsterSpawner : Spawner
 
         return combinedBounds;
     }
-    
+
 
     // ===== 트리거 / 생성 / 완료 =====
     // 1. 스포너 활성화 (MonsterCube에서 호출)

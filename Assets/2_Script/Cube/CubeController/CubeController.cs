@@ -2,34 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using UnityEngine.Events; // ÀÌº¥Æ® ½Ã½ºÅÛ »ç¿ëÀ» À§ÇØ Ãß°¡
+using UnityEngine.Events; // ì´ë²¤íŠ¸ ì‹œìŠ¤í…œ ì‚¬ìš©ì„ ìœ„í•´ ì¶”ê°€
 
 /// <summary>
-/// Å¥ºê È°¼ºÈ­¿Í Æ®¸®°Å¸¦ °ü¸®ÇÏ´Â ÄÄÆ÷³ÍÆ®
+/// íë¸Œ í™œì„±í™”ì™€ íŠ¸ë¦¬ê±°ë¥¼ ê´€ë¦¬í•˜ëŠ” ì»´í¬ë„ŒíŠ¸
 /// </summary>
 public class CubeController : MonoBehaviour
 {
-    // °ø°£ Æ®¸®°Å -> ºñÁ¤±âÀû °Ë»ç (Á¶°ÇÀÌ ÀÛµ¿ÇÒ ¶§¸¶´Ù)
-    // ½Ã°£ Æ®¸®°Å -> Á¤±âÀû °Ë»ç (¸Å ¾÷µ¥ÀÌÆ®¸¶´Ù)
+    // ê³µê°„ íŠ¸ë¦¬ê±° -> ë¹„ì •ê¸°ì  ê²€ì‚¬ (ì¡°ê±´ì´ ì‘ë™í•  ë•Œë§ˆë‹¤)
+    // ì‹œê°„ íŠ¸ë¦¬ê±° -> ì •ê¸°ì  ê²€ì‚¬ (ë§¤ ì—…ë°ì´íŠ¸ë§ˆë‹¤)
 
 
-    // -------------------- ÃÊ±âÈ­ --------------------
+    // -------------------- ì´ˆê¸°í™” --------------------
 
     void Start()
     {
-        // °øÅë µô·¹ÀÌ ÀúÀå¿ë ÀÓ½Ã º¯¼ö
+        // ê³µí†µ ë”œë ˆì´ ì €ì¥ìš© ì„ì‹œ ë³€ìˆ˜
         float tempTime = 0;
 
-
-        // ½ÃÀÛ ½Ã ¸ğµç Å¥ºê È®ÀÎ
+        // ì‹œì‘ ì‹œ ëª¨ë“  íë¸Œ í™•ì¸
         foreach (var data in activationSettings)
         {
-            // ----- Å¥ºê¹«¹ö ÄÄÆ÷³ÍÆ® ¾Öµå -----
+            // ----- íë¸Œë¬´ë²„ ì»´í¬ë„ŒíŠ¸ ì• ë“œ -----
             if (data.targetCube != null)
             { CheckAndAddMoverComponent(data.targetCube); }
 
 
-            // ----- °øÅë ½Ã°£ µô·¹ÀÌ ºÎ¿© -----
+            // ----- ê³µí†µ ì‹œê°„ ë”œë ˆì´ ë¶€ì—¬ -----
             if (0 < sharingDelayTime)
             {
                 if (data.triggerType == TriggerType.TimeTrigger)
@@ -43,78 +42,78 @@ public class CubeController : MonoBehaviour
     }
 
 
-    // Å¥ºê¿¡ CubeMover ÄÄÆ÷³ÍÆ®°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í ¾øÀ¸¸é Ãß°¡
+    // íë¸Œì— CubeMover ì»´í¬ë„ŒíŠ¸ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³  ì—†ìœ¼ë©´ ì¶”ê°€
     // MoverAdder
     private void CheckAndAddMoverComponent(GameObject cube)
     {
         CubeMover mover = cube.GetComponent<CubeMover>();
         if (mover == null)
         {
-            Debug.LogWarning($"Å¥ºê '{cube.name}'¿¡ CubeMover ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù. ÀÚµ¿À¸·Î Ãß°¡µË´Ï´Ù.");
+            Debug.LogWarning($"íë¸Œ '{cube.name}'ì— CubeMover ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤. ìë™ìœ¼ë¡œ ì¶”ê°€ë©ë‹ˆë‹¤.");
             cube.AddComponent<CubeMover>();
         }
     }
 
 
 
-    // -------------------- ÄÁÆ®·Ñ·¯ Æ®¸®°Å --------------------
+    // -------------------- ì»¨íŠ¸ë¡¤ëŸ¬ íŠ¸ë¦¬ê±° --------------------
 
-    // ÀÌ ÄÁÆ®·Ñ·¯°¡ ¿Ï·áµÈ ÈÄ È°¼ºÈ­ÇÒ ´ÙÀ½ Å¥ºê ÄÁÆ®·Ñ·¯
-    // CubeControllerManager¿¡ ÀÇÇØ ÁöÁ¤µÊ
+    // ì´ ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì™„ë£Œëœ í›„ í™œì„±í™”í•  ë‹¤ìŒ íë¸Œ ì»¨íŠ¸ë¡¤ëŸ¬
+    // CubeControllerManagerì— ì˜í•´ ì§€ì •ë¨
     [HideInInspector] public CubeController nextController;
 
-    // ´ÙÀ½ ÄÁÆ®·Ñ·¯¸¦ È°¼ºÈ­ÇÏ´Â Æ®¸®°Å ÀÌº¥Æ®
+    // ë‹¤ìŒ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ í™œì„±í™”í•˜ëŠ” íŠ¸ë¦¬ê±° ì´ë²¤íŠ¸
     [HideInInspector] public UnityEvent nextCubeControllerActivate;
 
-    // È°¼ºÈ­ È®ÀÎ
+    // í™œì„±í™” í™•ì¸
     private bool isActivated = false;
 
 
-    // ´ÙÀ½ ÄÁÆ®·Ñ·¯ È°¼ºÈ­ ¸Ş¼­µå
+    // ë‹¤ìŒ ì»¨íŠ¸ë¡¤ëŸ¬ í™œì„±í™” ë©”ì„œë“œ
     public void ActivateNextController()
     {
         if (nextController != null)
         {
-            Debug.Log($"[{gameObject.name}] ´ÙÀ½ ÄÁÆ®·Ñ·¯ [{nextController.gameObject.name}]¸¦ È°¼ºÈ­ÇÕ´Ï´Ù.");
+            Debug.Log($"[{gameObject.name}] ë‹¤ìŒ ì»¨íŠ¸ë¡¤ëŸ¬ [{nextController.gameObject.name}]ë¥¼ í™œì„±í™”í•©ë‹ˆë‹¤.");
             nextController.StartController();
         }
         else
-        { Debug.Log($"[{gameObject.name}] ´ÙÀ½ ÄÁÆ®·Ñ·¯°¡ ¼³Á¤µÇÁö ¾Ê¾Ò½À´Ï´Ù."); }
+        { Debug.Log($"[{gameObject.name}] ë‹¤ìŒ ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤."); }
     }
 
-    // ÄÁÆ®·Ñ·¯ ½ÃÀÛ ¸Ş¼­µå
+    // ì»¨íŠ¸ë¡¤ëŸ¬ ì‹œì‘ ë©”ì„œë“œ
     public void StartController()
     {
         isActivated = true;
-        Debug.Log($"[{gameObject.name}] ÄÁÆ®·Ñ·¯ È°¼ºÈ­µÊ");
+        Debug.Log($"[{gameObject.name}] ì»¨íŠ¸ë¡¤ëŸ¬ í™œì„±í™”ë¨");
     }
 
 
 
 
-    // -------------------- Å¥ºê Æ®¸®°Å --------------------
+    // -------------------- íë¸Œ íŠ¸ë¦¬ê±° --------------------
 
-    // Æ®¸®°Å Á¶°Ç Å¸ÀÔ Á¤ÀÇ
+    // íŠ¸ë¦¬ê±° ì¡°ê±´ íƒ€ì… ì •ì˜
     public enum TriggerType
     {
-        TimeTrigger,  // ½Ã°£ Æ®¸®°Å: ÀÏÁ¤ ½Ã°£ °æ°ú ÈÄ ¿ÀºêÁ§Æ® È°¼ºÈ­
-        AreaTrigger,  // ¿µ¿ª Æ®¸®°Å: Æ¯Á¤ ¿µ¿ª¿¡ ÇÃ·¹ÀÌ¾î°¡ µé¾î¿À¸é È°¼ºÈ­
-        Manual        // ¼öµ¿ Æ®¸®°Å: ÄÚµå¿¡¼­ Á÷Á¢ È£ÃâÇÏ¿© È°¼ºÈ­
+        TimeTrigger,  // ì‹œê°„ íŠ¸ë¦¬ê±°: ì¼ì • ì‹œê°„ ê²½ê³¼ í›„ ì˜¤ë¸Œì íŠ¸ í™œì„±í™”
+        AreaTrigger,  // ì˜ì—­ íŠ¸ë¦¬ê±°: íŠ¹ì • ì˜ì—­ì— í”Œë ˆì´ì–´ê°€ ë“¤ì–´ì˜¤ë©´ í™œì„±í™”
+        Manual        // ìˆ˜ë™ íŠ¸ë¦¬ê±°: ì½”ë“œì—ì„œ ì§ì ‘ í˜¸ì¶œí•˜ì—¬ í™œì„±í™”
     }
 
 
-    // ¿µ¿ª Æ®¸®°Å °¨Áö ½Ã È£ÃâµÊ
+    // ì˜ì—­ íŠ¸ë¦¬ê±° ê°ì§€ ì‹œ í˜¸ì¶œë¨
     public void OnAreaTrigger(GameObject triggerArea, GameObject other)
     {
         if (!isActivated) { return; }
 
-        // °¢ È°¼ºÈ­ µ¥ÀÌÅÍ¸¦ È®ÀÎ
+        // ê° í™œì„±í™” ë°ì´í„°ë¥¼ í™•ì¸
         foreach (var data in activationSettings)
         {
-            // ÀÌ¹Ì È°¼ºÈ­µÈ Å¥ºê´Â ½ºÅµ
+            // ì´ë¯¸ í™œì„±í™”ëœ íë¸ŒëŠ” ìŠ¤í‚µ
             if (data.hasActivated) continue;
 
-            // ¿µ¿ª Æ®¸®°Å Á¶°ÇÀÌ°í ¿µ¿ª°ú ÅÂ±×°¡ ÀÏÄ¡ÇÏ´ÂÁö È®ÀÎ
+            // ì˜ì—­ íŠ¸ë¦¬ê±° ì¡°ê±´ì´ê³  ì˜ì—­ê³¼ íƒœê·¸ê°€ ì¼ì¹˜í•˜ëŠ”ì§€ í™•ì¸
             if (data.triggerType == TriggerType.AreaTrigger &&
                 data.triggerArea == triggerArea &&
                 other.CompareTag(data.targetTag))
@@ -125,46 +124,46 @@ public class CubeController : MonoBehaviour
     }
 
 
-    // ¸ğµç Å¥ºê°¡ È°¼ºÈ­µÇ¾ú´ÂÁö È®ÀÎ
+    // ëª¨ë“  íë¸Œê°€ í™œì„±í™”ë˜ì—ˆëŠ”ì§€ í™•ì¸
     private void CheckAllCubesActivated()
     {
-        // ¸ğµç Å¥ºê°¡ È°¼ºÈ­µÇ¾ú´ÂÁö È®ÀÎ
+        // ëª¨ë“  íë¸Œê°€ í™œì„±í™”ë˜ì—ˆëŠ”ì§€ í™•ì¸
         foreach (var data in activationSettings)
         {
-            // ÇÏ³ª¶óµµ ºñÈ°¼ºÈ­ »óÅÂ¶ó¸é
-            // ¸®ÅÏ
+            // í•˜ë‚˜ë¼ë„ ë¹„í™œì„±í™” ìƒíƒœë¼ë©´
+            // ë¦¬í„´
             if (!data.hasActivated) { return; }
         }
 
-        // <- activatedCubeCount¿Í activationSettings.count ÀÇ ºñ±³·Î ¹Ù²Ù±â
+        // <- activatedCubeCountì™€ activationSettings.count ì˜ ë¹„êµë¡œ ë°”ê¾¸ê¸°
         //   if (activatedCubeCount < activationSettings.Count) { return; }
 
 
-        // ¸ğµç Å¥ºê°¡ È°¼ºÈ­µÇ¾úÀ¸¸é ÀÌº¥Æ® ¹ß»ı
+        // ëª¨ë“  íë¸Œê°€ í™œì„±í™”ë˜ì—ˆìœ¼ë©´ ì´ë²¤íŠ¸ ë°œìƒ
         if (activationSettings.Count > 0)
         {
-            Debug.Log($"[{gameObject.name}] ¸ğµç Å¥ºê°¡ È°¼ºÈ­µÇ¾ú½À´Ï´Ù. ÀÌº¥Æ®¸¦ ¹ß»ı½ÃÅµ´Ï´Ù.");
+            Debug.Log($"[{gameObject.name}] ëª¨ë“  íë¸Œê°€ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤. ì´ë²¤íŠ¸ë¥¼ ë°œìƒì‹œí‚µë‹ˆë‹¤.");
 
-            // ´ÙÀ½ ÄÁÆ®·Ñ·¯ È°¼ºÈ­ ÀÌº¥Æ® ¹ß»ı
+            // ë‹¤ìŒ ì»¨íŠ¸ë¡¤ëŸ¬ í™œì„±í™” ì´ë²¤íŠ¸ ë°œìƒ
             nextCubeControllerActivate?.Invoke();
         }
     }
 
 
 
-    // ¸Å ÇÁ·¹ÀÓ¸¶´Ù ½Ã°£ Æ®¸®°Å Ã¼Å©
+    // ë§¤ í”„ë ˆì„ë§ˆë‹¤ ì‹œê°„ íŠ¸ë¦¬ê±° ì²´í¬
     void Update()
     {
-        // È°¼ºÈ­ Ã¼Å©
+        // í™œì„±í™” ì²´í¬
         if (!isActivated) { return; }
 
-        // È°¼ºÈ­ »óÅÂ¶ó¸é, Å¥ºê È°¼ºÈ­ ·ÎÁ÷ Ã³¸®
+        // í™œì„±í™” ìƒíƒœë¼ë©´, íë¸Œ í™œì„±í™” ë¡œì§ ì²˜ë¦¬
         foreach (var data in activationSettings)
         {
-            // ÀÌ¹Ì È°¼ºÈ­µÈ Å¥ºê´Â ½ºÅµ
+            // ì´ë¯¸ í™œì„±í™”ëœ íë¸ŒëŠ” ìŠ¤í‚µ
             if (data.hasActivated) { continue; }
 
-            // ½Ã°£ Æ®¸®°Å Ã³¸®
+            // ì‹œê°„ íŠ¸ë¦¬ê±° ì²˜ë¦¬
             if (data.triggerType == TriggerType.TimeTrigger)
             {
                 data.timer += Time.deltaTime;
@@ -173,59 +172,59 @@ public class CubeController : MonoBehaviour
             }
         }
 
-        // ¸ğµç Å¥ºê È°¼ºÈ­ Ã¼Å©
+        // ëª¨ë“  íë¸Œ í™œì„±í™” ì²´í¬
         CheckAllCubesActivated();
     }
 
 
 
 
-    // -------------------- °øÅë °£°İ ÁöÁ¤ --------------------
+    // -------------------- ê³µí†µ ê°„ê²© ì§€ì • --------------------
 
-    [Tooltip("Å¥ºê¿Í Å¥ºê °£ÀÇ ´ë±â °£°İ")]
+    [Tooltip("íë¸Œì™€ íë¸Œ ê°„ì˜ ëŒ€ê¸° ê°„ê²©")]
     public float sharingDelayTime = 0f;
 
 
 
-    // -------------------- È°¼ºÈ­ --------------------
+    // -------------------- í™œì„±í™” --------------------
 
-    // Å¥ºê È°¼ºÈ­ ¼³Á¤À» ÀúÀåÇÏ´Â Å¬·¡½º
+    // íë¸Œ í™œì„±í™” ì„¤ì •ì„ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
     [System.Serializable]
     public class CubeData
     {
-        [Header("¿ÀºêÁ§Æ® ¼³Á¤")]
-        [Tooltip("È°¼ºÈ­ÇÒ Å¥ºê")]
+        [Header("ì˜¤ë¸Œì íŠ¸ ì„¤ì •")]
+        [Tooltip("í™œì„±í™”í•  íë¸Œ")]
         public GameObject targetCube;
 
-        [Header("Æ®¸®°Å ¼³Á¤")]
-        [Tooltip("È°¼ºÈ­ Æ®¸®°Å Á¾·ù")]
+        [Header("íŠ¸ë¦¬ê±° ì„¤ì •")]
+        [Tooltip("í™œì„±í™” íŠ¸ë¦¬ê±° ì¢…ë¥˜")]
         public TriggerType triggerType = TriggerType.TimeTrigger;
 
-        [Tooltip("¿µ¿ª Æ®¸®°ÅÀÇ ´ë»ó ÅÂ±× (±âº»: Player)")]
+        [Tooltip("ì˜ì—­ íŠ¸ë¦¬ê±°ì˜ ëŒ€ìƒ íƒœê·¸ (ê¸°ë³¸: Player)")]
         public string targetTag = "Player";
 
-        [Tooltip("¿µ¿ª Æ®¸®°ÅÀÏ °æ¿ì, Ãæµ¹ °¨ÁöÇÒ ¿µ¿ª ¿ÀºêÁ§Æ®")]
+        [Tooltip("ì˜ì—­ íŠ¸ë¦¬ê±°ì¼ ê²½ìš°, ì¶©ëŒ ê°ì§€í•  ì˜ì—­ ì˜¤ë¸Œì íŠ¸")]
         public GameObject triggerArea;
 
-        [Tooltip("½Ã°£ Æ®¸®°ÅÀÏ °æ¿ì, ±â´Ù¸± ½Ã°£")]
+        [Tooltip("ì‹œê°„ íŠ¸ë¦¬ê±°ì¼ ê²½ìš°, ê¸°ë‹¤ë¦´ ì‹œê°„")]
         public float delayTime = 0f;
 
-        // °æ°úÇÑ ½Ã°£
+        // ê²½ê³¼í•œ ì‹œê°„
         [HideInInspector] public float timer = 0f;
 
-        // È°¼ºÈ­ ¿©ºÎ
+        // í™œì„±í™” ì—¬ë¶€
         [HideInInspector] public bool hasActivated = false;
     }
 
-    [Header("Å¥ºê È°¼ºÈ­ ¼³Á¤")]
+    [Header("íë¸Œ í™œì„±í™” ì„¤ì •")]
     public List<CubeData> activationSettings = new List<CubeData>();
 
 
-    // ÇöÀç È°¼ºÈ­µÈ Å¥ºêÀÇ ¼ıÀÚ
+    // í˜„ì¬ í™œì„±í™”ëœ íë¸Œì˜ ìˆ«ì
     private int activatedCubeCount = 0;
 
 
-    // Å¥ºê ¼ıÀÚ È®ÀÎ
+    // íë¸Œ ìˆ«ì í™•ì¸
     private int CheckActivatedCubeCount()
     {
         int count = 0;
@@ -240,18 +239,18 @@ public class CubeController : MonoBehaviour
     }
 
 
-    // Å¥ºê È°¼ºÈ­
+    // íë¸Œ í™œì„±í™”
     private void ActivateCube(CubeData data)
     {
-        // È°¼ºÈ­µÇÁö ¾ÊÀº Å¥ºê¶ó¸é
+        // í™œì„±í™”ë˜ì§€ ì•Šì€ íë¸Œë¼ë©´
         if (data.targetCube != null && !data.hasActivated)
         {
-            // Å¥ºê È°¼ºÈ­
+            // íë¸Œ í™œì„±í™”
             data.targetCube.SetActive(true);
             data.hasActivated = true;
             activatedCubeCount++;
 
-            Debug.Log($"[{gameObject.name}] Å¥ºê [{data.targetCube.name}]°¡ È°¼ºÈ­µÇ¾ú½À´Ï´Ù." +
+            Debug.Log($"[{gameObject.name}] íë¸Œ [{data.targetCube.name}]ê°€ í™œì„±í™”ë˜ì—ˆìŠµë‹ˆë‹¤." +
                 $" ({activatedCubeCount}/{activationSettings.Count})");
         }
     }
@@ -259,26 +258,26 @@ public class CubeController : MonoBehaviour
 
 
 
-    // -------------------- Å×½ºÆ®/µğ¹ö±× --------------------
+    // -------------------- í…ŒìŠ¤íŠ¸/ë””ë²„ê·¸ --------------------
 
-    [Header("µğ¹ö±× ¿É¼Ç")]
-    [Tooltip("¾À ¿¡µğÅÍ¿¡¼­ ¿µ¿ª Æ®¸®°Å¸¦ ½Ã°¢È­")]
+    [Header("ë””ë²„ê·¸ ì˜µì…˜")]
+    [Tooltip("ì”¬ ì—ë””í„°ì—ì„œ ì˜ì—­ íŠ¸ë¦¬ê±°ë¥¼ ì‹œê°í™”")]
     public bool showTriggerAreas = true;
 
-    // µğ¹ö±×¿ë: ¾À¿¡¼­ ¿µ¿ª Æ®¸®°Å¿Í Å¥ºê¸¦ º¸¿©ÁÜ
+    // ë””ë²„ê·¸ìš©: ì”¬ì—ì„œ ì˜ì—­ íŠ¸ë¦¬ê±°ì™€ íë¸Œë¥¼ ë³´ì—¬ì¤Œ
     void OnDrawGizmos()
     {
         if (!showTriggerAreas || activationSettings == null) return;
 
         foreach (var data in activationSettings)
         {
-            // Æ®¸®°Å ¿µ¿ª Ç¥½Ã
+            // íŠ¸ë¦¬ê±° ì˜ì—­ í‘œì‹œ
             if (data.triggerType == TriggerType.AreaTrigger && data.triggerArea != null)
             {
                 Collider triggerCollider = data.triggerArea.GetComponent<Collider>();
                 if (triggerCollider != null)
                 {
-                    // ¿µ¿ª Æ®¸®°Å´Â ¹İÅõ¸í ¹Ú½º·Î Ç¥½Ã
+                    // ì˜ì—­ íŠ¸ë¦¬ê±°ëŠ” ë°˜íˆ¬ëª… ë°•ìŠ¤ë¡œ í‘œì‹œ
                     Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f);
                     Gizmos.DrawWireCube(triggerCollider.bounds.center, triggerCollider.bounds.size);
                 }
