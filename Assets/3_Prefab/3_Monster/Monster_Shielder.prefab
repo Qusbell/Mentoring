@@ -2209,6 +2209,7 @@ GameObject:
   - component: {fileID: 8407932823481910901}
   - component: {fileID: 4828177445522999760}
   - component: {fileID: 7270453051903933722}
+  - component: {fileID: 2852686773084337695}
   m_Layer: 8
   m_Name: Skeleton_Shield_Large_B
   m_TagString: Untagged
@@ -2281,3 +2282,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2852686773084337695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9215819455182724303}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1566205, y: 1.1349881, z: 0.5074554}
+  m_Center: {x: -0.02988733, y: -0.000015420252, z: 0.08438051}

@@ -85,7 +85,7 @@ Animator:
   m_GameObject: {fileID: 1008570438300534873}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ed67a81e5d9a0854696eb349ce5609c0, type: 3}
-  m_Controller: {fileID: 9100000, guid: c35df7960756ce643be14354853a951b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 93b6bcd959eae9240bcf30e9b43d8146, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1852,7 +1852,8 @@ Transform:
   m_LocalPosition: {x: 0.0000000012794814, y: 0.11535025, z: -0.069000006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 888021097449331192}
   m_Father: {fileID: 561982322213110736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8006138722690876445
@@ -1887,3 +1888,81 @@ Transform:
   - {fileID: 7435910785959725623}
   m_Father: {fileID: 4858443625655361769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &853532214140894739
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5252013889981263169}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+      propertyPath: m_Name
+      value: Skeleton_Golem_Axe_Large
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+--- !u!4 &888021097449331192 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e81c1b07860c19643ab056cae8de4a40, type: 3}
+  m_PrefabInstance: {fileID: 853532214140894739}
+  m_PrefabAsset: {fileID: 0}

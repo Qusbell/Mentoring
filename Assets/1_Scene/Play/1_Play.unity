@@ -855,6 +855,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!1001 &42053278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1142,6 +1143,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 100
+  oneTimeUse: 1
 --- !u!114 &62134708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2249,7 +2251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 117680116}
   m_Layer: 0
-  m_Name: CubeTrigger
+  m_Name: CubeMoveTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2911,6 +2913,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 7
+  oneTimeUse: 1
 --- !u!114 &157875263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3085,6 +3088,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!1 &179271691
 GameObject:
   m_ObjectHideFlags: 0
@@ -4825,63 +4829,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8318741442085839478, guid: 060b00abb8e8f7b4f88488eb005e3763, type: 3}
   m_PrefabInstance: {fileID: 291242302}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &292524259
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 4.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4617787347689549732, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-      propertyPath: m_Name
-      value: Player_test
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
 --- !u!1 &293631869
 GameObject:
   m_ObjectHideFlags: 0
@@ -6752,6 +6699,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &430513524
 GameObject:
   m_ObjectHideFlags: 0
@@ -7035,6 +6983,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 62
+  oneTimeUse: 1
 --- !u!114 &435386850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7322,11 +7271,6 @@ MonoBehaviour:
   showPath: 1
   showLaserPath: 1
   showEditorPreview: 1
---- !u!4 &448794975 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3661899217179359217, guid: da27eccf10ecd634da4b067265d11b8b, type: 3}
-  m_PrefabInstance: {fileID: 292524259}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &461666877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7653,6 +7597,68 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
   m_PrefabInstance: {fileID: 1637045414}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &487647390
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2559950472237959294, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_Name
+      value: Player_Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4225143
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.5950336
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+--- !u!4 &487647391 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+  m_PrefabInstance: {fileID: 487647390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &493573947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7784,6 +7790,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!1 &501646524 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -10625,6 +10632,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!1 &731462729
 GameObject:
   m_ObjectHideFlags: 0
@@ -11121,6 +11129,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &748890028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11512,6 +11521,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &781136304 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -11571,6 +11581,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 7
+  oneTimeUse: 1
 --- !u!114 &787726975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11843,6 +11854,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!1001 &808459409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13089,6 +13101,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &937323140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15182,6 +15195,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &1064062552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15748,6 +15762,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!1 &1100606390
 GameObject:
   m_ObjectHideFlags: 0
@@ -16099,6 +16114,39 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
+--- !u!1 &1116505847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1116505848}
+  m_Layer: 0
+  m_Name: CubeCollapserTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1116505848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116505847}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1869002828}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1123978341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16488,6 +16536,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!114 &1147726977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18148,6 +18197,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1
+  oneTimeUse: 1
 --- !u!1001 &1265880735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18779,6 +18829,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &1288745541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18917,6 +18968,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &1294522192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19340,6 +19392,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &1316969105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19657,6 +19710,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 62
+  oneTimeUse: 1
 --- !u!114 &1345459928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20831,6 +20885,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &1429476266
 GameObject:
   m_ObjectHideFlags: 0
@@ -22495,6 +22550,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1001 &1567251731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23509,6 +23565,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &1623681738
 GameObject:
   m_ObjectHideFlags: 0
@@ -23992,6 +24049,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!4 &1722037536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -26653,6 +26711,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8318741442085839478, guid: 060b00abb8e8f7b4f88488eb005e3763, type: 3}
   m_PrefabInstance: {fileID: 1861763376}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1869002827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1869002828}
+  - component: {fileID: 1869002830}
+  - component: {fileID: 1869002829}
+  m_Layer: 0
+  m_Name: CubeTrigger (0)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1869002828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869002827}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1116505848}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1869002829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869002827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a17879718d23664ba7ae29ca42f88ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+--- !u!65 &1869002830
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869002827}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1872083266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27843,6 +27968,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 4
+  oneTimeUse: 1
 --- !u!114 &1958225584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27928,6 +28054,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &1968764598
 GameObject:
   m_ObjectHideFlags: 0
@@ -27996,6 +28123,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &1979496832
 GameObject:
   m_ObjectHideFlags: 0
@@ -28064,6 +28192,7 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 1.5
+  oneTimeUse: 1
 --- !u!1 &1989214938
 GameObject:
   m_ObjectHideFlags: 0
@@ -29879,7 +30008,7 @@ PrefabInstance:
     - target: {fileID: 2079829270940065889, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 448794975}
+      objectReference: {fileID: 487647391}
     - target: {fileID: 5628392651492190630, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -30276,6 +30405,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2676246616708540547}
   - {fileID: 1102971743}
-  - {fileID: 292524259}
+  - {fileID: 487647390}
   - {fileID: 117680116}
+  - {fileID: 1116505848}
   - {fileID: 1913670570}
