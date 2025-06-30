@@ -10,7 +10,7 @@ public class TargetManager : MonoBehaviour
     public static TargetManager instance { get; private set; }
 
     // 타겟 (위치)
-    public Transform _target = null;
+    private Transform _target = null;
     public Transform target
     {
         get

@@ -48,6 +48,8 @@ public class MonsterSpawner : Spawner
         Debug.Log($"[{gameObject.name}] 하위 콜라이더 기반 스폰 위치 설정: {spawnLocation}");
     }
 
+
+
     // 하위 오브젝트들의 모든 콜라이더 범위를 합쳐서 계산
     private Bounds GetCombinedBoundsFromChildren()
     {

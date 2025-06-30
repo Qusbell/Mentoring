@@ -357,9 +357,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2659943776672970315}
-  m_Layer: 10
+  - component: {fileID: 2288903199969664391}
+  m_Layer: 0
   m_Name: targetPos
-  m_TagString: Target
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -379,6 +380,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4729436723229021230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2288903199969664391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2815951021216270033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879747074f8af3849bae66427f21d30a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPriority: 1
 --- !u!1 &3300114947849246973
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,11 +749,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cbf711dfe0a2644bf7402b752787f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTag: Player
-  targetLayerName: Player
-  targetLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  _target: {fileID: 0}
+  targetList: []
+  targetTag: Target
 --- !u!1 &4693354961025006660
 GameObject:
   m_ObjectHideFlags: 0
