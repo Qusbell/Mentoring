@@ -110,11 +110,16 @@ public class MonsterSpawner : Spawner
     public override void CheckCompleted()
     {
         // 모든 프리펩을 생성했다면
-        if (targetPrefabs.Count <= PrefabIndex)
+        if (targetPrefabs.Count <= PrefabIndex + 1)
         {
             base.CheckCompleted();
             // 주기적 스포너라면: 리셋 발생
             if (isEndlessSpawn) { ResetSpawner();}
+        }
+        else
+        {
+            // 다음 프리펩 인덱스 지정
+            PrefabIndex += 1;
         }
     }
 }
