@@ -342,11 +342,11 @@ public class CubeCollapser : MonoBehaviour
                 {
                     hasTriggered = true;
                     if (showDebugLog)
-                        Debug.Log($"[{gameObject.name}] 에리어 트리거 발동! 플레이어가 영역 [{triggerArea?.name}]에 진입");
+                        Debug.Log($"[{gameObject.name}] 에리어 트리거 발동 플레이어가 영역 [{triggerArea?.name}]에 진입");
                 }
                 else if (showDebugLog)
                 {
-                    Debug.Log($"[{gameObject.name}] 외부 트리거 발동! 플레이어 접촉");
+                    Debug.Log($"[{gameObject.name}] 외부 트리거 발동 플레이어 접촉");
                 }
 
                 StartCoroutine(StartCollapseProcedure());
