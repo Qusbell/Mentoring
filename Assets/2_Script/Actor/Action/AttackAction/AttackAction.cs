@@ -7,31 +7,37 @@ using UnityEngine;
 
 
 //==================================================
-// °ø°İ Çàµ¿
+// ê³µê²© í–‰ë™
 //==================================================
 abstract public class AttackAction : MonoBehaviour
 {
-    // °ø°İ·Â
+    // ê³µê²©ë ¥
     [SerializeField] protected int attackDamage = 1;
 
-    // °ø°İ »ç°Å¸®
+    // ê³µê²© ì‚¬ê±°ë¦¬
     [field: SerializeField] public float attackRange { get; protected set; } = 3f;
 
-
-    // °ø°İ µô·¹ÀÌ (°ø°İ ½ÃÀÛ ½ÃÁ¡À¸·ÎºÎÅÍ, Çàµ¿ ºÒ°¡´ÉÇÑ ½Ã°£)
-    //  [SerializeField] protected float attackDelay = 1f; // <- ÀÓ½Ã, ¾ÆÁ÷ ¹ÌÀû¿ë
-
-
-    // °ø°İ ´ë»ó ÅÂ±× (ÇØ´ç ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®¸¸ °ø°İ)
+    // ê³µê²© ëŒ€ìƒ íƒœê·¸ (í•´ë‹¹ íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë§Œ ê³µê²©)
     [SerializeField] protected string targetTag = "";
 
-    // <- °ø°İ ´ë»óÀÇ ·¹ÀÌ¾î
+    // <- ê³µê²© ëŒ€ìƒì˜ ë ˆì´ì–´
+
+    // ì–´ë–¤ ê³µê²©ì¸ì§€
+    protected Action doAttack;
+
+    // ê³µê²© ê°„ê²© (== ê³µê²© ì†ë„)
+    [SerializeField] protected float attackRate = 0.5f;
+
+    // ê³µê²© ê°€ëŠ¥ ì—¬ë¶€
+    public bool isCanAttack { get; protected set; } = true;
+
+
 
 
     protected virtual void Awake()
     {
-        // Å¸°ÙÅÂ±× °Ë»ç
-        // ¹èÁ¤µÇÁö ¾ÊÀº °æ¿ì : ±âÃÊÀûÀÎ Àç¹èÁ¤
+        // íƒ€ê²Ÿíƒœê·¸ ê²€ì‚¬
+        // ë°°ì •ë˜ì§€ ì•Šì€ ê²½ìš° : ê¸°ì´ˆì ì¸ ì¬ë°°ì •
         if (targetTag == "")
         {
             if (gameObject.tag == "Monster") { targetTag = "Player"; }
@@ -40,31 +46,20 @@ abstract public class AttackAction : MonoBehaviour
     }
 
 
-
-    // ¾î¶² °ø°İÀÎÁö
-    protected Action doAttack;
-
-    // °ø°İ
+    // ê³µê²©
     public void Attack()
     {
-        // °ø°İ °¡´É È®ÀÎ
+        // ê³µê²© ê°€ëŠ¥ í™•ì¸
         if (!CheckCanAttack()) { return; }
 
-        // °ø°İ
+        // ê³µê²©
         doAttack();
     }
 
 
-
-    // °ø°İ °£°İ (== °ø°İ ¼Óµµ)
-    [SerializeField] protected float attackRate = 0.5f;
-
-    // °ø°İ °¡´É ¿©ºÎ
-    public bool isCanAttack { get; protected set; } = true;
-
-    // °ø°İ °¡´ÉÇÑ »óÅÂ È®ÀÎ
-    // °ø°İ °¡´É : true
-    // °ø°İ ºÒ°¡ : false
+    // ê³µê²© ê°€ëŠ¥í•œ ìƒíƒœ í™•ì¸
+    // ê³µê²© ê°€ëŠ¥ : true
+    // ê³µê²© ë¶ˆê°€ : false
     protected bool CheckCanAttack()
     {
         if (isCanAttack == true)

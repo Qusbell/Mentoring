@@ -2,54 +2,86 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 
 [RequireComponent(typeof(DamageReaction))]
 [RequireComponent(typeof(CargoMoveAction))]
-// È£À§ Å¥ºê (È­¹°)
+// í˜¸ìœ„ íë¸Œ (í™”ë¬¼)
+// Player ë ˆì´ì–´, Player íƒœê·¸ í•„ìš”
 public class Cargo : Actor
 {
-    // ÀÌµ¿ ¸ŞÄ¿´ÏÁò
+    // ì´ë™ ë©”ì»¤ë‹ˆì¦˜
     CargoMoveAction cargoMoveAction;
 
-    // <- ¸ñÀûÁö µµÂø distance
-    [SerializeField] protected int distance = 3;
-    
-    // ´ÙÀ½ ¸ñÀûÁö ÀÌº¥Æ®
-    public Action setNextDestination;
+    // í˜„ì¬ ëª©ì ì§€
+    private CargoDestination _nowDestination;
+    public CargoDestination nowDestination
+    {
+        get // ëª©ì ì§€ í™•ì¸
+        { return _nowDestination; }
 
-    // ¸ñÀûÁö µµÂø ÈÄ, ´ÙÀ½ ¸ñÀûÁö Ãâ¹ß±îÁö ½Ã°£
-    [SerializeField] protected float nextStartTimer = 2f;
+        set // ëª©ì ì§€ ì§€ì •
+        {
+            _nowDestination = value;
+
+            // ë§Œì•½ cargoMoveActionì´ nullìƒíƒœë¼ë©´, ì´ˆê¸°í™”
+            if (cargoMoveAction == null)
+            { cargoMoveAction = moveAction as CargoMoveAction; }
+
+            cargoMoveAction.SetTarget(value.transform);
+        }
+    }
+
+    // ëª©ì ì§€ ë„ì°©ì„ íŒì •í•  distance
+    [SerializeField] protected float distance = 2f;
 
 
+
+    // ì‹¤í–‰ ì‹œ ì´ˆê¸°í™”
     protected override void Awake()
     {
         base.Awake();
-        // ´Ù¿îÄ³½ºÆ®
+        // ë‹¤ìš´ìºìŠ¤íŠ¸
         cargoMoveAction = moveAction as CargoMoveAction;
         if (cargoMoveAction == null)
-        { Debug.Log("CargoMoveAction ÇÒ´çµÇÁö ¾ÊÀ½ : " + gameObject.name); }
+        { Debug.Log("CargoMoveAction í• ë‹¹ë˜ì§€ ì•ŠìŒ : " + gameObject.name); }
+
+        // ëª©ì ì§€ê¹Œì§€ì˜ ê±°ë¦¬ ê²€ì¦
+        if (distance < 0)
+        {
+            Debug.Log(gameObject.name + " : ëª©ì ì§€ ë„ì°© íŒì • ê±°ë¦¬ê°€ ìŒìˆ˜");
+            distance = 1;
+        }
     }
 
 
+    // ë‹¤ìŒ ëª©ì ì§€ ì§€ì •
+    protected void SetNext()
+    {
+        nowDestination = nowDestination.nextDestination;
+    }
 
-    // ¸ñÀûÁö ¼³Á¤
-    public void SetDestination(Transform destination)
-    { cargoMoveAction.SetTarget(destination); }
-
+    // ì¼ì‹œ ì •ì§€
+    bool isLoopStop = false;
 
     private void Update()
     {
-        // ÇöÀç´Â ´Ü¼ø ÀÌµ¿¸¸ ÇÏµµ·Ï ¼³Á¤
-        cargoMoveAction.Move();
+        // ì¼ì‹œ ì •ì§€
+        if (isLoopStop) { return; }
 
-        // ¸ñÀûÁö µµÂø ½Ã
-        // ´ÙÀ½ ¸ñÀûÁö ¼³Á¤
-        if (cargoMoveAction.InDistance(distance))
-        { setNextDestination(); } // <- ÀÏÁ¤ ½Ã°£ ÈÄ ½ºÅ¸Æ®
+        // ë„ì°©í•˜ì§€ ì•Šì€ ê²½ìš° : Move
+        if (!cargoMoveAction.InDistance(distance))
+        { cargoMoveAction.Move(); }
+
+        // ëª©ì ì§€ ë„ì°© ì‹œ
+        // ë‹¤ìŒ ëª©ì ì§€ ì„¤ì •
+        else
+        {
+            isLoopStop = true; // ì¼ì‹œ ì •ì§€
+            StartCoroutine(Timer.StartTimer(nowDestination.nextStartTimer, () => { isLoopStop = false; })); // nì´ˆí›„ ì‹œì‘
+            SetNext();
+        }
     }
-
-
-
 }

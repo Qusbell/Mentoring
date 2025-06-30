@@ -8,31 +8,31 @@ using UnityEngine;
 [RequireComponent(typeof(NavMeshSurface))]
 public class NavMeshManager : MonoBehaviour
 {
-    // ½Ì±ÛÅæ
+    // ì‹±ê¸€í†¤
     public static NavMeshManager instance = null;
 
-    // ³×ºñ°ÔÀÌ¼Ç
+    // ë„¤ë¹„ê²Œì´ì…˜
     NavMeshSurface surface = null;
 
     private void Awake()
     { 
-        // ½Ì±ÛÅæ ÃÊ±âÈ­
+        // ì‹±ê¸€í†¤ ì´ˆê¸°í™”
         if (instance == null)
         { instance = this; }
         else { Destroy(this.gameObject); return; }
 
-        // NavMeshSurface ¼³Á¤
+        // NavMeshSurface ì„¤ì •
         surface = GetComponent<NavMeshSurface>();
-        if(surface == null) { Debug.Log("NavMeshSurface°¡ Á¸ÀçÇÏÁö ¾ÊÀ½ : " + gameObject.name); }
+        if(surface == null) { Debug.Log("NavMeshSurfaceê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŒ : " + gameObject.name); }
         surface.collectObjects = CollectObjects.Children;
 
-        Rebuild();
+        Rebuild(); // <- ë‚˜ì¤‘ì—ëŠ” ì œê±°
     }
 
-    // ÁöÇü °»½Å
+    // ì§€í˜• ê°±ì‹ 
     public void Rebuild()
     {
         surface.BuildNavMesh();
-        StartCoroutine(Timer.StartTimer(0.1f, Rebuild)); // <- Å×½ºÆ® : 0.1f¸¶´Ù ÁöÇü °»½Å
+        StartCoroutine(Timer.StartTimer(0.1f, Rebuild)); // <- í…ŒìŠ¤íŠ¸ : 0.1fë§ˆë‹¤ ì§€í˜• ê°±ì‹ , ì´í›„ ìˆ˜ì •í•  ê²ƒ
     }
 }

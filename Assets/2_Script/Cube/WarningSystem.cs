@@ -2,59 +2,59 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// À§¿¡¼­ ¾Æ·¡·Î ¶³¾îÁö´Â Å¥ºê°¡ ±× ¾Æ·¡¿¡ ÀÖ´Â Å¥ºêÀÇ À­¸é¿¡ »¡°£»ö °æ°í Ç¥½Ã¸¦ º¸¿©ÁÖ´Â ½ºÅ©¸³Æ®
-/// Å¥ºê°¡ °¡±î¿öÁú¼ö·Ï °æ°í Ç¥½Ã°¡ ´õ ¼±¸íÇØÁö°í, ÂøÁö Á÷Àü¿¡ ºÎµå·´°Ô »ç¶óÁü.
+/// ìœ„ì—ì„œ ì•„ë˜ë¡œ ë–¨ì–´ì§€ëŠ” íë¸Œê°€ ê·¸ ì•„ë˜ì— ìˆëŠ” íë¸Œì˜ ìœ—ë©´ì— ë¹¨ê°„ìƒ‰ ê²½ê³  í‘œì‹œë¥¼ ë³´ì—¬ì£¼ëŠ” ìŠ¤í¬ë¦½íŠ¸
+/// íë¸Œê°€ ê°€ê¹Œì›Œì§ˆìˆ˜ë¡ ê²½ê³  í‘œì‹œê°€ ë” ì„ ëª…í•´ì§€ê³ , ì°©ì§€ ì§ì „ì— ë¶€ë“œëŸ½ê²Œ ì‚¬ë¼ì§.
 /// </summary>
 public class WarningSystem : MonoBehaviour
 {
-    [Header("°æ°í Ç¥½Ã È¿°ú ¼³Á¤")]
-    [Tooltip("°æ°í »ö»ó º¯È­ ½ÃÀÛ °Å¸® ºñÀ² (0.5 = Àı¹İ °Å¸®¿¡¼­ ½ÃÀÛ)")]
+    [Header("ê²½ê³  í‘œì‹œ íš¨ê³¼ ì„¤ì •")]
+    [Tooltip("ê²½ê³  ìƒ‰ìƒ ë³€í™” ì‹œì‘ ê±°ë¦¬ ë¹„ìœ¨ (0.5 = ì ˆë°˜ ê±°ë¦¬ì—ì„œ ì‹œì‘)")]
     [Range(0.2f, 0.8f)]
     public float colorChangeStartRatio = 0.5f;
 
-    [Tooltip("°æ°í Ç¥½Ã »ç¶óÁü ½ÃÀÛ °Å¸® (ÂøÁö Àü ÀÌ °Å¸®¿¡¼­ »ç¶óÁö±â ½ÃÀÛ)")]
+    [Tooltip("ê²½ê³  í‘œì‹œ ì‚¬ë¼ì§ ì‹œì‘ ê±°ë¦¬ (ì°©ì§€ ì „ ì´ ê±°ë¦¬ì—ì„œ ì‚¬ë¼ì§€ê¸° ì‹œì‘)")]
     public float fadeStartDistance = 0.5f;
 
-    [Tooltip("°æ°í Ç¥½Ã »ç¶óÁü ½Ã°£ (ÃÊ, °ªÀÌ Å¬¼ö·Ï ÃµÃµÈ÷ »ç¶óÁü)")]
+    [Tooltip("ê²½ê³  í‘œì‹œ ì‚¬ë¼ì§ ì‹œê°„ (ì´ˆ, ê°’ì´ í´ìˆ˜ë¡ ì²œì²œíˆ ì‚¬ë¼ì§)")]
     public float fadeDuration = 0.3f;
 
-    // ³»ºÎ º¯¼ö (¼öÁ¤ÇÒ ÇÊ¿ä ¾øÀ½)
-    private GameObject targetCube;          // ¾Æ·¡¿¡ ÀÖ´Â Å¥ºê
-    private GameObject warningPlane;        // °æ°í Ç¥½Ã Æò¸é
-    private Vector3 initialPosition;        // ½ÃÀÛ À§Ä¡
-    private Vector3 targetPosition;         // ¸ñÀûÁö À§Ä¡
-    private float totalDistance;            // ÃÑ ÀÌµ¿ °Å¸®
-    private float colorChangeStartDist;     // »ö»ó º¯È­ ½ÃÀÛ °Å¸®
-    private bool isFading = false;          // »ç¶óÁö´Â ÁßÀÎÁö ¿©ºÎ
-    private Material planeMaterial;         // °æ°í Ç¥½Ã ÀçÁú
+    // ë‚´ë¶€ ë³€ìˆ˜ (ìˆ˜ì •í•  í•„ìš” ì—†ìŒ)
+    private GameObject targetCube;          // ì•„ë˜ì— ìˆëŠ” íë¸Œ
+    private GameObject warningPlane;        // ê²½ê³  í‘œì‹œ í‰ë©´
+    private Vector3 initialPosition;        // ì‹œì‘ ìœ„ì¹˜
+    private Vector3 targetPosition;         // ëª©ì ì§€ ìœ„ì¹˜
+    private float totalDistance;            // ì´ ì´ë™ ê±°ë¦¬
+    private float colorChangeStartDist;     // ìƒ‰ìƒ ë³€í™” ì‹œì‘ ê±°ë¦¬
+    private bool isFading = false;          // ì‚¬ë¼ì§€ëŠ” ì¤‘ì¸ì§€ ì—¬ë¶€
+    private Material planeMaterial;         // ê²½ê³  í‘œì‹œ ì¬ì§ˆ
 
-    // °íÁ¤ ¼³Á¤°ª (¼öÁ¤ÇÏ·Á¸é ÄÚµå ÆíÁı ÇÊ¿ä)
-    private readonly Color warningColor = Color.red;      // °æ°í »ö»ó (»¡°£»ö)
-    private const float startAlpha = 0.3f;                // ÃÊ±â Åõ¸íµµ (0.3 = 70% Åõ¸í)
-    private const float maxAlpha = 0.8f;                  // ÃÖ´ë Åõ¸íµµ (0.8 = 20% Åõ¸í)
-    private const float emissionIntensity = 1f;           // ¹ß±¤ °­µµ
-    private const float intensityCurve = 1f;              // »ö»ó º¯È­ °î¼± (1 = ÀÏÁ¤ÇÑ ¼Óµµ)
+    // ê³ ì • ì„¤ì •ê°’ (ìˆ˜ì •í•˜ë ¤ë©´ ì½”ë“œ í¸ì§‘ í•„ìš”)
+    private readonly Color warningColor = Color.red;      // ê²½ê³  ìƒ‰ìƒ (ë¹¨ê°„ìƒ‰)
+    private const float startAlpha = 0.3f;                // ì´ˆê¸° íˆ¬ëª…ë„ (0.3 = 70% íˆ¬ëª…)
+    private const float maxAlpha = 0.8f;                  // ìµœëŒ€ íˆ¬ëª…ë„ (0.8 = 20% íˆ¬ëª…)
+    private const float emissionIntensity = 1f;           // ë°œê´‘ ê°•ë„
+    private const float intensityCurve = 1f;              // ìƒ‰ìƒ ë³€í™” ê³¡ì„  (1 = ì¼ì •í•œ ì†ë„)
 
     
     //   void Awake()
     //   {
-    //       // ½ÃÀÛ ½Ã Áß¿ä Á¤º¸ Ãâ·Â
-    //       Debug.Log("°æ°í ½Ã½ºÅÛ: Å¥ºê °¨Áö¸¦ À§ÇØ Default ·¹ÀÌ¾î¸¦ »ç¿ëÇÕ´Ï´Ù.");
+    //       // ì‹œì‘ ì‹œ ì¤‘ìš” ì •ë³´ ì¶œë ¥
+    //       Debug.Log("ê²½ê³  ì‹œìŠ¤í…œ: íë¸Œ ê°ì§€ë¥¼ ìœ„í•´ Default ë ˆì´ì–´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.");
     //   }
 
     void Start()
     {
-        // ÃÊ±â À§Ä¡ ÀúÀå
+        // ì´ˆê¸° ìœ„ì¹˜ ì €ì¥
         initialPosition = transform.position;
 
-        // ¾Æ·¡¿¡ ÀÖ´Â Å¥ºê Ã¼Å© ¹× °æ°í Ç¥½Ã
+        // ì•„ë˜ì— ìˆëŠ” íë¸Œ ì²´í¬ ë° ê²½ê³  í‘œì‹œ
         CheckForCubeBelow();
     }
 
     void OnEnable()
     {
-        // È°¼ºÈ­µÉ ¶§µµ Ã¼Å©
-        if (transform.position == initialPosition) // ÃÊ±â À§Ä¡ÀÏ ¶§¸¸ Ã¼Å©
+        // í™œì„±í™”ë  ë•Œë„ ì²´í¬
+        if (transform.position == initialPosition) // ì´ˆê¸° ìœ„ì¹˜ì¼ ë•Œë§Œ ì²´í¬
         {
             CheckForCubeBelow();
         }
@@ -63,17 +63,17 @@ public class WarningSystem : MonoBehaviour
 
     private void CheckForCubeBelow()
     {
-        // ÀÚ±â ÀÚ½ÅÀ» ·¹ÀÌÄ³½ºÆ®¿¡¼­ Á¦¿ÜÇÏ±â À§ÇØ ÀÓ½Ã·Î ·¹ÀÌ¾î º¯°æ
+        // ìê¸° ìì‹ ì„ ë ˆì´ìºìŠ¤íŠ¸ì—ì„œ ì œì™¸í•˜ê¸° ìœ„í•´ ì„ì‹œë¡œ ë ˆì´ì–´ ë³€ê²½
         int originalLayer = gameObject.layer;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
-        // ¸ğµç Ãæµ¹ ¿ÀºêÁ§Æ® °¨Áö (¹«ÇÑ °Å¸®·Î ¼³Á¤ÇÏ¿© °Å¸® Á¦ÇÑ ¾øÀÌ °¨Áö)
+        // ëª¨ë“  ì¶©ëŒ ì˜¤ë¸Œì íŠ¸ ê°ì§€ (ë¬´í•œ ê±°ë¦¬ë¡œ ì„¤ì •í•˜ì—¬ ê±°ë¦¬ ì œí•œ ì—†ì´ ê°ì§€)
         RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, Mathf.Infinity, 1);
 
-        // µğ¹ö±×: °¨ÁöµÈ ¿ÀºêÁ§Æ® ¼ö È®ÀÎ
-        Debug.Log("·¹ÀÌÄ³½ºÆ®·Î °¨ÁöµÈ ¿ÀºêÁ§Æ® ¼ö: " + hits.Length);
+        // ë””ë²„ê·¸: ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸ ìˆ˜ í™•ì¸
+        Debug.Log("ë ˆì´ìºìŠ¤íŠ¸ë¡œ ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸ ìˆ˜: " + hits.Length);
 
-        // Ãæµ¹ °Å¸®¿¡ µû¶ó Á¤·Ä (°¡±î¿î °ÍºÎÅÍ)
+        // ì¶©ëŒ ê±°ë¦¬ì— ë”°ë¼ ì •ë ¬ (ê°€ê¹Œìš´ ê²ƒë¶€í„°)
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         bool foundValidCube = false;
@@ -82,35 +82,35 @@ public class WarningSystem : MonoBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
 
-            // µğ¹ö±×: °¨ÁöµÈ ¿ÀºêÁ§Æ® Á¤º¸
-            Debug.Log("- °¨ÁöµÈ ¿ÀºêÁ§Æ®: " + hitObject.name + " (°Å¸®: " + hit.distance + " À¯´Ö)");
+            // ë””ë²„ê·¸: ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸ ì •ë³´
+            Debug.Log("- ê°ì§€ëœ ì˜¤ë¸Œì íŠ¸: " + hitObject.name + " (ê±°ë¦¬: " + hit.distance + " ìœ ë‹›)");
 
-            // ÀÚ±â ÀÚ½Å Á¦¿Ü
+            // ìê¸° ìì‹  ì œì™¸
             if (hitObject == gameObject) continue;
 
-            // ÇÃ·¹ÀÌ¾î Á¦¿Ü (ÅÂ±×·Î È®ÀÎ)
+            // í”Œë ˆì´ì–´ ì œì™¸ (íƒœê·¸ë¡œ í™•ì¸)
             if (hitObject.CompareTag("Player"))
             {
-                Debug.Log("ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® Á¦¿Ü: " + hitObject.name);
+                Debug.Log("í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ ì œì™¸: " + hitObject.name);
                 continue;
             }
 
-            // ÇöÀç ÀÌµ¿ ÁßÀÎ Å¥ºê Á¦¿Ü (CubeMover°¡ ÀÖ°í ÇöÀç ¿òÁ÷ÀÌ°í ÀÖ´Â Å¥ºê)
+            // í˜„ì¬ ì´ë™ ì¤‘ì¸ íë¸Œ ì œì™¸ (CubeMoverê°€ ìˆê³  í˜„ì¬ ì›€ì§ì´ê³  ìˆëŠ” íë¸Œ)
             CubeMover cubeMover = hitObject.GetComponent<CubeMover>();
             if (cubeMover != null && cubeMover.IsCurrentlyMoving)
             {
-                Debug.Log("ÇöÀç ÀÌµ¿ ÁßÀÎ Å¥ºê Á¦¿Ü: " + hitObject.name);
+                Debug.Log("í˜„ì¬ ì´ë™ ì¤‘ì¸ íë¸Œ ì œì™¸: " + hitObject.name);
                 continue;
             }
 
-            // ÀûÇÕÇÑ Å¥ºê Ã£À½
+            // ì í•©í•œ íë¸Œ ì°¾ìŒ
             targetCube = hitObject;
             foundValidCube = true;
 
-            // µğ¹ö±×: ¼±ÅÃµÈ Å¥ºê È®ÀÎ
-            Debug.Log("¼±ÅÃµÈ Å¥ºê: " + targetCube.name + " (°Å¸®: " + hit.distance + " À¯´Ö)");
+            // ë””ë²„ê·¸: ì„ íƒëœ íë¸Œ í™•ì¸
+            Debug.Log("ì„ íƒëœ íë¸Œ: " + targetCube.name + " (ê±°ë¦¬: " + hit.distance + " ìœ ë‹›)");
 
-            // Å¥ºê Ã³¸® ·ÎÁ÷
+            // íë¸Œ ì²˜ë¦¬ ë¡œì§
             Renderer targetRenderer = targetCube.GetComponent<Renderer>();
             Renderer thisRenderer = GetComponent<Renderer>();
 
@@ -119,86 +119,87 @@ public class WarningSystem : MonoBehaviour
                 float targetTopY = targetRenderer.bounds.center.y + targetRenderer.bounds.extents.y;
                 float thisHalfHeight = thisRenderer.bounds.extents.y;
 
-                // Å¥ºê°¡ ÂøÁöÇÒ À§Ä¡ °è»ê
+                // íë¸Œê°€ ì°©ì§€í•  ìœ„ì¹˜ ê³„ì‚°
                 targetPosition = new Vector3(
                     transform.position.x,
                     targetTopY + thisHalfHeight,
                     transform.position.z
                 );
 
-                // ½ÃÀÛ À§Ä¡¿¡¼­ ¸ñÀûÁö±îÁö ÃÑ °Å¸® °è»ê
+                // ì‹œì‘ ìœ„ì¹˜ì—ì„œ ëª©ì ì§€ê¹Œì§€ ì´ ê±°ë¦¬ ê³„ì‚°
                 totalDistance = Vector3.Distance(initialPosition, targetPosition);
 
-                // »ö»ó º¯È­ ½ÃÀÛ °Å¸® °è»ê
+                // ìƒ‰ìƒ ë³€í™” ì‹œì‘ ê±°ë¦¬ ê³„ì‚°
                 colorChangeStartDist = totalDistance * colorChangeStartRatio;
 
-                // »¡°£»ö °æ°í Ç¥½Ã »ı¼º
+                // ë¹¨ê°„ìƒ‰ ê²½ê³  í‘œì‹œ ìƒì„±
                 CreateWarningPlane(hit, targetRenderer);
             }
 
-            break; // Ã¹ ¹øÂ° ÀûÇÕÇÑ Å¥ºê Ã£¾ÒÀ¸¹Ç·Î Áß´Ü
+            break; // ì²« ë²ˆì§¸ ì í•©í•œ íë¸Œ ì°¾ì•˜ìœ¼ë¯€ë¡œ ì¤‘ë‹¨
         }
 
-        // ¿ø·¡ ·¹ÀÌ¾î·Î º¹¿ø
+        // ì›ë˜ ë ˆì´ì–´ë¡œ ë³µì›
         gameObject.layer = originalLayer;
 
         if (!foundValidCube)
         {
-            Debug.LogWarning("¾Æ·¡¿¡ ÀûÇÕÇÑ Å¥ºê¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("ì•„ë˜ì— ì í•©í•œ íë¸Œë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 
-    // °æ°í Ç¥½Ã »ı¼º 
+
+    // ê²½ê³  í‘œì‹œ ìƒì„± 
     private void CreateWarningPlane(RaycastHit hit, Renderer targetRenderer)
     {
         if (targetCube == null) return;
 
-        // ÀÌÀü¿¡ »ı¼ºµÈ °æ°í Ç¥½Ã°¡ ÀÖÀ¸¸é Á¦°Å
+        // ì´ì „ì— ìƒì„±ëœ ê²½ê³  í‘œì‹œê°€ ìˆìœ¼ë©´ ì œê±°
         if (warningPlane != null)
         {
             Destroy(warningPlane);
         }
 
-        // Å¥ºê À­¸é À§Ä¡ °è»ê
+        // íë¸Œ ìœ—ë©´ ìœ„ì¹˜ ê³„ì‚°
         float targetTopY = targetRenderer.bounds.center.y + targetRenderer.bounds.extents.y;
         Vector3 planePosition = new Vector3(
             hit.point.x,
-            targetTopY + 0.005f, // ³ôÀÌ¸¦ ¾ÆÁÖ »ìÂ¦ ¿Ã¸² (5mm)
+            targetTopY + 0.005f, // ë†’ì´ë¥¼ ì•„ì£¼ ì‚´ì§ ì˜¬ë¦¼ (5mm)
             hit.point.z
         );
-        // µğ¹ö±×: °æ°í Ç¥½Ã À§Ä¡ È®ÀÎ
-        Debug.Log("°æ°í Ç¥½Ã »ı¼º À§Ä¡: " + planePosition + ", °¨ÁöµÈ Å¥ºê: " + targetCube.name);
+        // ë””ë²„ê·¸: ê²½ê³  í‘œì‹œ ìœ„ì¹˜ í™•ì¸
+        Debug.Log("ê²½ê³  í‘œì‹œ ìƒì„± ìœ„ì¹˜: " + planePosition + ", ê°ì§€ëœ íë¸Œ: " + targetCube.name);
 
-        // Æò¸é »ı¼º
-        warningPlane = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        // í‰ë©´ ìƒì„±
+        warningPlane = GameObject.CreatePrimitive(PrimitiveType.Quad); // <- ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì§ì ‘ ìƒì„± (ìŠ¤íŠ¸ë ˆìŠ¤ í¼, ìµœì í™” ê³¼ì œ, í”„ë¦¬í© ì„¤ì • ê³ ë ¤)
         warningPlane.name = "Warning_" + targetCube.name;
 
-        // À§Ä¡ ¹× È¸Àü ¼³Á¤
+        // ìœ„ì¹˜ ë° íšŒì „ ì„¤ì •
         warningPlane.transform.position = planePosition;
-        warningPlane.transform.rotation = Quaternion.Euler(90, 0, 0); // ¹Ù´Ú¿¡ ÆòÇàÇÏ°Ô ¼³Á¤
+        warningPlane.transform.rotation = Quaternion.Euler(90, 0, 0); // ë°”ë‹¥ì— í‰í–‰í•˜ê²Œ ì„¤ì •
 
-        // Å©±â ¼³Á¤ (Å¥ºê Å©±â¿¡ ¸Â°Ô)
+        // í¬ê¸° ì„¤ì • (íë¸Œ í¬ê¸°ì— ë§ê²Œ)
         float planeSize = targetRenderer.bounds.extents.x * 2;
         warningPlane.transform.localScale = new Vector3(planeSize, planeSize, 1f);
 
-        // Ãæµ¹Ã¼ Á¦°Å (ÇÊ¿ä ¾øÀ½)
+        // ì¶©ëŒì²´ ì œê±° (í•„ìš” ì—†ìŒ)
         Collider planeCollider = warningPlane.GetComponent<Collider>();
         if (planeCollider != null)
         {
             Destroy(planeCollider);
         }
 
-        // °æ°í Ç¥½Ã¸¦ Ignore Raycast ·¹ÀÌ¾î·Î ¼³Á¤ÇÏ¿© ´Ù¸¥ ·¹ÀÌÄ³½ºÆ®¿¡ °¨ÁöµÇÁö ¾Êµµ·Ï ÇÔ
+        // ê²½ê³  í‘œì‹œë¥¼ Ignore Raycast ë ˆì´ì–´ë¡œ ì„¤ì •í•˜ì—¬ ë‹¤ë¥¸ ë ˆì´ìºìŠ¤íŠ¸ì— ê°ì§€ë˜ì§€ ì•Šë„ë¡ í•¨
         warningPlane.layer = LayerMask.NameToLayer("Ignore Raycast");
 
-        // ¸ÓÆ¼¸®¾ó ¼³Á¤
+        // ë¨¸í‹°ë¦¬ì–¼ ì„¤ì •
         Renderer planeRenderer = warningPlane.GetComponent<Renderer>();
         if (planeRenderer != null)
         {
             planeMaterial = new Material(Shader.Find("Standard"));
 
-            // ¹İÅõ¸í ¼³Á¤
-            planeMaterial.SetFloat("_Mode", 3); // Åõ¸í ¸ğµå
+            // ë°˜íˆ¬ëª… ì„¤ì •
+            planeMaterial.SetFloat("_Mode", 3); // íˆ¬ëª… ëª¨ë“œ
             planeMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
             planeMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
             planeMaterial.SetInt("_ZWrite", 0);
@@ -207,117 +208,117 @@ public class WarningSystem : MonoBehaviour
             planeMaterial.DisableKeyword("_ALPHAPREMULTIPLY_ON");
             planeMaterial.renderQueue = 3000;
 
-            // ÃÊ±â »ö»ó ¼³Á¤ 
+            // ì´ˆê¸° ìƒ‰ìƒ ì„¤ì • 
             Color color = warningColor;
-            color.a = startAlpha; // ½ÃÀÛ Åõ¸íµµ ¼³Á¤
+            color.a = startAlpha; // ì‹œì‘ íˆ¬ëª…ë„ ì„¤ì •
             planeMaterial.color = color;
 
-            // ¹ß±¤ È¿°ú (Ã³À½¿¡´Â ¾àÇÏ°Ô)
+            // ë°œê´‘ íš¨ê³¼ (ì²˜ìŒì—ëŠ” ì•½í•˜ê²Œ)
             planeMaterial.EnableKeyword("_EMISSION");
             planeMaterial.SetColor("_EmissionColor", warningColor * startAlpha * emissionIntensity);
 
-            // ¸ÓÆ¼¸®¾ó Àû¿ë
+            // ë¨¸í‹°ë¦¬ì–¼ ì ìš©
             planeRenderer.material = planeMaterial;
         }
     }
 
     void Update()
     {
-        // °æ°í Ç¥½Ã°¡ ¾ø°Å³ª Å¥ºê°¡ ¿òÁ÷ÀÌÁö ¾Ê¾ÒÀ¸¸é ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½
+        // ê²½ê³  í‘œì‹œê°€ ì—†ê±°ë‚˜ íë¸Œê°€ ì›€ì§ì´ì§€ ì•Šì•˜ìœ¼ë©´ ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠìŒ
         if (warningPlane == null || targetCube == null || planeMaterial == null) return;
 
-        // ÇöÀç ¸ñÀûÁö±îÁö °Å¸® °è»ê
+        // í˜„ì¬ ëª©ì ì§€ê¹Œì§€ ê±°ë¦¬ ê³„ì‚°
         float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
-        // ¿òÁ÷ÀÓ °¨Áö (ÃÊ±â À§Ä¡¿¡¼­ 0.05 ÀÌ»ó ¿òÁ÷¿´´ÂÁö)
+        // ì›€ì§ì„ ê°ì§€ (ì´ˆê¸° ìœ„ì¹˜ì—ì„œ 0.05 ì´ìƒ ì›€ì§ì˜€ëŠ”ì§€)
         bool isMoving = Vector3.Distance(transform.position, initialPosition) > 0.05f;
 
         if (isMoving && !isFading)
         {
-            // ¸ñÀûÁö±îÁö ³²Àº °Å¸®°¡ ÆäÀÌµå ½ÃÀÛ °Å¸®º¸´Ù ÀÛÀ¸¸é »ç¶óÁö±â ½ÃÀÛ
+            // ëª©ì ì§€ê¹Œì§€ ë‚¨ì€ ê±°ë¦¬ê°€ í˜ì´ë“œ ì‹œì‘ ê±°ë¦¬ë³´ë‹¤ ì‘ìœ¼ë©´ ì‚¬ë¼ì§€ê¸° ì‹œì‘
             if (distanceToTarget <= fadeStartDistance)
             {
                 StartCoroutine(FadeOutWarning());
             }
             else
             {
-                // »ö»ó ¼±¸íµµ °è»ê (°Å¸®°¡ ÁÙ¾îµé¼ö·Ï ´õ ¼±¸íÇØÁü)
+                // ìƒ‰ìƒ ì„ ëª…ë„ ê³„ì‚° (ê±°ë¦¬ê°€ ì¤„ì–´ë“¤ìˆ˜ë¡ ë” ì„ ëª…í•´ì§)
                 UpdateWarningIntensity(distanceToTarget);
             }
         }
     }
 
-    // °Å¸®¿¡ µû¶ó °æ°í Ç¥½Ã ¼±¸íµµ ¾÷µ¥ÀÌÆ®
+    // ê±°ë¦¬ì— ë”°ë¼ ê²½ê³  í‘œì‹œ ì„ ëª…ë„ ì—…ë°ì´íŠ¸
     private void UpdateWarningIntensity(float currentDistance)
     {
-        // °Å¸® ºñÀ² °è»ê (1 = ¸Õ °Å¸®, 0 = °¡±î¿î °Å¸®)
+        // ê±°ë¦¬ ë¹„ìœ¨ ê³„ì‚° (1 = ë¨¼ ê±°ë¦¬, 0 = ê°€ê¹Œìš´ ê±°ë¦¬)
         float distanceRatio = Mathf.Clamp01(currentDistance / totalDistance);
 
-        // »ö»ó º¯È­ ½ÃÀÛÁ¡ ÀÌÈÄÀÇ ºñÀ²¸¸ »ç¿ë
+        // ìƒ‰ìƒ ë³€í™” ì‹œì‘ì  ì´í›„ì˜ ë¹„ìœ¨ë§Œ ì‚¬ìš©
         if (distanceRatio > colorChangeStartRatio)
         {
-            // ¾ÆÁ÷ »ö»ó º¯È­ ±¸°£¿¡ µµ´ŞÇÏÁö ¾ÊÀ½ - ÃÊ±â »ö»ó À¯Áö
+            // ì•„ì§ ìƒ‰ìƒ ë³€í™” êµ¬ê°„ì— ë„ë‹¬í•˜ì§€ ì•ŠìŒ - ì´ˆê¸° ìƒ‰ìƒ ìœ ì§€
             Color color = warningColor;
-            color.a = startAlpha;  // ÃÊ±â Åõ¸íµµ À¯Áö
+            color.a = startAlpha;  // ì´ˆê¸° íˆ¬ëª…ë„ ìœ ì§€
             planeMaterial.color = color;
             planeMaterial.SetColor("_EmissionColor", warningColor * startAlpha * emissionIntensity);
             return;
         }
 
-        // º¯È­ ÁøÇà ºñÀ² °è»ê (0 = º¯È­ ½ÃÀÛ, 1 = ÃÖ´ë °­µµ)
+        // ë³€í™” ì§„í–‰ ë¹„ìœ¨ ê³„ì‚° (0 = ë³€í™” ì‹œì‘, 1 = ìµœëŒ€ ê°•ë„)
         float changeProgress = 1f - (distanceRatio / colorChangeStartRatio);
 
-        // ºñ¼±Çü °î¼± Àû¿ë (´õ ÀÚ¿¬½º·¯¿î º¯È­¸¦ À§ÇØ)
+        // ë¹„ì„ í˜• ê³¡ì„  ì ìš© (ë” ìì—°ìŠ¤ëŸ¬ìš´ ë³€í™”ë¥¼ ìœ„í•´)
         float curvedProgress = Mathf.Pow(changeProgress, intensityCurve);
 
-        // Åõ¸íµµ °è»ê (startAlpha¿¡¼­ maxAlpha·Î º¯È­)
+        // íˆ¬ëª…ë„ ê³„ì‚° (startAlphaì—ì„œ maxAlphaë¡œ ë³€í™”)
         float alpha = Mathf.Lerp(startAlpha, maxAlpha, curvedProgress);
 
-        // »ö»ó ¹× ¹ß±¤ È¿°ú ¾÷µ¥ÀÌÆ®
+        // ìƒ‰ìƒ ë° ë°œê´‘ íš¨ê³¼ ì—…ë°ì´íŠ¸
         Color newColor = warningColor;
-        newColor.a = alpha;  // »õ Åõ¸íµµ Àû¿ë
+        newColor.a = alpha;  // ìƒˆ íˆ¬ëª…ë„ ì ìš©
         planeMaterial.color = newColor;
 
-        // ¹ß±¤ °­µµµµ ÇÔ²² Áõ°¡
+        // ë°œê´‘ ê°•ë„ë„ í•¨ê»˜ ì¦ê°€
         float emissionStrength = alpha * emissionIntensity;
         planeMaterial.SetColor("_EmissionColor", warningColor * emissionStrength);
     }
 
-    // °æ°í Ç¥½Ã ¼­¼­È÷ »ç¶óÁö°Ô ÇÏ±â
+    // ê²½ê³  í‘œì‹œ ì„œì„œíˆ ì‚¬ë¼ì§€ê²Œ í•˜ê¸°
     private IEnumerator FadeOutWarning()
     {
         if (warningPlane == null || planeMaterial == null) yield break;
 
         isFading = true;
 
-        // ÇöÀç »ö»ó °¡Á®¿À±â
+        // í˜„ì¬ ìƒ‰ìƒ ê°€ì ¸ì˜¤ê¸°
         Color startColor = planeMaterial.color;
         Color emissionColor = planeMaterial.GetColor("_EmissionColor");
 
-        // ¼­¼­È÷ »ç¶óÁö°Ô Ã³¸®
+        // ì„œì„œíˆ ì‚¬ë¼ì§€ê²Œ ì²˜ë¦¬
         float elapsedTime = 0f;
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / fadeDuration);
 
-            // Åõ¸íµµ °¨¼Ò (Á¡Á¡ Åõ¸íÇØÁü)
+            // íˆ¬ëª…ë„ ê°ì†Œ (ì ì  íˆ¬ëª…í•´ì§)
             Color newColor = startColor;
             newColor.a = Mathf.Lerp(startColor.a, 0f, t);
             planeMaterial.color = newColor;
 
-            // ¹ß±¤ °­µµµµ ÇÔ²² °¨¼Ò
+            // ë°œê´‘ ê°•ë„ë„ í•¨ê»˜ ê°ì†Œ
             Color newEmission = Color.Lerp(emissionColor, Color.black, t);
             planeMaterial.SetColor("_EmissionColor", newEmission);
 
             yield return null;
         }
 
-        // ¿ÏÀüÈ÷ Åõ¸íÇØÁö¸é Á¦°Å
+        // ì™„ì „íˆ íˆ¬ëª…í•´ì§€ë©´ ì œê±°
         RemoveWarning();
     }
 
-    // °æ°í Ç¥½Ã Á¦°Å
+    // ê²½ê³  í‘œì‹œ ì œê±°
     private void RemoveWarning()
     {
         if (warningPlane != null)
@@ -331,14 +332,14 @@ public class WarningSystem : MonoBehaviour
 
     void OnDisable()
     {
-        // ºñÈ°¼ºÈ­µÉ ¶§ °æ°í Á¦°Å
+        // ë¹„í™œì„±í™”ë  ë•Œ ê²½ê³  ì œê±°
         RemoveWarning();
     }
 
     void OnDestroy()
     {
-        // ½ºÅ©¸³Æ®°¡ ÆÄ±«µÉ ¶§ °æ°í Á¦°Å (¾À ÀüÈ¯ÀÌ³ª °ÔÀÓ Á¾·á ½Ã)
-        // Áö±İ ÆÄ±«µÇ´Â°Ç ¾øÁö¸¸ ¿¹»óÄ¡ ¸øÇÑ »óÈ²(¾À ÀüÈ¯, °ÔÀÓ Á¾·á, µğ¹ö±× Áß ¿ÀºêÁ§Æ® »èÁ¦ µî) ¸Ş¸ğ¸® ´©¼ö ¹æÁö¿ë
+        // ìŠ¤í¬ë¦½íŠ¸ê°€ íŒŒê´´ë  ë•Œ ê²½ê³  ì œê±° (ì”¬ ì „í™˜ì´ë‚˜ ê²Œì„ ì¢…ë£Œ ì‹œ)
+        // ì§€ê¸ˆ íŒŒê´´ë˜ëŠ”ê±´ ì—†ì§€ë§Œ ì˜ˆìƒì¹˜ ëª»í•œ ìƒí™©(ì”¬ ì „í™˜, ê²Œì„ ì¢…ë£Œ, ë””ë²„ê·¸ ì¤‘ ì˜¤ë¸Œì íŠ¸ ì‚­ì œ ë“±) ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ ë°©ì§€ìš©
         RemoveWarning();
     }
 }

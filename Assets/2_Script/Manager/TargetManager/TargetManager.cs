@@ -1,52 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 public class TargetManager : MonoBehaviour
 {
+    // ì‹±ê¸€í†¤
     public static TargetManager instance { get; private set; }
 
-    public Transform target { get; private set; }
+    // íƒ€ê²Ÿ (ìœ„ì¹˜)
+    public Transform _target = null;
+    public Transform target
+    {
+        get
+        {
+            if (_target == null)
+            { Targeting(); }
+            return _target.transform;
+        }
+        private set
+        { _target = value; }
+    }
 
-    [Header("Å¸°Ù Á¶°Ç")]
+
+    // íƒ€ê²Ÿ ë¦¬ìŠ¤íŠ¸
+    public List<Target> targetList = new List<Target>();
+
+
+    [Header("íƒ€ê²Ÿ ì¡°ê±´")]
     [SerializeField] private string targetTag = "Target";
-    [SerializeField] private string targetLayerName = "Target";
-    [SerializeField] private LayerMask targetLayerMask;
 
 
     void Awake()
     {
         if (instance == null) { instance = this; }
-        else { Destroy(gameObject); return; }
-    }
-
-    void Start()
-    { Targeting(); }
-
-    // Å¸°ÙÆÃ
-    public Transform Targeting()
-    {
-        // stringÀ¸·Î ÀÔ·Â¹ŞÀº ·¹ÀÌ¾î ÀÌ¸§À» int·Î º¯È¯
-        int targetLayer = LayerMask.NameToLayer(targetLayerName);
-
-        // ¸¸¾à targetLayerMask°¡ ÁöÁ¤µÇ¾î ÀÖÁö ¾Ê´Ù¸é, targetLayerNameÀ» ±â¹İÀ¸·Î »ı¼º
-        if (targetLayerMask.value == 0 && targetLayer >= 0)
-        { targetLayerMask = 1 << targetLayer; }
-
-        // ÅÂ±×·Î ÈÄº¸±ºÀ» ¸ÕÀú Ã£À½
-        GameObject[] candidates = GameObject.FindGameObjectsWithTag(targetTag);
-
-        foreach (var obj in candidates)
+        else
         {
-            // LayerMask¸¦ bit ¿¬»êÀ¸·Î Ã¼Å©
-            if (((1 << obj.layer) & targetLayerMask.value) != 0)
-            {
-                target = obj.transform;
-                break;
-            }
+            Debug.Log("TargetManager ë‹¤ìˆ˜ ì¡´ì¬, ë‹¨ì¼ ì¡´ì¬ ìœ„ë°˜");
+            Destroy(gameObject);
+            return;
         }
+    }
+    
 
-        return target;
+    // íƒ€ê²ŸíŒ…
+    public void Targeting()
+    {
+        // íƒ€ê²Ÿ í›„ë³´êµ° ê°€ì ¸ì˜¤ê¸°
+        targetList = FindObjectsOfType<Target>().ToList();
+
+        // íƒ€ê²Ÿì´ ì¡´ì¬í•˜ëŠ” ê²½ìš° : íƒ€ê²ŸíŒ…
+        if (0 < targetList.Count)
+        {
+            // ìš°ì„ ìˆœìœ„ì— ë”°ë¥¸ ì •ë ¬ (ì˜¤ë¦„ì°¨ìˆœ)
+            targetList.Sort((a, b) => a.targetPriority.CompareTo(b.targetPriority));
+
+            // ìµœê³  ìš°ì„  ìˆœìœ„ Targeting
+            target = targetList[0].transform;
+        }
+        else
+        { Debug.Log("ì”¬ì— target ì»´í¬ë„ŒíŠ¸ ì˜¤ë¸Œì íŠ¸ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŒ"); }
+
+
+        // ë””ë²„ê·¸ìš© ë¡œê·¸
+        if (_target == null)
+        { Debug.Log("Targeting ì™„ë£Œí–ˆì§€ë§Œ target == null"); }
     }
 }
