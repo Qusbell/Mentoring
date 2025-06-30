@@ -34,7 +34,7 @@ public class ChaseAction : MoveAction
     }
 
     protected virtual void Start()
-    { SetTarget(TargetManager.instance.Targeting()); }
+    { SetTarget(TargetManager.instance.target); }
 
 
     // 타겟 설정

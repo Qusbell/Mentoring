@@ -25,7 +25,7 @@ abstract public class Monster : Actor
     }
 
     private void Start()
-    { target = TargetManager.instance.Targeting(); }
+    { target = TargetManager.instance.target; }
 
     private void Update()
     { actionStatus(); }

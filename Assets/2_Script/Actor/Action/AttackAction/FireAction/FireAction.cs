@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// <- ¸ó½ºÅÍ¶ó´Â °¡Á¤À¸·Î Á¦ÀÛµÊ
+// <- ëª¬ìŠ¤í„°ë¼ëŠ” ê°€ì •ìœ¼ë¡œ ì œì‘ë¨
 public class FireAction : AttackAction
 {
     protected override void Awake()
@@ -14,34 +14,34 @@ public class FireAction : AttackAction
 
     private void Start()
     {
-        target = TargetManager.instance.Targeting();
+        target = TargetManager.instance.target;
     }
 
-    // ¹ß»çÃ¼
+    // ë°œì‚¬ì²´
     [SerializeField] protected GameObject projectile;
 
-    // ÀÓ½Ã Å¸°Ù
-    public Transform target; // <- ¹İµå½Ã player¸¸À» ÁöÁ¤ÇÏ°Ô µÊ
+    // ì„ì‹œ íƒ€ê²Ÿ
+    public Transform target; // <- ë°˜ë“œì‹œ playerë§Œì„ ì§€ì •í•˜ê²Œ ë¨
 
-    // ¹ß»ç À§Ä¡
+    // ë°œì‚¬ ìœ„ì¹˜
     public Transform firePos;
 
     protected void DoAttack()
     {
         if (projectile != null)
         {
-            // Åõ»çÃ¼ »ı¼ºÇÏ±â
-            GameObject instantProjectile = Instantiate(projectile, firePos.position, this.transform.rotation); // <- ¹ß»ç position Á¶Àı
+            // íˆ¬ì‚¬ì²´ ìƒì„±í•˜ê¸°
+            GameObject instantProjectile = Instantiate(projectile, firePos.position, this.transform.rotation); // <- ë°œì‚¬ position ì¡°ì ˆ
 
-            // Åõ»çÃ¼ ÀÌµ¿ ¹æ½Ä °¡Á®¿È
-            // <- ¿©±â MoveActionÀ» GetComponentÇÑ ´ÙÀ½, as Å°¿öµå·Î ¹Ù²ã³¢¿ì´Â °Ô ÁÁÀ» °Í °°±âµµ ÇÔ
+            // íˆ¬ì‚¬ì²´ ì´ë™ ë°©ì‹ ê°€ì ¸ì˜´
+            // <- ì—¬ê¸° MoveActionì„ GetComponentí•œ ë‹¤ìŒ, as í‚¤ì›Œë“œë¡œ ë°”ê¿”ë¼ìš°ëŠ” ê²Œ ì¢‹ì„ ê²ƒ ê°™ê¸°ë„ í•¨
             ProjectileMove moveAction = instantProjectile.GetComponent<ProjectileMove>();
 
-            // ¹ß»ç ¹æÇâ ÁöÁ¤
+            // ë°œì‚¬ ë°©í–¥ ì§€ì •
             if (moveAction != null)
             { moveAction.SetTarget(target.position); }
-            else { Debug.Log("FireAction : Àß¸øµÈ Projectile µî·ÏµÊ : " + gameObject.name); }
+            else { Debug.Log("FireAction : ì˜ëª»ëœ Projectile ë“±ë¡ë¨ : " + gameObject.name); }
         }
-        else { Debug.Log("Projectile ÁöÁ¤µÇÁö ¾ÊÀ½ : " + gameObject.name); }
+        else { Debug.Log("Projectile ì§€ì •ë˜ì§€ ì•ŠìŒ : " + gameObject.name); }
     }
 }
