@@ -199,6 +199,7 @@ public class CubeCollapser : MonoBehaviour
         );
     }
 
+
     // 떨어지는 상태 업데이트
     private void UpdateFalling()
     {
@@ -217,6 +218,7 @@ public class CubeCollapser : MonoBehaviour
             DeactivateCube();
         }
     }
+
 
     // 붕괴 절차 시작
     private IEnumerator StartCollapseProcedure()
