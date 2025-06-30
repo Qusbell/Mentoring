@@ -93,6 +93,6 @@ abstract public class Spawner : MonoBehaviour
     }
 
     // 스폰 위치 지정
-    public virtual void SetSpawnLocation()
+    protected virtual void SetSpawnLocation()
     { spawnLocation = transform.position; }
 }

@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 109443377}
   - component: {fileID: 109443376}
   m_Layer: 9
-  m_Name: Cube (1)
+  m_Name: spawner
   m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,7 +495,7 @@ MonoBehaviour:
   heightOffset: 0.5
   spawnRate: 1
   startTrigger: 1
-  isEndlessSpawn: 1
+  isEndlessSpawn: 0
 --- !u!65 &109443377
 BoxCollider:
   m_ObjectHideFlags: 0
