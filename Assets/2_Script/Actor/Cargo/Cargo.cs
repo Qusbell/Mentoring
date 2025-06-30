@@ -35,6 +35,7 @@ public class Cargo : Actor
     }
 
     // 목적지 도착을 판정할 distance
+    // <- 기즈모
     [SerializeField] protected float distance = 2f;
 
 

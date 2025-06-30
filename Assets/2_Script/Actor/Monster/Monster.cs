@@ -86,7 +86,7 @@ abstract public class Monster : Actor
         // 공격 가능하다면
         if (InAttackRange() && attackAction.isCanAttack && !doAttack)
         {
-            // <- 원래 공격 판정이 있었던 자리
+            // attackAction.Attack();
             animatior.isAttack = true; // 어택 애니메이션 재생
         }
 
@@ -95,7 +95,6 @@ abstract public class Monster : Actor
         else if (doAttack)
         {
             doAttack = false;
-            //  attackAction.Attack(); // <- 실제 공격 판정 발생
             actionStatus = ReloadStatus; // 공격 후딜레이로 이행 }
         }
     }
