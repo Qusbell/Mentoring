@@ -122,13 +122,21 @@ public class CubeCollapser : MonoBehaviour
             // 트리거로 설정
             triggerCol.isTrigger = true;
 
-            // TriggerArea 컴포넌트 확인 및 추가
-            TriggerArea triggerAreaComponent = triggerArea.GetComponent<TriggerArea>();
-            if (triggerAreaComponent == null)
+            // SimpleTriggerForCollapser 컴포넌트 확인 및 추가
+            SimpleTriggerForCollapser triggerComponent = triggerArea.GetComponent<SimpleTriggerForCollapser>();
+            if (triggerComponent == null)
             {
-                triggerAreaComponent = triggerArea.AddComponent<TriggerArea>();
+                triggerComponent = triggerArea.AddComponent<SimpleTriggerForCollapser>();
                 if (showDebugLog)
-                    Debug.Log($"[{gameObject.name}] 트리거 영역에 TriggerArea가 자동 추가됨: {triggerArea.name}");
+                    Debug.Log($"[{gameObject.name}] 트리거 영역에 SimpleTriggerForCollapser가 자동 추가됨: {triggerArea.name}");
+            }
+
+            // 자기 자신을 타겟으로 등록
+            if (!triggerComponent.targetCollapsers.Contains(this))
+            {
+                triggerComponent.targetCollapsers.Add(this);
+                if (showDebugLog)
+                    Debug.Log($"[{gameObject.name}] 자기 자신이 트리거 타겟으로 등록됨");
             }
 
             if (showDebugLog)
