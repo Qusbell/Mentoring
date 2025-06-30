@@ -5091,7 +5091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33
+      value: 32.9
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18308,6 +18308,7 @@ MonoBehaviour:
   - {fileID: 0}
   heightOffset: 0.5
   spawnRate: 0
+  startTrigger: 0
   isEndlessSpawn: 0
 --- !u!114 &1240735868
 MonoBehaviour:
@@ -24055,6 +24056,14 @@ PrefabInstance:
     - target: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_Name
       value: Cube_Grass (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: oneTimeUse
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay

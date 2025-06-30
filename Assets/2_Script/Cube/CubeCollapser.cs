@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// 단순화된 큐브 붕괴 컴포넌트
 /// 플레이어 접근, 시간 경과, 외부 트리거, 에리어 트리거에 의해 붕괴되는 큐브
-/// 에리어 트리거 모드에서는 다른 큐브들도 함께 붕괴 가능
 /// </summary>
 public class CubeCollapser : MonoBehaviour
 {
@@ -19,7 +17,7 @@ public class CubeCollapser : MonoBehaviour
         Time,            // 시간 기반 (일정 시간 후 붕괴)
         PlayerProximity, // 플레이어 근접
         ExternalTrigger, // 외부 호출에 의한 트리거
-        AreaTrigger      // 에리어 트리거 (다른 큐브들도 함께 붕괴)
+        AreaTrigger      // 에리어 트리거 (플레이어가 영역에 들어오면 붕괴)
     }
 
     [Tooltip("플레이어 태그")]
@@ -104,7 +102,7 @@ public class CubeCollapser : MonoBehaviour
         {
             // 콜라이더가 없으면 박스 콜라이더 추가
             col = gameObject.AddComponent<BoxCollider>();
-            Debug.Log($"[{gameObject.name}] 에리어 트리거용 BoxCollider가 자동 추가되었습니다.");
+            Debug.Log($"[{gameObject.name}] 에리어 트리거용 BoxCollider가 자동 추가됨.");
         }
 
         // 트리거로 설정
@@ -244,24 +242,6 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-    // 추가 큐브들 순차적으로 붕괴 트리거
-    private IEnumerator TriggerAdditionalCubes()
-    {
-        foreach (var cube in additionalCubes)
-        {
-            if (cube != null && cube != this && cube.currentState == CubeState.Idle)
-            {
-                cube.TriggerCollapse();
-
-                // 간격이 설정되어 있으면 대기
-                if (collapseInterval > 0)
-                {
-                    yield return new WaitForSeconds(collapseInterval);
-                }
-            }
-        }
-    }
-
     // 큐브 비활성화
     private void DeactivateCube()
     {
@@ -299,7 +279,7 @@ public class CubeCollapser : MonoBehaviour
                     if (triggerType == TriggerType.AreaTrigger)
                     {
                         hasTriggered = true;
-                        Debug.Log($"[{gameObject.name}] 에리어 트리거 발동! 붕괴 시작");
+                        Debug.Log($"[{gameObject.name}] 에리어 트리거 발동 붕괴 시작");
                     }
                     StartCoroutine(StartCollapseProcedure());
                 }
@@ -326,36 +306,9 @@ public class CubeCollapser : MonoBehaviour
         transform.position = originalPosition;
     }
 
-    // 디버그용: 씬에서 트리거 영역 시각화
+    // 디버그용 시각화 제거됨 (깔끔한 씬 뷰)
     void OnDrawGizmos()
     {
-        if (triggerType == TriggerType.PlayerProximity)
-        {
-            Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f); // 주황색, 반투명
-            Gizmos.DrawWireSphere(transform.position, triggerDistance);
-        }
-        else if (triggerType == TriggerType.AreaTrigger)
-        {
-            // 에리어 트리거 영역 표시
-            Collider col = GetComponent<Collider>();
-            if (col != null)
-            {
-                Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.3f); // 빨간색, 반투명
-                if (col is BoxCollider)
-                {
-                    BoxCollider box = col as BoxCollider;
-                    Matrix4x4 oldMatrix = Gizmos.matrix;
-                    Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
-                    Gizmos.DrawCube(box.center, box.size);
-                    Gizmos.matrix = oldMatrix;
-                }
-                else
-                {
-                    Gizmos.DrawWireCube(col.bounds.center, col.bounds.size);
-                }
-            }
-
-            // 연결된 큐브들과 연결선 표시 (제거됨 - 단순화)
-        }
+        // 모든 시각화 제거됨
     }
 }
