@@ -36,6 +36,11 @@ abstract public class Monster : Actor
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
+
+
+
+    // ===== 상태 =====
+
     // 생성 상태
     private void SpawnState()
     {
@@ -79,18 +84,18 @@ abstract public class Monster : Actor
     private void AttackStatus()
     {
         // 공격 가능하다면
-        if (InAttackRange() && attackAction.isCanAttack)
+        if (InAttackRange() && attackAction.isCanAttack && !doAttack)
         {
-            attackAction.Attack();
+            // <- 원래 공격 판정이 있었던 자리
             animatior.isAttack = true; // 어택 애니메이션 재생
         }
 
         if (animatior.CheckAnimationName("Attack"))
         { doAttack = true; }
-
-        if (doAttack && !animatior.CheckAnimationName("Attack"))
+        else if (doAttack)
         {
             doAttack = false;
+            //  attackAction.Attack(); // <- 실제 공격 판정 발생
             actionStatus = ReloadStatus; // 공격 후딜레이로 이행 }
         }
     }
