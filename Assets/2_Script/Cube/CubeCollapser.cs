@@ -3,64 +3,58 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ´Ü¼øÈ­µÈ Å¥ºê ºØ±« ÄÄÆ÷³ÍÆ®
-/// ÇÃ·¹ÀÌ¾î Á¢±Ù, ½Ã°£ °æ°ú, ¿ÜºÎ Æ®¸®°Å, ¿¡¸®¾î Æ®¸®°Å¿¡ ÀÇÇØ ºØ±«µÇ´Â Å¥ºê
-/// ¿¡¸®¾î Æ®¸®°Å ¸ğµå¿¡¼­´Â ´Ù¸¥ Å¥ºêµéµµ ÇÔ²² ºØ±« °¡´É
+/// ë‹¨ìˆœí™”ëœ íë¸Œ ë¶•ê´´ ì»´í¬ë„ŒíŠ¸
+/// í”Œë ˆì´ì–´ ì ‘ê·¼, ì‹œê°„ ê²½ê³¼, ì™¸ë¶€ íŠ¸ë¦¬ê±°, ì—ë¦¬ì–´ íŠ¸ë¦¬ê±°ì— ì˜í•´ ë¶•ê´´ë˜ëŠ” íë¸Œ
+/// ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ëª¨ë“œì—ì„œëŠ” ë‹¤ë¥¸ íë¸Œë“¤ë„ í•¨ê»˜ ë¶•ê´´ ê°€ëŠ¥
 /// </summary>
 public class CubeCollapser : MonoBehaviour
 {
-    [Header("Æ®¸®°Å ¼³Á¤")]
-    [Tooltip("ºØ±« Æ®¸®°Å À¯Çü")]
+    [Header("íŠ¸ë¦¬ê±° ì„¤ì •")]
+    [Tooltip("ë¶•ê´´ íŠ¸ë¦¬ê±° ìœ í˜•")]
     public TriggerType triggerType = TriggerType.PlayerProximity;
 
-    // Æ®¸®°Å Å¸ÀÔ Á¤ÀÇ
+    // íŠ¸ë¦¬ê±° íƒ€ì… ì •ì˜
     public enum TriggerType
     {
-        Time,            // ½Ã°£ ±â¹İ (ÀÏÁ¤ ½Ã°£ ÈÄ ºØ±«)
-        PlayerProximity, // ÇÃ·¹ÀÌ¾î ±ÙÁ¢
-        ExternalTrigger, // ¿ÜºÎ È£Ãâ¿¡ ÀÇÇÑ Æ®¸®°Å
-        AreaTrigger      // ¿¡¸®¾î Æ®¸®°Å (´Ù¸¥ Å¥ºêµéµµ ÇÔ²² ºØ±«)
+        Time,            // ì‹œê°„ ê¸°ë°˜ (ì¼ì • ì‹œê°„ í›„ ë¶•ê´´)
+        PlayerProximity, // í”Œë ˆì´ì–´ ê·¼ì ‘
+        ExternalTrigger, // ì™¸ë¶€ í˜¸ì¶œì— ì˜í•œ íŠ¸ë¦¬ê±°
+        AreaTrigger      // ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° (ë‹¤ë¥¸ íë¸Œë“¤ë„ í•¨ê»˜ ë¶•ê´´)
     }
 
-    [Tooltip("ÇÃ·¹ÀÌ¾î ÅÂ±×")]
+    [Tooltip("í”Œë ˆì´ì–´ íƒœê·¸")]
     public string playerTag = "Player";
 
-    [Tooltip("ÇÃ·¹ÀÌ¾î ±ÙÁ¢ Æ®¸®°Å °Å¸®")]
+    [Tooltip("í”Œë ˆì´ì–´ ê·¼ì ‘ íŠ¸ë¦¬ê±° ê±°ë¦¬")]
     public float triggerDistance = 0.1f;
 
-    [Tooltip("ºØ±« Àü ´ë±â ½Ã°£ (ÃÊ)")]
+    [Tooltip("ë¶•ê´´ ì „ ëŒ€ê¸° ì‹œê°„ (ì´ˆ)")]
     public float warningDelay = 1f;
 
-    [Header("¿¡¸®¾î Æ®¸®°Å ¼³Á¤ (AreaTrigger ¸ğµå¿ë)")]
-    [Tooltip("ÇÔ²² ºØ±«½ÃÅ³ ´Ù¸¥ Å¥ºêµé")]
-    public List<CubeCollapser> additionalCubes = new List<CubeCollapser>();
-
-    [Tooltip("°¢ Å¥ºê °£ ºØ±« °£°İ (ÃÊ, 0ÀÌ¸é µ¿½Ã¿¡ ºØ±«)")]
-    public float collapseInterval = 0.1f;
-
-    [Tooltip("ÇÑ ¹ø¸¸ Æ®¸®°ÅµÇ´ÂÁö ¿©ºÎ")]
+    [Header("ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ì„¤ì • (AreaTrigger ëª¨ë“œìš©)")]
+    [Tooltip("í•œ ë²ˆë§Œ íŠ¸ë¦¬ê±°ë˜ëŠ”ì§€ ì—¬ë¶€")]
     public bool oneTimeUse = true;
 
-    // ³»ºÎ °íÁ¤ ¼³Á¤ (Inspector¿¡¼­ ¼öÁ¤ ºÒ°¡)
-    private const float COLLAPSE_SPEED = 15f;         // ºØ±« ¼Óµµ
-    private const float DEACTIVATE_DISTANCE = 10f;   // ºñÈ°¼ºÈ­ °Å¸®
-    private const float DEACTIVATE_TIME = 2f;        // ºñÈ°¼ºÈ­ ½Ã°£
-    private const float SHAKE_DURATION = 2.0f;       // Èçµé¸² Áö¼Ó ½Ã°£
-    private const float INITIAL_SHAKE_INTENSITY = 0.05f; // ÃÊ±â Èçµé¸² °­µµ
-    private const float MAX_SHAKE_INTENSITY = 0.2f;  // ÃÖ´ë Èçµé¸² °­µµ
-    private const float SHAKE_SPEED = 5f;           // Èçµé¸² ¼Óµµ
-    private const float SHAKE_ACCELERATION = 5.0f;   // Èçµé¸² °¡¼ÓÈ­ ºñÀ²
+    // ë‚´ë¶€ ê³ ì • ì„¤ì • (Inspectorì—ì„œ ìˆ˜ì • ë¶ˆê°€)
+    private const float COLLAPSE_SPEED = 15f;         // ë¶•ê´´ ì†ë„
+    private const float DEACTIVATE_DISTANCE = 10f;   // ë¹„í™œì„±í™” ê±°ë¦¬
+    private const float DEACTIVATE_TIME = 2f;        // ë¹„í™œì„±í™” ì‹œê°„
+    private const float SHAKE_DURATION = 2.0f;       // í”ë“¤ë¦¼ ì§€ì† ì‹œê°„
+    private const float INITIAL_SHAKE_INTENSITY = 0.05f; // ì´ˆê¸° í”ë“¤ë¦¼ ê°•ë„
+    private const float MAX_SHAKE_INTENSITY = 0.2f;  // ìµœëŒ€ í”ë“¤ë¦¼ ê°•ë„
+    private const float SHAKE_SPEED = 5f;           // í”ë“¤ë¦¼ ì†ë„
+    private const float SHAKE_ACCELERATION = 5.0f;   // í”ë“¤ë¦¼ ê°€ì†í™” ë¹„ìœ¨
 
-    // Å¥ºê »óÅÂ Á¤ÀÇ
+    // íë¸Œ ìƒíƒœ ì •ì˜
     private enum CubeState
     {
-        Idle,       // ´ë±â »óÅÂ
-        Shaking,    // Èçµé¸² »óÅÂ
-        Falling,    // ¶³¾îÁö´Â »óÅÂ
-        Collapsed   // ºØ±« ¿Ï·á
+        Idle,       // ëŒ€ê¸° ìƒíƒœ
+        Shaking,    // í”ë“¤ë¦¼ ìƒíƒœ
+        Falling,    // ë–¨ì–´ì§€ëŠ” ìƒíƒœ
+        Collapsed   // ë¶•ê´´ ì™„ë£Œ
     }
 
-    // ³»ºÎ º¯¼ö
+    // ë‚´ë¶€ ë³€ìˆ˜
     private CubeState currentState = CubeState.Idle;
     private Transform playerTransform;
     private Vector3 originalPosition;
@@ -68,18 +62,18 @@ public class CubeCollapser : MonoBehaviour
     private float fallenDistance = 0f;
     private float shakeTimer = 0f;
     private float sqrTriggerDistance;
-    private bool hasTriggered = false; // ¿¡¸®¾î Æ®¸®°Å¿ë
+    private bool hasTriggered = false; // ì—ë¦¬ì–´ íŠ¸ë¦¬ê±°ìš©
 
-    // ½ÃÀÛ ½Ã ÃÊ±âÈ­
+    // ì‹œì‘ ì‹œ ì´ˆê¸°í™”
     void Awake()
     {
-        // ¿ø·¡ À§Ä¡ ÀúÀå
+        // ì›ë˜ ìœ„ì¹˜ ì €ì¥
         originalPosition = transform.position;
 
-        // °Å¸® °è»ê ÃÖÀûÈ­¸¦ À§ÇÑ Á¦°ö°ª ¹Ì¸® °è»ê
+        // ê±°ë¦¬ ê³„ì‚° ìµœì í™”ë¥¼ ìœ„í•œ ì œê³±ê°’ ë¯¸ë¦¬ ê³„ì‚°
         sqrTriggerDistance = triggerDistance * triggerDistance;
 
-        // ¿¡¸®¾î Æ®¸®°Å ¸ğµå¿¡¼­ Äİ¶óÀÌ´õ ¼³Á¤
+        // ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ëª¨ë“œì—ì„œ ì½œë¼ì´ë” ì„¤ì •
         if (triggerType == TriggerType.AreaTrigger)
         {
             SetupAreaTrigger();
@@ -88,39 +82,39 @@ public class CubeCollapser : MonoBehaviour
 
     void Start()
     {
-        // ÇÃ·¹ÀÌ¾î Ã£±â (ÇÑ ¹ø¸¸ ½ÇÇà)
+        // í”Œë ˆì´ì–´ ì°¾ê¸° (í•œ ë²ˆë§Œ ì‹¤í–‰)
         GameObject player = GameObject.FindGameObjectWithTag(playerTag);
         if (player != null)
         {
             playerTransform = player.transform;
         }
 
-        // ½Ã°£ Æ®¸®°ÅÀÎ °æ¿ì ÀÚµ¿À¸·Î ºØ±« ½ÃÀÛ
+        // ì‹œê°„ íŠ¸ë¦¬ê±°ì¸ ê²½ìš° ìë™ìœ¼ë¡œ ë¶•ê´´ ì‹œì‘
         if (triggerType == TriggerType.Time)
         {
             StartCoroutine(StartCollapseProcedure());
         }
     }
 
-    // ¿¡¸®¾î Æ®¸®°Å¿ë Äİ¶óÀÌ´õ ¼³Á¤
+    // ì—ë¦¬ì–´ íŠ¸ë¦¬ê±°ìš© ì½œë¼ì´ë” ì„¤ì •
     private void SetupAreaTrigger()
     {
         Collider col = GetComponent<Collider>();
         if (col == null)
         {
-            // Äİ¶óÀÌ´õ°¡ ¾øÀ¸¸é ¹Ú½º Äİ¶óÀÌ´õ Ãß°¡
+            // ì½œë¼ì´ë”ê°€ ì—†ìœ¼ë©´ ë°•ìŠ¤ ì½œë¼ì´ë” ì¶”ê°€
             col = gameObject.AddComponent<BoxCollider>();
-            Debug.Log($"[{gameObject.name}] ¿¡¸®¾î Æ®¸®°Å¿ë BoxCollider°¡ ÀÚµ¿ Ãß°¡µÇ¾ú½À´Ï´Ù.");
+            Debug.Log($"[{gameObject.name}] ì—ë¦¬ì–´ íŠ¸ë¦¬ê±°ìš© BoxColliderê°€ ìë™ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
 
-        // Æ®¸®°Å·Î ¼³Á¤
+        // íŠ¸ë¦¬ê±°ë¡œ ì„¤ì •
         col.isTrigger = true;
     }
 
-    // ¸Å ÇÁ·¹ÀÓ ½ÇÇà 
+    // ë§¤ í”„ë ˆì„ ì‹¤í–‰ 
     void Update()
     {
-        // ÇöÀç »óÅÂ¿¡ µû¸¥ Ã³¸®
+        // í˜„ì¬ ìƒíƒœì— ë”°ë¥¸ ì²˜ë¦¬
         switch (currentState)
         {
             case CubeState.Idle:
@@ -136,12 +130,12 @@ public class CubeCollapser : MonoBehaviour
                 break;
 
             case CubeState.Collapsed:
-                // ÀÌ¹Ì ºØ±«µÊ - ¾Æ¹«°Íµµ ÇÏÁö ¾ÊÀ½
+                // ì´ë¯¸ ë¶•ê´´ë¨ - ì•„ë¬´ê²ƒë„ í•˜ì§€ ì•ŠìŒ
                 break;
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î ±ÙÁ¢ È®ÀÎ
+    // í”Œë ˆì´ì–´ ê·¼ì ‘ í™•ì¸
     private void CheckPlayerProximity()
     {
         if (triggerType != TriggerType.PlayerProximity || playerTransform == null) return;
@@ -153,110 +147,104 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-    // Èçµé¸² »óÅÂ ¾÷µ¥ÀÌÆ®
+    // í”ë“¤ë¦¼ ìƒíƒœ ì—…ë°ì´íŠ¸
     private void UpdateShaking()
     {
-        // Èçµé¸² Å¸ÀÌ¸Ó Áõ°¡
+        // í”ë“¤ë¦¼ íƒ€ì´ë¨¸ ì¦ê°€
         shakeTimer += Time.deltaTime;
 
-        // Æ¯Á¤ ½Ã°£ÀÌ Áö³ª¸é Èçµé¸² ´Ü°è ¿Ï·á
+        // íŠ¹ì • ì‹œê°„ì´ ì§€ë‚˜ë©´ í”ë“¤ë¦¼ ë‹¨ê³„ ì™„ë£Œ
         if (shakeTimer >= SHAKE_DURATION)
         {
-            // Èçµé¸² Á¾·á, ¶³¾îÁö±â ½ÃÀÛ
+            // í”ë“¤ë¦¼ ì¢…ë£Œ, ë–¨ì–´ì§€ê¸° ì‹œì‘
             currentState = CubeState.Falling;
 
-            // ¿ÀºêÁ§Æ® À§Ä¡¸¦ ¿ø·¡ À§Ä¡·Î Á¤È®È÷ ÀçÁ¶Á¤ (Èçµé¸² ÁßÁö)
+            // ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜ë¥¼ ì›ë˜ ìœ„ì¹˜ë¡œ ì •í™•íˆ ì¬ì¡°ì • (í”ë“¤ë¦¼ ì¤‘ì§€)
             transform.position = new Vector3(
                 originalPosition.x,
-                transform.position.y,  // Y À¯Áö
+                transform.position.y,  // Y ìœ ì§€
                 originalPosition.z
             );
 
             return;
         }
 
-        // ÁøÇà·ü¿¡ µû¶ó Èçµé¸² °­µµ °è»ê (Áö¼öÀûÀ¸·Î Áõ°¡)
-        float progress = shakeTimer / SHAKE_DURATION; // 0 ~ 1 ¹üÀ§
+        // ì§„í–‰ë¥ ì— ë”°ë¼ í”ë“¤ë¦¼ ê°•ë„ ê³„ì‚° (ì§€ìˆ˜ì ìœ¼ë¡œ ì¦ê°€)
+        float progress = shakeTimer / SHAKE_DURATION; // 0 ~ 1 ë²”ìœ„
 
-        // ºñ¼±Çü Èçµé¸² °­µµ (½Ã°£ÀÌ Áö³¯¼ö·Ï ´õ »¡¸® Áõ°¡)
+        // ë¹„ì„ í˜• í”ë“¤ë¦¼ ê°•ë„ (ì‹œê°„ì´ ì§€ë‚ ìˆ˜ë¡ ë” ë¹¨ë¦¬ ì¦ê°€)
         float intensityFactor = Mathf.Pow(progress, SHAKE_ACCELERATION);
 
-        // ÃÊ±â °­µµ¿¡¼­ ÃÖ´ë °­µµ·Î Áõ°¡
+        // ì´ˆê¸° ê°•ë„ì—ì„œ ìµœëŒ€ ê°•ë„ë¡œ ì¦ê°€
         currentShakeIntensity = Mathf.Lerp(INITIAL_SHAKE_INTENSITY, MAX_SHAKE_INTENSITY, intensityFactor);
 
-        // ½Ã°£ °æ°ú¿¡ µû¶ó ´õ ºü¸£°Ô Èçµé¸² (ÁøÇà·ü¿¡ µû¶ó ¼Óµµ Áõ°¡)
+        // ì‹œê°„ ê²½ê³¼ì— ë”°ë¼ ë” ë¹ ë¥´ê²Œ í”ë“¤ë¦¼ (ì§„í–‰ë¥ ì— ë”°ë¼ ì†ë„ ì¦ê°€)
         float currentShakeSpeed = SHAKE_SPEED * (1f + progress);
 
-        // ½Ã°£¿¡ µû¸¥ Èçµé¸² À§Ä¡ °è»ê
+        // ì‹œê°„ì— ë”°ë¥¸ í”ë“¤ë¦¼ ìœ„ì¹˜ ê³„ì‚°
         float time = Time.time * currentShakeSpeed;
         float xOffset = Mathf.Sin(time * 0.9f) * currentShakeIntensity;
         float zOffset = Mathf.Sin(time * 1.1f) * currentShakeIntensity;
 
-        // ÁøÇà·üÀÌ ³ô¾ÆÁú¼ö·Ï ´õ ¹«ÀÛÀ§ÀûÀÎ ¿òÁ÷ÀÓ Ãß°¡
+        // ì§„í–‰ë¥ ì´ ë†’ì•„ì§ˆìˆ˜ë¡ ë” ë¬´ì‘ìœ„ì ì¸ ì›€ì§ì„ ì¶”ê°€
         if (progress > 0.7f)
         {
             xOffset += Mathf.Sin(time * 2.7f) * currentShakeIntensity * 0.3f;
             zOffset += Mathf.Sin(time * 3.1f) * currentShakeIntensity * 0.3f;
         }
 
-        // À§Ä¡ Àû¿ë (YÃàÀº À¯Áö, X¿Í Z¸¸ º¯°æ)
+        // ìœ„ì¹˜ ì ìš© (Yì¶•ì€ ìœ ì§€, Xì™€ Zë§Œ ë³€ê²½)
         transform.position = new Vector3(
             originalPosition.x + xOffset,
-            transform.position.y,  // YÃàÀº ÇöÀç ³ôÀÌ À¯Áö
+            transform.position.y,  // Yì¶•ì€ í˜„ì¬ ë†’ì´ ìœ ì§€
             originalPosition.z + zOffset
         );
     }
 
-    // ¶³¾îÁö´Â »óÅÂ ¾÷µ¥ÀÌÆ®
+    // ë–¨ì–´ì§€ëŠ” ìƒíƒœ ì—…ë°ì´íŠ¸
     private void UpdateFalling()
     {
-        // ÀÌÀü À§Ä¡ ÀúÀå
+        // ì´ì „ ìœ„ì¹˜ ì €ì¥
         float prevY = transform.position.y;
 
-        // ¾Æ·¡ ¹æÇâÀ¸·Î ÀÌµ¿ (°íÁ¤ ¼Óµµ)
+        // ì•„ë˜ ë°©í–¥ìœ¼ë¡œ ì´ë™ (ê³ ì • ì†ë„)
         transform.Translate(Vector3.down * COLLAPSE_SPEED * Time.deltaTime);
 
-        // ¶³¾îÁø °Å¸® ´©Àû °è»ê
+        // ë–¨ì–´ì§„ ê±°ë¦¬ ëˆ„ì  ê³„ì‚°
         fallenDistance += (prevY - transform.position.y);
 
-        // °Å¸® ±â¹İ ºñÈ°¼ºÈ­ Ã¼Å©
+        // ê±°ë¦¬ ê¸°ë°˜ ë¹„í™œì„±í™” ì²´í¬
         if (fallenDistance >= DEACTIVATE_DISTANCE)
         {
             DeactivateCube();
         }
     }
 
-    // ºØ±« ÀıÂ÷ ½ÃÀÛ
+    // ë¶•ê´´ ì ˆì°¨ ì‹œì‘
     private IEnumerator StartCollapseProcedure()
     {
-        // ÀÌ¹Ì ÁøÇà ÁßÀÌ¸é Ãë¼Ò
+        // ì´ë¯¸ ì§„í–‰ ì¤‘ì´ë©´ ì·¨ì†Œ
         if (currentState != CubeState.Idle) yield break;
 
-        // ¿¡¸®¾î Æ®¸®°Å ¸ğµå¿¡¼­ ´Ù¸¥ Å¥ºêµéµµ ÇÔ²² ºØ±«
-        if (triggerType == TriggerType.AreaTrigger)
-        {
-            StartCoroutine(TriggerAdditionalCubes());
-        }
-
-        // °æ°í ´ë±â ½Ã°£
+        // ê²½ê³  ëŒ€ê¸° ì‹œê°„
         yield return new WaitForSeconds(warningDelay);
 
-        // Èçµé¸² ´Ü°è ½ÃÀÛ
+        // í”ë“¤ë¦¼ ë‹¨ê³„ ì‹œì‘
         currentState = CubeState.Shaking;
         shakeTimer = 0f;
         currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
 
-        // ½Ã°£ ±â¹İ ºñÈ°¼ºÈ­ ¼³Á¤
+        // ì‹œê°„ ê¸°ë°˜ ë¹„í™œì„±í™” ì„¤ì •
         yield return new WaitForSeconds(SHAKE_DURATION + DEACTIVATE_TIME);
 
-        // ¾ÆÁ÷ ºñÈ°¼ºÈ­µÇÁö ¾Ê¾Ò´Ù¸é
+        // ì•„ì§ ë¹„í™œì„±í™”ë˜ì§€ ì•Šì•˜ë‹¤ë©´
         if (currentState != CubeState.Collapsed)
         {
             DeactivateCube();
         }
     }
 
-    // Ãß°¡ Å¥ºêµé ¼øÂ÷ÀûÀ¸·Î ºØ±« Æ®¸®°Å
+    // ì¶”ê°€ íë¸Œë“¤ ìˆœì°¨ì ìœ¼ë¡œ ë¶•ê´´ íŠ¸ë¦¬ê±°
     private IEnumerator TriggerAdditionalCubes()
     {
         foreach (var cube in additionalCubes)
@@ -265,7 +253,7 @@ public class CubeCollapser : MonoBehaviour
             {
                 cube.TriggerCollapse();
 
-                // °£°İÀÌ ¼³Á¤µÇ¾î ÀÖÀ¸¸é ´ë±â
+                // ê°„ê²©ì´ ì„¤ì •ë˜ì–´ ìˆìœ¼ë©´ ëŒ€ê¸°
                 if (collapseInterval > 0)
                 {
                     yield return new WaitForSeconds(collapseInterval);
@@ -274,14 +262,14 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-    // Å¥ºê ºñÈ°¼ºÈ­
+    // íë¸Œ ë¹„í™œì„±í™”
     private void DeactivateCube()
     {
         currentState = CubeState.Collapsed;
         gameObject.SetActive(false);
     }
 
-    // Á÷Á¢ ºØ±« Æ®¸®°Å (¿¡µğÅÍ³ª ´Ù¸¥ ½ºÅ©¸³Æ®¿¡¼­ È£Ãâ °¡´É)
+    // ì§ì ‘ ë¶•ê´´ íŠ¸ë¦¬ê±° (ì—ë””í„°ë‚˜ ë‹¤ë¥¸ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ í˜¸ì¶œ ê°€ëŠ¥)
     public void TriggerCollapse()
     {
         if (currentState == CubeState.Idle)
@@ -290,20 +278,20 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-    // OnTriggerEnter ÀÌº¥Æ® Ã³¸® (Æ®¸®°Å Äİ¶óÀÌ´õ¿Í Ãæµ¹ ½Ã)
+    // OnTriggerEnter ì´ë²¤íŠ¸ ì²˜ë¦¬ (íŠ¸ë¦¬ê±° ì½œë¼ì´ë”ì™€ ì¶©ëŒ ì‹œ)
     private void OnTriggerEnter(Collider other)
     {
-        // ¿ÜºÎ Æ®¸®°Å ¸ğµå ¶Ç´Â ¿¡¸®¾î Æ®¸®°Å ¸ğµå¿¡¼­ Ã³¸®
+        // ì™¸ë¶€ íŠ¸ë¦¬ê±° ëª¨ë“œ ë˜ëŠ” ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ëª¨ë“œì—ì„œ ì²˜ë¦¬
         if ((triggerType == TriggerType.ExternalTrigger || triggerType == TriggerType.AreaTrigger) &&
             currentState == CubeState.Idle)
         {
-            // ¿¡¸®¾î Æ®¸®°Å ¸ğµå¿¡¼­ ÇÑ ¹ø¸¸ Æ®¸®°Å È®ÀÎ
+            // ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ëª¨ë“œì—ì„œ í•œ ë²ˆë§Œ íŠ¸ë¦¬ê±° í™•ì¸
             if (triggerType == TriggerType.AreaTrigger && oneTimeUse && hasTriggered)
             {
                 return;
             }
 
-            // ÇÃ·¹ÀÌ¾î ÅÂ±×°¡ ¼³Á¤µÈ °æ¿ì ÅÂ±× È®ÀÎ
+            // í”Œë ˆì´ì–´ íƒœê·¸ê°€ ì„¤ì •ëœ ê²½ìš° íƒœê·¸ í™•ì¸
             if (!string.IsNullOrEmpty(playerTag))
             {
                 if (other.CompareTag(playerTag))
@@ -311,12 +299,12 @@ public class CubeCollapser : MonoBehaviour
                     if (triggerType == TriggerType.AreaTrigger)
                     {
                         hasTriggered = true;
-                        Debug.Log($"[{gameObject.name}] ¿¡¸®¾î Æ®¸®°Å ¹ßµ¿! ¿¬°áµÈ {additionalCubes.Count}°³ Å¥ºê¿Í ÇÔ²² ºØ±« ½ÃÀÛ");
+                        Debug.Log($"[{gameObject.name}] ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ë°œë™! ë¶•ê´´ ì‹œì‘");
                     }
                     StartCoroutine(StartCollapseProcedure());
                 }
             }
-            else // ÅÂ±× ¼³Á¤ÀÌ ¾È µÈ °æ¿ì ¸ğµç Ãæµ¹ Ã³¸®
+            else // íƒœê·¸ ì„¤ì •ì´ ì•ˆ ëœ ê²½ìš° ëª¨ë“  ì¶©ëŒ ì²˜ë¦¬
             {
                 if (triggerType == TriggerType.AreaTrigger)
                 {
@@ -327,7 +315,7 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-    // ºØ±« Å¥ºê ÃÊ±âÈ­ (Àç»ç¿ë ½Ã)
+    // ë¶•ê´´ íë¸Œ ì´ˆê¸°í™” (ì¬ì‚¬ìš© ì‹œ)
     public void Reset()
     {
         StopAllCoroutines();
@@ -338,21 +326,21 @@ public class CubeCollapser : MonoBehaviour
         transform.position = originalPosition;
     }
 
-    // µğ¹ö±×¿ë: ¾À¿¡¼­ Æ®¸®°Å ¿µ¿ª ½Ã°¢È­
+    // ë””ë²„ê·¸ìš©: ì”¬ì—ì„œ íŠ¸ë¦¬ê±° ì˜ì—­ ì‹œê°í™”
     void OnDrawGizmos()
     {
         if (triggerType == TriggerType.PlayerProximity)
         {
-            Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f); // ÁÖÈ²»ö, ¹İÅõ¸í
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.3f); // ì£¼í™©ìƒ‰, ë°˜íˆ¬ëª…
             Gizmos.DrawWireSphere(transform.position, triggerDistance);
         }
         else if (triggerType == TriggerType.AreaTrigger)
         {
-            // ¿¡¸®¾î Æ®¸®°Å ¿µ¿ª Ç¥½Ã
+            // ì—ë¦¬ì–´ íŠ¸ë¦¬ê±° ì˜ì—­ í‘œì‹œ
             Collider col = GetComponent<Collider>();
             if (col != null)
             {
-                Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.3f); // »¡°£»ö, ¹İÅõ¸í
+                Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.3f); // ë¹¨ê°„ìƒ‰, ë°˜íˆ¬ëª…
                 if (col is BoxCollider)
                 {
                     BoxCollider box = col as BoxCollider;
@@ -367,15 +355,7 @@ public class CubeCollapser : MonoBehaviour
                 }
             }
 
-            // ¿¬°áµÈ Å¥ºêµé°ú ¿¬°á¼± Ç¥½Ã
-            Gizmos.color = new Color(1f, 1f, 0f, 0.5f); // ³ë¶õ»ö
-            foreach (var cube in additionalCubes)
-            {
-                if (cube != null)
-                {
-                    Gizmos.DrawLine(transform.position, cube.transform.position);
-                }
-            }
+            // ì—°ê²°ëœ íë¸Œë“¤ê³¼ ì—°ê²°ì„  í‘œì‹œ (ì œê±°ë¨ - ë‹¨ìˆœí™”)
         }
     }
 }
