@@ -68,14 +68,11 @@ public class MonsterSpawner : Spawner
 
         // 나머지 콜라이더들 범위 모두 합치기
         for (int i = 1; i < allColliders.Length; i++)
-        {
-            combinedBounds.Encapsulate(allColliders[i].bounds);
-        }
-
-        Debug.Log($"[{gameObject.name}] 하위 콜라이더 {allColliders.Length}개의 범위 계산 완료. 크기: {combinedBounds.size}");
+        { combinedBounds.Encapsulate(allColliders[i].bounds); }
 
         return combinedBounds;
     }
+    
 
     // ===== 트리거 / 생성 / 완료 =====
     // 1. 스포너 활성화 (MonsterCube에서 호출)
@@ -97,6 +94,7 @@ public class MonsterSpawner : Spawner
         if (spawnTrigger)
         {
             // 오브젝트 생성
+            Debug.Log(PrefabIndex + "번째 몬스터 생성");
             base.SpawnObject();
 
             // 종료 체크
@@ -107,15 +105,14 @@ public class MonsterSpawner : Spawner
         }
     }
 
+
     // 종료 확인
     public override void CheckCompleted()
     {
         // 모든 프리펩을 생성했다면
-        if (targetPrefabs.Count <= PrefabIndex + 1)
+        if (targetPrefabs.Count <= PrefabIndex)
         {
-            Debug.Log($"[{gameObject.name}] 몬스터 스폰 완료");
             base.CheckCompleted();
-
             // 주기적 스포너라면: 리셋 발생
             if (isEndlessSpawn) { ResetSpawner();}
         }

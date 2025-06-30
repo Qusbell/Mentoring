@@ -17,11 +17,14 @@ abstract public class Spawner : MonoBehaviour
     private int _prefabIndex = 0;
     public int PrefabIndex
     {
-        get { return _prefabIndex; }
+        get
+        {
+            return _prefabIndex % targetPrefabs.Count;
+        }
         protected set
         {
             // null 검사 && 인덱스 검사
-            if (targetPrefabs != null && 0 <= value && value < targetPrefabs.Count)
+            if (targetPrefabs != null && 0 <= value)
             { _prefabIndex = value; }
         }
     }

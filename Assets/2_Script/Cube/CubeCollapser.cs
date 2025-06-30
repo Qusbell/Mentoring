@@ -244,6 +244,9 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
+
+    /* <- 컴파일 오류 회피용 통째로 주석처리
+
     // 추가 큐브들 순차적으로 붕괴 트리거
     private IEnumerator TriggerAdditionalCubes()
     {
@@ -261,6 +264,8 @@ public class CubeCollapser : MonoBehaviour
             }
         }
     }
+    */
+
 
     // 큐브 비활성화
     private void DeactivateCube()
