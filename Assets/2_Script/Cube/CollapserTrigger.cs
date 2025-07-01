@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// CubeCollapser 전용 간단한 트리거 (기존 TriggerArea와 분리)
+/// CubeCollapser 전용 간단한 트리거
 /// </summary>
-public class SimpleTriggerForCollapser : MonoBehaviour
+public class CollapseTrigger : MonoBehaviour
 {
     [Tooltip("붕괴시킬 CubeCollapser들")]
     public List<CubeCollapser> targetCollapsers = new List<CubeCollapser>();
@@ -20,7 +20,7 @@ public class SimpleTriggerForCollapser : MonoBehaviour
         if (other.CompareTag(playerTag))
         {
             if (showDebugLog)
-                Debug.Log($"[{gameObject.name}] 플레이어 감지");
+                Debug.Log($"[{gameObject.name}] 플레이어 감지!");
 
             foreach (CubeCollapser collapser in targetCollapsers)
             {
@@ -29,7 +29,7 @@ public class SimpleTriggerForCollapser : MonoBehaviour
                     collapser.TriggerCollapse();
 
                     if (showDebugLog)
-                        Debug.Log($"[{gameObject.name}] 큐브 [{collapser.gameObject.name}] 붕괴 트리거");
+                        Debug.Log($"[{gameObject.name}] 큐브 [{collapser.gameObject.name}] 붕괴 트리거!");
                 }
             }
         }

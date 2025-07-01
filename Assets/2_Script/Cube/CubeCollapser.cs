@@ -122,13 +122,13 @@ public class CubeCollapser : MonoBehaviour
             // 트리거로 설정
             triggerCol.isTrigger = true;
 
-            // SimpleTriggerForCollapser 컴포넌트 확인 및 추가
-            SimpleTriggerForCollapser triggerComponent = triggerArea.GetComponent<SimpleTriggerForCollapser>();
+            // CollapseTrigger 컴포넌트 확인 및 추가
+            CollapseTrigger triggerComponent = triggerArea.GetComponent<CollapseTrigger>();
             if (triggerComponent == null)
             {
-                triggerComponent = triggerArea.AddComponent<SimpleTriggerForCollapser>();
+                triggerComponent = triggerArea.AddComponent<CollapseTrigger>();
                 if (showDebugLog)
-                    Debug.Log($"[{gameObject.name}] 트리거 영역에 SimpleTriggerForCollapser가 자동 추가됨: {triggerArea.name}");
+                    Debug.Log($"[{gameObject.name}] 트리거 영역에 CollapseTrigger가 자동 추가됨: {triggerArea.name}");
             }
 
             // 자기 자신을 타겟으로 등록
@@ -342,11 +342,11 @@ public class CubeCollapser : MonoBehaviour
                 {
                     hasTriggered = true;
                     if (showDebugLog)
-                        Debug.Log($"[{gameObject.name}] 에리어 트리거 발동 플레이어가 영역 [{triggerArea?.name}]에 진입");
+                        Debug.Log($"[{gameObject.name}] 에리어 트리거 발동! 플레이어가 영역 [{triggerArea?.name}]에 진입");
                 }
                 else if (showDebugLog)
                 {
-                    Debug.Log($"[{gameObject.name}] 외부 트리거 발동 플레이어 접촉");
+                    Debug.Log($"[{gameObject.name}] 외부 트리거 발동! 플레이어 접촉");
                 }
 
                 StartCoroutine(StartCollapseProcedure());
