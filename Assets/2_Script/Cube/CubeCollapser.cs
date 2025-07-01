@@ -281,8 +281,17 @@ public class CubeCollapser : MonoBehaviour
         if (showDebugLog)
             Debug.Log($"[{gameObject.name}] 붕괴 시작! 트리거 타입: {triggerType}");
 
-        // 경고 대기 시간
-        yield return new WaitForSeconds(warningDelay);
+        // Area Trigger는 즉시 붕괴, 다른 트리거는 Warning Delay 적용
+        float actualWarningDelay = (triggerType == TriggerType.AreaTrigger) ? 0f : warningDelay;
+
+        if (actualWarningDelay > 0f)
+        {
+            if (showDebugLog)
+                Debug.Log($"[{gameObject.name}] {actualWarningDelay}초 경고 대기 중...");
+        }
+
+        // 경고 대기 시간 (Area Trigger는 0초)
+        yield return new WaitForSeconds(actualWarningDelay);
 
         // 흔들림 단계 시작
         currentState = CubeState.Shaking;
