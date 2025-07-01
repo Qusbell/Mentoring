@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 // [RequireComponent(typeof(MeleeBasicAttack))]
+[RequireComponent(typeof(BasicWeaponAttack))]
 public class MinionMonster : Monster
 {
     protected override void AttackStatus()

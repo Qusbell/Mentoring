@@ -9,7 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMove))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(JumpAction))]
-[RequireComponent(typeof(MeleeBasicAttack))]
+[RequireComponent(typeof(BasicWeaponAttack))]
 [RequireComponent(typeof(DamageReaction))]
 public class Player : Actor
 {

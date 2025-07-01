@@ -11,8 +11,6 @@ public class BasicWeaponAttack : AttackAction
     // 무기가 활성화되어있을 시간
     [SerializeField] private float weaponActiveTime = 1f;
 
-
-
     // ActorWeapon 캐시
     private ActorWeapon weapon = null;
 

@@ -75,11 +75,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.31
+      value: 8.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.81
+      value: 0.255
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -422,9 +422,6 @@ PrefabInstance:
       addedObject: {fileID: 1520399751604937701}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 549557112800401863}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1539455233351821605}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       insertIndex: -1
@@ -435,6 +432,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1418905534921212663}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 52846371049484032}
     - targetCorrespondingSourceObject: {fileID: 3862085102932151524, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5615804469478134038}
@@ -580,23 +580,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 13
---- !u!114 &549557112800401863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2559950472237959294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85eff001cdfd1b0449953927808f202f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 1
-  <attackRange>k__BackingField: 3
-  targetTag: 
-  attackRate: 1
-  attackAngle: 360
 --- !u!114 &1539455233351821605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,7 +631,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetList: []
-  targetTag: Player
+--- !u!114 &52846371049484032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2559950472237959294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 1
+  <attackRange>k__BackingField: 3
+  targetTag: 
+  attackRate: 0.5
+  myWeapon: {fileID: 1936351326036441547}
+  weaponActiveTime: 2
 --- !u!4 &2887848445311178001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 528080494839242814, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
