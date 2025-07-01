@@ -107,7 +107,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -166,6 +166,9 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 5
+  triggerArea: {fileID: 0}
+  oneTimeUse: 1
+  showDebugLog: 1
 --- !u!114 &-7016859420567969904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,10 +181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayDistance: 10
-  detectionLayer:
-    serializedVersion: 2
-    m_Bits: 1
   colorChangeStartRatio: 0.5
   fadeStartDistance: 0.5
   fadeDuration: 0.3

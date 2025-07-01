@@ -108,7 +108,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -167,3 +167,6 @@ MonoBehaviour:
   playerTag: Player
   triggerDistance: 2
   warningDelay: 3
+  triggerArea: {fileID: 0}
+  oneTimeUse: 1
+  showDebugLog: 1
