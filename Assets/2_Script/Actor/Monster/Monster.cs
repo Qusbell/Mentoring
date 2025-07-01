@@ -32,7 +32,7 @@ abstract public class Monster : Actor
 
 
     // 공격 사거리 계산
-    bool InAttackRange()
+    protected bool InAttackRange()
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
@@ -49,7 +49,7 @@ abstract public class Monster : Actor
     }
 
     // 대기 상태
-    private void IdleStatus()
+    protected void IdleStatus()
     {
         if (InAttackRange())  // 공격 가능 상태라면
         { actionStatus = AttackStatus; } // 공격으로
@@ -59,7 +59,7 @@ abstract public class Monster : Actor
 
 
     // 이동 상태
-    private void MoveStatus()
+    protected void MoveStatus()
     {
         if (InAttackRange())
         {
@@ -77,11 +77,11 @@ abstract public class Monster : Actor
 
 
     // 공격, 리로드 애니메이션 재생 추가 확인
-    bool doAttack = false;
-    bool doReload = false;
+    protected bool doAttack = false;
+    protected bool doReload = false;
 
     // 공격 상태
-    private void AttackStatus()
+    protected virtual void AttackStatus()
     {
         // 공격 가능하다면
         if (InAttackRange() && attackAction.isCanAttack && !doAttack)
@@ -101,7 +101,7 @@ abstract public class Monster : Actor
 
 
     // 공격 후딜레이 애니메이션 재생
-    private void ReloadStatus()
+    protected void ReloadStatus()
     {
         if (animatior.CheckAnimationName("Reload"))
         { doReload = true; }

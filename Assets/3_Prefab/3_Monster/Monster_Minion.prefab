@@ -1436,12 +1436,12 @@ GameObject:
   - component: {fileID: 8231533210879514318}
   - component: {fileID: -7833144631291186871}
   - component: {fileID: 394994946788186938}
-  - component: {fileID: 157271148904066673}
   - component: {fileID: -9184585946787287395}
   - component: {fileID: -1961226020710905288}
   - component: {fileID: -4275034679557372163}
   - component: {fileID: -4324133006189494714}
   - component: {fileID: 7726280659300360691}
+  - component: {fileID: 5954479926083274602}
   m_Layer: 8
   m_Name: Monster_Minion
   m_TagString: Monster
@@ -1545,23 +1545,6 @@ CapsuleCollider:
   m_Height: 2.2058024
   m_Direction: 1
   m_Center: {x: -0, y: 1.0864282, z: 0}
---- !u!114 &157271148904066673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6143643343095581565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85eff001cdfd1b0449953927808f202f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 1
-  <attackRange>k__BackingField: 2.5
-  targetTag: 
-  attackRate: 1.5
-  attackAngle: 60
 --- !u!195 &-9184585946787287395
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1636,6 +1619,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711a601acc6acb042bc572a625f71354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5954479926083274602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143643343095581565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 1
+  <attackRange>k__BackingField: 2
+  targetTag: 
+  attackRate: 2
+  myWeapon: {fileID: 8939563338791786793}
+  attackActiveTime: 1
 --- !u!1 &6628943230737950743
 GameObject:
   m_ObjectHideFlags: 0

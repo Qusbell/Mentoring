@@ -61,7 +61,8 @@ public class Cargo : Actor
     // 다음 목적지 지정
     protected void SetNext()
     {
-        nowDestination = nowDestination.nextDestination;
+        if (nowDestination.nextDestination != null)
+        { nowDestination = nowDestination.nextDestination; }
     }
 
     // 일시 정지
@@ -81,6 +82,8 @@ public class Cargo : Actor
         else
         {
             isLoopStop = true; // 일시 정지
+
+            // 다음 목적지가 존재한다면 : 다음 목적지 설정 및 실행
             StartCoroutine(Timer.StartTimer(nowDestination.nextStartTimer, () => { isLoopStop = false; })); // n초후 시작
             SetNext();
         }

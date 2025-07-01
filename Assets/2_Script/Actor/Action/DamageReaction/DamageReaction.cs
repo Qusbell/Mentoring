@@ -6,15 +6,15 @@ using UnityEngine;
 
 
 //==================================================
-// ÇÇ°İÀ¸·Î ÀÎÇÑ ÇÇÇØ ¹İÀÀ / »ç¸Á ½Ã Ã³¸®
+// í”¼ê²©ìœ¼ë¡œ ì¸í•œ í”¼í•´ ë°˜ì‘ / ì‚¬ë§ ì‹œ ì²˜ë¦¬
 //==================================================
 public class DamageReaction : MonoBehaviour
 {
-    [SerializeField] protected int maxHp = 10;  // ÃÖ´ë »ı¸í·Â
-    [SerializeField] protected int nowHp = 10;  // ÇöÀç »ı¸í·Â
+    [SerializeField] protected int maxHp = 10;  // ìµœëŒ€ ìƒëª…ë ¥
+    [SerializeField] protected int nowHp = 10;  // í˜„ì¬ ìƒëª…ë ¥
 
 
-    // ÇÇ°İ
+    // í”¼ê²©
     public virtual void TakeDamage(int damage)
     {
         if (damage <= nowHp)
@@ -22,18 +22,18 @@ public class DamageReaction : MonoBehaviour
         else
         { nowHp = 0; }
 
-        Debug.Log("ÇÇ°İ: " + gameObject.name);
+        //  Debug.Log("í”¼ê²©: " + gameObject.name);
 
-        // ÇÇ°İ ¹İÀÀ
+        // í”¼ê²© ë°˜ì‘
         // DamageReaction();
 
-        // Ã¼·ÂÀÌ 0 ÀÌÇÏ·Î ¶³¾îÁö¸é Ã³¸®
+        // ì²´ë ¥ì´ 0 ì´í•˜ë¡œ ë–¨ì–´ì§€ë©´ ì²˜ë¦¬
         if (nowHp <= 0)
         { Die(); }
     }
 
 
-    // »ç¸Á Ã³¸®
+    // ì‚¬ë§ ì²˜ë¦¬
     protected virtual void Die()
     {
 
