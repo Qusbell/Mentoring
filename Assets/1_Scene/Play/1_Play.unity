@@ -171,9 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &14661323
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -687,9 +687,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &37188130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -836,9 +836,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &37316408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,9 +1001,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &61265930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2332,9 +2332,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: -10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &131627554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2934,9 +2934,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: -10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &160513903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3077,9 +3077,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &164747895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4027,9 +4027,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &240426121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4280,9 +4280,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &251900891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4754,7 +4754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_Enabled
@@ -4763,6 +4763,14 @@ PrefabInstance:
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -5011,9 +5019,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &295166445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5885,9 +5893,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &361263479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6813,9 +6821,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &425289162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6890,9 +6898,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &430784310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7279,9 +7287,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: -10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &443003319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7405,9 +7413,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: -10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &461666877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7638,9 +7646,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &480736110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7908,9 +7916,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &498098383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8156,9 +8164,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &518038957
 GameObject:
   m_ObjectHideFlags: 0
@@ -9035,9 +9043,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &591872320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9724,8 +9732,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -10187,9 +10207,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &667661554 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -10331,9 +10351,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &684700433 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -10752,9 +10772,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &728120500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10870,7 +10890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
@@ -10878,7 +10898,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showLaserPath
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -11050,9 +11074,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &746162037
 GameObject:
   m_ObjectHideFlags: 0
@@ -11100,9 +11124,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &746296295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11251,9 +11275,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &747360115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11335,7 +11359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
@@ -11343,11 +11367,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showLaserPath
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -11505,9 +11529,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &778644659
 GameObject:
   m_ObjectHideFlags: 0
@@ -11557,9 +11581,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &778644662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11655,9 +11679,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &789381688
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11972,9 +11996,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &802466969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12218,9 +12242,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &844023098
 GameObject:
   m_ObjectHideFlags: 0
@@ -12270,9 +12294,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &846531746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12410,9 +12434,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &869882516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13221,9 +13245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &933618427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13987,9 +14011,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1002547265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15151,7 +15175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_Enabled
@@ -15160,6 +15184,14 @@ PrefabInstance:
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -15317,9 +15349,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1054983631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15833,9 +15865,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1099267090
 GameObject:
   m_ObjectHideFlags: 0
@@ -15886,9 +15918,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1099267093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15957,9 +15989,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1101584320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16093,9 +16125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1102971741
 GameObject:
   m_ObjectHideFlags: 0
@@ -16240,9 +16272,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1105621187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16702,9 +16734,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1158020601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17188,9 +17220,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1214628120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17252,8 +17284,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -19034,9 +19078,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1281581954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19601,9 +19645,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1315564906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20634,9 +20678,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1405950872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21098,9 +21142,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1429433219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21499,9 +21543,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1460803013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21901,9 +21945,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1475475558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22486,9 +22530,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1543504295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22713,9 +22757,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1563341854
 GameObject:
   m_ObjectHideFlags: 0
@@ -22765,9 +22809,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1563341857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23011,9 +23055,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1572466222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23518,8 +23562,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -23593,9 +23649,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1586575240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23657,8 +23713,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -23730,9 +23798,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1618167192
 GameObject:
   m_ObjectHideFlags: 0
@@ -23782,9 +23850,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1618167195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24196,9 +24264,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1701957788 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647806409915958697, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
@@ -24268,9 +24336,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1720645883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24602,9 +24670,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1753376897
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24741,9 +24809,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1756033293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24855,9 +24923,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1761014675
 GameObject:
   m_ObjectHideFlags: 0
@@ -24907,9 +24975,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1764306012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25844,8 +25912,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -26630,8 +26710,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: moveSpeed
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showLaserPath
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: showEditorPreview
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
@@ -26705,9 +26797,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1846264548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27164,9 +27256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: -10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1874068435
 GameObject:
   m_ObjectHideFlags: 0
@@ -27216,9 +27308,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1881362347
 GameObject:
   m_ObjectHideFlags: 0
@@ -27271,9 +27363,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1897614943
 GameObject:
   m_ObjectHideFlags: 0
@@ -28273,9 +28365,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &1960525743
 GameObject:
   m_ObjectHideFlags: 0
@@ -28325,9 +28417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1960525746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28396,9 +28488,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 10, y: 0, z: 0}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1968764601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28467,9 +28559,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 10}
   moveSpeed: 25
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!114 &1979496835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28536,9 +28628,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &1993251677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29165,9 +29257,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: -10, z: 0}
   moveSpeed: 15
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1001 &2050110141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29693,9 +29785,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &2082972112
 GameObject:
   m_ObjectHideFlags: 0
@@ -29745,9 +29837,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 7
-  showPath: 1
-  showLaserPath: 1
-  showEditorPreview: 1
+  showPath: 0
+  showLaserPath: 0
+  showEditorPreview: 0
 --- !u!1 &2094553757
 GameObject:
   m_ObjectHideFlags: 0
@@ -30311,15 +30403,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalRotation.w
