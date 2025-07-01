@@ -6,15 +6,9 @@ using UnityEngine;
 // <- 몬스터라는 가정으로 제작됨
 public class FireAction : AttackAction
 {
-    protected override void Awake()
-    {
-        base.Awake();
-        doAttack = DoAttack;
-    }
-
     private void Start()
     {
-        target = TargetManager.instance.target;
+        target = TargetManager.instance.target; // <- 여기서 직접 받아와야 하나??
     }
 
     // 발사체
@@ -26,7 +20,7 @@ public class FireAction : AttackAction
     // 발사 위치
     public Transform firePos;
 
-    protected void DoAttack()
+    protected override void DoAttack()
     {
         if (projectile != null)
         {

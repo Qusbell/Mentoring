@@ -5,48 +5,40 @@ using UnityEngine;
 
 
 //==================================================
-// ±ÙÁ¢ ±âº» °ø°İ
+// ê·¼ì ‘ ê¸°ë³¸ ê³µê²©
 //==================================================
 public class MeleeBasicAttack : AttackAction
 {
-    [SerializeField] protected float attackAngle = 90f;  // °ø°İ °¢µµ
+    [SerializeField] protected float attackAngle = 90f;  // ê³µê²© ê°ë„
 
-    protected override void Awake()
+    protected override void DoAttack()
     {
-        base.Awake();
-        doAttack = DoAttack;
-    }
-
-
-
-    protected void DoAttack()
-    {
-        // OverlapSphere¸¦ »ç¿ëÇÏ¿© °ø°İ ¹üÀ§ ³»ÀÇ ¸ğµç Äİ¶óÀÌ´õ¸¦ Ã£À½
-        // <- ´ë»óÀÇ ·¹ÀÌ¾î¸¦ Å½Áö
+        // OverlapSphereë¥¼ ì‚¬ìš©í•˜ì—¬ ê³µê²© ë²”ìœ„ ë‚´ì˜ ëª¨ë“  ì½œë¼ì´ë”ë¥¼ ì°¾ìŒ
+        // <- ëŒ€ìƒì˜ ë ˆì´ì–´ë¥¼ íƒì§€
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
 
-        // °¨ÁöÇÑ ¸ğµç Äİ¶óÀÌ´õ¿¡ ´ëÇØ¼­ ÆÇÁ¤
+        // ê°ì§€í•œ ëª¨ë“  ì½œë¼ì´ë”ì— ëŒ€í•´ì„œ íŒì •
         foreach (Collider hitCollider in hitColliders)
         {
-            // Å¸°Ù ÅÂ±×¸¦ °¡Áø ¿ÀºêÁ§Æ®ÀÎÁö È®ÀÎ
+            // íƒ€ê²Ÿ íƒœê·¸ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ì¸ì§€ í™•ì¸
             if (!hitCollider.CompareTag(targetTag)) { continue; }
 
-            // Å¸°Ù ¹æÇâ º¤ÅÍ °è»ê
+            // íƒ€ê²Ÿ ë°©í–¥ ë²¡í„° ê³„ì‚°
             Vector3 directionToTarget = hitCollider.transform.position - transform.position;
-            directionToTarget.y = 0;  // YÃà °ªÀ» 0À¸·Î ¼³Á¤ (³ôÀÌ Â÷ÀÌ ¹«½Ã)
+            directionToTarget.y = 0;  // Yì¶• ê°’ì„ 0ìœ¼ë¡œ ì„¤ì • (ë†’ì´ ì°¨ì´ ë¬´ì‹œ)
             
-            // ÀÚ½ÅÀÇ Àü¹æ º¤ÅÍ¿Í Å¸°Ù ¹æÇâ º¤ÅÍ »çÀÌÀÇ °¢µµ °è»ê
+            // ìì‹ ì˜ ì „ë°© ë²¡í„°ì™€ íƒ€ê²Ÿ ë°©í–¥ ë²¡í„° ì‚¬ì´ì˜ ê°ë„ ê³„ì‚°
             float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
             
-            // °è»êµÈ °¢µµ°¡ °ø°İ °¢µµÀÇ Àı¹İº¸´Ù ÀÛÀºÁö È®ÀÎ
+            // ê³„ì‚°ëœ ê°ë„ê°€ ê³µê²© ê°ë„ì˜ ì ˆë°˜ë³´ë‹¤ ì‘ì€ì§€ í™•ì¸
             if (angleToTarget <= attackAngle / 2)
             {
-                // DamageReaction ÄÄÆ÷³ÍÆ®°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í, µ¥¹ÌÁö Ã³¸®
+                // DamageReaction ì»´í¬ë„ŒíŠ¸ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³ , ë°ë¯¸ì§€ ì²˜ë¦¬
                 DamageReaction targetActor = hitCollider.GetComponent<DamageReaction>();
                 if (targetActor != null)
                 {
                     targetActor.TakeDamage(attackDamage);
-                    // µğ¹ö±× ½Ã°¢È­: °ø°İÀÌ ÀûÁßÇÑ Å¸°Ù±îÁö »¡°£»ö ¼± ±×¸®±â
+                    // ë””ë²„ê·¸ ì‹œê°í™”: ê³µê²©ì´ ì ì¤‘í•œ íƒ€ê²Ÿê¹Œì§€ ë¹¨ê°„ìƒ‰ ì„  ê·¸ë¦¬ê¸°
                     Debug.DrawLine(transform.position, hitCollider.transform.position, Color.red, 1f);
                 }
             }
@@ -55,14 +47,14 @@ public class MeleeBasicAttack : AttackAction
     } // MeleeBasicAttack
 
 
-    // °ø°İ ¹üÀ§ ½Ã°¢È­
+    // ê³µê²© ë²”ìœ„ ì‹œê°í™”
     void OnDrawGizmos()
     {
-        // °ø°İ ¹üÀ§¸¦ ½Ã°¢È­
+        // ê³µê²© ë²”ìœ„ë¥¼ ì‹œê°í™”
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
 
-        // °ø°İ °¢µµ¸¦ ½Ã°¢È­
+        // ê³µê²© ê°ë„ë¥¼ ì‹œê°í™”
         Gizmos.color = Color.blue;
         Vector3 rightDir = Quaternion.Euler(0, attackAngle / 2, 0) * transform.forward;
         Vector3 leftDir = Quaternion.Euler(0, -attackAngle / 2, 0) * transform.forward;
