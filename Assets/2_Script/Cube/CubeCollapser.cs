@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 /// <summary>
@@ -218,8 +219,14 @@ public class CubeCollapser : MonoBehaviour
                 originalPosition.z
             );
 
-            // NavMesh에서 즉시 제거하기 위해 오브젝트를 완전히 비활성화
-            gameObject.SetActive(false);
+            // NavMesh에서 즉시 제거하기 위해 NavMeshModifier 추가하여 제외시키기
+            NavMeshModifier modifier = GetComponent<NavMeshModifier>();
+            if (modifier == null)
+            {
+                modifier = gameObject.AddComponent<NavMeshModifier>();
+            }
+            modifier.overrideArea = true;
+            modifier.area = 1; // Not Walkable 영역으로 설정
 
             // NavMesh 리빌드 - 발판 사라짐
             NavMeshManager.instance.Rebuild();

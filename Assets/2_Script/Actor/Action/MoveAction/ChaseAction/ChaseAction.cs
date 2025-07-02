@@ -106,6 +106,7 @@ public class ChaseAction : MoveAction
         UpdateDestination();       // 목적지 확인
         UpdateNextMoveDirection(); // 다음 방향 설정
         UpdateMyPositionOnNav();   // 자신 위치 갱신
-        Turn();                    // 회전
+
+        Turn();
     }
 }
