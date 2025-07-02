@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,10 @@ public class DamageReaction : MonoBehaviour
     [SerializeField] protected int nowHp = 10;  // 현재 생명력
 
 
+    public Action hitAction { private get; set; }
+    public Action dieAction { private get; set; }
+
+
     // 피격
     public virtual void TakeDamage(int damage)
     {
@@ -22,20 +27,27 @@ public class DamageReaction : MonoBehaviour
         else
         { nowHp = 0; }
 
-        //  Debug.Log("피격: " + gameObject.name);
 
-        // 피격 반응
-        // DamageReaction();
-
-        // 체력이 0 이하로 떨어지면 처리
-        if (nowHp <= 0)
+        if (0 < nowHp)
+        { Hit(); }
+        else
         { Die(); }
+    }
+
+
+    protected void Hit()
+    {
+        Debug.Log("히트");
+        if (hitAction != null)
+        { hitAction(); }
     }
 
 
     // 사망 처리
     protected virtual void Die()
     {
-
+        if(dieAction != null)
+        { dieAction(); }
+        StartCoroutine(Timer.StartTimer(3f, () => Destroy(gameObject)));
     }
 }

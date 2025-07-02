@@ -10,18 +10,18 @@ public class MinionMonster : Monster
     protected override void AttackStatus()
     {
         // 공격 가능하다면
-        if (InAttackRange() && attackAction.isCanAttack && !doAttack)
+        if (InAttackRange() && attackAction.isCanAttack && !animationPlayCheck)
         {
             attackAction.Attack();
-            animatior.isAttack = true; // 어택 애니메이션 재생
+            animator.PlayAnimation("DoAttack"); // 어택 애니메이션 재생
         }
 
-        if (animatior.CheckAnimationName("Attack"))
-        { doAttack = true; }
+        if (animator.CheckAnimationName("Attack"))
+        { animationPlayCheck = true; }
 
-        else if (doAttack)
+        else if (animationPlayCheck)
         {
-            doAttack = false;
+            animationPlayCheck = false;
             actionStatus = ReloadStatus; // 공격 후딜레이로 이행 }
         }
 

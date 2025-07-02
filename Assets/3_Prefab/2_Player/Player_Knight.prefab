@@ -604,8 +604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 10
-  nowHp: 10
+  maxHp: 100
+  nowHp: 100
 --- !u!114 &7056037903966329871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,7 +646,7 @@ MonoBehaviour:
   attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
-  attackRate: 0.5
+  attackRate: 1
   myWeapon: {fileID: 1936351326036441547}
   weaponActiveTime: 2
 --- !u!4 &2887848445311178001 stripped

@@ -8,45 +8,30 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 [RequireComponent(typeof(Animator))]
 public class ActorAnimation : MonoBehaviour
 {
-    // æ÷¥œ∏ﬁ¿Ã≈Õ
+    // Ïï†ÎãàÎ©îÏù¥ÌÑ∞
     protected Animator animator;
 
-    // √ ±‚»≠
+
+    // <- ÌîÑÎ°úÌçºÌã∞ Î∞©Ïãù Î∂ÄÌôú ÏÉùÍ∞Å?
+
+
+    // Ï¥àÍ∏∞Ìôî
     protected virtual void Awake()
     { animator = GetComponent<Animator>(); }
 
-
-    // æÓ∂≤ Animation¿ª ¿Áª˝«“¡ˆ √º≈©
-
-
-    public bool isMove
-    {
-        set
-        { animator.SetBool("IsMove", value); }
-    }
-
-    public bool isJump
-    {
-        set
-        { animator.SetBool("IsJump", value); }
-    }
-
-    public bool isAttack
-    {
-        set
-        { if (value) { animator.SetTrigger("IsAttack"); } }
-    }
-
-    public bool isDie { protected get; set; } = false;
-    //  animatior.SetBool("IsDie", isDie);  // <- æ∆¡˜ ªÁ∏¡∏º«¿Ã æ¯¥¬ ∞Õ ∞∞æ∆º≠ ¿·Ω√ ¡¶ø‹
-
-
-    // ∑π¿ÃæÓ 0π¯ø°º≠
-    // «ˆ¿Á ¿Áª˝µ«∞Ì ¿÷¥¬ æ÷¥œ∏ﬁ¿Ãº« ¿Ã∏ß »Æ¿Œ
+    // Î†àÏù¥Ïñ¥ 0Î≤àÏóêÏÑú
+    // ÌòÑÏû¨ Ïû¨ÏÉùÎêòÍ≥† ÏûàÎäî Ïï†ÎãàÎ©îÏù¥ÏÖò Ïù¥Î¶Ñ ÌôïÏù∏
     public virtual bool CheckAnimationName(string animationStateName)
     {
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-        return state.IsName(animationStateName) && state.normalizedTime < 1.0f;
+        return state.IsName(animationStateName);
     }
 
+    // SetBool Ïû¨ÏÉù
+    public virtual void PlayAnimation(string animationName, bool p_bool)
+    { animator.SetBool(animationName, p_bool); }
+
+    // SetTrigger Ïû¨ÏÉù
+    public virtual void PlayAnimation(string animationName)
+    { animator.SetTrigger(animationName); }
 }

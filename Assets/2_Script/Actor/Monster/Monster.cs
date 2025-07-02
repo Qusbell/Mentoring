@@ -11,9 +11,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(DamageReaction))]
 abstract public class Monster : Actor
 {
-    // 현재 수행 중인 행동
-    protected Action actionStatus;
-
     // 타겟
     Transform target;
 
@@ -22,6 +19,9 @@ abstract public class Monster : Actor
     {
         base.Awake();
         actionStatus = SpawnState; // 생성부터 시작
+
+        damageReaction.hitAction = () => SwitchStatus(HitStatus);
+        damageReaction.dieAction = () => SwitchStatus(DieStatus);
     }
 
     private void Start()
@@ -36,7 +36,25 @@ abstract public class Monster : Actor
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
+    // 현재 수행 중인 행동
+    protected Action actionStatus;
 
+    // 공격, 리로드 등 애니메이션 재생 추가 확인
+    protected bool animationPlayCheck = false;
+
+    protected void SwitchStatus(Action nextStatus)
+    {
+        animationPlayCheck = false;
+        actionStatus = nextStatus;
+    }
+
+    protected void SwitchStatusWhenAnimationEnd(string animationName, Action nextStatus)
+    {
+        if (animator.CheckAnimationName(animationName))
+        { animationPlayCheck = true; }
+        else if (animationPlayCheck)
+        { SwitchStatus(nextStatus); }
+    }
 
 
     // ===== 상태 =====
@@ -44,17 +62,17 @@ abstract public class Monster : Actor
     // 생성 상태
     private void SpawnState()
     {
-        if (!animatior.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
-        { actionStatus = IdleStatus; } // 대기
+        if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
+        { SwitchStatus(IdleStatus); } // 대기
     }
 
     // 대기 상태
     protected void IdleStatus()
     {
         if (InAttackRange())  // 공격 가능 상태라면
-        { actionStatus = AttackStatus; } // 공격으로
+        { SwitchStatus(AttackStatus); } // 공격으로
         else
-        { actionStatus = MoveStatus; }  // 아니면 이동
+        { SwitchStatus(MoveStatus); }  // 아니면 이동
     }
 
 
@@ -63,53 +81,61 @@ abstract public class Monster : Actor
     {
         if (InAttackRange())
         {
-            animatior.isMove = false;
             moveAction.isMove = false;
-            actionStatus = AttackStatus;
+            SwitchStatus(AttackStatus);
         }
         else
         {
-            animatior.isMove = true;
             moveAction.isMove = true;
             moveAction.Move();
         }
+
+        animator.PlayAnimation("IsMove", moveAction.isMove);
     }
 
 
-    // 공격, 리로드 애니메이션 재생 추가 확인
-    protected bool doAttack = false;
-    protected bool doReload = false;
 
     // 공격 상태
     protected virtual void AttackStatus()
     {
         // 공격 가능하다면
-        if (InAttackRange() && attackAction.isCanAttack && !doAttack)
+        if (attackAction.isCanAttack && !animationPlayCheck && InAttackRange())
         {
             // attackAction.Attack();
-            animatior.isAttack = true; // 어택 애니메이션 재생
+            animator.PlayAnimation("DoAttack"); // 어택 애니메이션 재생
         }
 
-        if (animatior.CheckAnimationName("Attack"))
-        { doAttack = true; }
-        else if (doAttack)
-        {
-            doAttack = false;
-            actionStatus = ReloadStatus; // 공격 후딜레이로 이행 }
-        }
+        SwitchStatusWhenAnimationEnd("Attack", ReloadStatus);
     }
-
 
     // 공격 후딜레이 애니메이션 재생
     protected void ReloadStatus()
     {
-        if (animatior.CheckAnimationName("Reload"))
-        { doReload = true; }
-        
-        if (doReload && !animatior.CheckAnimationName("Reload"))
+        SwitchStatusWhenAnimationEnd("Reload", IdleStatus);
+    }
+
+
+
+
+    // 피격 시 애니메이션
+
+    protected void HitStatus()
+    {
+        if (!animationPlayCheck)
         {
-            doReload = false;
-            actionStatus = IdleStatus;
+            animator.PlayAnimation("IsHit");
+        }
+        SwitchStatusWhenAnimationEnd("IsHit", IdleStatus);
+    }
+
+
+    protected void DieStatus()
+    {
+        if (!animationPlayCheck)
+        {
+            animator.PlayAnimation("IsDie");
         }
     }
+
+
 }
