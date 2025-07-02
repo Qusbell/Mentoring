@@ -26,13 +26,11 @@ public class NavMeshManager : MonoBehaviour
         if(surface == null) { Debug.Log("NavMeshSurface가 존재하지 않음 : " + gameObject.name); }
         surface.collectObjects = CollectObjects.Children;
 
-        Rebuild(); // <- 나중에는 제거
     }
 
     // 지형 갱신
     public void Rebuild()
     {
         surface.BuildNavMesh();
-        StartCoroutine(Timer.StartTimer(0.1f, Rebuild)); // <- 테스트 : 0.1f마다 지형 갱신, 이후 수정할 것
     }
 }
