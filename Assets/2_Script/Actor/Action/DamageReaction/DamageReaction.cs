@@ -49,6 +49,9 @@ public class DamageReaction : MonoBehaviour
     {
         if(dieAction != null)
         { dieAction(); }
+
+        // <- 죽었을 경우의 이것저것 처리
+
         StartCoroutine(Timer.StartTimer(3f, () => Destroy(gameObject)));
     }
 }
