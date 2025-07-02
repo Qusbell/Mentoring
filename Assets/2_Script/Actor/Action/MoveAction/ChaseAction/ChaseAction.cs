@@ -63,8 +63,9 @@ public class ChaseAction : MoveAction
 
     public override void Move()
     {
-        // 타겟이 존재하는 경우에만 move
-        if (target != null)
+        // 타겟이 존재하고,
+        // 길이 존재하는 경우에만 move
+        if (target != null && nav.hasPath && nav.pathStatus == NavMeshPathStatus.PathComplete)
         {
             isMove = true;
             base.Move();

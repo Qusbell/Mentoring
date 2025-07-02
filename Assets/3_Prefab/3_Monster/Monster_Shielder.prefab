@@ -806,7 +806,7 @@ GameObject:
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4195979026956042644
 Transform:
   m_ObjectHideFlags: 0
@@ -995,6 +995,7 @@ MonoBehaviour:
   attackRate: 1
   myWeapon: {fileID: 9215819455182724303}
   weaponActiveTime: 1
+  maxHitCount: 1
 --- !u!1 &2910221618307621725
 GameObject:
   m_ObjectHideFlags: 0
