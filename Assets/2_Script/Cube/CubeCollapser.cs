@@ -218,6 +218,13 @@ public class CubeCollapser : MonoBehaviour
                 originalPosition.z
             );
 
+            // NavMesh에서 즉시 제거하기 위해 콜라이더 비활성화
+            Collider col = GetComponent<Collider>();
+            if (col != null)
+            {
+                col.enabled = false;
+            }
+
             // NavMesh 리빌드 - 발판 사라짐
             NavMeshManager.instance.Rebuild();
 
