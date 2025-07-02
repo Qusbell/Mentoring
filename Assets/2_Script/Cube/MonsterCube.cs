@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 몬스터가 나오는 큐브 컴포넌트
+/// 몬스터가 나오는 큐브 컴포넌트 (기존 코드 최소 수정 버전)
 /// 큐브 활성화 시 또는 도착 시 자동으로 몬스터 스폰
 /// </summary>
 public class MonsterCube : MonoBehaviour
@@ -16,7 +16,7 @@ public class MonsterCube : MonoBehaviour
     public MonsterSpawner monsterSpawner;
 
     [Header("스폰 타이밍 설정")]
-    [Tooltip("큐브 활성화와 동시에 몬스터 스폰 (true: 활성화시, false: 도착시)")]
+    [Tooltip("체크하면 큐브 활성화와 동시에 이동 시작 위치에서 스폰 (기본: 이동 완료 후 스폰)")]
     public bool spawnOnActivation = false;
 
     [Header("스폰 설정")]
@@ -52,11 +52,11 @@ public class MonsterCube : MonoBehaviour
 
         if (showDebugLog)
         {
-            string timing = spawnOnActivation ? "활성화 시" : "도착 시";
+            string timing = spawnOnActivation ? "이동 시작 위치에서 스폰" : "이동 완료 후 스폰";
             Debug.Log($"[{gameObject.name}] MonsterCube 초기화 완료. 스폰 타이밍: {timing}");
         }
 
-        // 활성화 시 스폰이면 즉시 체크
+        // 즉시 스폰이 체크되어 있으면 바로 실행
         if (spawnOnActivation)
         {
             CheckActivationSpawn();
@@ -71,15 +71,9 @@ public class MonsterCube : MonoBehaviour
             return;
         }
 
-        // 스폰 타이밍에 따른 처리
-        if (spawnOnActivation)
+        // 즉시 스폰이 아닌 경우에만 이동 완료 체크
+        if (!spawnOnActivation)
         {
-            // 활성화 시 스폰 모드 (이미 Start에서 처리됨)
-            return;
-        }
-        else
-        {
-            // 도착 시 스폰 모드 (기존 로직)
             CheckArrivalSpawn();
         }
     }
@@ -89,13 +83,12 @@ public class MonsterCube : MonoBehaviour
     {
         if (hasSpawnTriggered) return;
 
-        // 큐브가 활성화되었으므로 즉시 스폰
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] 큐브 활성화 감지 몬스터 스폰을 시작합니다.");
+            Debug.Log($"[{gameObject.name}] 큐브 활성화 감지 - 이동 시작 위치에서 몬스터 스폰을 시작합니다.");
         }
 
-        TriggerSpawn();
+        TriggerSpawnAtMoveStartPosition();
         hasSpawnTriggered = true;
         hasActivated = true;
     }
@@ -131,7 +124,84 @@ public class MonsterCube : MonoBehaviour
         }
     }
 
-    // 스폰 트리거
+    // 이동 시작 위치에서 스폰 트리거
+    private void TriggerSpawnAtMoveStartPosition()
+    {
+        if (monsterSpawner == null)
+        {
+            Debug.LogError($"[{gameObject.name}] MonsterSpawner가 없어서 스폰할 수 없습니다");
+            return;
+        }
+
+        // CubeMover가 있으면 이동 시작 위치 계산
+        Vector3 spawnPosition;
+        if (cubeMover != null)
+        {
+            // 이동 시작 위치 = 현재 위치 + CubeMover의 startPositionOffset
+            spawnPosition = transform.position + cubeMover.startPositionOffset;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] 이동 시작 위치에서 스폰: {spawnPosition} (오프셋: {cubeMover.startPositionOffset})");
+            }
+        }
+        else
+        {
+            // CubeMover가 없으면 현재 위치 사용
+            spawnPosition = transform.position;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] CubeMover가 없어 현재 위치에서 스폰: {spawnPosition}");
+            }
+        }
+
+        // MonsterSpawner를 이동 시작 위치로 임시 이동
+        Vector3 originalPosition = monsterSpawner.transform.position;
+        monsterSpawner.transform.position = spawnPosition;
+
+        if (delayBeforeSpawn > 0)
+        {
+            StartCoroutine(DelayedSpawnAndRestore(originalPosition));
+        }
+        else
+        {
+            ActivateSpawner();
+            // 다음 프레임에 원래 위치로 복원
+            StartCoroutine(RestoreSpawnerPosition(originalPosition));
+        }
+    }
+
+    // 딜레이 후 스폰하고 위치 복원
+    private IEnumerator DelayedSpawnAndRestore(Vector3 originalPosition)
+    {
+        if (showDebugLog)
+        {
+            Debug.Log($"[{gameObject.name}] {delayBeforeSpawn}초 대기 후 이동 시작 위치에서 스폰 시작");
+        }
+
+        yield return new WaitForSeconds(delayBeforeSpawn);
+        ActivateSpawner();
+
+        yield return RestoreSpawnerPosition(originalPosition);
+    }
+
+    // MonsterSpawner 위치 복원
+    private IEnumerator RestoreSpawnerPosition(Vector3 originalPosition)
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (monsterSpawner != null)
+        {
+            monsterSpawner.transform.position = originalPosition;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] MonsterSpawner 위치 복원 완료: {originalPosition}");
+            }
+        }
+    }
+    // 스폰 트리거 (도착 시 - 기본 위치에서)
     private void TriggerSpawn()
     {
         if (monsterSpawner == null)
@@ -173,7 +243,7 @@ public class MonsterCube : MonoBehaviour
 
             if (showDebugLog)
             {
-                string timing = spawnOnActivation ? "활성화 시" : "도착 시";
+                string timing = spawnOnActivation ? "즉시 스폰" : "이동 완료 후 스폰";
                 Debug.Log($"[{gameObject.name}] 몬스터 스포너 활성화 완료 (타이밍: {timing})");
             }
         }
@@ -194,7 +264,14 @@ public class MonsterCube : MonoBehaviour
             Debug.Log($"[{gameObject.name}] 수동으로 스폰을 트리거합니다.");
         }
 
-        TriggerSpawn();
+        if (spawnOnActivation)
+        {
+            TriggerSpawnAtMoveStartPosition();
+        }
+        else
+        {
+            TriggerSpawn();
+        }
         hasSpawnTriggered = true;
     }
 
