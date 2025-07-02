@@ -2156,6 +2156,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &178752002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,6 +2171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 2.5
   showDebugLog: 1
 --- !u!114 &178752003
@@ -2275,7 +2277,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -3417,6 +3419,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &283025679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3431,6 +3434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 2.5
   showDebugLog: 1
 --- !u!114 &283025680
@@ -3640,6 +3644,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &306542756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3654,6 +3659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 2.5
   showDebugLog: 1
 --- !u!114 &306542757
@@ -4614,6 +4620,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &387543465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4628,6 +4635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &387543466
@@ -6092,6 +6100,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &550849765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6106,6 +6115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &550849766
@@ -6457,6 +6467,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &592073382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6471,6 +6482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &592073383
@@ -7309,6 +7321,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &665888537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7323,6 +7336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &665888538
@@ -10313,6 +10327,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &987061351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10327,6 +10342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &987061352
@@ -14226,6 +14242,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &1374439444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14240,6 +14257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &1374439445
@@ -19671,6 +19689,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &1952212745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19685,6 +19704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &1952212746
@@ -20073,6 +20093,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &1966453183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20087,6 +20108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 2.5
   showDebugLog: 1
 --- !u!114 &1966453184
@@ -21122,6 +21144,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &2063827571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21136,6 +21159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &2063827572
@@ -21993,6 +22017,7 @@ MonoBehaviour:
   spawnRate: 1.5
   startTrigger: 0
   isEndlessSpawn: 0
+  spawnType: 0
 --- !u!114 &2118950811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22007,6 +22032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
+  spawnOnActivation: 0
   delayBeforeSpawn: 1.5
   showDebugLog: 1
 --- !u!114 &2118950812
