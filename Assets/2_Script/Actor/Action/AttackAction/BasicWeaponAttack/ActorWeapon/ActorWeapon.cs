@@ -50,10 +50,11 @@ public class ActorWeapon : MonoBehaviour
         {
             // 피해를 입을 수 있다면
             DamageReaction damageReaction = other.GetComponent<DamageReaction>();
-
-            // 데미지 적용
             if (damageReaction != null)
-            { damageReaction.TakeDamage(attackDamage); }
+            {
+                // 데미지 적용
+                damageReaction.TakeDamage(attackDamage);
+            }
         }
     }
 

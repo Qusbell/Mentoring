@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¿µ¿ª Æ®¸®°Å·Î »ç¿ëÇÒ ¿ÀºêÁ§Æ®¿¡ ºÙÀÌ´Â ÄÄÆ÷³ÍÆ®
+/// ì˜ì—­ íŠ¸ë¦¬ê±°ë¡œ ì‚¬ìš©í•  ì˜¤ë¸Œì íŠ¸ì— ë¶™ì´ëŠ” ì»´í¬ë„ŒíŠ¸
 /// </summary>
 public class TriggerArea : MonoBehaviour
 {
-    [Tooltip("ÀÌ Æ®¸®°Å¸¦ °¨ÁöÇÒ CubeController")]
+    [Tooltip("ì´ íŠ¸ë¦¬ê±°ë¥¼ ê°ì§€í•  CubeController")]
     public CubeController controller;
 
-    // Æ®¸®°Å ¿µ¿ª¿¡ ÁøÀÔÇßÀ» ¶§ È£ÃâµÊ
+    // íŠ¸ë¦¬ê±° ì˜ì—­ì— ì§„ì…í–ˆì„ ë•Œ í˜¸ì¶œë¨
     private void OnTriggerEnter(Collider other)
     {
         if (controller != null)
