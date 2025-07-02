@@ -26,7 +26,7 @@ public class BasicWeaponAttack : AttackAction
 
     protected override void DoAttack()
     {
-        Debug.Log("DoAttack");
+        //  Debug.Log("DoAttack");
         weapon.UseWeapon();
         StartCoroutine(Timer.StartTimer(weaponActiveTime, weapon.NotUseWeapon));
     }

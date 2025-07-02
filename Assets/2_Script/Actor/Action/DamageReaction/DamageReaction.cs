@@ -15,6 +15,8 @@ public class DamageReaction : MonoBehaviour
     [SerializeField] protected int nowHp = 10;  // 현재 생명력
 
 
+    // 외부에서부터 가져올 피격 시 액션
+    // 애니메이션 요소로 사용 중
     public Action hitAction { private get; set; }
     public Action dieAction { private get; set; }
 
@@ -37,7 +39,6 @@ public class DamageReaction : MonoBehaviour
 
     protected void Hit()
     {
-        Debug.Log("히트");
         if (hitAction != null)
         { hitAction(); }
     }
