@@ -11,6 +11,9 @@ public class BasicWeaponAttack : AttackAction
     // 무기가 활성화되어있을 시간
     [SerializeField] private float weaponActiveTime = 1f;
 
+    // 최대 히트 가능 횟수
+    [SerializeField] private int maxHitCount = 1;
+
     // ActorWeapon 캐시
     private ActorWeapon weapon = null;
 
@@ -21,7 +24,7 @@ public class BasicWeaponAttack : AttackAction
         weapon = myWeapon.GetComponent<ActorWeapon>();
         if (weapon == null)
         { weapon = myWeapon.AddComponent<ActorWeapon>(); }
-        weapon.SetWeapon(targetTag, attackDamage);
+        weapon.SetWeapon(targetTag, attackDamage, maxHitCount);
     }
 
     protected override void DoAttack()

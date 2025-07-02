@@ -10,22 +10,27 @@ public class ActorWeapon : MonoBehaviour
     // 무기의 콜라이더
     private Collider weaponCollider = null;
 
+    // 공격의 판정 횟수 체크
+    // 공격 대상(key) / 히트 횟수(value)
+    private Dictionary<GameObject, int> hitTargets = null;
+
     // 무기 콜라이더의 활성/비활성 여부
     public bool isActivate
     {
         set
         {
             weaponCollider.enabled = value;
+
+            // 활성화 시
             if (value)
-            {
-                // <- 새 리스트 생성
-            }
+            { hitTargets = new Dictionary<GameObject, int>(); }
+
+            // 비활성화 시
             else
-            {
-                // <- 리스트 = null
-            }
+            { hitTargets = null; }
         }
     }
+
 
 
     private void Awake()
@@ -62,10 +67,19 @@ public class ActorWeapon : MonoBehaviour
             DamageReaction damageReaction = other.GetComponent<DamageReaction>();
             if (damageReaction != null)
             {
-                // <- 리스트에 존재하는 콜라이더인지 확인하고 && 피격 횟수 이하인지
+                if (hitTargets != null)
+                {
+                    int hitCount = 0;
+                    hitTargets.TryGetValue(other.gameObject, out hitCount);
 
-                // 데미지 적용
-                damageReaction.TakeDamage(attackDamage);
+                    // 최대 히트 횟수 확인 및 처리
+                    if (hitCount < maxHitCount)
+                    {
+                        hitTargets[other.gameObject] = hitCount + 1; // hitCount += 1
+                        damageReaction.TakeDamage(attackDamage);     // 데미지 적용
+                    }
+                    // else: 최대 히트 횟수 도달 시 추가 동작 없음(무시)
+                }
             }
         }
     }
@@ -76,10 +90,12 @@ public class ActorWeapon : MonoBehaviour
     // attackAction으로부터 가져올 정보
     private string targetTag = "";
     private int attackDamage = 0;
+    private int maxHitCount = 1; // 최대 히트 횟수
 
-    public void SetWeapon(string p_targetTag, int p_attackDamage)
+    public void SetWeapon(string p_targetTag, int p_attackDamage, int p_maxHitCount = 1)
     {
         targetTag = p_targetTag;
         attackDamage = p_attackDamage;
+        maxHitCount = p_maxHitCount;
     }
 }
