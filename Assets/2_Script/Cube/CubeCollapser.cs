@@ -367,22 +367,4 @@ public class CubeCollapser : MonoBehaviour
         if (showDebugLog)
             Debug.Log($"[{gameObject.name}] 큐브 리셋 완료");
     }
-
-    void OnDrawGizmos()
-    {
-        // AreaTrigger 모드일 때 연결선 표시
-        if (triggerType == TriggerType.AreaTrigger && triggerArea != null)
-        {
-            Gizmos.color = hasTriggered ? Color.green : Color.red;
-            Gizmos.DrawLine(transform.position, triggerArea.transform.position);
-
-            // 트리거 영역 표시
-            Collider triggerCol = triggerArea.GetComponent<Collider>();
-            if (triggerCol != null)
-            {
-                Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
-                Gizmos.DrawWireCube(triggerCol.bounds.center, triggerCol.bounds.size);
-            }
-        }
-    }
 }
