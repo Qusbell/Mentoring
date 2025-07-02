@@ -3,75 +3,120 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¸ó½ºÅÍ°¡ ³ª¿À´Â Å¥ºê ÄÄÆ÷³ÍÆ®
-/// Å¥ºê µµÂø ½Ã ÀÚµ¿À¸·Î ¸ó½ºÅÍ ½ºÆù
+/// ëª¬ìŠ¤í„°ê°€ ë‚˜ì˜¤ëŠ” íë¸Œ ì»´í¬ë„ŒíŠ¸ (ê¸°ì¡´ ì½”ë“œ ìµœì†Œ ìˆ˜ì • ë²„ì „)
+/// íë¸Œ í™œì„±í™” ì‹œ ë˜ëŠ” ë„ì°© ì‹œ ìë™ìœ¼ë¡œ ëª¬ìŠ¤í„° ìŠ¤í°
 /// </summary>
 public class MonsterCube : MonoBehaviour
 {
-    [Header("¿¬°á ´ë»ó")]
-    [Tooltip("°¨ÁöÇÒ Å¥ºê ¹«¹ö (ºñ¾îÀÖÀ¸¸é ÀÚµ¿À¸·Î Ã£À½)")]
+    [Header("ì—°ê²° ëŒ€ìƒ")]
+    [Tooltip("ê°ì§€í•  íë¸Œ ë¬´ë²„ (ë¹„ì–´ìˆìœ¼ë©´ ìë™ìœ¼ë¡œ ì°¾ìŒ)")]
     public CubeMover cubeMover;
 
-    [Tooltip("È°¼ºÈ­ÇÒ ¸ó½ºÅÍ ½ºÆ÷³Ê (ºñ¾îÀÖÀ¸¸é ÀÚµ¿À¸·Î Ã£À½)")]
+    [Tooltip("í™œì„±í™”í•  ëª¬ìŠ¤í„° ìŠ¤í¬ë„ˆ (ë¹„ì–´ìˆìœ¼ë©´ ìë™ìœ¼ë¡œ ì°¾ìŒ)")]
     public MonsterSpawner monsterSpawner;
 
-    [Header("½ºÆù ¼³Á¤")]
-    [Tooltip("½ºÆù Àü ´ë±â ½Ã°£ (ÃÊ)")]
+    [Header("ìŠ¤í° íƒ€ì´ë° ì„¤ì •")]
+    [Tooltip("ì²´í¬í•˜ë©´ íë¸Œ í™œì„±í™”ì™€ ë™ì‹œì— ì´ë™ ì‹œì‘ ìœ„ì¹˜ì—ì„œ ìŠ¤í° (ê¸°ë³¸: ì´ë™ ì™„ë£Œ í›„ ìŠ¤í°)")]
+    public bool spawnOnActivation = false;
+
+    [Header("ìŠ¤í° ì„¤ì •")]
+    [Tooltip("ìŠ¤í° ì „ ëŒ€ê¸° ì‹œê°„ (ì´ˆ)")]
     public float delayBeforeSpawn = 0f;
 
-    [Header("µğ¹ö±×")]
-    [Tooltip("µğ¹ö±× ·Î±× Ãâ·Â")]
+    [Header("ë””ë²„ê·¸")]
+    [Tooltip("ë””ë²„ê·¸ ë¡œê·¸ ì¶œë ¥")]
     public bool showDebugLog = true;
 
-    // ³»ºÎ »óÅÂ
+    // ë‚´ë¶€ ìƒíƒœ
     private bool hasSpawnTriggered = false;
+    private bool hasActivated = false;
 
     void Start()
     {
-        // ÀÚµ¿À¸·Î ÄÄÆ÷³ÍÆ® Ã£±â
+        // ìë™ìœ¼ë¡œ ì»´í¬ë„ŒíŠ¸ ì°¾ê¸°
         if (cubeMover == null)
         {
             cubeMover = GetComponent<CubeMover>();
         }
-
         if (monsterSpawner == null)
         {
             monsterSpawner = GetComponent<MonsterSpawner>();
         }
 
-        // ÄÄÆ÷³ÍÆ® È®ÀÎ
-        if (cubeMover == null)
-        {
-            Debug.LogError($"[{gameObject.name}] CubeMover ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
-            return;
-        }
-
+        // ì»´í¬ë„ŒíŠ¸ í™•ì¸
         if (monsterSpawner == null)
         {
-            Debug.LogError($"[{gameObject.name}] MonsterSpawner ÄÄÆ÷³ÍÆ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogError($"[{gameObject.name}] MonsterSpawner ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
             return;
         }
 
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] MonsterCube ÃÊ±âÈ­ ¿Ï·á. Å¥ºê µµÂø ½Ã ¸ó½ºÅÍ ½ºÆù ¿¹Á¤.");
+            string timing = spawnOnActivation ? "ì´ë™ ì‹œì‘ ìœ„ì¹˜ì—ì„œ ìŠ¤í°" : "ì´ë™ ì™„ë£Œ í›„ ìŠ¤í°";
+            Debug.Log($"[{gameObject.name}] MonsterCube ì´ˆê¸°í™” ì™„ë£Œ. ìŠ¤í° íƒ€ì´ë°: {timing}");
+        }
+
+        // ì¦‰ì‹œ ìŠ¤í°ì´ ì²´í¬ë˜ì–´ ìˆìœ¼ë©´ ë°”ë¡œ ì‹¤í–‰
+        if (spawnOnActivation)
+        {
+            CheckActivationSpawn();
         }
     }
 
     void Update()
     {
-        // ÀÌ¹Ì ½ºÆùÇßÀ¸¸é Ã¼Å©ÇÏÁö ¾ÊÀ½
+        // ì´ë¯¸ ìŠ¤í°í–ˆìœ¼ë©´ ì²´í¬í•˜ì§€ ì•ŠìŒ
         if (hasSpawnTriggered)
         {
             return;
         }
 
-        // Å¥ºê°¡ µµÂøÇß´ÂÁö Ã¼Å©
-        if (cubeMover != null && cubeMover.HasArrived)
+        // ì¦‰ì‹œ ìŠ¤í°ì´ ì•„ë‹Œ ê²½ìš°ì—ë§Œ ì´ë™ ì™„ë£Œ ì²´í¬
+        if (!spawnOnActivation)
+        {
+            CheckArrivalSpawn();
+        }
+    }
+
+    // í™œì„±í™” ì‹œ ìŠ¤í° ì²´í¬
+    private void CheckActivationSpawn()
+    {
+        if (hasSpawnTriggered) return;
+
+        if (showDebugLog)
+        {
+            Debug.Log($"[{gameObject.name}] íë¸Œ í™œì„±í™” ê°ì§€ - ì´ë™ ì‹œì‘ ìœ„ì¹˜ì—ì„œ ëª¬ìŠ¤í„° ìŠ¤í°ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
+        }
+
+        TriggerSpawnAtMoveStartPosition();
+        hasSpawnTriggered = true;
+        hasActivated = true;
+    }
+
+    // ë„ì°© ì‹œ ìŠ¤í° ì²´í¬ (ê¸°ì¡´ ë¡œì§)
+    private void CheckArrivalSpawn()
+    {
+        if (hasSpawnTriggered) return;
+
+        // CubeMoverê°€ ì—†ìœ¼ë©´ ì¦‰ì‹œ ìŠ¤í° (ì •ì  íë¸Œ)
+        if (cubeMover == null)
         {
             if (showDebugLog)
             {
-                Debug.Log($"[{gameObject.name}] Å¥ºê µµÂø °¨Áö! ¸ó½ºÅÍ ½ºÆùÀ» ½ÃÀÛÇÕ´Ï´Ù.");
+                Debug.Log($"[{gameObject.name}] CubeMoverê°€ ì—†ëŠ” ì •ì  íë¸Œ. ì¦‰ì‹œ ëª¬ìŠ¤í„° ìŠ¤í°.");
+            }
+
+            TriggerSpawn();
+            hasSpawnTriggered = true;
+            return;
+        }
+
+        // íë¸Œê°€ ë„ì°©í–ˆëŠ”ì§€ ì²´í¬
+        if (cubeMover.HasArrived)
+        {
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] íë¸Œ ë„ì°© ê°ì§€ ëª¬ìŠ¤í„° ìŠ¤í°ì„ ì‹œì‘í•©ë‹ˆë‹¤.");
             }
 
             TriggerSpawn();
@@ -79,41 +124,117 @@ public class MonsterCube : MonoBehaviour
         }
     }
 
-    // ½ºÆù Æ®¸®°Å
+    // ì´ë™ ì‹œì‘ ìœ„ì¹˜ì—ì„œ ìŠ¤í° íŠ¸ë¦¬ê±°
+    private void TriggerSpawnAtMoveStartPosition()
+    {
+        if (monsterSpawner == null)
+        {
+            Debug.LogError($"[{gameObject.name}] MonsterSpawnerê°€ ì—†ì–´ì„œ ìŠ¤í°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
+            return;
+        }
+
+        // CubeMoverê°€ ìˆìœ¼ë©´ ì´ë™ ì‹œì‘ ìœ„ì¹˜ ê³„ì‚°
+        Vector3 spawnPosition;
+        if (cubeMover != null)
+        {
+            // ì´ë™ ì‹œì‘ ìœ„ì¹˜ = í˜„ì¬ ìœ„ì¹˜ + CubeMoverì˜ startPositionOffset
+            spawnPosition = transform.position + cubeMover.startPositionOffset;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] ì´ë™ ì‹œì‘ ìœ„ì¹˜ì—ì„œ ìŠ¤í°: {spawnPosition} (ì˜¤í”„ì…‹: {cubeMover.startPositionOffset})");
+            }
+        }
+        else
+        {
+            // CubeMoverê°€ ì—†ìœ¼ë©´ í˜„ì¬ ìœ„ì¹˜ ì‚¬ìš©
+            spawnPosition = transform.position;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] CubeMoverê°€ ì—†ì–´ í˜„ì¬ ìœ„ì¹˜ì—ì„œ ìŠ¤í°: {spawnPosition}");
+            }
+        }
+
+        // MonsterSpawnerë¥¼ ì´ë™ ì‹œì‘ ìœ„ì¹˜ë¡œ ì„ì‹œ ì´ë™
+        Vector3 originalPosition = monsterSpawner.transform.position;
+        monsterSpawner.transform.position = spawnPosition;
+
+        if (delayBeforeSpawn > 0)
+        {
+            StartCoroutine(DelayedSpawnAndRestore(originalPosition));
+        }
+        else
+        {
+            ActivateSpawner();
+            // ë‹¤ìŒ í”„ë ˆì„ì— ì›ë˜ ìœ„ì¹˜ë¡œ ë³µì›
+            StartCoroutine(RestoreSpawnerPosition(originalPosition));
+        }
+    }
+
+    // ë”œë ˆì´ í›„ ìŠ¤í°í•˜ê³  ìœ„ì¹˜ ë³µì›
+    private IEnumerator DelayedSpawnAndRestore(Vector3 originalPosition)
+    {
+        if (showDebugLog)
+        {
+            Debug.Log($"[{gameObject.name}] {delayBeforeSpawn}ì´ˆ ëŒ€ê¸° í›„ ì´ë™ ì‹œì‘ ìœ„ì¹˜ì—ì„œ ìŠ¤í° ì‹œì‘");
+        }
+
+        yield return new WaitForSeconds(delayBeforeSpawn);
+        ActivateSpawner();
+
+        yield return RestoreSpawnerPosition(originalPosition);
+    }
+
+    // MonsterSpawner ìœ„ì¹˜ ë³µì›
+    private IEnumerator RestoreSpawnerPosition(Vector3 originalPosition)
+    {
+        yield return new WaitForEndOfFrame();
+
+        if (monsterSpawner != null)
+        {
+            monsterSpawner.transform.position = originalPosition;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] MonsterSpawner ìœ„ì¹˜ ë³µì› ì™„ë£Œ: {originalPosition}");
+            }
+        }
+    }
+    // ìŠ¤í° íŠ¸ë¦¬ê±° (ë„ì°© ì‹œ - ê¸°ë³¸ ìœ„ì¹˜ì—ì„œ)
     private void TriggerSpawn()
     {
         if (monsterSpawner == null)
         {
-            Debug.LogError($"[{gameObject.name}] MonsterSpawner°¡ ¾ø¾î¼­ ½ºÆùÇÒ ¼ö ¾ø½À´Ï´Ù!");
+            Debug.LogError($"[{gameObject.name}] MonsterSpawnerê°€ ì—†ì–´ì„œ ìŠ¤í°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
             return;
         }
 
         if (delayBeforeSpawn > 0)
         {
-            // µô·¹ÀÌ°¡ ÀÖÀ¸¸é ÄÚ·çÆ¾À¸·Î Ã³¸®
+            // ë”œë ˆì´ê°€ ìˆìœ¼ë©´ ì½”ë£¨í‹´ìœ¼ë¡œ ì²˜ë¦¬
             StartCoroutine(DelayedSpawn());
         }
         else
         {
-            // Áï½Ã ½ºÆù
+            // ì¦‰ì‹œ ìŠ¤í°
             ActivateSpawner();
         }
     }
 
-    // µô·¹ÀÌ ÈÄ ½ºÆù
+    // ë”œë ˆì´ í›„ ìŠ¤í°
     private IEnumerator DelayedSpawn()
     {
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] {delayBeforeSpawn}ÃÊ ´ë±â ÈÄ ½ºÆù ½ÃÀÛ...");
+            Debug.Log($"[{gameObject.name}] {delayBeforeSpawn}ì´ˆ ëŒ€ê¸° í›„ ìŠ¤í° ì‹œì‘");
         }
 
         yield return new WaitForSeconds(delayBeforeSpawn);
-
         ActivateSpawner();
     }
 
-    // ½ºÆ÷³Ê È°¼ºÈ­
+    // ìŠ¤í¬ë„ˆ í™œì„±í™”
     private void ActivateSpawner()
     {
         if (monsterSpawner != null)
@@ -122,48 +243,68 @@ public class MonsterCube : MonoBehaviour
 
             if (showDebugLog)
             {
-                Debug.Log($"[{gameObject.name}] ¸ó½ºÅÍ ½ºÆ÷³Ê È°¼ºÈ­ ¿Ï·á!");
+                string timing = spawnOnActivation ? "ì¦‰ì‹œ ìŠ¤í°" : "ì´ë™ ì™„ë£Œ í›„ ìŠ¤í°";
+                Debug.Log($"[{gameObject.name}] ëª¬ìŠ¤í„° ìŠ¤í¬ë„ˆ í™œì„±í™” ì™„ë£Œ (íƒ€ì´ë°: {timing})");
             }
         }
     }
 
-    // ¼öµ¿ ½ºÆù Æ®¸®°Å (Å×½ºÆ®¿ë)
+    // ìˆ˜ë™ ìŠ¤í° íŠ¸ë¦¬ê±° (í…ŒìŠ¤íŠ¸ìš©)
+    [ContextMenu("ìˆ˜ë™ ìŠ¤í° íŠ¸ë¦¬ê±°")]
     public void ManualSpawnTrigger()
     {
         if (hasSpawnTriggered)
         {
-            Debug.LogWarning($"[{gameObject.name}] ÀÌ¹Ì ½ºÆùÀÌ ½ÇÇàµÇ¾ú½À´Ï´Ù.");
+            Debug.LogWarning($"[{gameObject.name}] ì´ë¯¸ ìŠ¤í°ì´ ì‹¤í–‰ë˜ì—ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] ¼öµ¿À¸·Î ½ºÆùÀ» Æ®¸®°ÅÇÕ´Ï´Ù.");
+            Debug.Log($"[{gameObject.name}] ìˆ˜ë™ìœ¼ë¡œ ìŠ¤í°ì„ íŠ¸ë¦¬ê±°í•©ë‹ˆë‹¤.");
         }
 
-        TriggerSpawn();
+        if (spawnOnActivation)
+        {
+            TriggerSpawnAtMoveStartPosition();
+        }
+        else
+        {
+            TriggerSpawn();
+        }
         hasSpawnTriggered = true;
     }
 
-    // »óÅÂ ÃÊ±âÈ­ (Àç»ç¿ëÀ» À§ÇØ)
+    // ìƒíƒœ ì´ˆê¸°í™” (ì¬ì‚¬ìš©ì„ ìœ„í•´)
     public void ResetMonsterCube()
     {
         hasSpawnTriggered = false;
+        hasActivated = false;
 
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] MonsterCube »óÅÂ ÃÊ±âÈ­ ¿Ï·á.");
+            Debug.Log($"[{gameObject.name}] MonsterCube ìƒíƒœ ì´ˆê¸°í™” ì™„ë£Œ.");
         }
     }
 
-    // »óÅÂ È®ÀÎ¿ë ÇÁ·ÎÆÛÆ¼µé
+    // ìƒíƒœ í™•ì¸ìš© í”„ë¡œí¼í‹°ë“¤
     public bool HasSpawnTriggered
     {
         get { return hasSpawnTriggered; }
     }
 
+    public bool HasActivated
+    {
+        get { return hasActivated; }
+    }
+
     public bool CanTriggerSpawn
     {
-        get { return !hasSpawnTriggered && cubeMover != null && monsterSpawner != null; }
+        get { return !hasSpawnTriggered && monsterSpawner != null; }
+    }
+
+    public bool IsActivationMode
+    {
+        get { return spawnOnActivation; }
     }
 }

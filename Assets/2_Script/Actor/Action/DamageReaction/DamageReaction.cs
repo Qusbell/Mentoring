@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,15 +7,21 @@ using UnityEngine;
 
 
 //==================================================
-// ÇÇ°İÀ¸·Î ÀÎÇÑ ÇÇÇØ ¹İÀÀ / »ç¸Á ½Ã Ã³¸®
+// í”¼ê²©ìœ¼ë¡œ ì¸í•œ í”¼í•´ ë°˜ì‘ / ì‚¬ë§ ì‹œ ì²˜ë¦¬
 //==================================================
 public class DamageReaction : MonoBehaviour
 {
-    [SerializeField] protected int maxHp = 10;  // ÃÖ´ë »ı¸í·Â
-    [SerializeField] protected int nowHp = 10;  // ÇöÀç »ı¸í·Â
+    [SerializeField] protected int maxHp = 10;  // ìµœëŒ€ ìƒëª…ë ¥
+    [SerializeField] protected int nowHp = 10;  // í˜„ì¬ ìƒëª…ë ¥
 
 
-    // ÇÇ°İ
+    // ì™¸ë¶€ì—ì„œë¶€í„° ê°€ì ¸ì˜¬ í”¼ê²© ì‹œ ì•¡ì…˜
+    // ì• ë‹ˆë©”ì´ì…˜ ìš”ì†Œë¡œ ì‚¬ìš© ì¤‘
+    public Action hitAction { private get; set; }
+    public Action dieAction { private get; set; }
+
+
+    // í”¼ê²©
     public virtual void TakeDamage(int damage)
     {
         if (damage <= nowHp)
@@ -22,20 +29,26 @@ public class DamageReaction : MonoBehaviour
         else
         { nowHp = 0; }
 
-        Debug.Log("ÇÇ°İ: " + gameObject.name);
 
-        // ÇÇ°İ ¹İÀÀ
-        // DamageReaction();
-
-        // Ã¼·ÂÀÌ 0 ÀÌÇÏ·Î ¶³¾îÁö¸é Ã³¸®
-        if (nowHp <= 0)
+        if (0 < nowHp)
+        { Hit(); }
+        else
         { Die(); }
     }
 
 
-    // »ç¸Á Ã³¸®
+    protected void Hit()
+    {
+        if (hitAction != null)
+        { hitAction(); }
+    }
+
+
+    // ì‚¬ë§ ì²˜ë¦¬
     protected virtual void Die()
     {
-
+        if(dieAction != null)
+        { dieAction(); }
+        StartCoroutine(Timer.StartTimer(3f, () => Destroy(gameObject)));
     }
 }

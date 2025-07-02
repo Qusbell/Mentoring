@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class ProjectileMove : MoveAction
 {
-    // Åõ»çÃ¼ À¯Áö ½Ã°£
+    // íˆ¬ì‚¬ì²´ ìœ ì§€ ì‹œê°„
     [SerializeField] protected float projectileTimer = 10f;
 
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     protected override void Awake()
     {
         base.Awake();
-        // °¢Á¾ ¹°¸® Á¦°Å
+        // ê°ì¢… ë¬¼ë¦¬ ì œê±°
         rigid.useGravity = false;
         rigid.freezeRotation = true;
     }
 
-    // ¸ñÇ¥ À§Ä¡¸¦ ÀÔ·Â¹Þ´Â ¸Þ¼­µå
+    // ëª©í‘œ ìœ„ì¹˜ë¥¼ ìž…ë ¥ë°›ëŠ” ë©”ì„œë“œ
     public void SetTarget(Vector3 targetPos)
     {
-        // ¹æÇâ º¤ÅÍ °è»ê (Á¤±ÔÈ­)
+        // ë°©í–¥ ë²¡í„° ê³„ì‚° (ì •ê·œí™”)
         moveVec = (targetPos - transform.position).normalized;
         isMove = true;
 
-        // Å¸ÀÌ¸Ó ÈÄ ÇØ´ç Åõ»çÃ¼ »èÁ¦
+        // íƒ€ì´ë¨¸ í›„ í•´ë‹¹ íˆ¬ì‚¬ì²´ ì‚­ì œ
         StartCoroutine(Timer.StartTimer(projectileTimer, () => Destroy(this.gameObject)));
 
-        Turn(); // <- µü 1È¸, ÇØ´ç ¹æÇâ ¹Ù¶óº½
+        Turn(); // <- ë”± 1íšŒ, í•´ë‹¹ ë°©í–¥ ë°”ë¼ë´„
     }
 }

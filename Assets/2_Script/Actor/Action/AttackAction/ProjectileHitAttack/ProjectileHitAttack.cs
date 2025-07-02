@@ -1,45 +1,52 @@
 using UnityEngine;
 
 
-// ÀÚ½ÅÀÇ Äİ¶óÀÌ´õ¸¦ ÂüÁ¶ÇÏ´Â °ø°İ
-// Åõ»çÃ¼ÀÇ ÀÛµ¿
+// ìì‹ ì˜ ì½œë¼ì´ë”ë¥¼ ì°¸ì¡°í•˜ëŠ” ê³µê²©
+// íˆ¬ì‚¬ì²´ì˜ ì‘ë™
 public class ProjectileHitAttack : AttackAction
 {
     protected override void Awake()
     {
         base.Awake();
 
-        // Äİ¶óÀÌ´õ Æ®¸®°Å on
+        // ì½œë¼ì´ë” íŠ¸ë¦¬ê±° on
         Collider collider = GetComponent<Collider>();
         if (collider != null) { collider.isTrigger = true; }
-        else { Debug.Log("Projectile¿¡ Äİ¶óÀÌ´õ ¾øÀ½"); }
+        else { Debug.Log("Projectileì— ì½œë¼ì´ë” ì—†ìŒ"); }
     }
 
 
-    // Äİ¶óÀÌ´õ ÇÊ¼ö Æ®¸®°Å
+    // ì½œë¼ì´ë” í•„ìˆ˜ íŠ¸ë¦¬ê±°
     private void OnTriggerEnter(Collider other)
     {
-        // ´ë»ó ÅÂ±× ÀûÁß ½Ã
-        // µ¥¹ÌÁö Àû¿ë ¹× »èÁ¦
+        // ëŒ€ìƒ íƒœê·¸ ì ì¤‘ ì‹œ
+        // ë°ë¯¸ì§€ ì ìš© ë° ì‚­ì œ
         if (other.CompareTag(targetTag))
         {
             ApplyDamage(other.gameObject);
             Destroy(gameObject);
         }
-        // Å¥ºê Ãæµ¹ ½Ã
+        // íë¸Œ ì¶©ëŒ ì‹œ
         else if (other.CompareTag("Cube"))
         {
-            Destroy(gameObject); // »èÁ¦
+            Destroy(gameObject); // ì‚­ì œ
         }
     }
 
 
-    // µ¥¹ÌÁö Àû¿ë
+    // ë°ë¯¸ì§€ ì ìš©
     private void ApplyDamage(GameObject target)
     {
-        // ¿¹½Ã: Health ÄÄÆ÷³ÍÆ®°¡ ÀÖ´Ù°í °¡Á¤
+        // ì˜ˆì‹œ: Health ì»´í¬ë„ŒíŠ¸ê°€ ìˆë‹¤ê³  ê°€ì •
         DamageReaction health = target.GetComponent<DamageReaction>();
         if (health != null)
         { health.TakeDamage(attackDamage); }
     }
+
+
+
+
+    // delete
+    protected override void DoAttack() { }
+
 }

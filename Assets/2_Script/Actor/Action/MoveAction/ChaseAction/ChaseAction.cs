@@ -64,8 +64,13 @@ public class ChaseAction : MoveAction
     public override void Move()
     {
         // 타겟이 존재하는 경우에만 move
-        if(target != null)
-        { base.Move(); }
+        if (target != null)
+        {
+            isMove = true;
+            base.Move();
+        }
+        else
+        { isMove = false; }
     }
 
     // 다음 이동 방향
@@ -98,9 +103,9 @@ public class ChaseAction : MoveAction
 
     private void Update()
     {
-        UpdateDestination();
+        UpdateDestination();       // 목적지 확인
         UpdateNextMoveDirection(); // 다음 방향 설정
-        UpdateMyPositionOnNav();   // 네비게이션 갱신
+        UpdateMyPositionOnNav();   // 자신 위치 갱신
         Turn();                    // 회전
     }
 }

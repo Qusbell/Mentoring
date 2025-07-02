@@ -19,7 +19,7 @@ abstract public class Actor : MonoBehaviour
     protected DamageReaction damageReaction;
 
     // 애니메이션
-    protected ActorAnimation animatior;
+    protected ActorAnimation animator;
 
     // 생성 초기화
     protected virtual void Awake()
@@ -29,7 +29,7 @@ abstract public class Actor : MonoBehaviour
         // 물리회전 제거
         rigid.freezeRotation = true;
 
-        animatior = GetComponent<ActorAnimation>();
+        animator = GetComponent<ActorAnimation>();
         moveAction = GetComponent<MoveAction>();
         attackAction = GetComponent<AttackAction>();
         damageReaction = GetComponent<DamageReaction>();

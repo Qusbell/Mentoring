@@ -90,12 +90,9 @@ abstract public class Spawner : MonoBehaviour
         if (targetPrefabs.Count < 0) { Debug.Log("스포너 프리펩 인덱스 비어있음"); return; }
         // 현재 인덱스의 프리팹, 지정된 위치, 기본 회전값으로 생성
         Instantiate(targetPrefabs[PrefabIndex], spawnLocation, Quaternion.identity);
-
-        // 다음 프리펩 인덱스 지정
-        PrefabIndex += 1;
     }
 
     // 스폰 위치 지정
-    public virtual void SetSpawnLocation()
+    protected virtual void SetSpawnLocation()
     { spawnLocation = transform.position; }
 }

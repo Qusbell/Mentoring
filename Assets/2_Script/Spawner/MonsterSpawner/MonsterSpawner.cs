@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+
 public class MonsterSpawner : Spawner
 {
     [Header("스폰 위치 설정")]
-    [Tooltip("큐브 위에서 추가로 높일 거리 (기본: 0.5유닛)")]
-    public float heightOffset = 0.5f;
+    [Tooltip("큐브 위에서 추가로 높일 거리 (기본: 0.5유닛), 근데 이거 필요한가?")]
+    public float heightOffset = 0.5f; // <- 필요한가?
 
     // 생성 주기
     [SerializeField] protected float spawnRate = 2f;
@@ -16,11 +19,21 @@ public class MonsterSpawner : Spawner
     [SerializeField] bool isEndlessSpawn = false;
 
 
+    private enum SpawnType
+    {
+        OnTop,  // 오브젝트의 위에서 생성될지 결정
+        Around  // 오브젝트 주변에서 생성될지 결정
+    }
+
+    // 오브젝트를 어떤 방식으로 생성할지 결정
+    [SerializeField] SpawnType spawnType = SpawnType.OnTop;
+
+
     // 초기화
     protected void Start()
     {
-        targetCollider = GetComponent<Collider>();
-        if (targetCollider == null)
+        myCollider = GetComponent<Collider>();
+        if (myCollider == null)
         {
             Debug.LogError("콜라이더 존재하지 않음 : " + gameObject.name);
             return;
@@ -33,24 +46,47 @@ public class MonsterSpawner : Spawner
 
     // ===== 스폰 위치 =====
     // 현재 오브젝트의 콜라이더
-    protected Collider targetCollider;
+    protected Collider myCollider;
 
     // 윗면 중앙 계산 (하위 콜라이더들 포함)
-    public override void SetSpawnLocation()
+    protected override void SetSpawnLocation()
     {
-        // 하위 콜라이더들을 모두 포함해서 윗면 정중앙 계산
-        Bounds combinedBounds = GetCombinedBoundsFromChildren();
-        Vector3 topCenter = combinedBounds.center + Vector3.up * combinedBounds.extents.y;
+        // SpawnType에 따라서 다르게 설정
+        switch (spawnType)
+        {
+            case SpawnType.OnTop:
+                // 하위 콜라이더들을 모두 포함해서 윗면 정중앙 계산
+                Bounds combinedBounds = GetCombinedBoundsFromChildren();
+                Vector3 topCenter = combinedBounds.center + Vector3.up * combinedBounds.extents.y;
 
-        // 추가 높이 오프셋 적용
-        spawnLocation = topCenter + Vector3.up * heightOffset;
+                // 추가 높이 오프셋 적용
+                spawnLocation = topCenter + Vector3.up * heightOffset;
+                break;
 
-        Debug.Log($"[{gameObject.name}] 하위 콜라이더 기반 스폰 위치 설정: {spawnLocation}");
+
+            case SpawnType.Around:
+                // <- 4가지 방향 결정 (일단은)
+                break;
+        }
+    }
+
+
+    // 스폰 가능한 장소를 모두 List로 생성
+    // <- 나중에 반응 보고 결정
+    private List<Vector3> GetAroundSpawnLocations()
+    {
+        List<Vector3> aroundSpawnLocations = new List<Vector3>();
+
+
+
+
+
+        return aroundSpawnLocations;
     }
 
 
 
-    // 하위 오브젝트들의 모든 콜라이더 범위를 합쳐서 계산
+    // 하위 오브젝트들의 모든 콜라이더 범위를 합치기
     private Bounds GetCombinedBoundsFromChildren()
     {
         // 모든 하위 콜라이더 가져오기 (자기 자신 포함)
@@ -72,7 +108,7 @@ public class MonsterSpawner : Spawner
 
         return combinedBounds;
     }
-    
+
 
     // ===== 트리거 / 생성 / 완료 =====
     // 1. 스포너 활성화 (MonsterCube에서 호출)
@@ -110,11 +146,16 @@ public class MonsterSpawner : Spawner
     public override void CheckCompleted()
     {
         // 모든 프리펩을 생성했다면
-        if (targetPrefabs.Count <= PrefabIndex)
+        if (targetPrefabs.Count <= PrefabIndex + 1)
         {
             base.CheckCompleted();
             // 주기적 스포너라면: 리셋 발생
             if (isEndlessSpawn) { ResetSpawner();}
+        }
+        else
+        {
+            // 다음 프리펩 인덱스 지정
+            PrefabIndex += 1;
         }
     }
 }

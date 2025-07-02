@@ -27,11 +27,6 @@ public class TargetManager : MonoBehaviour
     // 타겟 리스트
     public List<Target> targetList = new List<Target>();
 
-
-    [Header("타겟 조건")]
-    [SerializeField] private string targetTag = "Target";
-
-
     void Awake()
     {
         if (instance == null) { instance = this; }
