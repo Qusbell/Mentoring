@@ -14,7 +14,17 @@ public class ActorWeapon : MonoBehaviour
     public bool isActivate
     {
         set
-        { weaponCollider.enabled = value; }
+        {
+            weaponCollider.enabled = value;
+            if (value)
+            {
+                // <- 새 리스트 생성
+            }
+            else
+            {
+                // <- 리스트 = null
+            }
+        }
     }
 
 
@@ -52,6 +62,8 @@ public class ActorWeapon : MonoBehaviour
             DamageReaction damageReaction = other.GetComponent<DamageReaction>();
             if (damageReaction != null)
             {
+                // <- 리스트에 존재하는 콜라이더인지 확인하고 && 피격 횟수 이하인지
+
                 // 데미지 적용
                 damageReaction.TakeDamage(attackDamage);
             }

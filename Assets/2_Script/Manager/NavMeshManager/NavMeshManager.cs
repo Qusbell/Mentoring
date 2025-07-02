@@ -25,6 +25,9 @@ public class NavMeshManager : MonoBehaviour
         surface = GetComponent<NavMeshSurface>();
         if(surface == null) { Debug.Log("NavMeshSurface가 존재하지 않음 : " + gameObject.name); }
         surface.collectObjects = CollectObjects.Children;
+
+        // 콜라이더 기반 맵 생성
+        surface.useGeometry = UnityEngine.AI.NavMeshCollectGeometry.PhysicsColliders;
     }
 
     private void Start()
