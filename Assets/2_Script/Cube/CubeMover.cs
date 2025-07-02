@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
 /// 큐브 이동을 관리하는 컴포넌트
 /// 미리 배치된 큐브가 시작 시 꺼지고, 활성화될 때 지정한 위치에서 시작하여 원래 배치된 위치로 돌아옴
 /// 이동 경로를 레이저로 시각화 (에디터에서만)
-/// 
+/// </summary>
 public class CubeMover : MonoBehaviour
 {
     [Header("이동 설정")]
@@ -37,13 +37,6 @@ public class CubeMover : MonoBehaviour
     private Vector3 startPosition;         // 계산된 시작 위치
     private bool isMovingToOriginal;       // 원래 위치로 이동 중
     private bool hasArrived;               // 원래 위치에 도착했는지 여부
-
-
-
-
-
-
-    
 
     // 시작 시 초기화
     void Awake()
@@ -82,11 +75,6 @@ public class CubeMover : MonoBehaviour
     // 매 프레임마다 실행
     void Update()
     {
-
-        // <- dotween
-
-
-
         // 원래 위치로 이동 중일 때
         if (isMovingToOriginal && !hasArrived)
         {
@@ -102,6 +90,9 @@ public class CubeMover : MonoBehaviour
             {
                 transform.position = originalPosition;  // 정확한 위치로 설정
                 hasArrived = true;                      // 도착 상태로 변경
+
+                // NavMesh 리빌드-이동 끝 발판 생성
+                NavMeshManager.instance.Rebuild();
             }
 
 #if UNITY_EDITOR
@@ -123,12 +114,6 @@ public class CubeMover : MonoBehaviour
 #endif
     }
 
-
-
-
-
-
-
 #if UNITY_EDITOR
     [Tooltip("에디터에서만 레이저 효과로 경로 표시")]
     public bool showLaserPath = true;
@@ -138,7 +123,6 @@ public class CubeMover : MonoBehaviour
 
     // 레이저 경로용 LineRenderer (에디터 전용)
     private LineRenderer pathLaser;
-
 
     // 레이저 렌더러 설정 (에디터 전용)
     private void SetupLaserRenderer()
@@ -165,9 +149,6 @@ public class CubeMover : MonoBehaviour
 
         UpdateLaserPath();
     }
-
-
-
 
     // 레이저 경로 업데이트 (에디터 전용)
     private void UpdateLaserPath()
@@ -200,8 +181,6 @@ public class CubeMover : MonoBehaviour
             pathLaser.enabled = false;
         }
     }
-
-
 
     // 에디터에서 경로 미리보기 (씬 뷰에서만 표시)
     void OnDrawGizmos()

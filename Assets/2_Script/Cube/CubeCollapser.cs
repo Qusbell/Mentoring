@@ -218,6 +218,9 @@ public class CubeCollapser : MonoBehaviour
                 originalPosition.z
             );
 
+            // NavMesh 리빌드 - 발판 사라짐
+            NavMeshManager.instance.Rebuild();
+
             return;
         }
 
