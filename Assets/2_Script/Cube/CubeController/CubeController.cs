@@ -12,7 +12,6 @@ public class CubeController : MonoBehaviour
     // 공간 트리거 -> 비정기적 검사 (조건이 작동할 때마다)
     // 시간 트리거 -> 정기적 검사 (매 업데이트마다)
 
-
     // -------------------- 초기화 --------------------
 
     void Start()
@@ -118,7 +117,7 @@ public class CubeController : MonoBehaviour
                 data.triggerArea == triggerArea &&
                 other.CompareTag(data.targetTag))
             {
-                ActivateCube(data);
+                StartCoroutine(Timer.StartTimer<CubeData>(data.delayTime, ActivateCube, data));
             }
         }
     }

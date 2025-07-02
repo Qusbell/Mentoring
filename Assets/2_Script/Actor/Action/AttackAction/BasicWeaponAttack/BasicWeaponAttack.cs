@@ -24,7 +24,6 @@ public class BasicWeaponAttack : AttackAction
         weapon.SetWeapon(targetTag, attackDamage);
     }
 
-
     protected override void DoAttack()
     {
         Debug.Log("DoAttack");

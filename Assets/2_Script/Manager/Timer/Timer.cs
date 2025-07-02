@@ -5,12 +5,22 @@ using System.Collections;
 
 public class Timer : MonoBehaviour
 {
-    // ¹ü¿ë Å¸ÀÌ¸Ó ÄÚ·çÆ¾
-    // p_duration : Å¸ÀÌ¸Ó ½Ã°£
-    // p_callback : Å¸ÀÌ¸Ó Á¾·á ½Ã ½ÇÇà½ÃÅ³ ÇÔ¼ö (Á¶°Ç : ¸®ÅÏ void, ¸Å°³º¯¼ö ¾øÀ½)
-    public static IEnumerator StartTimer(float p_duration = 0, Action p_callback = null)
+    // ë²”ìš© íƒ€ì´ë¨¸ ì½”ë£¨í‹´
+    // p_duration : íƒ€ì´ë¨¸ ì‹œê°„
+    // p_callback : íƒ€ì´ë¨¸ ì¢…ë£Œ ì‹œ ì‹¤í–‰ì‹œí‚¬ í•¨ìˆ˜ (ì¡°ê±´ : ë¦¬í„´ void, ë§¤ê°œë³€ìˆ˜ ì—†ìŒ)
+    public static IEnumerator StartTimer(float p_duration, Action p_callback)
     {
         yield return new WaitForSeconds(p_duration);
-        p_callback?.Invoke(); // ½Ã°£ Á¾·á ½Ã Äİ¹é ½ÇÇà
+        p_callback?.Invoke(); // ì‹œê°„ ì¢…ë£Œ ì‹œ ì½œë°± ì‹¤í–‰
     }
+
+
+    
+    public static IEnumerator StartTimer<T>(float p_duration, Action<T> p_callback, T param)
+    {
+        yield return new WaitForSeconds(p_duration);
+        p_callback?.Invoke(param); // ì‹œê°„ ì¢…ë£Œ ì‹œ ì½œë°± ì‹¤í–‰
+    }
+
+
 }
