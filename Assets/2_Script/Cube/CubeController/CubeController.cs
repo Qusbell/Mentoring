@@ -84,7 +84,7 @@ public class CubeController : MonoBehaviour
     public void StartController()
     {
         isActivated = true;
-        Debug.Log($"[{gameObject.name}] 컨트롤러 활성화됨");
+        //  Debug.Log($"[{gameObject.name}] 컨트롤러 활성화됨");
     }
 
 
@@ -141,7 +141,7 @@ public class CubeController : MonoBehaviour
         // 모든 큐브가 활성화되었으면 이벤트 발생
         if (activationSettings.Count > 0)
         {
-            Debug.Log($"[{gameObject.name}] 모든 큐브가 활성화되었습니다. 이벤트를 발생시킵니다.");
+            // Debug.Log($"[{gameObject.name}] 모든 큐브가 활성화되었습니다. 이벤트를 발생시킵니다.");
 
             // 다음 컨트롤러 활성화 이벤트 발생
             nextCubeControllerActivate?.Invoke();
