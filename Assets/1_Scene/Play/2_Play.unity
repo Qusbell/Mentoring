@@ -892,7 +892,7 @@ PrefabInstance:
       addedObject: {fileID: 318159156}
     - targetCorrespondingSourceObject: {fileID: 7222477677593277190, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 318159158}
+      addedObject: {fileID: 318159166}
   m_SourcePrefab: {fileID: 100100000, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
 --- !u!4 &318159154 stripped
 Transform:
@@ -937,10 +937,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
---- !u!114 &318159158
+--- !u!114 &318159166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1077,7 +1077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &318241642
@@ -1115,7 +1115,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!1001 &321500001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!1001 &358832065
@@ -2432,7 +2432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!1001 &995559774
@@ -2808,7 +2808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
-  heightOffset: 0.5
+  heightOffset: 0
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -2827,7 +2827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1160601881
@@ -2846,7 +2846,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!114 &1160601885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3451,7 +3451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
-  heightOffset: 0.5
+  heightOffset: 0
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -3470,7 +3470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1410945152
@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1556394679
@@ -3855,7 +3855,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!1001 &1556400976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3976,7 +3976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
-  heightOffset: 0
+  heightOffset: -0.1
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -3995,7 +3995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1556400982
@@ -4014,7 +4014,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!1001 &1601770715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4201,7 +4201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1617918932
@@ -4239,7 +4239,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!1 &1628306130
 GameObject:
   m_ObjectHideFlags: 0
@@ -4403,7 +4403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1648576091
@@ -4524,7 +4524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1657457851
@@ -4541,7 +4541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
-  heightOffset: 0.5
+  heightOffset: 0
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -4562,7 +4562,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!114 &1657457856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5234,7 +5234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1949845122
@@ -5253,7 +5253,7 @@ MonoBehaviour:
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
-  showEditorPreview: 1
+  showEditorPreview: 0
 --- !u!1 &1959205631
 GameObject:
   m_ObjectHideFlags: 0
