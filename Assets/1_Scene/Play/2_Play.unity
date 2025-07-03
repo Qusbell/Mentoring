@@ -3873,7 +3873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
-  heightOffset: 0.5
+  heightOffset: 0.1
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -3892,7 +3892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 0
+  spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1648576091
