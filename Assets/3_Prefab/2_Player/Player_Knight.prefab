@@ -618,6 +618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slowPercentOnAttack: 20
+  slowTimeOnAttack: 1.5
 --- !u!114 &1418905534921212663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,7 +650,8 @@ MonoBehaviour:
   targetTag: 
   attackRate: 2.3
   myWeapon: {fileID: 1936351326036441547}
-  weaponActiveTime: 1.4
+  weaponBeforeDelay: 0.5
+  weaponActiveTime: 1
   maxHitCount: 1
 --- !u!4 &2887848445311178001 stripped
 Transform:

@@ -35,7 +35,7 @@ public class MonsterSpawner : Spawner
         myCollider = GetComponent<Collider>();
         if (myCollider == null)
         {
-            Debug.LogError("콜라이더 존재하지 않음 : " + gameObject.name);
+            Debug.Log("콜라이더 존재하지 않음 : " + gameObject.name);
             return;
         }
 

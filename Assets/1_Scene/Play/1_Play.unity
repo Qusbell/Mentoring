@@ -3201,7 +3201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
-  heightOffset: 0.5
+  heightOffset: 0
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -3220,7 +3220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 1
+  spawnOnActivation: 0
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!1001 &173298173
@@ -3366,14 +3366,14 @@ MonoBehaviour:
     triggerType: 0
     targetTag: Player
     triggerArea: {fileID: 1857891032}
-    delayTime: 8
+    delayTime: 10
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 157875260}
     triggerType: 0
     targetTag: Player
     triggerArea: {fileID: 1857891032}
-    delayTime: 8
+    delayTime: 10
     timer: 0
     hasActivated: 0
   showTriggerAreas: 1
@@ -7933,15 +7933,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.35
+      value: -3.85
       objectReference: {fileID: 0}
     - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.19
+      value: 4.62
       objectReference: {fileID: 0}
     - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.61
+      value: -2.06
       objectReference: {fileID: 0}
     - target: {fileID: 2940030083548975812, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12288,7 +12288,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCollapsers:
-  - {fileID: 0}
+  - {fileID: 37316408}
+  - {fileID: 728120500}
+  - {fileID: 802466969}
+  - {fileID: 1099267093}
+  - {fileID: 164747895}
+  - {fileID: 498098383}
+  - {fileID: 1105621187}
+  - {fileID: 1958225583}
+  - {fileID: 1147726976}
+  - {fileID: 2130672822}
+  - {fileID: 1017103967}
+  - {fileID: 949042853}
   playerTag: Player
   showDebugLog: 1
 --- !u!1001 &799903689
@@ -18124,7 +18135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCollapsers:
-  - {fileID: 0}
+  - {fileID: 1345459927}
+  - {fileID: 435386849}
   playerTag: Player
   showDebugLog: 1
 --- !u!4 &1226334398
@@ -28006,7 +28018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCollapsers:
-  - {fileID: 0}
+  - {fileID: 62134707}
   playerTag: Player
   showDebugLog: 1
 --- !u!1 &1872392222
@@ -31124,7 +31136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
-  heightOffset: 0.5
+  heightOffset: 0
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -31143,7 +31155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 1
+  spawnOnActivation: 0
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!1001 &2138060712
