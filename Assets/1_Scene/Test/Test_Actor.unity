@@ -820,13 +820,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_Shielder
       objectReference: {fileID: 0}
+    - target: {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.23
+      value: 24.78
       objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 9.2
       objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.z
@@ -865,6 +869,111 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 489dff6294583ba43893e073aadec084, type: 3}
+--- !u!1 &1162610754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1162610755}
+  - component: {fileID: 1162610758}
+  - component: {fileID: 1162610757}
+  - component: {fileID: 1162610756}
+  m_Layer: 9
+  m_Name: Cube (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1162610755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162610754}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 26.389227, y: 8.7300005, z: -3.158999}
+  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1162610756
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162610754}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1162610757
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162610754}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1162610758
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162610754}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1250145536
 GameObject:
   m_ObjectHideFlags: 0
@@ -974,15 +1083,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.16
+      value: 3.56
       objectReference: {fileID: 0}
     - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.36
+      value: 12.22
       objectReference: {fileID: 0}
     - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.05
+      value: -5.63
       objectReference: {fileID: 0}
     - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1016,6 +1125,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_Minion
       objectReference: {fileID: 0}
+    - target: {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1032,6 +1145,10 @@ PrefabInstance:
     - target: {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
       propertyPath: m_Name
       value: Monster_Archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7762890709775158706, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1375,6 +1492,10 @@ PrefabInstance:
       propertyPath: maxHitCount
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 52846371049484032, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: attackDamage
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2559950472237959294, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
       propertyPath: m_Name
       value: Player_Knight
@@ -1430,6 +1551,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1976466648}
   - {fileID: 2076164605}
+  - {fileID: 1162610755}
   - {fileID: 1866683702}
   - {fileID: 1728107046}
   - {fileID: 1343171882}

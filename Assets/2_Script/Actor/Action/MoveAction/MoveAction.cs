@@ -6,43 +6,43 @@ using UnityEngine;
 
 
 //==================================================
-// ÀÌµ¿ Çàµ¿
-// moveVecÀ» ¿ÜºÎ¿¡¼­ ÀÔ·ÂÇÏ¸é, moveSpeedÀÇ ¼Óµµ·Î ÀÌµ¿
+// ì´ë™ í–‰ë™
+// moveVecì„ ì™¸ë¶€ì—ì„œ ì…ë ¥í•˜ë©´, moveSpeedì˜ ì†ë„ë¡œ ì´ë™
 //==================================================
 [RequireComponent(typeof(Rigidbody))]
-public class MoveAction : MonoBehaviour
+public class MoveAction : ActorAction
 {
-    // ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ ¹°¸®È¿°ú
+    // ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•œ ë¬¼ë¦¬íš¨ê³¼
     protected Rigidbody rigid;
 
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     protected virtual void Awake()
     {
-        // Rigidbody ÃÊ±âÈ­
+        // Rigidbody ì´ˆê¸°í™”
         rigid = GetComponent<Rigidbody>();
     }
     
 
     //==================================================
-    // ÀÌµ¿ ¸Ş¼­µå
+    // ì´ë™ ë©”ì„œë“œ
     //==================================================
 
-    // ÀÌµ¿ÇÒ ¹æÇâ
+    // ì´ë™í•  ë°©í–¥
     public Vector3 moveVec { get; set; }
 
-    // ÀÌµ¿ ¼Óµµ
+    // ì´ë™ ì†ë„
     [SerializeField] protected float moveSpeed = 5;
 
-    // ÀÌµ¿ »óÅÂ ¿©ºÎ
+    // ì´ë™ ìƒíƒœ ì—¬ë¶€
     public bool isMove { get; set; } = false;
 
 
-    // ÀÌµ¿ ¸Ş¼­µå
-    // ÇöÀçÀ§Ä¡ += ¹æÇâ * ÀÌµ¿ °£°İ * ÀÌµ¿ °£°İ º¸Á¤
+    // ì´ë™ ë©”ì„œë“œ
+    // í˜„ì¬ìœ„ì¹˜ += ë°©í–¥ * ì´ë™ ê°„ê²© * ì´ë™ ê°„ê²© ë³´ì •
     public virtual void Move()
     { rigid.MovePosition(rigid.position + moveVec * moveSpeed * Time.deltaTime); }
 
-    // È¸Àü
+    // íšŒì „
     protected virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
 }

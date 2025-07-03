@@ -9,7 +9,7 @@ using UnityEngine;
 //==================================================
 // 공격 행동
 //==================================================
-abstract public class AttackAction : MonoBehaviour
+abstract public class AttackAction : ActorAction
 {
     // 공격력
     [SerializeField] protected int attackDamage = 1;

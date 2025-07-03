@@ -9,7 +9,7 @@ using UnityEngine;
 // 도약 / 점프
 //==================================================
 [RequireComponent(typeof(Rigidbody))]
-public class JumpAction : MonoBehaviour
+public class JumpAction : ActorAction
 {
     // 오브젝트에 대한 물리효과
     protected Rigidbody rigid;

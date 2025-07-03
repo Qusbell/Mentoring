@@ -53,13 +53,20 @@ public class ChaseAction : MoveAction
     // 목적지 갱신
     void UpdateDestination()
     {
-        if (target != null) { nav.SetDestination(target.position); }
-        else
+        if (!nav.isOnNavMesh)
         {
-            Debug.Log("target 부재 중 : " + gameObject.name);
-            nav.SetDestination(this.transform.position);
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(this.transform.position, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                Debug.Log("붙음");
+                nav.Warp(hit.position);
+            }
         }
+
+        if (target != null && nav.isOnNavMesh)
+        { nav.SetDestination(target.position); }
     }
+
 
     public override void Move()
     {
