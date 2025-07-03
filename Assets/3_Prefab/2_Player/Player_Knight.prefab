@@ -592,6 +592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseController: {fileID: 0}
+  newAttackClip: {fileID: 0}
 --- !u!114 &6878090883934099199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slowPercentOnAttack: 20
+  slowTimeOnAttack: 1.5
 --- !u!114 &1418905534921212663
 MonoBehaviour:
   m_ObjectHideFlags: 0
