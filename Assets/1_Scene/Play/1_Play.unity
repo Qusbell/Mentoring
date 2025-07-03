@@ -2963,7 +2963,7 @@ GameObject:
   - component: {fileID: 157875263}
   - component: {fileID: 157875262}
   m_Layer: 0
-  m_Name: Cube_17_2
+  m_Name: Cube_18_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12061,7 +12061,7 @@ GameObject:
   - component: {fileID: 787726975}
   - component: {fileID: 787726974}
   m_Layer: 0
-  m_Name: Cube_17_1
+  m_Name: Cube_18_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13899,7 +13899,7 @@ GameObject:
   - component: {fileID: 949042854}
   - component: {fileID: 949042853}
   m_Layer: 0
-  m_Name: Cube_16_12
+  m_Name: Cube_17_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13921,7 +13921,7 @@ Transform:
   - {fileID: 782723424}
   - {fileID: 1969505141}
   - {fileID: 694268887}
-  m_Father: {fileID: 1184462976}
+  m_Father: {fileID: 1283425120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &949042853
 MonoBehaviour:
@@ -14052,6 +14052,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1184462976}
+  - {fileID: 1283425120}
   m_Father: {fileID: 1913670570}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &977259384
@@ -14132,7 +14133,7 @@ MonoBehaviour:
     triggerType: 0
     targetTag: Player
     triggerArea: {fileID: 1857891032}
-    delayTime: 5
+    delayTime: 10
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2130672820}
@@ -15027,7 +15028,7 @@ GameObject:
   - component: {fileID: 1017103968}
   - component: {fileID: 1017103967}
   m_Layer: 0
-  m_Name: Cube_16_11
+  m_Name: Cube_17_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15049,7 +15050,7 @@ Transform:
   - {fileID: 77254997}
   - {fileID: 1404192694}
   - {fileID: 2011800990}
-  m_Father: {fileID: 1184462976}
+  m_Father: {fileID: 1283425120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1017103967
 MonoBehaviour:
@@ -17275,7 +17276,7 @@ GameObject:
   - component: {fileID: 1147726977}
   - component: {fileID: 1147726976}
   m_Layer: 0
-  m_Name: Cube_16_9
+  m_Name: Cube_17_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17297,7 +17298,7 @@ Transform:
   - {fileID: 366491293}
   - {fileID: 1268768531}
   - {fileID: 907561251}
-  m_Father: {fileID: 1184462976}
+  m_Father: {fileID: 1283425120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1147726976
 MonoBehaviour:
@@ -17590,10 +17591,6 @@ Transform:
   - {fileID: 498098381}
   - {fileID: 1105621185}
   - {fileID: 1958225582}
-  - {fileID: 1147726975}
-  - {fileID: 2130672821}
-  - {fileID: 1017103966}
-  - {fileID: 949042852}
   m_Father: {fileID: 977259383}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1185628549
@@ -19700,6 +19697,41 @@ MonoBehaviour:
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
+--- !u!1 &1283425119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1283425120}
+  m_Layer: 0
+  m_Name: Cube_17
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1283425120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283425119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1147726975}
+  - {fileID: 2130672821}
+  - {fileID: 1017103966}
+  - {fileID: 949042852}
+  m_Father: {fileID: 977259383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1288745541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22072,7 +22104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1439592772}
   m_Layer: 0
-  m_Name: Cube_17
+  m_Name: Cube_18
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31018,7 +31050,7 @@ GameObject:
   - component: {fileID: 2130672825}
   - component: {fileID: 2130672824}
   m_Layer: 0
-  m_Name: Cube_16_10
+  m_Name: Cube_17_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31040,7 +31072,7 @@ Transform:
   - {fileID: 1783845581}
   - {fileID: 723331062}
   - {fileID: 291679498}
-  m_Father: {fileID: 1184462976}
+  m_Father: {fileID: 1283425120}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2130672822
 MonoBehaviour:
