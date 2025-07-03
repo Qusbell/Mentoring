@@ -2130,6 +2130,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 52846371049484032, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: weaponActiveTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 52846371049484032, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
+      propertyPath: weaponBeforeDelay
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2559950472237959294, guid: 002565ace60f26745934bcb8a310e69e, type: 3}
       propertyPath: m_Name
       value: Player_Knight
