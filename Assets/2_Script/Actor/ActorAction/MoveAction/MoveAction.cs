@@ -20,6 +20,7 @@ public class MoveAction : ActorAction
     {
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
+        originMoveSpeed = moveSpeed;
     }
     
 
@@ -30,8 +31,11 @@ public class MoveAction : ActorAction
     // 이동할 방향
     public Vector3 moveVec { get; set; }
 
-    // 이동 속도
+    // 현재 이동 속도
     [SerializeField] protected float moveSpeed = 5;
+
+    // 원래 이동 속도
+    protected float originMoveSpeed;
 
     // 이동 상태 여부
     public bool isMove { get; set; } = false;
@@ -45,4 +49,35 @@ public class MoveAction : ActorAction
     // 회전
     protected virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
+
+
+    // 슬로우 리스트
+    // 인덱스(key) / 슬로우가 적용된 이동속도(value)
+    private Dictionary<int, float> slowSpeedDictionary = new Dictionary<int, float>();
+    private int slowSpeedKeyIndex = 0;
+
+    // 슬로우 상태
+    public void Slow(int slowStrengthPercent, float slowTime)
+    {
+        slowSpeedDictionary[slowSpeedKeyIndex] = GetSlowSpeed(slowStrengthPercent);
+        StartCoroutine(Timer.StartTimer<int>(slowTime, (index) => { slowSpeedDictionary.Remove(index); SetSlowSpeed(); }, slowSpeedKeyIndex));
+        SetSlowSpeed();
+        slowSpeedKeyIndex++;
+    }
+
+    // 느려진 이동속도 구하기 (퍼센트)
+    private float GetSlowSpeed(int slowStrengthPercent)
+    { return originMoveSpeed * (1f - (slowStrengthPercent / 100f)); }
+
+    // 느려진 이동속도 구하기 (실수 단위)
+    private float GetSlowSpeed(float slowStrength)
+    { return originMoveSpeed * (1f - slowStrength); }
+
+    // 슬로우 적용
+    private void SetSlowSpeed()
+    {
+        moveSpeed = originMoveSpeed;
+        foreach (float speed in slowSpeedDictionary.Values)
+        {if (speed < moveSpeed) { moveSpeed = speed; } }
+    }
 }

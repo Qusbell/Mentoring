@@ -25,14 +25,14 @@ public class ActorAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
 
 
-        // 1. AnimatorOverrideController 생성 및 원본 컨트롤러 할당
-        AnimatorOverrideController overrideController = new AnimatorOverrideController(baseController);
-
-        // 2. 기존 애니메이션 클립과 교체할 클립 매핑
-        overrideController["Attack"] = newAttackClip; // "Attack"은 원본 컨트롤러의 상태(State) 또는 클립 이름
-
-        // 3. Animator에 오버라이드 컨트롤러 적용
-        animator.runtimeAnimatorController = overrideController;
+        //   // 1. AnimatorOverrideController 생성 및 원본 컨트롤러 할당
+        //   AnimatorOverrideController overrideController = new AnimatorOverrideController(baseController);
+        //   
+        //   // 2. 기존 애니메이션 클립과 교체할 클립 매핑
+        //   overrideController["Attack"] = newAttackClip; // "Attack"은 원본 컨트롤러의 상태(State) 또는 클립 이름
+        //   
+        //   // 3. Animator에 오버라이드 컨트롤러 적용
+        //   animator.runtimeAnimatorController = overrideController;
     }
 
     // 레이어 0번에서

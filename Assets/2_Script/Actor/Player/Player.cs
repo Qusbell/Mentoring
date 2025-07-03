@@ -25,6 +25,9 @@ public class Player : Actor
     }
 
 
+    [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
+    [SerializeField] protected float slowTimeOnAttack = 2;  // 공격 중 슬로우 시간
+
     // 프레임당 업데이트
     protected virtual void Update()
     {
@@ -42,6 +45,7 @@ public class Player : Actor
         {
             animator.PlayAnimation("DoAttack");
             attackAction.Attack();
+            moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack);
         }
     }
 }
