@@ -963,8 +963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 5
-  nowHp: 5
+  maxHp: 4
+  nowHp: 4
 --- !u!114 &5066733110248321778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,6 +994,7 @@ MonoBehaviour:
   targetTag: 
   attackRate: 1
   myWeapon: {fileID: 9215819455182724303}
+  weaponBeforeDelay: 0.2
   weaponActiveTime: 1
   maxHitCount: 1
 --- !u!1 &2910221618307621725
