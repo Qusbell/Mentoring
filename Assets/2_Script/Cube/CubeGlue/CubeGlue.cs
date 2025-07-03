@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class CubeGlue : MonoBehaviour
 {
     private void Start()
-    { beforePos = this.transform.position; }
-
+    {
+        beforePos = this.transform.position;
+    }
 
     // 콜라이더가 접촉해있는 동안
     private void OnCollisionStay(Collision collision)
     {
+        // Player, Monster 태그만 허용
+        if (!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Monster"))
+            return;
+
         // 접촉한 콜라이더 오브젝트에
         // RigidBody가 있다면
         Rigidbody rigid = collision.gameObject.GetComponent<Rigidbody>();
@@ -24,22 +28,18 @@ public class CubeGlue : MonoBehaviour
 
     // 이전 위치
     Vector3 beforePos;
-
     // 현재 방향
     Vector3 direction;
-
 
     // 매 물리 연산마다 업데이트
     private void FixedUpdate()
     {
         // 현재 향하고 있는 방향
         direction = GetDirection();
-
         // 현재 위치를 저장해둠
         // 다음 업데이트에서는 과거 위치가 되겠지
         beforePos = this.transform.position;
     }
-
 
     // 이전 위치 - 현재 위치
     // 이러면 Vector3값으로 현재 향하고 있는 방향이 나옴
