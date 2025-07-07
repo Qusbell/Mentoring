@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class MonsterSpawner : Spawner
 {
     [Header("스폰 위치 설정")]
@@ -11,13 +10,10 @@ public class MonsterSpawner : Spawner
 
     // 생성 주기
     [SerializeField] protected float spawnRate = 2f;
-
     // 시작과 함께 트리거 작동시킬지 설정
     [SerializeField] bool startTrigger = false;
-
     // 끝없이 스폰시킬지 설정
     [SerializeField] bool isEndlessSpawn = false;
-
 
     private enum SpawnType
     {
@@ -28,7 +24,6 @@ public class MonsterSpawner : Spawner
     // 오브젝트를 어떤 방식으로 생성할지 결정
     [SerializeField] SpawnType spawnType = SpawnType.OnTop;
 
-
     // 초기화
     protected void Start()
     {
@@ -38,11 +33,9 @@ public class MonsterSpawner : Spawner
             Debug.Log("콜라이더 존재하지 않음 : " + gameObject.name);
             return;
         }
-
         if (startTrigger)
         { SpawnTriggerOn(); }
     }
-
 
     // ===== 스폰 위치 =====
     // 현재 오브젝트의 콜라이더
@@ -58,57 +51,41 @@ public class MonsterSpawner : Spawner
                 // 하위 콜라이더들을 모두 포함해서 윗면 정중앙 계산
                 Bounds combinedBounds = GetCombinedBoundsFromChildren();
                 Vector3 topCenter = combinedBounds.center + Vector3.up * combinedBounds.extents.y;
-
                 // 추가 높이 오프셋 적용
                 spawnLocation = topCenter + Vector3.up * heightOffset;
                 break;
-
-
             case SpawnType.Around:
                 // <- 4가지 방향 결정 (일단은)
                 break;
         }
     }
 
-
     // 스폰 가능한 장소를 모두 List로 생성
     // <- 나중에 반응 보고 결정
     private List<Vector3> GetAroundSpawnLocations()
     {
         List<Vector3> aroundSpawnLocations = new List<Vector3>();
-
-
-
-
-
         return aroundSpawnLocations;
     }
-
-
 
     // 하위 오브젝트들의 모든 콜라이더 범위를 합치기
     private Bounds GetCombinedBoundsFromChildren()
     {
         // 모든 하위 콜라이더 가져오기 (자기 자신 포함)
         Collider[] allColliders = GetComponentsInChildren<Collider>();
-
         if (allColliders.Length == 0)
         {
             // 콜라이더가 없으면 Transform 기준으로 기본 크기 사용
             Debug.LogWarning($"[{gameObject.name}] 하위 콜라이더를 찾을 수 없습니다. Transform 크기를 사용합니다.");
             return new Bounds(transform.position, transform.lossyScale);
         }
-
         // 첫 번째 콜라이더로 초기 범위 설정
         Bounds combinedBounds = allColliders[0].bounds;
-
         // 나머지 콜라이더들 범위 모두 합치기
         for (int i = 1; i < allColliders.Length; i++)
         { combinedBounds.Encapsulate(allColliders[i].bounds); }
-
         return combinedBounds;
     }
-
 
     // ===== 트리거 / 생성 / 완료 =====
     // 1. 스포너 활성화 (MonsterCube에서 호출)
@@ -122,8 +99,7 @@ public class MonsterSpawner : Spawner
         SpawnObject();
     }
 
-
-    // 생성
+    // 생성 (수정됨)
     protected override void SpawnObject()
     {
         // 스폰 트리거가 켜져있다면
@@ -133,14 +109,20 @@ public class MonsterSpawner : Spawner
             Debug.Log(PrefabIndex + "번째 몬스터 생성");
             base.SpawnObject();
 
+            // 첫 번째 몬스터 스폰 시에만 베이크 및 플래그 설정 (수정됨)
+            if (!NavMeshManager.hasAnyMonsterSpawned)
+            {
+                NavMeshManager.hasAnyMonsterSpawned = true;
+                NavMeshManager.instance.Rebuild();
+                Debug.Log($"[{gameObject.name}] 첫 몬스터 스폰 - 베이킹 시작!");
+            }
+
             // 종료 체크
             CheckCompleted();
-
             // 종료되지 않았다면 : 다음 스폰 예약
             if (!isCompleted) { StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject)); }
         }
     }
-
 
     // 종료 확인
     public override void CheckCompleted()
@@ -150,7 +132,7 @@ public class MonsterSpawner : Spawner
         {
             base.CheckCompleted();
             // 주기적 스포너라면: 리셋 발생
-            if (isEndlessSpawn) { ResetSpawner();}
+            if (isEndlessSpawn) { ResetSpawner(); }
         }
         else
         {
