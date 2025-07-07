@@ -75,15 +75,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.2
+      value: -11.76
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.26
+      value: -5.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -256,6 +256,10 @@ PrefabInstance:
     - target: {fileID: 360375151596564303, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 528080494839242814, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.617
       objectReference: {fileID: 0}
     - target: {fileID: 654058105499033908, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_Layer
@@ -648,7 +652,7 @@ MonoBehaviour:
   attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
-  attackRate: 2.3
+  attackRate: 1.4
   myWeapon: {fileID: 1936351326036441547}
   weaponBeforeDelay: 0.4
   weaponActiveTime: 0.6
