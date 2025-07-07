@@ -91,12 +91,8 @@ public class CubeMover : MonoBehaviour
                 transform.position = originalPosition;  // 정확한 위치로 설정
                 hasArrived = true;                      // 도착 상태로 변경
 
-                // 몬스터가 스폰된 후에만 베이크 (수정된 부분)
-                if (NavMeshManager.hasAnyMonsterSpawned)
-                {
-                    NavMeshManager.instance.Rebuild();
-                    Debug.Log($"[{gameObject.name}] 큐브 도착 - NavMesh 베이크");
-                }
+                // NavMesh 리빌드-이동 끝 발판 생성
+                NavMeshManager.instance.Rebuild();
             }
 
 #if UNITY_EDITOR
@@ -117,6 +113,10 @@ public class CubeMover : MonoBehaviour
         UpdateLaserPath();
 #endif
     }
+
+
+
+
 
 #if UNITY_EDITOR
     [Tooltip("에디터에서만 레이저 효과로 경로 표시")]

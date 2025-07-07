@@ -228,12 +228,8 @@ public class CubeCollapser : MonoBehaviour
             modifier.overrideArea = true;
             modifier.area = 1; // Not Walkable 영역으로 설정
 
-            // 몬스터가 스폰된 후에만 베이크 (수정된 부분)
-            if (NavMeshManager.hasAnyMonsterSpawned)
-            {
-                NavMeshManager.instance.Rebuild();
-                Debug.Log($"[{gameObject.name}] 큐브 붕괴 - NavMesh 베이크");
-            }
+            // NavMesh 리빌드 - 발판 사라짐
+            NavMeshManager.instance.Rebuild();
 
             return;
         }
