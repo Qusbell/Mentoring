@@ -2987,7 +2987,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: efd2f721df7b6a5439e7eed3a9005730, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &192599133
 MonoBehaviour:
@@ -15347,7 +15347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c4a4cb2ff6cc048ae584eeb6245812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStartTimer: 5
+  nextStartTimer: 6
 --- !u!1 &1128004099
 GameObject:
   m_ObjectHideFlags: 0
@@ -15520,7 +15520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c4a4cb2ff6cc048ae584eeb6245812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStartTimer: 2
+  nextStartTimer: 1
 --- !u!1001 &1142877373
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27762,13 +27762,6 @@ MonoBehaviour:
     targetTag: Player
     triggerArea: {fileID: 1258329578}
     delayTime: 4.5
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 1964150675}
-    triggerType: 0
-    targetTag: Player
-    triggerArea: {fileID: 1258329578}
-    delayTime: 15
     timer: 0
     hasActivated: 0
   showTriggerAreas: 1
