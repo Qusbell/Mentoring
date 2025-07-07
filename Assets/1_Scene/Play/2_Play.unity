@@ -4312,11 +4312,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8030117709470689724, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8030117709470689724, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8030117709470689724, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4359,6 +4359,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7222477677593277190, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1648576091}
+    - targetCorrespondingSourceObject: {fileID: 7222477677593277190, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648576092}
   m_SourcePrefab: {fileID: 100100000, guid: ff3bfc1e1a5758545b11f2b3d68731f1, type: 3}
 --- !u!4 &1648576087 stripped
 Transform:
@@ -4403,7 +4406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMover: {fileID: 0}
   monsterSpawner: {fileID: 0}
-  spawnOnActivation: 1
+  spawnOnActivation: 0
   delayBeforeSpawn: 0
   showDebugLog: 1
 --- !u!114 &1648576091
@@ -4418,11 +4421,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: -10, z: 0}
+  startPositionOffset: {x: 0, y: 20, z: 0}
   moveSpeed: 15
   showPath: 0
   showLaserPath: 0
   showEditorPreview: 1
+--- !u!114 &1648576092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1648576088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e949b54b5b35b748b5d0dedf7ae182c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorChangeStartRatio: 0.5
+  fadeStartDistance: 0.5
+  fadeDuration: 0.3
 --- !u!1001 &1657457847
 PrefabInstance:
   m_ObjectHideFlags: 0
