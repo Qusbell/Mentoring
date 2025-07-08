@@ -75,15 +75,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.47
+      value: -11.76
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.44
+      value: -5.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -21.11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f30941043ad71474fbf91fc6b3de0ff3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -652,10 +652,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 5
+  attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
-  attackRate: 2
+  attackRate: 1.4
   myWeapon: {fileID: 1936351326036441547}
   weaponBeforeDelay: 0.4
   weaponActiveTime: 0.6
