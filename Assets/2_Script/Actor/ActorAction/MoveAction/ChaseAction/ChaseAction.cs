@@ -55,10 +55,12 @@ public class ChaseAction : MoveAction
     {
         if (!nav.isOnNavMesh)
         {
+            Debug.Log(this.gameObject.name + " : navMesh 위가 아님");
+
             NavMeshHit hit;
             if (NavMesh.SamplePosition(this.transform.position, out hit, 1.0f, NavMesh.AllAreas))
             {
-                Debug.Log("붙음");
+                Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
                 nav.Warp(hit.position);
             }
         }
@@ -87,7 +89,9 @@ public class ChaseAction : MoveAction
 
     // 네비게이션 위치와 자신 위치 동기화
     void UpdateMyPositionOnNav()
-    { if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; } }
+    { 
+        if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
+    }
 
 
     // 회전 속도

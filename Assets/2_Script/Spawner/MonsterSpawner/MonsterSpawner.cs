@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 public class MonsterSpawner : Spawner
 {
-    [Header("스폰 위치 설정")]
-    [Tooltip("큐브 위에서 추가로 높일 거리 (기본: 0.5유닛), 근데 이거 필요한가?")]
-    public float heightOffset = 0.5f; // <- 필요한가?
     // 생성 주기
     [SerializeField] protected float spawnRate = 2f;
     // 시작과 함께 트리거 작동시킬지 설정
@@ -45,7 +42,7 @@ public class MonsterSpawner : Spawner
                 Bounds combinedBounds = GetCombinedBoundsFromChildren();
                 Vector3 topCenter = combinedBounds.center + Vector3.up * combinedBounds.extents.y;
                 // 추가 높이 오프셋 적용
-                spawnLocation = topCenter + Vector3.up * heightOffset;
+                spawnLocation = topCenter;
                 break;
             case SpawnType.Around:
                 // <- 4가지 방향 결정 (일단은)

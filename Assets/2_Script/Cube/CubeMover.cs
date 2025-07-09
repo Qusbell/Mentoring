@@ -90,7 +90,7 @@ public class CubeMover : MonoBehaviour
             {
                 transform.position = originalPosition;  // 정확한 위치로 설정
                 hasArrived = true;                      // 도착 상태로 변경
-
+                //  this.gameObject.layer = LayerMask.NameToLayer("Cube"); // <- 자기자신 레이어 변경
                 // NavMesh 리빌드-이동 끝 발판 생성
                 NavMeshManager.instance.Rebuild();
             }

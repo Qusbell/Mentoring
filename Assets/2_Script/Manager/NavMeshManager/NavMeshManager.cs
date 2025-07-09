@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Unity.AI.Navigation;
 using UnityEngine;
+
 [RequireComponent(typeof(NavMeshSurface))]
 public class NavMeshManager : MonoBehaviour
 {
@@ -18,10 +19,9 @@ public class NavMeshManager : MonoBehaviour
         else { Destroy(this.gameObject); return; }
         // NavMeshSurface 설정
         surface = GetComponent<NavMeshSurface>();
-        if (surface == null) { Debug.Log("NavMeshSurface가 존재하지 않음 : " + gameObject.name); }
-        surface.collectObjects = CollectObjects.Children;
-        // 콜라이더 기반 맵 생성
-        surface.useGeometry = UnityEngine.AI.NavMeshCollectGeometry.PhysicsColliders;
+        surface.collectObjects = CollectObjects.Children; // 자식 오브젝트만 맵 생성
+        surface.useGeometry = UnityEngine.AI.NavMeshCollectGeometry.PhysicsColliders; // 콜라이더 기반 맵 생성
+        //   surface.layerMask = LayerMask.GetMask("Cube"); // Cube 레이어만 맵 생성
     }
     private void Start()
     { Rebuild(); }

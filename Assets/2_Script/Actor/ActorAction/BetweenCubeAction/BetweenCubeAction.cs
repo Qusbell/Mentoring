@@ -86,7 +86,7 @@ public class BetweenCubeAction : MonoBehaviour
             // 키 추가
             ImpactDirection dir = GetDirectionFromWhereToThis(contact.normal);
 
-            Debug.Log("between 분리 : " + collision.gameObject.name + " " + dir);
+            // Debug.Log("between 접촉 : " + collision.gameObject.name + " " + dir);
 
             if (HasOppositeDirection(dir))
             {
@@ -109,7 +109,7 @@ public class BetweenCubeAction : MonoBehaviour
             // 키가 있으면 제거
             collisionDirections.Remove(otherCollider);
 
-            Debug.Log("between 분리 : " + collision.gameObject.name);
+            // Debug.Log("between 분리 : " + collision.gameObject.name);
         }
     }
 }
