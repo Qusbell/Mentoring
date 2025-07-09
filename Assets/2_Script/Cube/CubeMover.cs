@@ -2,6 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 1. 중복된 의미의 변수, 메서드, 프로퍼티 통일
+// 쉽게 말해서 하나만 써라
+
+// 2. 업데이트에 들어가있는 함수들을 사용이 끝나면 아예 this.enabled = false로 만들어버린다던가
+// 아니면 애초에 조건 만족 시 딱 1번만 실행하게 만든다던가
+// 또는 프로퍼티로 호출 시에 체크한다던가
+// Trigger 컴포넌트 <-> Work 컴포넌트 분리  
+
+
+// 3. 디버그를 업데이트를 넣을때에는 확실히 이게 안되는 부분만 써라
+
+// 4. 상속구조를 한번 활용해봐라 
+
+
 /// <summary>
 /// 큐브 이동을 관리하는 컴포넌트
 /// 미리 배치된 큐브가 시작 시 꺼지고, 활성화될 때 지정한 위치에서 시작하여 원래 배치된 위치로 돌아옴
@@ -12,6 +27,7 @@ public class CubeMover : MonoBehaviour
     [Header("이동 설정")]
     [Tooltip("시작 위치 (배치된 위치 기준으로 더해짐)")]
     public Vector3 startPositionOffset = new Vector3(10, 0, 0);
+
 
     [Tooltip("이동 속도 (초당 유닛)")]
     public float moveSpeed = 3f;
@@ -26,7 +42,7 @@ public class CubeMover : MonoBehaviour
         get { return isMovingToOriginal && !hasArrived; }
     }
 
-    // 도착 여부를 외부에서 확인할 수 있는 프로퍼티 (CubeSpawnerController에서 사용)
+    // 도착 여부를 외부에서 확인할 수 있는 프로퍼티 (CubeSpawnerController에서 사용
     public bool HasArrived
     {
         get { return hasArrived; }
@@ -94,7 +110,7 @@ public class CubeMover : MonoBehaviour
                 //this.gameObject.layer = LayerMask.NameToLayer("Cube"); // <- 자기자신 레이어 변경
                 ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Cube"));
 
-                Debug.Log("현재 레이어: " + this.gameObject.layer);
+                //Debug.Log("현재 레이어: " + this.gameObject.layer);
                 // NavMesh 리빌드-이동 끝 발판 생성
                 NavMeshManager.instance.Rebuild();
             }
