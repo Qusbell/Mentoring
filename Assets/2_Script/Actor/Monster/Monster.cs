@@ -12,8 +12,18 @@ using UnityEngine.UI;
 [RequireComponent(typeof(DamageReaction))]
 abstract public class Monster : Actor
 {
+    private Transform _target;
     // 타겟
-    public Transform target { get; set; }
+    public Transform target
+    {
+        get
+        {
+            if (_target == null)
+            { _target = TargetManager.instance.target; }
+            return _target;
+        }
+    }
+
 
     protected override void Awake()
     {
@@ -24,10 +34,6 @@ abstract public class Monster : Actor
         damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
     }
 
-    private void Start()
-    { target = TargetManager.instance.target; }
-
-    
 
     private void Update()
     { actionStatus(); }

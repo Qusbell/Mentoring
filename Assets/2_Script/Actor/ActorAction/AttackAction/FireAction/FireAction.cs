@@ -1,26 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 
 // <- 몬스터라는 가정으로 제작됨
 public class FireAction : AttackAction
 {
-    private void Start()
-    {
-        Monster monster = GetComponent<Monster>();
-        if(monster == null)
-        { Debug.Log("FireAction이 Monster와 함께 있지 않음"); }
-        else
-        { target = monster.target; }
-            
-    }
-
     // 발사체
     [SerializeField] protected GameObject projectile;
 
     // 임시 타겟
-    public Transform target; // <- 반드시 player만을 지정하게 됨
+    private Transform _target; // <- 반드시 player만을 지정하게 됨
+    public Transform target
+    {
+        get
+        {
+            if(_target == null)
+            {
+                Monster monster = GetComponent<Monster>();
+                _target = monster.target;
+            }
+            return _target;
+        }
+    }
 
     // 발사 위치
     public Transform firePos;
