@@ -53,6 +53,7 @@ public class CubeMover : MonoBehaviour
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
+            ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Default"));
         }
     }
 
@@ -90,7 +91,10 @@ public class CubeMover : MonoBehaviour
             {
                 transform.position = originalPosition;  // 정확한 위치로 설정
                 hasArrived = true;                      // 도착 상태로 변경
-                //  this.gameObject.layer = LayerMask.NameToLayer("Cube"); // <- 자기자신 레이어 변경
+                //this.gameObject.layer = LayerMask.NameToLayer("Cube"); // <- 자기자신 레이어 변경
+                ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Cube"));
+
+                Debug.Log("현재 레이어: " + this.gameObject.layer);
                 // NavMesh 리빌드-이동 끝 발판 생성
                 NavMeshManager.instance.Rebuild();
             }
@@ -99,6 +103,17 @@ public class CubeMover : MonoBehaviour
             // 에디터에서만 레이저 경로 업데이트
             UpdateLaserPath();
 #endif
+        }
+    }
+
+
+    // 레이어 변경 재귀 함수 (임시, 확인용)
+    private void ChangeLayersRecursively(Transform trans, int layer)
+    {
+        trans.gameObject.layer = layer;
+        foreach (Transform child in trans)
+        {
+            ChangeLayersRecursively(child, layer);
         }
     }
 
