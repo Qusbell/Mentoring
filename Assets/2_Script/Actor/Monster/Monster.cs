@@ -22,6 +22,10 @@ abstract public class Monster : Actor
             { _target = TargetManager.instance.target; }
             return _target;
         }
+        set
+        {
+            _target = value;
+        }
     }
 
 
