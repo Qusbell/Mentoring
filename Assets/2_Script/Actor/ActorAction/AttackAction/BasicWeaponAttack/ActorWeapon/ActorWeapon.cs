@@ -76,7 +76,7 @@ public class ActorWeapon : MonoBehaviour
                     if (hitCount < maxHitCount)
                     {
                         hitTargets[other.gameObject] = hitCount + 1; // hitCount += 1
-                        damageReaction.TakeDamage(attackDamage);     // 데미지 적용
+                        damageReaction.TakeDamage(attackDamage, this.gameObject); // 데미지 적용
                     }
                     // else: 최대 히트 횟수 도달 시 추가 동작 없음(무시)
                 }

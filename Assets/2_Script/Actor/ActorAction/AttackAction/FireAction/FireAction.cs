@@ -8,7 +8,12 @@ public class FireAction : AttackAction
 {
     private void Start()
     {
-        target = TargetManager.instance.target; // <- 여기서 직접 받아와야 하나??
+        Monster monster = GetComponent<Monster>();
+        if(monster == null)
+        { Debug.Log("FireAction이 Monster와 함께 있지 않음"); }
+        else
+        { target = monster.target; }
+            
     }
 
     // 발사체

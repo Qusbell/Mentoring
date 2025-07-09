@@ -14,12 +14,10 @@ public class DamageReaction : ActorAction
     [SerializeField] protected int maxHp = 10;  // 최대 생명력
     [SerializeField] protected int nowHp = 10;  // 현재 생명력
 
-
-    // 외부에서부터 가져올 피격 시 액션
+    // 외부에서부터 가져올 피격/사망 시 액션
     // 애니메이션 요소로 사용 중
-    public Action hitAction { private get; set; }
-    public Action dieAction { private get; set; }
-
+    public Action hitAnimation { private get; set; }
+    public Action dieAnimation { private get; set; }
 
     // 피격
     public virtual void TakeDamage(int damage)
@@ -29,6 +27,34 @@ public class DamageReaction : ActorAction
         else
         { nowHp = 0; }
 
+        if (0 < nowHp)
+        { Hit(); }
+        else
+        { Die(); }
+    }
+
+
+    // 피격
+    public virtual void TakeDamage(int damage, GameObject enemy)
+    {
+        // 마지막으로 공격한 적을 타겟팅
+        // <- 게으른 코딩. 이후 수정
+        GameObject lastAttackedEnemy = enemy;
+        Monster monster = GetComponent<Monster>();
+        if (monster != null)
+        {
+            Transform tempTrans = monster.target;
+            monster.target = lastAttackedEnemy.transform;
+            Timer.StartTimer(20, () => { monster.target = tempTrans; });
+        }
+
+
+
+        // 피격
+        if (damage <= nowHp)
+        { nowHp -= damage; }
+        else
+        { nowHp = 0; }
 
         if (0 < nowHp)
         { Hit(); }
@@ -39,16 +65,16 @@ public class DamageReaction : ActorAction
 
     protected void Hit()
     {
-        if (hitAction != null)
-        { hitAction(); }
+        if (hitAnimation != null)
+        { hitAnimation(); }
     }
 
 
     // 사망 처리
     protected virtual void Die()
     {
-        if(dieAction != null)
-        { dieAction(); }
+        if (dieAnimation != null)
+        { dieAnimation(); }
 
         // ----- 사망 시, 모든 ActorAction / 콜라이더 비활성화 -----
 
@@ -71,6 +97,6 @@ public class DamageReaction : ActorAction
         if (rb != null)
         { rb.isKinematic = true; }
 
-        StartCoroutine(Timer.StartTimer(3f, () => Destroy(gameObject)));
+        StartCoroutine(Timer.StartTimer(3f, () => Destroy(gameObject))); // <- 이후 오브젝트 풀로 이동하는 걸 고려
     }
 }

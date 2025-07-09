@@ -62,4 +62,9 @@ public class TargetManager : MonoBehaviour
         if (_target == null)
         { Debug.Log("Targeting 완료했지만 target == null"); }
     }
+
+
+
+    // 몬스터가 피격 시
+    // target 변경
 }

@@ -13,19 +13,21 @@ using UnityEngine.UI;
 abstract public class Monster : Actor
 {
     // 타겟
-    Transform target;
+    public Transform target { get; set; }
 
     protected override void Awake()
     {
         base.Awake();
         actionStatus = SpawnState; // 생성부터 시작
 
-        damageReaction.hitAction = () => SwitchStatus(HitStatus);
-        damageReaction.dieAction = () => SwitchStatus(DieStatus);
+        damageReaction.hitAnimation = () => SwitchStatus(HitStatus);
+        damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
     }
 
     private void Start()
     { target = TargetManager.instance.target; }
+
+    
 
     private void Update()
     { actionStatus(); }
@@ -38,8 +40,6 @@ abstract public class Monster : Actor
 
     // 현재 수행 중인 행동
     protected Action actionStatus;
-
-
 
 
     // 애니메이션 트리거의 단일 활성화 보장
