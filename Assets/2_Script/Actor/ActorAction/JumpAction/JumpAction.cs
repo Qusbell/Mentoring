@@ -82,6 +82,7 @@ public class JumpAction : ActorAction
     }
 
     // 착지 상태인지 판정
+    //
     protected bool IsJump()
     {
         // 앞/뒤 레이캐스트

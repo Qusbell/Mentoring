@@ -21,7 +21,7 @@ public class NavMeshManager : MonoBehaviour
         surface = GetComponent<NavMeshSurface>();
         surface.collectObjects = CollectObjects.Children; // 자식 오브젝트만 맵 생성
         surface.useGeometry = UnityEngine.AI.NavMeshCollectGeometry.PhysicsColliders; // 콜라이더 기반 맵 생성
-        //   surface.layerMask = LayerMask.GetMask("Cube"); // Cube 레이어만 맵 생성
+        surface.layerMask = LayerMask.GetMask("Cube"); // Cube 레이어만 맵 생성
     }
     private void Start()
     { Rebuild(); }
