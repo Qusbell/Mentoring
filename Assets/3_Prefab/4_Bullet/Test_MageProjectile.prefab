@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6129278783575550341}
   - component: {fileID: 1559460829401720967}
-  - component: {fileID: 5221002552752490417}
   - component: {fileID: 7229923996995265545}
   - component: {fileID: 976257640579006336}
   - component: {fileID: 2769892338940849361}
@@ -65,22 +64,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5221002552752490417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2336828060849677753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38f9bef1eb3dc540865beb8bac95bc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 1
-  <attackRange>k__BackingField: 3
-  targetTag: Player
-  attackRate: 0.5
 --- !u!136 &7229923996995265545
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -131,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 1
   <attackRange>k__BackingField: 3
-  targetTag: 
+  targetTag: Player
   attackRate: 0.5
 --- !u!114 &2502068240392846196
 MonoBehaviour:
@@ -147,6 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   turnSpeed: 1.5
+  accelRate: 0.1
+  accelSpeed: 0.1
 --- !u!1001 &9010616011398549743
 PrefabInstance:
   m_ObjectHideFlags: 0
