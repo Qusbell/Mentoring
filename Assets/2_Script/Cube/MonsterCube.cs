@@ -47,6 +47,7 @@ public class MonsterCube : MonoBehaviour
         if (monsterSpawner == null)
         {
             Debug.LogError($"[{gameObject.name}] MonsterSpawner 컴포넌트를 찾을 수 없습니다");
+            this.enabled = false; // 필수 컴포넌트 없으면 비활성화
             return;
         }
 
@@ -65,9 +66,10 @@ public class MonsterCube : MonoBehaviour
 
     void Update()
     {
-        // 이미 스폰했으면 체크하지 않음
+        // 이미 스폰했으면 컴포넌트 비활성화 (성능 최적화)
         if (hasSpawnTriggered)
         {
+            this.enabled = false;
             return;
         }
 
@@ -91,6 +93,9 @@ public class MonsterCube : MonoBehaviour
         TriggerSpawn();
         hasSpawnTriggered = true;
         hasActivated = true;
+
+        // 작업 완료 후 컴포넌트 비활성화
+        this.enabled = false;
     }
 
     // 도착 시 스폰 체크 (기존 로직)
@@ -108,6 +113,7 @@ public class MonsterCube : MonoBehaviour
 
             TriggerSpawn();
             hasSpawnTriggered = true;
+            this.enabled = false; // 작업 완료 후 비활성화
             return;
         }
 
@@ -121,6 +127,7 @@ public class MonsterCube : MonoBehaviour
 
             TriggerSpawn();
             hasSpawnTriggered = true;
+            this.enabled = false; // 작업 완료 후 비활성화
         }
     }
 
@@ -189,6 +196,7 @@ public class MonsterCube : MonoBehaviour
 
         TriggerSpawn();
         hasSpawnTriggered = true;
+        this.enabled = false; // 수동 실행 후에도 비활성화
     }
 
     // 상태 초기화 (재사용을 위해)
@@ -196,6 +204,7 @@ public class MonsterCube : MonoBehaviour
     {
         hasSpawnTriggered = false;
         hasActivated = false;
+        this.enabled = true; // 리셋 시 다시 활성화
 
         if (showDebugLog)
         {
