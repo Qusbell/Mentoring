@@ -10,7 +10,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(ChaseAction))]
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(DamageReaction))]
-abstract public class Monster : Actor
+public class Monster : Actor
 {
     private Transform _target;
     // 타겟
@@ -28,7 +28,6 @@ abstract public class Monster : Actor
         }
     }
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -38,9 +37,11 @@ abstract public class Monster : Actor
         damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
     }
 
-
     private void Update()
-    { actionStatus(); }
+    {
+        actionStatus();
+        moveAction.Turn();
+    }
 
 
     // 공격 사거리 계산
@@ -67,7 +68,7 @@ abstract public class Monster : Actor
     // 재생 중 애니메이션 확인
     protected bool animationPlayCheck = false;
 
-    // 각종 상태 비활성화
+    // 상태 변경 / 애니메이션 체크 초기화
     protected void SwitchStatus(Action nextStatus)
     {
         animationTrigger = true;
@@ -90,6 +91,8 @@ abstract public class Monster : Actor
     // 생성 상태
     private void SpawnState()
     {
+        // Debug.Log("Spawn");
+
         if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
         { SwitchStatus(IdleStatus); } // 대기
     }
@@ -97,6 +100,8 @@ abstract public class Monster : Actor
     // 대기 상태
     protected void IdleStatus()
     {
+        Debug.Log("Idle");
+
         if (InAttackRange())  // 공격 가능 상태라면
         {
             SwitchStatus(AttackStatus);
@@ -111,6 +116,8 @@ abstract public class Monster : Actor
     // 이동 상태
     protected void MoveStatus()
     {
+        Debug.Log("Move");
+
         if (InAttackRange())
         {
             moveAction.isMove = false;
@@ -126,17 +133,25 @@ abstract public class Monster : Actor
     }
 
 
+    // <- 공격 선딜레이 상태?
+
 
     // 공격 상태
-    protected virtual void AttackStatus() // <- 하위 몬스터들도 제대로 확인할 것
+    protected virtual void AttackStatus()
     {
+        Debug.Log("Attack");
+
         // 공격 가능하다면
-        if (attackAction.isCanAttack && InAttackRange())
+        if (attackAction.isCanAttack)
         {
-            // attackAction.Attack();
-            PlayAnimationTriggerOnce("DoAttack");
+            if (InAttackRange())
+            {
+                attackAction.Attack();
+                PlayAnimationTriggerOnce("DoAttack");
+            }
+            else { SwitchStatus(IdleStatus); }
         }
-        
+
         SwitchStatusWhenAnimationEnd("Attack", ReloadStatus);
     }
 
@@ -144,9 +159,9 @@ abstract public class Monster : Actor
     // 공격 후딜레이 애니메이션 재생
     protected void ReloadStatus()
     {
+        Debug.Log("Reload");
         SwitchStatusWhenAnimationEnd("Reload", IdleStatus);
     }
-
 
 
 
@@ -154,12 +169,14 @@ abstract public class Monster : Actor
 
     protected void HitStatus()
     {
+        // Debug.Log("Hit");
         PlayAnimationTriggerOnce("IsHit");
         SwitchStatusWhenAnimationEnd("Hit", IdleStatus);
     }
 
     protected void DieStatus()
     {
+        // Debug.Log("Die");
         PlayAnimationTriggerOnce("IsDie");
     }
 }

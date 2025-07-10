@@ -44,8 +44,6 @@ public class ProjectileHitAttack : AttackAction
     }
 
 
-
-
     // delete
     protected override void DoAttack() { }
 

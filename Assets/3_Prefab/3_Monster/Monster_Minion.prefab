@@ -1440,8 +1440,8 @@ GameObject:
   - component: {fileID: -1961226020710905288}
   - component: {fileID: -4275034679557372163}
   - component: {fileID: -4324133006189494714}
-  - component: {fileID: 7726280659300360691}
   - component: {fileID: 5954479926083274602}
+  - component: {fileID: 656635881556464233}
   m_Layer: 8
   m_Name: Monster_Minion
   m_TagString: Monster
@@ -1607,18 +1607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 3
   nowHp: 3
---- !u!114 &7726280659300360691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6143643343095581565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 711a601acc6acb042bc572a625f71354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5954479926083274602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,6 +1627,18 @@ MonoBehaviour:
   weaponBeforeDelay: 0.2
   weaponActiveTime: 1
   maxHitCount: 1
+--- !u!114 &656635881556464233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143643343095581565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f9bb30b0f93aed4b95d093a41e3b0c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6628943230737950743
 GameObject:
   m_ObjectHideFlags: 0

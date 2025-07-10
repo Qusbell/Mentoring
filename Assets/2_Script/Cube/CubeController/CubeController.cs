@@ -24,35 +24,18 @@ public class CubeController : MonoBehaviour
         {
             // ----- 큐브무버 컴포넌트 애드 -----
             if (data.targetCube != null)
-            { CheckAndAddMoverComponent(data.targetCube); }
+            { Debug.Log("cubeMover 없음"); }
 
 
             // ----- 공통 시간 딜레이 부여 -----
             if (0 < sharingDelayTime)
             {
-                if (data.triggerType == TriggerType.TimeTrigger)
-                {
-                    tempTime += data.delayTime;
-                    tempTime += sharingDelayTime;
-                    data.delayTime = tempTime;
-                }
+                tempTime += data.delayTime;
+                tempTime += sharingDelayTime;
+                data.delayTime = tempTime;
             }
         } // foreach
     }
-
-
-    // 큐브에 CubeMover 컴포넌트가 있는지 확인하고 없으면 추가
-    // MoverAdder
-    private void CheckAndAddMoverComponent(GameObject cube)
-    {
-        CubeMover mover = cube.GetComponent<CubeMover>();
-        if (mover == null)
-        {
-            Debug.LogWarning($"큐브 '{cube.name}'에 CubeMover 컴포넌트가 없습니다. 자동으로 추가됩니다.");
-            cube.AddComponent<CubeMover>();
-        }
-    }
-
 
 
     // -------------------- 컨트롤러 트리거 --------------------

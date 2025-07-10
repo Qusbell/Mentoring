@@ -31,8 +31,6 @@ public class ActorWeapon : MonoBehaviour
         }
     }
 
-
-
     private void Awake()
     {
         weaponCollider = GetComponent<Collider>();
@@ -48,11 +46,8 @@ public class ActorWeapon : MonoBehaviour
     
     // ===== 콜라이더 활성화 / 비활성화 =====
 
-    public void UseWeapon()
-    { isActivate = true; }
-
-    public void NotUseWeapon()
-    { isActivate = false; }
+    public void UseWeapon() { isActivate = true; }
+    public void NotUseWeapon() { isActivate = false; }
 
 
 

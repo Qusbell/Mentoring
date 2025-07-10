@@ -7,19 +7,9 @@ using UnityEngine;
 [RequireComponent (typeof(ProjectileMove))]
 public class Projectile : Actor
 {
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-
-    // ¸Å ÇÁ·¹ÀÓ ÀÌµ¿
+    // ë§¤ í”„ë ˆì„ ì´ë™
     protected virtual void Update()
     {
         if (moveAction.isMove) { moveAction.Move(); }
     }
-
-
-
 }

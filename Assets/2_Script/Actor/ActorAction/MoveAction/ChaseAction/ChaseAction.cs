@@ -98,7 +98,7 @@ public class ChaseAction : MoveAction
     [SerializeField] protected float rotationSpeed = 3f;
 
     // 다음 진행 방향을 향해 회전 (느리게)
-    protected override void Turn()
+    public override void Turn()
     {
         Vector3 direction = moveVec;
         if (moveVec == Vector3.zero)
@@ -106,8 +106,6 @@ public class ChaseAction : MoveAction
             direction = target.position - transform.position;
             direction.y = 0;
         }
-        else
-        { direction = moveVec; }
 
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
@@ -118,7 +116,5 @@ public class ChaseAction : MoveAction
         UpdateDestination();       // 목적지 확인
         UpdateNextMoveDirection(); // 다음 방향 설정
         UpdateMyPositionOnNav();   // 자신 위치 갱신
-
-        Turn();
     }
 }

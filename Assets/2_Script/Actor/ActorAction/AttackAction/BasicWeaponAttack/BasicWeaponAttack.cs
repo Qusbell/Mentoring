@@ -20,6 +20,7 @@ public class BasicWeaponAttack : AttackAction
     // ActorWeapon 캐시
     private ActorWeapon weapon = null;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,5 +39,4 @@ public class BasicWeaponAttack : AttackAction
         StartCoroutine(Timer.StartTimer(weaponBeforeDelay, weapon.UseWeapon));
         StartCoroutine(Timer.StartTimer(weaponBeforeDelay + weaponActiveTime, weapon.NotUseWeapon));
     }
-
 }

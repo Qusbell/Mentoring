@@ -7,6 +7,9 @@ using UnityEngine;
 // <- 몬스터라는 가정으로 제작됨
 public class FireAction : AttackAction
 {
+    // attackBeforeDelay
+    [SerializeField] private float weaponBeforeDelay = 0.35f;
+
     // 발사체
     [SerializeField] protected GameObject projectile;
 
@@ -30,6 +33,11 @@ public class FireAction : AttackAction
 
     protected override void DoAttack()
     {
+        StartCoroutine(Timer.StartTimer(weaponBeforeDelay, Fire));
+    }
+
+    protected void Fire()
+    {
         if (projectile != null)
         {
             // 투사체 생성하기
@@ -41,7 +49,7 @@ public class FireAction : AttackAction
 
             // 발사 방향 지정
             if (moveAction != null)
-            { moveAction.SetTarget(target.position); }
+            { moveAction.SetTargetPos(target.position); }
             else { Debug.Log("FireAction : 잘못된 Projectile 등록됨 : " + gameObject.name); }
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }

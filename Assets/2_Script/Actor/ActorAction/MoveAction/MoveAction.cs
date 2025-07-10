@@ -47,7 +47,7 @@ public class MoveAction : ActorAction
     { rigid.MovePosition(rigid.position + moveVec * moveSpeed * Time.deltaTime); }
 
     // 회전
-    protected virtual void Turn()
+    public virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
 
 

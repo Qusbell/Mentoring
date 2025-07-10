@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 2235218766167420711}
   - component: {fileID: 3237082938306507263}
   - component: {fileID: 2392287228515701913}
-  - component: {fileID: 8623404209215932467}
+  - component: {fileID: 3085591412297278114}
   m_Layer: 0
   m_Name: Monster_Mage
   m_TagString: Untagged
@@ -485,8 +485,8 @@ MonoBehaviour:
   <attackRange>k__BackingField: 10
   targetTag: 
   attackRate: 2.5
+  weaponBeforeDelay: 0.35
   projectile: {fileID: 2336828060849677753, guid: 4ab66f9db6bf98f42a28d46a2f4a6611, type: 3}
-  target: {fileID: 0}
   firePos: {fileID: 2281714855753279812}
 --- !u!195 &411016965163252633
 NavMeshAgent:
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 2
   nowHp: 2
---- !u!114 &8623404209215932467
+--- !u!114 &3085591412297278114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -559,7 +559,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2801390549913854848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8079e1c3f943d646bccba3d3609e949, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f9bb30b0f93aed4b95d093a41e3b0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3037311676926964130
