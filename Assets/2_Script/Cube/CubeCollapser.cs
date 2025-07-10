@@ -3,7 +3,7 @@ using Unity.AI.Navigation;
 using UnityEngine;
 
 /// <summary>
-/// 단순화된 큐브 붕괴 컴포넌트 (개선버전)
+/// 단순화된 큐브 붕괴 컴포넌트 (최적화 버전)
 /// 플레이어 접근, 시간 경과, 외부 트리거, 에리어 트리거에 의해 붕괴되는 큐브
 /// </summary>
 public class CubeCollapser : MonoBehaviour
@@ -167,6 +167,13 @@ public class CubeCollapser : MonoBehaviour
     // 매 프레임 실행 
     void Update()
     {
+        // 붕괴 완료 시 컴포넌트 비활성화 (성능 최적화)
+        if (currentState == CubeState.Collapsed)
+        {
+            this.enabled = false;
+            return;
+        }
+
         // 현재 상태에 따른 처리
         switch (currentState)
         {
@@ -182,9 +189,6 @@ public class CubeCollapser : MonoBehaviour
                 UpdateFalling();
                 break;
 
-            case CubeState.Collapsed:
-                // 이미 붕괴됨 - 아무것도 하지 않음
-                break;
         }
     }
 
@@ -213,7 +217,6 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-
     // 흔들림 상태 업데이트
     private void UpdateShaking()
     {
@@ -236,7 +239,10 @@ public class CubeCollapser : MonoBehaviour
             SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
 
             // NavMesh 리빌드 - 발판 사라짐
-            NavMeshManager.instance.Rebuild();
+            if (NavMeshManager.instance != null) // null 체크 추가 (안정성)
+            {
+                NavMeshManager.instance.Rebuild();
+            }
 
             return;
         }
@@ -328,18 +334,25 @@ public class CubeCollapser : MonoBehaviour
             Debug.Log($"[{gameObject.name}] 붕괴 완료!");
 
         gameObject.SetActive(false);
+
+        // 비활성화 후 컴포넌트도 비활성화 (안정성)
+        this.enabled = false;
     }
 
     // 직접 붕괴 트리거 (에디터나 다른 스크립트에서 호출 가능)
     public void TriggerCollapse()
     {
-        if (currentState == CubeState.Idle)
+        if (currentState != CubeState.Idle)
         {
             if (showDebugLog)
-                Debug.Log($"[{gameObject.name}] 외부에서 붕괴 트리거됨!");
-
-            StartCoroutine(StartCollapseProcedure());
+                Debug.Log($"[{gameObject.name}] 이미 붕괴 진행 중이므로 무시됨. 현재 상태: {currentState}");
+            return; // 중복 실행 방지 (안정성)
         }
+
+        if (showDebugLog)
+            Debug.Log($"[{gameObject.name}] 외부에서 붕괴 트리거됨!");
+
+        StartCoroutine(StartCollapseProcedure());
     }
 
     // OnTriggerEnter 이벤트 처리 (트리거 콜라이더와 충돌 시)
@@ -383,6 +396,8 @@ public class CubeCollapser : MonoBehaviour
         shakeTimer = 0f;
         hasTriggered = false;
         transform.position = originalPosition;
+        gameObject.SetActive(true); // 리셋 시 게임오브젝트 활성화
+        this.enabled = true; // 리셋 시 컴포넌트 재활성화
 
         if (showDebugLog)
             Debug.Log($"[{gameObject.name}] 큐브 리셋 완료");
