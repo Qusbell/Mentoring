@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-
 
 // 1. 중복된 의미의 변수, 메서드, 프로퍼티 통일
 // 쉽게 말해서 하나만 써라
@@ -28,7 +28,6 @@ public class CubeMover : MonoBehaviour
     [Tooltip("시작 위치 (배치된 위치 기준으로 더해짐)")]
     public Vector3 startPositionOffset = new Vector3(10, 0, 0);
 
-
     [Tooltip("이동 속도 (초당 유닛)")]
     public float moveSpeed = 3f;
 
@@ -42,7 +41,7 @@ public class CubeMover : MonoBehaviour
         get { return isMovingToOriginal && !hasArrived; }
     }
 
-    // 도착 여부를 외부에서 확인할 수 있는 프로퍼티 (CubeSpawnerController에서 사용
+    // 도착 여부를 외부에서 확인할 수 있는 프로퍼티
     public bool HasArrived
     {
         get { return hasArrived; }
@@ -92,6 +91,13 @@ public class CubeMover : MonoBehaviour
     // 매 프레임마다 실행
     void Update()
     {
+        // 이미 도착했으면 컴포넌트 비활성화 (성능 최적화)
+        if (hasArrived)
+        {
+            this.enabled = false;
+            return;
+        }
+
         // 원래 위치로 이동 중일 때
         if (isMovingToOriginal && !hasArrived)
         {
@@ -107,12 +113,16 @@ public class CubeMover : MonoBehaviour
             {
                 transform.position = originalPosition;  // 정확한 위치로 설정
                 hasArrived = true;                      // 도착 상태로 변경
-                //this.gameObject.layer = LayerMask.NameToLayer("Cube"); // <- 자기자신 레이어 변경
                 ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Cube"));
 
-                //Debug.Log("현재 레이어: " + this.gameObject.layer);
                 // NavMesh 리빌드-이동 끝 발판 생성
-                NavMeshManager.instance.Rebuild();
+                if (NavMeshManager.instance != null) // null 체크 추가 (안정성)
+                {
+                    NavMeshManager.instance.Rebuild();
+                }
+
+                // 이동 완료 후 컴포넌트 비활성화
+                this.enabled = false;
             }
 
 #if UNITY_EDITOR
@@ -121,7 +131,6 @@ public class CubeMover : MonoBehaviour
 #endif
         }
     }
-
 
     // 레이어 변경 재귀 함수 (임시, 확인용)
     private void ChangeLayersRecursively(Transform trans, int layer)
@@ -138,16 +147,13 @@ public class CubeMover : MonoBehaviour
     {
         isMovingToOriginal = false;
         hasArrived = false;
+        this.enabled = true; // 리셋 시 다시 활성화
 
 #if UNITY_EDITOR
         // 에디터에서만 레이저 경로 업데이트
         UpdateLaserPath();
 #endif
     }
-
-
-
-
 
 #if UNITY_EDITOR
     [Tooltip("에디터에서만 레이저 효과로 경로 표시")]
