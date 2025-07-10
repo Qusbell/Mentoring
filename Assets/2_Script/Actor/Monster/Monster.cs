@@ -94,13 +94,13 @@ public class Monster : Actor
         // Debug.Log("Spawn");
 
         if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
-        { SwitchStatus(IdleStatus); } // 대기
+        { SwitchStatus(IdleStatus); }
     }
 
     // 대기 상태
     protected void IdleStatus()
     {
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
 
         if (InAttackRange())  // 공격 가능 상태라면
         {
@@ -116,7 +116,7 @@ public class Monster : Actor
     // 이동 상태
     protected void MoveStatus()
     {
-        Debug.Log("Move");
+        //Debug.Log("Move");
 
         if (InAttackRange())
         {
@@ -139,7 +139,7 @@ public class Monster : Actor
     // 공격 상태
     protected virtual void AttackStatus()
     {
-        Debug.Log("Attack");
+        //Debug.Log("Attack");
 
         // 공격 가능하다면
         if (attackAction.isCanAttack)
@@ -159,7 +159,7 @@ public class Monster : Actor
     // 공격 후딜레이 애니메이션 재생
     protected void ReloadStatus()
     {
-        Debug.Log("Reload");
+        //Debug.Log("Reload");
         SwitchStatusWhenAnimationEnd("Reload", IdleStatus);
     }
 

@@ -53,12 +53,12 @@ public class ChaseAction : MoveAction
     // 목적지 갱신
     void UpdateDestination()
     {
-        if (!nav.isOnNavMesh)
-        {
-            Debug.Log(this.gameObject.name + " : navMesh 위가 아님");
+        float distance = Vector3.Distance(nav.nextPosition, transform.position);
 
+        if (!nav.isOnNavMesh || 0.1f < distance)
+        {
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(this.transform.position, out hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))
             {
                 Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
                 nav.Warp(hit.position);
