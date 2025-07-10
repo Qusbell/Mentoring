@@ -38,10 +38,10 @@ public class Monster : Actor
         damageReaction.hitAnimation = () => SwitchStatus(HitStatus);
         damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
 
+
+        // 낙사 추가
         if(GetComponent<FallingAction>() == null)
-        {
-            this.AddComponent<FallingAction>();
-        }
+        { this.AddComponent<FallingAction>(); }
     }
 
     private void Update()

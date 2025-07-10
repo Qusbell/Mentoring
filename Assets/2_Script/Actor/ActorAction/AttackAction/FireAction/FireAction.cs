@@ -8,14 +8,13 @@ using UnityEngine;
 public class FireAction : AttackAction
 {
     // attackBeforeDelay
-    [SerializeField] private float weaponBeforeDelay = 0.35f;
+    [SerializeField] protected float weaponBeforeDelay = 0.35f;
 
     // 발사체
     [SerializeField] protected GameObject projectile;
 
     // 발사 위치
     [SerializeField] protected Transform firePos;
-
 
 
     // 임시 타겟
@@ -33,12 +32,14 @@ public class FireAction : AttackAction
         }
     }
 
+
     protected override void DoAttack()
     {
         StartCoroutine(Timer.StartTimer(weaponBeforeDelay, Fire));
     }
 
-    protected void Fire()
+
+    protected virtual void Fire()
     {
         if (projectile != null)
         {
@@ -56,4 +57,11 @@ public class FireAction : AttackAction
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }
     }
+
+
+
+
+
+
+
 }
