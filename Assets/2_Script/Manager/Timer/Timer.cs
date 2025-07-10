@@ -15,7 +15,6 @@ public class Timer : MonoBehaviour
     }
 
 
-    
     public static IEnumerator StartTimer<T>(float p_duration, Action<T> p_callback, T param)
     {
         yield return new WaitForSeconds(p_duration);
@@ -23,4 +22,13 @@ public class Timer : MonoBehaviour
     }
 
 
+    // 무한반복 코루틴
+    public static IEnumerator EndlessTimer(float p_duration, Action p_callback)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(p_duration);
+            p_callback?.Invoke();
+        }
+    }
 }

@@ -26,9 +26,14 @@ abstract public class AttackAction : ActorAction
     // 공격 간격 (== 공격 속도)
     [SerializeField] protected float attackRate = 0.5f;
 
-    // 공격 가능 여부
-    public bool isCanAttack { get; protected set; } = true;
 
+    // 공격 가능 여부
+    protected bool _isCanAttack = true;
+    public virtual bool isCanAttack
+    {
+        get { return _isCanAttack; }
+        protected set { _isCanAttack = value; }
+    }
 
 
     protected virtual void Awake()

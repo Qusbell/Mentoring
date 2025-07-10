@@ -13,6 +13,11 @@ public class FireAction : AttackAction
     // 발사체
     [SerializeField] protected GameObject projectile;
 
+    // 발사 위치
+    [SerializeField] protected Transform firePos;
+
+
+
     // 임시 타겟
     private Transform _target; // <- 반드시 player만을 지정하게 됨
     public Transform target
@@ -27,9 +32,6 @@ public class FireAction : AttackAction
             return _target;
         }
     }
-
-    // 발사 위치
-    public Transform firePos;
 
     protected override void DoAttack()
     {

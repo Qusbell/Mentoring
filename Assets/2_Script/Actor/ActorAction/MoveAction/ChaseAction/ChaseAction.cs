@@ -53,9 +53,10 @@ public class ChaseAction : MoveAction
     // 목적지 갱신
     void UpdateDestination()
     {
-        float distance = Vector3.Distance(nav.nextPosition, transform.position);
+        // nav상 위치와 transform 위치의 괴리
+        float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
 
-        if (!nav.isOnNavMesh || 0.1f < distance)
+        if (!nav.isOnNavMesh || 0.1f < gapDistance)
         {
             NavMeshHit hit;
             if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))

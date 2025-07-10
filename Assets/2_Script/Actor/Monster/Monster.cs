@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -35,6 +37,11 @@ public class Monster : Actor
 
         damageReaction.hitAnimation = () => SwitchStatus(HitStatus);
         damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
+
+        if(GetComponent<FallingAction>() == null)
+        {
+            this.AddComponent<FallingAction>();
+        }
     }
 
     private void Update()
