@@ -200,6 +200,20 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
+    // 재귀적으로 레이어 변경
+    private void SetLayerRecursively(GameObject obj, int layer)
+    {
+        // 자기 자신 레이어 변경
+        obj.layer = layer;
+
+        // 모든 자식들의 레이어도 변경
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
+    }
+
+
     // 흔들림 상태 업데이트
     private void UpdateShaking()
     {
@@ -219,14 +233,7 @@ public class CubeCollapser : MonoBehaviour
                 originalPosition.z
             );
 
-            // NavMesh에서 즉시 제거하기 위해 NavMeshModifier 추가하여 제외시키기
-            NavMeshModifier modifier = GetComponent<NavMeshModifier>();
-            if (modifier == null)
-            {
-                modifier = gameObject.AddComponent<NavMeshModifier>();
-            }
-            modifier.overrideArea = true;
-            modifier.area = 1; // Not Walkable 영역으로 설정
+            SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
 
             // NavMesh 리빌드 - 발판 사라짐
             NavMeshManager.instance.Rebuild();
