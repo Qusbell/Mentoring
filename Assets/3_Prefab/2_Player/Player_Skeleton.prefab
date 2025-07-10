@@ -491,7 +491,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000003909577, y: 0.000000013664912, z: -3.3347906e-17, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4999999, y: 1.6999998, z: 1.7}
+  m_LocalScale: {x: 1.4999999, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 888390635061671392}
@@ -565,8 +565,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.3, z: 0.7}
-  m_Center: {x: 0.0000036908211, y: 0.7815391, z: 0.0000000056551377}
+  m_Size: {x: 0.9999999, y: 1.7913204, z: 0.42487356}
+  m_Center: {x: 0.0000036811637, y: 1.0359008, z: -0.012285124}
 --- !u!1 &1850185741143356663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,7 +1245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1c9ea500b304149aff6ffd47879d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4.5
+  moveSpeed: 6
 --- !u!114 &8983823797723537583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,8 +1298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowPercentOnAttack: 20
-  slowTimeOnAttack: 1.5
+  slowPercentOnAttack: 30
+  slowTimeOnAttack: 1
 --- !u!114 &2169939233528477970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,11 +1340,11 @@ MonoBehaviour:
   attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
-  attackRate: 1.1
+  attackRate: 0.6
   myWeapon: {fileID: 1507084875693659171}
-  weaponBeforeDelay: 0.4
-  weaponActiveTime: 0.6
-  maxHitCount: 1
+  weaponBeforeDelay: 0.35
+  weaponActiveTime: 0.8
+  maxHitCount: 2
 --- !u!1 &5359304219147062780
 GameObject:
   m_ObjectHideFlags: 0
