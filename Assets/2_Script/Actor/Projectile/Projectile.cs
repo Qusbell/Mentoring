@@ -22,4 +22,10 @@ public class Projectile : Actor
     {
         if (moveAction.isMove) { moveAction.Move(); }
     }
+
+
+    protected void OnDestroy()
+    {
+       // <- 끝났을 때 이펙트 
+    }
 }

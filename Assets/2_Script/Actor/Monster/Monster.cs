@@ -30,6 +30,9 @@ public class Monster : Actor
         }
     }
 
+    // 추격 행동
+    ChaseAction chaseAction;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,10 +41,12 @@ public class Monster : Actor
         damageReaction.hitAnimation = () => SwitchStatus(HitStatus);
         damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
 
-
         // 낙사 추가
         if(GetComponent<FallingAction>() == null)
         { this.AddComponent<FallingAction>(); }
+
+        chaseAction = moveAction as ChaseAction;
+        if (chaseAction == null) { Debug.Log(this.gameObject.name + " : ChaseAction 아님"); }
     }
 
     private void Update()
@@ -125,7 +130,9 @@ public class Monster : Actor
     {
         //Debug.Log("Move");
 
-        if (InAttackRange())
+        if (!chaseAction.isCanChase)
+        { SwitchStatus(IdleStatus); }
+        else if (InAttackRange())
         {
             moveAction.isMove = false;
             SwitchStatus(AttackStatus);

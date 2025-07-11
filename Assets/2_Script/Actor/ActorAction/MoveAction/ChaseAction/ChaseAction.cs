@@ -94,6 +94,32 @@ public class ChaseAction : MoveAction
         if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
     }
 
+    public bool isCanChase
+    {
+        get { return CanChaseTarget(); }
+    }
+
+    // 대상을 추격할 수 있는 상태인지 확인하는 메서드
+    protected bool CanChaseTarget()
+    {
+        if (nav == null || target == null)
+        { return false; }
+
+        // NavMeshAgent가 활성화되어 있고, 경로가 유효한지 확인
+        if (!nav.isActiveAndEnabled)
+        { return false; }
+
+        NavMeshPath path = new NavMeshPath();
+        bool hasPath = nav.CalculatePath(target.position, path);
+
+        // 경로가 존재하고, 경로 상태가 완성되었으며, 경로 길이가 0보다 크면 추격 가능
+        if (hasPath && path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 1)
+        { return true; }
+
+        return false;
+    }
+
+
 
     // 회전 속도
     [SerializeField] protected float rotationSpeed = 3f;
