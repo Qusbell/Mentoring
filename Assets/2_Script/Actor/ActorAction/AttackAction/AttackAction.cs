@@ -66,7 +66,12 @@ abstract public class AttackAction : ActorAction
         if (isCanAttack == true)
         {
             isCanAttack = false;
-            StartCoroutine(Timer.StartTimer(attackRate, () => { isCanAttack = true; }));
+            Timer.Instance.StartTimer(
+                this, "_Attack",
+                attackRate,
+                () => { isCanAttack = true; });
+
+            // StartCoroutine(Timer.StartTimer(attackRate, () => { isCanAttack = true; }));
             return true;
         }
         else { return false; }

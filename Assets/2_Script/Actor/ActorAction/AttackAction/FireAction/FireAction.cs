@@ -35,7 +35,7 @@ public class FireAction : AttackAction
 
     protected override void DoAttack()
     {
-        StartCoroutine(Timer.StartTimer(weaponBeforeDelay, Fire));
+        Timer.Instance.StartTimer(this, "_Fire", weaponBeforeDelay, Fire);
     }
 
 
@@ -57,11 +57,5 @@ public class FireAction : AttackAction
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }
     }
-
-
-
-
-
-
 
 }
