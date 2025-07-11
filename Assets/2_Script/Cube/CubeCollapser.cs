@@ -398,7 +398,7 @@ public class CubeCollapser : MonoBehaviour
                 }
                 else if (showDebugLog)
                 {
-                    Debug.Log($"[{gameObject.name}] 외부 트리거 발동! 플레이어 접촉");
+                    Debug.Log($"[{gameObject.name}] 외부 트리거 발동 플레이어 접촉");
                 }
 
                 StartCoroutine(StartCollapseProcedure());
