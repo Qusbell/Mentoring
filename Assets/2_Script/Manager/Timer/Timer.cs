@@ -31,4 +31,21 @@ public class Timer : MonoBehaviour
             p_callback?.Invoke();
         }
     }
+
+
+
+    // 메쉬 삭제용 타이머
+    public static IEnumerator LerpTimer(float duration, Action<float> onUpdate, Action onComplete = null)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            onUpdate?.Invoke(t);
+            yield return null;
+        }
+        onUpdate?.Invoke(1f); // 마지막에 완전히 1로 보정
+        onComplete?.Invoke();
+    }
 }

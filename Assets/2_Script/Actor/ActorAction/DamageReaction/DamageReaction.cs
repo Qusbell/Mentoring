@@ -98,5 +98,8 @@ public class DamageReaction : ActorAction
         { rb.isKinematic = true; }
 
         StartCoroutine(Timer.StartTimer(3f, () => Destroy(gameObject))); // <- 이후 오브젝트 풀로 이동하는 걸 고려
+
+        // 모든 마테리얼 투명화 (2초)
+        //  GetComponent<SetMaterials>().SetAllMaterialsToFadeOut();
     }
 }
