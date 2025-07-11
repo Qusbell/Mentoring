@@ -58,7 +58,7 @@ public class MonsterCube : MonoBehaviour
             Debug.Log($"[{gameObject.name}] MonsterCube 초기화 완료. 스폰 타이밍: {timing}");
         }
 
-        // ✅ 최적화: 정적 큐브 케이스를 Start에서 한 번만 처리
+        // 정적 큐브 케이스를 Start에서 한 번만 처리
         if (!spawnOnActivation && cubeMover == null)
         {
             if (showDebugLog)
@@ -81,14 +81,14 @@ public class MonsterCube : MonoBehaviour
 
     void Update()
     {
-        // ✅ 최적화: 이미 스폰했으면 즉시 비활성화
+        // 이미 스폰했으면 즉시 비활성화
         if (hasSpawnTriggered)
         {
             this.enabled = false;
             return;
         }
 
-        // ✅ 최적화: 조건을 한 번에 체크하고 즉시 처리
+        // 조건을 한 번에 체크하고 즉시 처리
         if (!spawnOnActivation && cubeMover != null && cubeMover.HasArrived)
         {
             if (showDebugLog)
@@ -99,7 +99,7 @@ public class MonsterCube : MonoBehaviour
             TriggerSpawn();
             hasSpawnTriggered = true;
             this.enabled = false; // 성능 최적화
-            return; // ✅ 핵심: 즉시 종료로 불필요한 처리 방지
+            return; // 즉시 종료로 불필요한 처리 방지
         }
     }
 
