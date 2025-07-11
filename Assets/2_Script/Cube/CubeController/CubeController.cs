@@ -24,7 +24,7 @@ public class CubeController : MonoBehaviour
         {
             // ----- 큐브무버 컴포넌트 애드 -----
             if (data.targetCube != null)
-            { Debug.Log("cubeMover 없음"); }
+           // { Debug.Log("cubeMover 없음"); }
 
 
             // ----- 공통 시간 딜레이 부여 -----

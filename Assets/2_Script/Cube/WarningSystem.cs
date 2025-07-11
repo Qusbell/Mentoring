@@ -1,11 +1,12 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 위에서 아래로 떨어지는 큐브가 그 아래에 있는 큐브의 윗면에 빨간색 경고 표시를 보여주는 스크립트
 /// 큐브가 가까워질수록 경고 표시가 더 선명해지고, 착지 직전에 부드럽게 사라짐.
-/// 오브젝트 풀링으로 성능 최적화 (프리팹용)
+/// 오브젝트 풀링으로 성능 최적화
+/// Default와 Cube 레이어 모두 감지하도록 레이어마스크 수정
 /// </summary>
 public class WarningSystem : MonoBehaviour
 {
@@ -183,6 +184,7 @@ public class WarningSystem : MonoBehaviour
     /// <summary>
     /// 떨어지는 큐브 아래에 다른 큐브가 있는지 레이캐스트로 확인
     /// 있으면 그 큐브 위에 경고 표시 생성
+    /// Default와 Cube 레이어 모두 감지하도록 수정
     /// </summary>
     private void CheckForCubeBelow()
     {
@@ -190,8 +192,13 @@ public class WarningSystem : MonoBehaviour
         int originalLayer = gameObject.layer;
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
-        // 아래 방향으로 레이캐스트 발사 (무한 거리, Default 레이어만)
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, Mathf.Infinity, 1);
+        // Default와 Cube 레이어 모두 감지하도록 레이어마스크 확장
+        int defaultLayer = 1 << LayerMask.NameToLayer("Default");
+        int cubeLayer = 1 << LayerMask.NameToLayer("Cube");
+        int layerMask = defaultLayer | cubeLayer;
+
+        // 아래 방향으로 레이캐스트 발사 (무한 거리, Default + Cube 레이어)
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, Mathf.Infinity, layerMask);
 
         // 가까운 순서대로 정렬 (첫 번째로 만나는 적합한 큐브 선택)
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
@@ -253,7 +260,7 @@ public class WarningSystem : MonoBehaviour
         // 적합한 큐브를 찾지 못한 경우 디버그 로그 출력
         if (!foundValidCube)
         {
-            Debug.LogWarning($"[{gameObject.name}] 아래에 적합한 큐브를 찾을 수 없습니다.");
+            Debug.LogWarning($"[{gameObject.name}] 아래에 적합한 큐브를 찾을 수 없습니다. (Default 또는 Cube 레이어에서 검색함)");
         }
     }
 
