@@ -101,7 +101,7 @@ public class CubeController : MonoBehaviour
                 other.CompareTag(data.targetTag))
             {
                 //  StartCoroutine(Timer.StartTimer<CubeData>(data.delayTime, ActivateCube, data));
-                Timer.Instance.StartTimer(data.delayTime, ActivateCube, data);
+                Timer.Instance.StartTimer(this, data.delayTime, ActivateCube, data);
             }
         }
     }

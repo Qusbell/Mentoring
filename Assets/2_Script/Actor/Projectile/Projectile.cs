@@ -13,7 +13,7 @@ public class Projectile : Actor
     {
         // 타이머 후 해당 투사체 삭제
         // StartCoroutine(Timer.StartTimer(projectileTimer, () => Destroy(this.gameObject)));
-        Timer.Instance.StartTimer(projectileTimer, () => Destroy(this.gameObject));
+        Timer.Instance.StartTimer(this, projectileTimer, () => Destroy(this.gameObject));
     }
 
 
@@ -24,8 +24,8 @@ public class Projectile : Actor
     }
 
 
-    protected void OnDestroy()
-    {
-       // <- 끝났을 때 이펙트 
-    }
+    // protected void OnDestroy()
+    // {
+    //    // <- 끝났을 때 이펙트 
+    // }
 }

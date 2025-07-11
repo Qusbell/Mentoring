@@ -39,29 +39,29 @@ public class Timer : SingletonT<Timer>
     // ===== 단일 타이머 (중복 방지) =====
 
     // ----- 타이머 시작 -----
-    protected void StartTimer((int, string) key, float duration, Action callback)
+    protected void StartTimer((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
         if (continuousTimers.ContainsKey(key)) { return; }
 
-        Coroutine timer = StartCoroutine(TimerCoroutine(key, duration, callback));
+        Coroutine timer = StartCoroutine(TimerCoroutine(key, component, duration, callback));
         continuousTimers[key] = timer;
     }
 
     // this, string 방식으로 호출
     public void StartTimer(MonoBehaviour component, string key, float duration, Action callback)
-    { StartTimer(GetTimerKeyAsMono(component, key), duration, callback); }
+    { StartTimer(GetTimerKeyAsMono(component, key), component, duration, callback); }
 
     // ----- 제네릭 단일 타이머 시작 -----
-    protected void StartTimer<T>((int, string) key, float duration, Action<T> callback, T param)
+    protected void StartTimer<T>((int, string) key, MonoBehaviour component, float duration, Action<T> callback, T param)
     {
         if (continuousTimers.ContainsKey(key)) { return; }
 
-        Coroutine timer = StartCoroutine(TimerCoroutine(key, duration, callback, param));
+        Coroutine timer = StartCoroutine(TimerCoroutine(key, component, duration, callback, param));
         continuousTimers[key] = timer;
     }
 
     public void StartTimer<T>(MonoBehaviour component, string key, float duration, Action<T> callback, T param)
-    { StartTimer(GetTimerKeyAsMono(component, key), duration, callback, param); }
+    { StartTimer(GetTimerKeyAsMono(component, key), component, duration, callback, param); }
 
     // ----- 타이머 조기 종료 -----
     protected void StopTimer((int, string) key)
@@ -77,17 +77,38 @@ public class Timer : SingletonT<Timer>
     { StopTimer(GetTimerKeyAsMono(component, key)); }
 
     // ----- 타이머 코루틴 ------
-    protected IEnumerator TimerCoroutine((int, string) key, float duration, Action callback)
+    // 개선
+    protected IEnumerator TimerCoroutine((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
-        yield return new WaitForSeconds(duration);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (component == null)
+            {
+                continuousTimers.Remove(key);
+                yield break;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
         callback?.Invoke();
         continuousTimers.Remove(key);
     }
 
     // ----- 제네릭 단일 타이머 코루틴 -----
-    protected IEnumerator TimerCoroutine<T>((int, string) key, float duration, Action<T> callback, T param)
+    protected IEnumerator TimerCoroutine<T>((int, string) key, MonoBehaviour component, float duration, Action<T> callback, T param)
     {
-        yield return new WaitForSeconds(duration);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (component == null)
+            {
+                continuousTimers.Remove(key);
+                yield break;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
         callback?.Invoke(param);
         continuousTimers.Remove(key);
     }
@@ -95,20 +116,20 @@ public class Timer : SingletonT<Timer>
 
 
 
+
     // ===== 무한반복 타이머 (중복방지) =====
 
     // ----- 중복 실행 방지 EndlessTimer 시작 -----
-    protected void StartEndlessTimer((int, string) key, float duration, Action callback)
+    protected void StartEndlessTimer((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
         key = GetEndlessTimerKey(key);
-        if (continuousTimers.ContainsKey(key)) { return; } // 이미 실행 중이면 무시
-
-        Coroutine timer = StartCoroutine(EndlessTimerCoroutine(key, duration, callback));
+        if (continuousTimers.ContainsKey(key)) { return; }
+        Coroutine timer = StartCoroutine(EndlessTimerCoroutine(key, component, duration, callback));
         continuousTimers[key] = timer;
     }
 
     public void StartEndlessTimer(MonoBehaviour component, string key, float duration, Action callback)
-    { StartEndlessTimer(GetTimerKeyAsMono(component, key), duration, callback); }
+    { StartEndlessTimer(GetTimerKeyAsMono(component, key), component, duration, callback); }
 
     // ----- EndlessTimer 중지 -----
     protected void StopEndlessTimer((int, string) key)
@@ -124,35 +145,47 @@ public class Timer : SingletonT<Timer>
     { StopEndlessTimer(GetTimerKeyAsMono(component, key)); }
 
     // ----- EndlessTimer 코루틴 (중복 실행 방지) -----
-    private IEnumerator EndlessTimerCoroutine((int, string) key, float duration, Action callback)
+    private IEnumerator EndlessTimerCoroutine((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
         while (true)
         {
+            if (component == null)
+            {
+                continuousTimers.Remove(key);
+                yield break;
+            }
             yield return new WaitForSeconds(duration);
             callback?.Invoke();
         }
-        // ※ 무한 반복이므로 Remove는 StopEndlessTimer에서만 호출
     }
 
+    // ===== 타이머 (중복 가능, MonoBehaviour 체크 추가) =====
 
-    // ===== 타이머 (중복 가능) =====
+    // MonoBehaviour를 파라미터로 받는 버전
+    public void StartTimer(MonoBehaviour component, float duration, Action callback)
+    {
+        StartCoroutine(TimerCoroutine(component, duration, callback));
+    }
 
-    public void StartTimer(float duration, Action callback)
-    { StartCoroutine(TimerCoroutine(duration, callback)); }
-
-    private IEnumerator TimerCoroutine(float duration, Action callback)
+    private IEnumerator TimerCoroutine(MonoBehaviour component, float duration, Action callback)
     {
         yield return new WaitForSeconds(duration);
-        callback?.Invoke();
+        if (component != null)
+            callback?.Invoke();
     }
 
-    public void StartTimer<T>(float duration, Action<T> callback, T param)
-    { StartCoroutine(TimerCoroutine(duration, callback, param)); }
+    // 제네릭 버전
+    public void StartTimer<T>(MonoBehaviour component, float duration, Action<T> callback, T param)
+    {
+        StartCoroutine(TimerCoroutine(component, duration, callback, param));
+    }
 
-    private IEnumerator TimerCoroutine<T>(float duration, Action<T> callback, T param)
+    private IEnumerator TimerCoroutine<T>(MonoBehaviour component, float duration, Action<T> callback, T param)
     {
         yield return new WaitForSeconds(duration);
-        callback?.Invoke(param);
+        if (component != null)
+            callback?.Invoke(param);
     }
+
 
 }

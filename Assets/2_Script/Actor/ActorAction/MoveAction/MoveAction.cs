@@ -63,7 +63,7 @@ public class MoveAction : ActorAction
 
         System.Action<int> tempAction = (index) => { slowSpeedDictionary.Remove(index); SetSlowSpeed(); };
         //  StartCoroutine(Timer.StartTimer<int>(slowTime, tempAction, slowSpeedKeyIndex));
-        Timer.Instance.StartTimer(slowTime, tempAction, slowSpeedKeyIndex);
+        Timer.Instance.StartTimer(this, slowTime, tempAction, slowSpeedKeyIndex);
 
         SetSlowSpeed();
         slowSpeedKeyIndex++;

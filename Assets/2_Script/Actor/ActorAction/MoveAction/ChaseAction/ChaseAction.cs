@@ -58,7 +58,6 @@ public class ChaseAction : MoveAction
     }
 
 
-
     public bool isCanChase
     {
         get { return IsCanChaseTarget(); }
@@ -83,9 +82,9 @@ public class ChaseAction : MoveAction
         }
 
         // 3. 경로가 유효한가?
-        if (!nav.hasPath || nav.pathStatus != NavMeshPathStatus.PathComplete)
+        if (!nav.hasPath)
         {
-            // Debug.Log("경로 미유효");
+            // Debug.Log(this.gameObject.GetInstanceID() + " : 경로 미유효");
             nav.ResetPath();
             return false;
         }
