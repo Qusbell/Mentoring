@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(ProjectileHitAttack))]
-[RequireComponent (typeof(ProjectileMove))]
 public class Projectile : Actor
 {
     // 투사체 유지 시간
