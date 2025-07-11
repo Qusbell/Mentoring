@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7550256572966195779}
   - component: {fileID: 7186799263879512740}
-  - component: {fileID: 3650663742266390517}
   m_Layer: 9
   m_Name: Floor
   m_TagString: Untagged
@@ -61,23 +60,6 @@ MonoBehaviour:
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
---- !u!114 &3650663742266390517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3107192442902064632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: -10, z: 0}
-  moveSpeed: 10
-  showPath: 0
-  showLaserPath: 0
-  showEditorPreview: 0
 --- !u!1001 &31172915916679273
 PrefabInstance:
   m_ObjectHideFlags: 0
