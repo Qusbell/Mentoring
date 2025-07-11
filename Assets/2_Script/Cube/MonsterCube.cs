@@ -94,7 +94,7 @@ public class MonsterCube : MonoBehaviour
         {
             if (showDebugLog)
             {
-                Debug.Log($"[{gameObject.name}] 큐브 도착 감지. 몬스터 스폰을 시작합니다.");
+                //Debug.Log($"[{gameObject.name}] 큐브 도착 감지. 몬스터 스폰을 시작합니다.");
             }
 
             TriggerSpawn();
@@ -111,7 +111,7 @@ public class MonsterCube : MonoBehaviour
 
         if (showDebugLog)
         {
-            Debug.Log($"[{gameObject.name}] 큐브 활성화 감지 - 즉시 몬스터 스폰을 시작합니다.");
+           // Debug.Log($"[{gameObject.name}] 큐브 활성화 감지 - 즉시 몬스터 스폰을 시작합니다.");
         }
 
         TriggerSpawn();

@@ -92,7 +92,7 @@ public class MonsterSpawner : Spawner
         if (spawnTrigger)
         {
             // 오브젝트 생성
-            Debug.Log(PrefabIndex + "번째 몬스터 생성");
+           // Debug.Log(PrefabIndex + "번째 몬스터 생성");
             base.SpawnObject();
             // 종료 체크
             CheckCompleted();
