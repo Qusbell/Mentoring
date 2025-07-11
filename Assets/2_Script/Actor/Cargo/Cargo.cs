@@ -84,7 +84,8 @@ public class Cargo : Actor
             isLoopStop = true; // 일시 정지
 
             // 다음 목적지가 존재한다면 : 다음 목적지 설정 및 실행
-            StartCoroutine(Timer.StartTimer(nowDestination.nextStartTimer, () => { isLoopStop = false; })); // n초후 시작
+            Timer.Instance.StartTimer(nowDestination.nextStartTimer, () => { isLoopStop = false; });
+            // StartCoroutine(Timer.StartTimer(nowDestination.nextStartTimer, () => { isLoopStop = false; })); // n초후 시작
             SetNext();
         }
     }

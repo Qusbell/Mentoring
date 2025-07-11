@@ -12,7 +12,8 @@ public class Projectile : Actor
     private void Start()
     {
         // 타이머 후 해당 투사체 삭제
-        StartCoroutine(Timer.StartTimer(projectileTimer, () => Destroy(this.gameObject)));
+        // StartCoroutine(Timer.StartTimer(projectileTimer, () => Destroy(this.gameObject)));
+        Timer.Instance.StartTimer(projectileTimer, () => Destroy(this.gameObject));
     }
 
 

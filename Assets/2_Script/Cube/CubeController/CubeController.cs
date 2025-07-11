@@ -100,7 +100,8 @@ public class CubeController : MonoBehaviour
                 data.triggerArea == triggerArea &&
                 other.CompareTag(data.targetTag))
             {
-                StartCoroutine(Timer.StartTimer<CubeData>(data.delayTime, ActivateCube, data));
+                //  StartCoroutine(Timer.StartTimer<CubeData>(data.delayTime, ActivateCube, data));
+                Timer.Instance.StartTimer(data.delayTime, ActivateCube, data);
             }
         }
     }

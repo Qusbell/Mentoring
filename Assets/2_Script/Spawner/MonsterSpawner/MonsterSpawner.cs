@@ -97,7 +97,8 @@ public class MonsterSpawner : Spawner
             // 종료 체크
             CheckCompleted();
             // 종료되지 않았다면 : 다음 스폰 예약
-            if (!isCompleted) { StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject)); }
+            //  if (!isCompleted) { StartCoroutine(Timer.StartTimer(spawnRate, SpawnObject)); }
+            if (!isCompleted) { Timer.Instance.StartTimer(spawnRate, SpawnObject); }
         }
     }
     // 종료 확인

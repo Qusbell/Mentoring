@@ -19,7 +19,8 @@ public class GuidedProjectileMove : ProjectileMove
 
     private void Start()
     {
-        StartCoroutine(Timer.EndlessTimer(accelRate, () => { moveSpeed += accelSpeed; }));
+        // StartCoroutine(Timer.EndlessTimer(accelRate, () => { moveSpeed += accelSpeed; }));
+        Timer.Instance.StartEndlessTimer(this, "_ProjectileMove", accelRate, () => moveSpeed += accelSpeed);
     }
 
     // 목표 대상을 입력받는 메서드

@@ -75,7 +75,8 @@ public class MonsterCube : MonoBehaviour
         // 즉시 스폰이 체크되어 있으면 바로 실행
         if (spawnOnActivation)
         {
-            StartCoroutine(Timer.StartTimer(0.02f, CheckActivationSpawn));
+            // StartCoroutine(Timer.StartTimer(0.02f, CheckActivationSpawn));
+            Timer.Instance.StartTimer(0.02f, CheckActivationSpawn);
         }
     }
 
