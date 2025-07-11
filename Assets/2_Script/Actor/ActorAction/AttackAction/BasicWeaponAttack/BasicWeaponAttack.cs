@@ -44,7 +44,7 @@ public class BasicWeaponAttack : AttackAction
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
-                weaponActiveTime,
+                weaponBeforeDelay + weaponActiveTime,
                 weapon.NotUseWeapon);
 
         //  StartCoroutine(Timer.StartTimer(weaponBeforeDelay, weapon.UseWeapon));
