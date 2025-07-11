@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 몬스터가 나오는 큐브 컴포넌트 (안전한 버전)
+/// 몬스터가 나오는 큐브 컴포넌트 (최적화 버전)
 /// 큐브 활성화 시 또는 도착 시 자동으로 몬스터 스폰
+/// 불필요한 중복 체크 제거 및 즉시 종료로 성능 최적화
 /// </summary>
 public class MonsterCube : MonoBehaviour
 {
@@ -57,6 +58,20 @@ public class MonsterCube : MonoBehaviour
             Debug.Log($"[{gameObject.name}] MonsterCube 초기화 완료. 스폰 타이밍: {timing}");
         }
 
+        // ✅ 최적화: 정적 큐브 케이스를 Start에서 한 번만 처리
+        if (!spawnOnActivation && cubeMover == null)
+        {
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] CubeMover가 없는 정적 큐브. 즉시 몬스터 스폰.");
+            }
+
+            TriggerSpawn();
+            hasSpawnTriggered = true;
+            this.enabled = false; // Update 사용하지 않음
+            return;
+        }
+
         // 즉시 스폰이 체크되어 있으면 바로 실행
         if (spawnOnActivation)
         {
@@ -66,17 +81,25 @@ public class MonsterCube : MonoBehaviour
 
     void Update()
     {
-        // 이미 스폰했으면 컴포넌트 비활성화 (성능 최적화)
+        // ✅ 최적화: 이미 스폰했으면 즉시 비활성화
         if (hasSpawnTriggered)
         {
             this.enabled = false;
             return;
         }
 
-        // 즉시 스폰이 아닌 경우에만 이동 완료 체크
-        if (!spawnOnActivation)
+        // ✅ 최적화: 조건을 한 번에 체크하고 즉시 처리
+        if (!spawnOnActivation && cubeMover != null && cubeMover.HasArrived)
         {
-            CheckArrivalSpawn();
+            if (showDebugLog)
+            {
+                Debug.Log($"[{gameObject.name}] 큐브 도착 감지. 몬스터 스폰을 시작합니다.");
+            }
+
+            TriggerSpawn();
+            hasSpawnTriggered = true;
+            this.enabled = false; // 성능 최적화
+            return; // ✅ 핵심: 즉시 종료로 불필요한 처리 방지
         }
     }
 
@@ -96,39 +119,6 @@ public class MonsterCube : MonoBehaviour
 
         // 작업 완료 후 컴포넌트 비활성화
         this.enabled = false;
-    }
-
-    // 도착 시 스폰 체크 (기존 로직)
-    private void CheckArrivalSpawn()
-    {
-        if (hasSpawnTriggered) return;
-
-        // CubeMover가 없으면 즉시 스폰 (정적 큐브)
-        if (cubeMover == null)
-        {
-            if (showDebugLog)
-            {
-                Debug.Log($"[{gameObject.name}] CubeMover가 없는 정적 큐브. 즉시 몬스터 스폰.");
-            }
-
-            TriggerSpawn();
-            hasSpawnTriggered = true;
-            this.enabled = false; // 작업 완료 후 비활성화
-            return;
-        }
-
-        // 큐브가 도착했는지 체크
-        if (cubeMover.HasArrived)
-        {
-            if (showDebugLog)
-            {
-                Debug.Log($"[{gameObject.name}] 큐브 도착 감지 몬스터 스폰을 시작합니다.");
-            }
-
-            TriggerSpawn();
-            hasSpawnTriggered = true;
-            this.enabled = false; // 작업 완료 후 비활성화
-        }
     }
 
     // 스폰 트리거
@@ -212,7 +202,7 @@ public class MonsterCube : MonoBehaviour
         }
     }
 
-    // 상태 확인용 프로퍼티들
+    // 상태 확인용 프로퍼티들 (기존 호환성 유지)
     public bool HasSpawnTriggered
     {
         get { return hasSpawnTriggered; }
