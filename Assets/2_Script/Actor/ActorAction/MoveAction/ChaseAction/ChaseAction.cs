@@ -61,7 +61,7 @@ public class ChaseAction : MoveAction
             NavMeshHit hit;
             if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))
             {
-                Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
+                //Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
                 nav.Warp(hit.position);
             }
         }
