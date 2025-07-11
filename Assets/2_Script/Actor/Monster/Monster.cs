@@ -130,9 +130,7 @@ public class Monster : Actor
     {
         //Debug.Log("Move");
 
-        if (!chaseAction.isCanChase)
-        { SwitchStatus(IdleStatus); }
-        else if (InAttackRange())
+        if (InAttackRange())
         {
             moveAction.isMove = false;
             SwitchStatus(AttackStatus);
