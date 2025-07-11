@@ -26,9 +26,8 @@ public class SetMaterials : MonoBehaviour
     // 머티리얼을 Fade 모드로 설정하는 함수
     void SetMaterialToFade(Material mat)
     {
-        if (mat == null) return;
-        // Standard Shader에서만 동작
-        if (mat.shader.name != "Standard") return;
+        if (mat == null) { return; }
+        if (mat.shader.name != "Standard") { return; }
 
         mat.SetFloat("_Mode", 2); // 2 = Fade, 3 = Transparent
         mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
