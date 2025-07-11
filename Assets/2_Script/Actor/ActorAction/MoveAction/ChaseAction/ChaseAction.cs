@@ -53,21 +53,46 @@ public class ChaseAction : MoveAction
     // 목적지 갱신
     void UpdateDestination()
     {
-        // nav상 위치와 transform 위치의 괴리
-        float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
-
-        if (!nav.isOnNavMesh || 0.1f < gapDistance)
-        {
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))
-            {
-                //Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
-                nav.Warp(hit.position);
-            }
-        }
-
         if (target != null && nav.isOnNavMesh)
         { nav.SetDestination(target.position); }
+    }
+
+
+
+    public bool isCanChase
+    {
+        get { return IsCanChaseTarget(); }
+    }
+
+
+    // 추적 가능 여부
+    public bool IsCanChaseTarget()
+    {
+        // 1. 타겟이 존재하는가?
+        if (target == null)
+        {
+            // Debug.Log("target 미존재");
+            return false;
+        }
+
+        // 2. 네비메쉬 위에 있는가?
+        if (!nav.isOnNavMesh)
+        {
+            // Debug.Log("navMesh 위에 없음");
+            return false;
+        }
+
+        // 3. 경로가 유효한가?
+        if (!nav.hasPath || nav.pathStatus != NavMeshPathStatus.PathComplete)
+        {
+            // Debug.Log("경로 미유효");
+            nav.ResetPath();
+            return false;
+        }
+
+        // 추적 가능
+        // Debug.Log("추적 가능");
+        return true;
     }
 
 
@@ -90,35 +115,22 @@ public class ChaseAction : MoveAction
 
     // 네비게이션 위치와 자신 위치 동기화
     void UpdateMyPositionOnNav()
-    { 
+    {
+        // nav상 위치와 transform 위치의 괴리
+        float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
+
+        if (!nav.isOnNavMesh || 0.1f < gapDistance)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))
+            {
+                //Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
+                nav.Warp(hit.position);
+            }
+        }
+
         if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
     }
-
-    public bool isCanChase
-    {
-        get { return CanChaseTarget(); }
-    }
-
-    // 대상을 추격할 수 있는 상태인지 확인하는 메서드
-    protected bool CanChaseTarget()
-    {
-        if (nav == null || target == null)
-        { return false; }
-
-        // NavMeshAgent가 활성화되어 있고, 경로가 유효한지 확인
-        if (!nav.isActiveAndEnabled)
-        { return false; }
-
-        NavMeshPath path = new NavMeshPath();
-        bool hasPath = nav.CalculatePath(target.position, path);
-
-        // 경로가 존재하고, 경로 상태가 완성되었으며, 경로 길이가 0보다 크면 추격 가능
-        if (hasPath && path.status == NavMeshPathStatus.PathComplete && path.corners.Length > 1)
-        { return true; }
-
-        return false;
-    }
-
 
 
     // 회전 속도

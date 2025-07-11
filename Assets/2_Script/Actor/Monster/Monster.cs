@@ -112,33 +112,38 @@ public class Monster : Actor
     // 대기 상태
     protected void IdleStatus()
     {
-        //Debug.Log("Idle");
+        // Debug.Log("Idle");
 
-        if (InAttackRange())  // 공격 가능 상태라면
+        if (InAttackRange())
         {
             SwitchStatus(AttackStatus);
-        } // 공격으로
-        else
+        }
+        else if (chaseAction.isCanChase)
         {
             SwitchStatus(MoveStatus);
-        }  // 아니면 이동
+        }
     }
 
 
     // 이동 상태
     protected void MoveStatus()
     {
-        //Debug.Log("Move");
+        // Debug.Log("Move");
 
         if (InAttackRange())
         {
             moveAction.isMove = false;
             SwitchStatus(AttackStatus);
         }
-        else
+        else if (chaseAction.isCanChase)
         {
             moveAction.isMove = true;
             moveAction.Move();
+        }
+        else
+        {
+            moveAction.isMove = false;
+            SwitchStatus(IdleStatus);
         }
 
         animator.PlayAnimation("IsMove", moveAction.isMove);
@@ -151,7 +156,7 @@ public class Monster : Actor
     // 공격 상태
     protected virtual void AttackStatus()
     {
-        //Debug.Log("Attack");
+        // Debug.Log("Attack");
 
         // 공격 가능하다면
         if (attackAction.isCanAttack)
@@ -171,11 +176,9 @@ public class Monster : Actor
     // 공격 후딜레이 애니메이션 재생
     protected void ReloadStatus()
     {
-        //Debug.Log("Reload");
+        // Debug.Log("Reload");
         SwitchStatusWhenAnimationEnd("Reload", IdleStatus);
     }
-
-
 
     // 피격 시 애니메이션
 
