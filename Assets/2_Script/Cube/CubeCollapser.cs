@@ -349,8 +349,8 @@ public class CubeCollapser : MonoBehaviour
     {
         currentState = CubeState.Collapsed;
 
-        if (showDebugLog)
-            Debug.Log($"[{gameObject.name}] 붕괴 완료!");
+        //if (showDebugLog)
+           // Debug.Log($"[{gameObject.name}] 붕괴 완료!");
 
         gameObject.SetActive(false);
 

@@ -103,6 +103,6 @@ public class DamageReaction : ActorAction
         // StartCoroutine(Timer.StartTimer(3f, () => Destroy(this.gameObject)));
 
         // 모든 마테리얼 투명화 (2초)
-        GetComponent<SetMaterials>().SetAllMaterialsToFadeOut();
+        //GetComponent<SetMaterials>().SetAllMaterialsToFadeOut();
     }
 }
