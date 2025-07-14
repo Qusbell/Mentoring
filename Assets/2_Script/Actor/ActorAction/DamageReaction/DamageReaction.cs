@@ -98,9 +98,9 @@ public class DamageReaction : ActorAction
         if (rb != null)
         { rb.isKinematic = true; }
 
-        // 3초 후 제거
-        Timer.Instance.StartTimer(this, "_WhenDie", 3f, () => Destroy(this.gameObject)); // <- 이후 오브젝트 풀로 이동하는 걸 고려
-        // StartCoroutine(Timer.StartTimer(3f, () => Destroy(this.gameObject)));
+        // 2초 후 제거
+        Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject)); // <- 이후 오브젝트 풀로 이동하는 걸 고려
+        // StartCoroutine(Timer.StartTimer(2f, () => Destroy(this.gameObject)));
 
         // 모든 마테리얼 투명화 (2초)
         //GetComponent<SetMaterials>().SetAllMaterialsToFadeOut();
