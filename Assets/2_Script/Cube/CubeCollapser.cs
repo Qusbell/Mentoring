@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 성능 최적화된 큐브 붕괴 컴포넌트
 /// 기존 기능은 100% 유지하면서 불필요한 Update만 제거
+/// 자식 오브젝트 (0,0,0) 위치 문제 해결
 /// </summary>
 public class CubeCollapser : MonoBehaviour
 {
@@ -151,7 +152,7 @@ public class CubeCollapser : MonoBehaviour
     {
         if (playerTransform == null) return;
 
-        // 3프레임마다만 거리 체크 (67% 성능 향상)
+        // 3프레임마다만 거리 체크
         frameCounter++;
         if (frameCounter >= PROXIMITY_CHECK_INTERVAL)
         {
@@ -350,7 +351,7 @@ public class CubeCollapser : MonoBehaviour
         currentState = CubeState.Collapsed;
 
         //if (showDebugLog)
-           // Debug.Log($"[{gameObject.name}] 붕괴 완료!");
+        // Debug.Log($"[{gameObject.name}] 붕괴 완료!");
 
         gameObject.SetActive(false);
 
@@ -406,7 +407,7 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
-    // 붕괴 큐브 초기화 (기존 로직에 최적화 변수 추가)
+    // 붕괴 큐브 초기화 (자식 오브젝트 (0,0,0) 문제 해결)
     public void Reset()
     {
         StopAllCoroutines();
@@ -415,7 +416,13 @@ public class CubeCollapser : MonoBehaviour
         shakeTimer = 0f;
         hasTriggered = false;
         frameCounter = 0;  // 최적화 변수 리셋
-        transform.position = originalPosition;
+
+        // originalPosition이 (0,0,0) 근처면 위치 변경하지 않음 (자식 오브젝트 문제 해결)
+        if (originalPosition.magnitude > 0.1f)
+        {
+            transform.position = originalPosition;
+        }
+
         gameObject.SetActive(true);
 
         // 리셋 시 적절한 Update 상태로 복원
