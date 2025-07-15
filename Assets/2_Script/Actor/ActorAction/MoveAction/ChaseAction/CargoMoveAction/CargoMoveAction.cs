@@ -5,11 +5,5 @@ using UnityEngine;
 
 public class CargoMoveAction : ChaseAction
 {
-    protected override void Start()
-    {
-        // void
-    }
-
-
-
+    // <- 클래스 삭제할 것
 }

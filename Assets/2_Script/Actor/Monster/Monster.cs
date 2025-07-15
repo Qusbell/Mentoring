@@ -21,7 +21,7 @@ public class Monster : Actor
         get
         {
             if (_target == null)
-            { _target = TargetManager.instance.target; }
+            { _target = TargetManager.Instance.target; }
             return _target;
         }
         set

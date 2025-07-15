@@ -4,11 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 
-public class TargetManager : MonoBehaviour
+public class TargetManager : SingletonT<TargetManager>
 {
-    // 싱글톤
-    public static TargetManager instance { get; private set; }
-
     // 타겟 (위치)
     private Transform _target = null;
     public Transform target
@@ -23,21 +20,8 @@ public class TargetManager : MonoBehaviour
         { _target = value; }
     }
 
-
     // 타겟 리스트
     public List<Target> targetList = new List<Target>();
-
-    void Awake()
-    {
-        if (instance == null) { instance = this; }
-        else
-        {
-            Debug.Log("TargetManager 다수 존재, 단일 존재 위반");
-            Destroy(gameObject);
-            return;
-        }
-    }
-    
 
     // 타겟팅
     public void Targeting()
@@ -63,8 +47,4 @@ public class TargetManager : MonoBehaviour
         { Debug.Log("Targeting 완료했지만 target == null"); }
     }
 
-
-
-    // 몬스터가 피격 시
-    // target 변경
 }

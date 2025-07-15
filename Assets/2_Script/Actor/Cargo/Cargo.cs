@@ -51,10 +51,7 @@ public class Cargo : Actor
 
         // 목적지까지의 거리 검증
         if (distance < 0)
-        {
-            Debug.Log(gameObject.name + " : 목적지 도착 판정 거리가 음수");
-            distance = 1;
-        }
+        { Debug.Log(gameObject.name + " : 목적지 도착 판정 거리가 음수"); distance = 1; }
     }
 
 
@@ -62,7 +59,7 @@ public class Cargo : Actor
     protected void SetNext()
     {
         if (nowDestination.nextDestination != null)
-        { nowDestination = nowDestination.nextDestination; }
+        { nowDestination = nowDestination.nextDestination; Debug.Log("목적지 할당 : " + nowDestination.name); }
     }
 
     // 일시 정지
@@ -75,7 +72,10 @@ public class Cargo : Actor
 
         // 도착하지 않은 경우 : Move
         if (!cargoMoveAction.InDistance(distance))
-        { cargoMoveAction.Move(); }
+        {
+            cargoMoveAction.Move();
+            cargoMoveAction.Turn();
+        }
 
         // 목적지 도착 시
         // 다음 목적지 설정

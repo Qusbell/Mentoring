@@ -124,6 +124,7 @@ public class Timer : SingletonT<Timer>
     {
         key = GetEndlessTimerKey(key);
         if (continuousTimers.ContainsKey(key)) { return; }
+
         Coroutine timer = StartCoroutine(EndlessTimerCoroutine(key, component, duration, callback));
         continuousTimers[key] = timer;
     }
@@ -171,7 +172,8 @@ public class Timer : SingletonT<Timer>
     {
         yield return new WaitForSeconds(duration);
         if (component != null)
-            callback?.Invoke();
+        { callback?.Invoke(); }
+            
     }
 
     // 제네릭 버전
@@ -184,7 +186,7 @@ public class Timer : SingletonT<Timer>
     {
         yield return new WaitForSeconds(duration);
         if (component != null)
-            callback?.Invoke(param);
+        { callback?.Invoke(param); }
     }
 
 

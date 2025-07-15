@@ -16,7 +16,7 @@ public class ChaseAction : MoveAction
     protected NavMeshAgent nav;
 
     // 추적할 대상
-    protected Transform target;
+    public Transform target;
 
 
     // 생성
@@ -33,8 +33,11 @@ public class ChaseAction : MoveAction
         nav.updateRotation = false;
     }
 
-    protected virtual void Start()
-    { SetTarget(TargetManager.instance.target); }
+    protected void Start()
+    {
+        SetTarget(TargetManager.Instance.target);
+        Timer.Instance.StartEndlessTimer(this, "시작", 0.2f, UpdateDestination); // 목적지 업데이트
+    }
 
 
     // 타겟 설정
@@ -50,17 +53,36 @@ public class ChaseAction : MoveAction
     { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
 
 
+    // 목적지 갱신 (이전 버전)
+    //  void UpdateDestination()
+    //  {
+    //      if (target != null && nav.isOnNavMesh)
+    //      { nav.SetDestination(target.position); }
+    //  }
+
     // 목적지 갱신
-    void UpdateDestination()
+    private void UpdateDestination()
     {
-        if (target != null && nav.isOnNavMesh)
-        { nav.SetDestination(target.position); }
+        if (target != null && nav != null && nav.isOnNavMesh)
+        {
+            NavMeshPath path = new NavMeshPath();
+            if (NavMesh.CalculatePath(nav.transform.position, target.position, NavMesh.AllAreas, path)
+                && path.status == NavMeshPathStatus.PathComplete)
+            { nav.SetPath(path); }
+        }
     }
 
 
+    // 추격 가능 여부
+    protected bool _isCanChase;
+
     public bool isCanChase
     {
-        get { return IsCanChaseTarget(); }
+        get
+        {
+            _isCanChase = IsCanChaseTarget();
+            return _isCanChase;
+        }
     }
 
 
@@ -85,7 +107,6 @@ public class ChaseAction : MoveAction
         if (!nav.hasPath)
         {
             // Debug.Log(this.gameObject.GetInstanceID() + " : 경로 미유효");
-            nav.ResetPath();
             return false;
         }
 
@@ -108,9 +129,11 @@ public class ChaseAction : MoveAction
         { isMove = false; }
     }
 
+
     // 다음 이동 방향
     void UpdateNextMoveDirection()
     { moveVec = nav.desiredVelocity.normalized; }
+
 
     // 네비게이션 위치와 자신 위치 동기화
     void UpdateMyPositionOnNav()
@@ -149,9 +172,8 @@ public class ChaseAction : MoveAction
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
-    private void Update()
+    protected void Update()
     {
-        UpdateDestination();       // 목적지 확인
         UpdateNextMoveDirection(); // 다음 방향 설정
         UpdateMyPositionOnNav();   // 자신 위치 갱신
     }

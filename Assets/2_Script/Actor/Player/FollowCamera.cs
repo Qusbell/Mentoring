@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    [SerializeField] protected Transform target; // µû¶ó°¥ Å¸°Ù(ÇÃ·¹ÀÌ¾î)
+    [SerializeField] protected Transform target; // ë”°ë¼ê°ˆ íƒ€ê²Ÿ(í”Œë ˆì´ì–´)
     [SerializeField] protected Vector3 offset;
     [SerializeField] protected Vector3 rotation;
     
     void LateUpdate()
     {
-        transform.position = target.position + offset;
-        transform.rotation = Quaternion.Euler(rotation);
+        if(target != null)
+        {
+            transform.position = target.position + offset;
+            transform.rotation = Quaternion.Euler(rotation);
+        }
     }
 }
