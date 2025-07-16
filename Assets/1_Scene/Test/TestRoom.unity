@@ -951,8 +951,8 @@ MonoBehaviour:
   targetPrefabs:
   - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
   spawnRate: 1
-  startTrigger: 0
-  isEndlessSpawn: 0
+  startTrigger: 1
+  isEndlessSpawn: 1
   spawnType: 0
 --- !u!1 &580072483 stripped
 GameObject:
@@ -1368,7 +1368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashDistance: 10
+  dashPower: 0
   dashRecupTime: 4
   dashStack: 2
 --- !u!1001 &1728107046
