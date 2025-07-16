@@ -24,7 +24,6 @@ public class Player : Actor
         jumpAction = GetComponent<JumpAction>();
     }
 
-
     [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
     [SerializeField] protected float slowTimeOnAttack = 2;  // 공격 중 슬로우 시간
 

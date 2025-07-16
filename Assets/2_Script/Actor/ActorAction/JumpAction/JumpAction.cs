@@ -33,6 +33,10 @@ public class JumpAction : ActorAction
 
         // 착지 확인
         bottomRayDistance = transform.localScale.y * 1.05f;
+
+        FootCollider foot = GetComponentInChildren<FootCollider>();
+        if (foot == null) { Debug.Log(this.gameObject.name + " : 착지 판정용 콜라이더 부재"); }
+        foot.ground = Grounded;
     }
 
 
@@ -51,13 +55,6 @@ public class JumpAction : ActorAction
     protected float raySpacing;
 
 
-    private void Update()
-    {
-        isJump = IsJump();
-        // <- 애니메이션 변경? 아니면 Actor 쪽에서 직접 애니메이션 제어?
-    }
-
-
     // 점프
     // 위치 += 위쪽 방향 * 점프높이
     // 힘을 가함 (물리효과)
@@ -66,6 +63,8 @@ public class JumpAction : ActorAction
         // 점프 상태가 아니라면
         if (!isJump)
         {
+            isJump = true;
+
             // 불필요한 물리 초기화
             rigid.velocity = Vector3.zero;
             // 위쪽 방향으로 jumpHeight만큼 힘을 가함
@@ -81,21 +80,6 @@ public class JumpAction : ActorAction
         protected set { _isJump = value; }
     }
 
-    // 착지 상태인지 판정
-    //
-    protected bool IsJump()
-    {
-        // 앞/뒤 레이캐스트
-        return !(
-            // 앞쪽 레이캐스트
-            Physics.Raycast(transform.position + (transform.forward * raySpacing),
-            Vector3.down,
-            bottomRayDistance) ||
-
-            // 뒤쪽 레이캐스트
-            Physics.Raycast(transform.position - (transform.forward * raySpacing),
-            Vector3.down,
-            bottomRayDistance)
-            );
-    }
+    protected void Grounded()
+    { isJump = false; Debug.Log("착지"); }
 }
