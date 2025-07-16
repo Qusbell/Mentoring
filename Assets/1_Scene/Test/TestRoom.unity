@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 10
   nowHp: 10
+  bouncePowerWhenDie: 10
 --- !u!65 &76647376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1834,7 +1835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.84
+      value: -1.72
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalRotation.w
