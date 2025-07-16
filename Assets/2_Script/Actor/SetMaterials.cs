@@ -61,19 +61,23 @@ public class SetMaterials : MonoBehaviour
             materials.AddRange(renderer.materials);
         }
 
-        // Timer 유틸리티 활용
-        //  StartCoroutine(Timer.LerpTimer(2f, (t) =>
-        //  {
-        //      foreach (var mat in materials)
-        //      {
-        //          if (mat.HasProperty("_Color"))
-        //          {
-        //              Color color = mat.color;
-        //              color.a = Mathf.Lerp(1f, 0f, t);
-        //              mat.color = color;
-        //          }
-        //      }
-        //  }));
+
+        //
+        System.Action<float> action = (t) =>
+        {
+            foreach (var mat in materials)
+            {
+                if (mat.HasProperty("_Color"))
+                {
+                    Color color = mat.color;
+                    color.a = Mathf.Lerp(1f, 0f, t);
+                    mat.color = color;
+                }
+            }
+        };
+
+
+
     }
 
 }
