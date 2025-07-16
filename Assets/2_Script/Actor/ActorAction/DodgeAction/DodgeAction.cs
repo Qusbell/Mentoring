@@ -51,7 +51,6 @@ public class DodgeAction : ActorAction
     // 미끄러지기 시간 (마찰계수 줄이기 시간)
     [SerializeField] protected float dodgeSlideTime = 0.2f;
 
-    
 
     // 땃쥐 중?
     public bool isDodge { get; protected set; }

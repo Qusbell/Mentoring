@@ -80,6 +80,8 @@ public class JumpAction : ActorAction
         protected set { _isJump = value; }
     }
 
+
+    // FootCollider으로 전달되는 용도
     protected void Grounded()
-    { isJump = false; Debug.Log("착지"); }
+    { isJump = false; }
 }

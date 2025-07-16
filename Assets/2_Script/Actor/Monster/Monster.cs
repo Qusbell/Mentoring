@@ -114,13 +114,11 @@ public class Monster : Actor
         // Debug.Log("Idle");
 
         if (InAttackRange() && chaseAction.IsFacingTarget())
-        {
-            SwitchStatus(AttackStatus);
-        }
+        { SwitchStatus(AttackStatus); }
         else if (chaseAction.isCanChase)
-        {
-            SwitchStatus(MoveStatus);
-        }
+        { SwitchStatus(MoveStatus); }
+        else
+        { moveAction.Turn(); }
     }
 
 
@@ -137,7 +135,9 @@ public class Monster : Actor
             if (chaseAction.IsFacingTarget())
             { SwitchStatus(AttackStatus); }
             else
-            { moveAction.Turn(); }
+            {
+                moveAction.Turn();
+            }
         }
         else if (chaseAction.isCanChase)
         {

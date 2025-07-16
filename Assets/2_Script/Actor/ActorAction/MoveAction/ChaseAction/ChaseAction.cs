@@ -160,6 +160,8 @@ public class ChaseAction : MoveAction
     public override void Turn()
     {
         Vector3 direction = moveVec;
+
+        // moveVec이 0인 경우의 회전
         if (moveVec == Vector3.zero)
         {
             direction = target.position - transform.position;

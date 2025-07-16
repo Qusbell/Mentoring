@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FootCollider : MonoBehaviour
 {
-    Rigidbody rigid;
+    // Rigidbody rigid; // <- 몬스터 밟고 튀어오르기
 
     private void Awake()
     {
@@ -16,7 +16,7 @@ public class FootCollider : MonoBehaviour
         if (collider != null)
         { collider.isTrigger = true; }
 
-        rigid = GetComponentInParent<Rigidbody>();
+        // rigid = GetComponentInParent<Rigidbody>();
     }
 
     // 착지 판정으로 정정
