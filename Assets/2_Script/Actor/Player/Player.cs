@@ -50,7 +50,7 @@ public class Player : Actor
         }
 
 
-        if (input.isDashKeyDown && dodgeAction.isCanDash) { dodgeAction.Dodge(); animator.PlayAnimation("DoDodge"); }
+        if (input.isDodgeKeyDown && dodgeAction.isCanDash) { dodgeAction.Dodge(); animator.PlayAnimation("DoDodge"); }
         animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
         
     }

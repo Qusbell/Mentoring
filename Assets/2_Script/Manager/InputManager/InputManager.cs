@@ -72,9 +72,14 @@ public class InputManager : MonoBehaviour
     // 대시 입력
     //==========
 
-    public bool isDashKeyDown { get; protected set; }
+    public bool isDodgeKeyDown { get; protected set; }
     protected void InputDash()
-    { isDashKeyDown = Input.GetMouseButtonDown(1); }
+    {
+        if(Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.LeftShift))
+        { isDodgeKeyDown = true; }
+        else
+        { isDodgeKeyDown= false; }
+    }
 
 
 
