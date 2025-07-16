@@ -400,8 +400,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.1, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.5, y: 0.1, z: 0.4}
+  m_Center: {x: 0, y: 0, z: 0.05}
 --- !u!114 &3451742319746817384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,6 +1196,7 @@ GameObject:
   - component: {fileID: 3696162683426923108}
   - component: {fileID: 2169939233528477970}
   - component: {fileID: 7741900305207183450}
+  - component: {fileID: 3959130391364565562}
   m_Layer: 7
   m_Name: Player_Skeleton
   m_TagString: Player
@@ -1398,6 +1399,21 @@ MonoBehaviour:
   weaponBeforeDelay: 0.35
   weaponActiveTime: 0.5
   maxHitCount: 1
+--- !u!114 &3959130391364565562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333357997323496402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashPower: 13
+  dashRecupTime: 4
+  dashStack: 2
 --- !u!1 &5359304219147062780
 GameObject:
   m_ObjectHideFlags: 0

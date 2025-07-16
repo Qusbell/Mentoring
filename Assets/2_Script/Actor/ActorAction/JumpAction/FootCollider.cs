@@ -15,12 +15,13 @@ public class FootCollider : MonoBehaviour
         { collider.isTrigger = true; }
     }
 
-    // 착지 판정
+    // 착지 판정으로 정정
     public System.Action ground;
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Cube")
+        if (other.tag == "Cube" ||
+            other.gameObject.layer == LayerMask.NameToLayer("Cube")) // <- 나중에 레이어 체크는 제거해도 상관없지 않나?
         { ground?.Invoke(); }
     }
 }

@@ -7,82 +7,85 @@ public class InputManager : MonoBehaviour
     protected virtual void Update()
     { SetInput(); }
     
-    //==================================================
-    // ¹æÇâ ÀÔ·Â
-    //==================================================
+    //==========
+    // ë°©í–¥ ì…ë ¥
+    //==========
 
-    // ÀÔ·Â¹Ş´Â ¹æÇâ
+    // ì…ë ¥ë°›ëŠ” ë°©í–¥
     protected float moveHorizontal;
     protected float moveVertical;
     public Vector3 moveVec { get; protected set; }
-    
-    // moveKey ÀÔ·Â
-    public bool isMoveKeyDown
-    {
-        get
-        { return moveVec != Vector3.zero; }
-    }
 
-    // ÀÔ·Â µ¥µåÁ¸
+    // ì…ë ¥ ë°ë“œì¡´
     [SerializeField] protected float inputDeadZone = 0.1f;
 
-    // ÀÌµ¿ ¹æÇâ ÀÔ·Â
+    // ì´ë™ ë°©í–¥ ì…ë ¥
     protected void InputWASD()
-    // ÀÔ·Â(WASD, ¡è¡é¡ç¡æ)À¸·Î ¹æÇâ ÁöÁ¤
-    // Á¤±ÔÈ­µÈ(¸ğµç ¹æÇâÀ¸·Î Å©±â°¡ 1ÀÎ) ¹æÇâº¤ÅÍ »ı¼º
+    // ì…ë ¥(WASD, â†‘â†“â†â†’)ìœ¼ë¡œ ë°©í–¥ ì§€ì •
+    // ì •ê·œí™”ëœ(ëª¨ë“  ë°©í–¥ìœ¼ë¡œ í¬ê¸°ê°€ 1ì¸) ë°©í–¥ë²¡í„° ìƒì„±
     {
-        // ¹æÇâ ÀÔ·Â¹ŞÀ½
-        moveHorizontal = Input.GetAxisRaw("Horizontal"); // xÃà (ÁÂ¿ì)
-        moveVertical = Input.GetAxisRaw("Vertical");     // zÃà (¾ÕµÚ)
+        // ë°©í–¥ ì…ë ¥ë°›ìŒ
+        moveHorizontal = Input.GetAxisRaw("Horizontal"); // xì¶• (ì¢Œìš°)
+        moveVertical = Input.GetAxisRaw("Vertical");     // zì¶• (ì•ë’¤)
 
-        // µ¥µåÁ¸ °Ë»ç
+        // ë°ë“œì¡´ ê²€ì‚¬
         if (Mathf.Abs(moveHorizontal) < inputDeadZone) { moveHorizontal = 0; }
         if (Mathf.Abs(moveVertical) < inputDeadZone) { moveVertical = 0; }
 
-        // ¹æÇâ ´ëÀÔ
-        // 45µµ(ÄõÅÍºä) Æ²¾îÁø ¹æÇâ
-        // <- ½ÇÁ¦ Ä«¸Ş¶ó °¢µµ¿¡ ´ëÀÀÇÏµµ·Ï ¹Ù²Ü °Í
-        moveVec = (Quaternion.Euler(0, 45, 0)  // ÀÌµ¿ ¹æÇâÀ» yÃà ±âÁØ 45µµ È¸Àü (Ä«¸Ş¶ó °¢µµ)
-            * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // ÀÔ·ÂµÈ ¹æÇâº¤ÅÍ
+        // ë°©í–¥ ëŒ€ì…
+        // 45ë„(ì¿¼í„°ë·°) í‹€ì–´ì§„ ë°©í–¥
+        // <- ì‹¤ì œ ì¹´ë©”ë¼ ê°ë„ì— ëŒ€ì‘í•˜ë„ë¡ ë°”ê¿€ ê²ƒ
+        moveVec = (Quaternion.Euler(0, 45, 0)  // ì´ë™ ë°©í–¥ì„ yì¶• ê¸°ì¤€ 45ë„ íšŒì „ (ì¹´ë©”ë¼ ê°ë„)
+            * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // ì…ë ¥ëœ ë°©í–¥ë²¡í„°
     }
 
 
 
-    //==================================================
-    // Á¡ÇÁ ÀÔ·Â
-    //==================================================
+    //==========
+    // ì í”„ ì…ë ¥
+    //==========
 
-    // Á¡ÇÁ ÀÔ·Â ¿©ºÎ
+    // ì í”„ ì…ë ¥ ì—¬ë¶€
     public bool isJumpKeyDown { get; protected set; }
 
-    // Á¡ÇÁ ¿©ºÎ ÀÔ·Â
-    // ½ºÆäÀÌ½º ¹Ù
+    // ì í”„ ì—¬ë¶€ ì…ë ¥
+    // ìŠ¤í˜ì´ìŠ¤ ë°”
     protected void InputJump()
     { isJumpKeyDown = Input.GetButtonDown("Jump"); }
 
 
 
-    //==================================================
-    // °ø°İ ÀÔ·Â
-    //==================================================
+    //==========
+    // ê³µê²© ì…ë ¥
+    //==========
 
-    // °ø°İ ÀÔ·Â ¿©ºÎ
+    // ê³µê²© ì…ë ¥ ì—¬ë¶€
     public bool isAttackKeyDown { get; protected set; }
 
-    // °ø°İ ÀÔ·Â
-    // ÁÂÅ¬¸¯
+    // ê³µê²© ì…ë ¥
+    // ì¢Œí´ë¦­
     protected void InputAttack()
     { isAttackKeyDown = Input.GetMouseButtonDown(0); }
 
 
-    //==================================================
-    // ÅëÇÕ ÀÔ·Â
-    //==================================================
+    //==========
+    // ëŒ€ì‹œ ì…ë ¥
+    //==========
 
-    // °¢Á¾ ÀÔ·Â ´ëÀÀ
-    // WASD || ¡è¡é¡ç¡æ
+    public bool isDashKeyDown { get; protected set; }
+    protected void InputDash()
+    { isDashKeyDown = Input.GetKeyDown(KeyCode.LeftShift); }
+
+
+
+    //==========
+    // í†µí•© ì…ë ¥
+    //==========
+
+    // ê°ì¢… ì…ë ¥ ëŒ€ì‘
+    // WASD || â†‘â†“â†â†’
     // Jump(Space Bar)
-    // AttackAction(ÁÂÅ¬¸¯)
+    // AttackAction(ì¢Œí´ë¦­)
     protected void SetInput()
-    { InputWASD(); InputJump(); InputAttack(); }
+    { InputWASD(); InputJump(); InputAttack(); InputDash(); }
 }
