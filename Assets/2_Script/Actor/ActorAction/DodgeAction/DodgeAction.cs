@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class DashAction : ActorAction
+public class DodgeAction : ActorAction
 {
     private Rigidbody rigid;
     private Collider myCollider;
@@ -11,7 +11,7 @@ public class DashAction : ActorAction
         rigid = GetComponent<Rigidbody>();
         myCollider = GetComponent<Collider>();
 
-        // 마찰 0인 임시 Material 생성
+        // 마찰 0인 Material 생성
         zeroFrictionMaterial = new PhysicMaterial();
         zeroFrictionMaterial.dynamicFriction = 0f;
         zeroFrictionMaterial.staticFriction = 0f;
@@ -32,7 +32,7 @@ public class DashAction : ActorAction
     [SerializeField] protected float dashSlideTime = 0.2f;
 
     // 땃쥐 중
-    [HideInInspector] public bool isDodge = false;
+    public bool isDodge { get; protected set; }
 
     // 마찰계수
     private PhysicMaterial originalMaterial;   // 원래 Material 저장
@@ -51,8 +51,11 @@ public class DashAction : ActorAction
 
             // 마찰계수 조정
             myCollider.material = zeroFrictionMaterial;
+            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; });
+
+            // 땃쥐 기간
             isDodge = true;
-            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; isDodge = false; });
+            Timer.Instance.StartTimer(this, "_IsDodge", 1, () => { isDodge = false; }); // <- 나중에 지속시간 정정
         }
     }
 
