@@ -19,6 +19,9 @@ public class DamageReaction : ActorAction
     public Action hitAnimation { private get; set; }
     public Action dieAnimation { private get; set; }
 
+    // 죽었을 때 바운스 거리
+    [SerializeField] protected int bouncePowerWhenDie = 10;
+
     // 피격
     public virtual void TakeDamage(int damage)
     {
@@ -42,7 +45,7 @@ public class DamageReaction : ActorAction
     public virtual void TakeDamage(int damage, GameObject enemy)
     {
         // 마지막으로 공격한 적을 타겟팅
-        // <- 게으른 코딩. 이후 수정
+        // <- 야매 코딩. 이후 수정
         GameObject lastAttackedEnemy = enemy;
         Monster monster = GetComponent<Monster>();
         if (monster != null)
@@ -60,7 +63,13 @@ public class DamageReaction : ActorAction
         if (0 < nowHp)
         { Hit(); }
         else
-        { Die(); }
+        {
+            // <- 야매
+            Die();
+            Vector3 vector = (this.transform.position - enemy.transform.position).normalized;
+            Rigidbody rigid = GetComponent<Rigidbody>();
+            rigid.AddForce(vector * bouncePowerWhenDie, ForceMode.Impulse);
+        }
     }
 
 
@@ -77,7 +86,7 @@ public class DamageReaction : ActorAction
         if (dieAnimation != null)
         { dieAnimation(); }
 
-        // ----- 사망 시, 모든 ActorAction / 콜라이더 비활성화 -----
+        // ----- 사망 시, 모든 ActorAction 비활성화 -----
 
         ActorAction[] actorActions = this.GetComponents<ActorAction>();
         if(actorActions != null)
@@ -86,17 +95,11 @@ public class DamageReaction : ActorAction
             { item.enabled = false; }
         }
 
-        Collider[] colliders = this.GetComponentsInChildren<Collider>();
-        if(colliders != null)
-        {
-            foreach (var item in colliders)
-            { item.enabled = false; }
-        }
 
-        // 일시적으로 물리 영향 X
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        { rb.isKinematic = true; }
+        // 레이어 변경
+        int targetLayer = LayerMask.NameToLayer("DieActorLayer");
+        ChangeLayerRecursively(this.gameObject, targetLayer);
+
 
         // 2초 후 제거
         Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject)); // <- 이후 오브젝트 풀로 이동하는 걸 고려
@@ -104,5 +107,17 @@ public class DamageReaction : ActorAction
 
         // 모든 마테리얼 투명화 (2초)
         //GetComponent<SetMaterials>().SetAllMaterialsToFadeOut();
+    }
+
+
+    // 모든 레이어 변경
+    // <- 유틸리티로 빼둘 생각?
+    void ChangeLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+        foreach (Transform child in obj.transform)
+        {
+            ChangeLayerRecursively(child.gameObject, newLayer);
+        }
     }
 }
