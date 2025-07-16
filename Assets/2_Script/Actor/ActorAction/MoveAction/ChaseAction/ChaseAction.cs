@@ -85,8 +85,7 @@ public class ChaseAction : MoveAction
         }
     }
 
-
-    // 추적 가능 여부
+    // 추적 가능 여부 <- 수정할 것, 현재 제대로 작동 X
     public bool IsCanChaseTarget()
     {
         // 1. 타겟이 존재하는가?
@@ -154,7 +153,6 @@ public class ChaseAction : MoveAction
         if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
     }
 
-
     // 회전 속도
     [SerializeField] protected float rotationSpeed = 3f;
 
@@ -171,6 +169,23 @@ public class ChaseAction : MoveAction
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
+
+
+    public bool IsFacingTarget(float tolerance = 0.99f)
+    {
+        Vector3 toTarget = (target.position - transform.position);
+        toTarget.y = 0f; // y값 무시
+        toTarget.Normalize();
+
+        Vector3 forward = transform.forward;
+        forward.y = 0f; // y값 무시
+        forward.Normalize();
+
+        float dot = Vector3.Dot(forward, toTarget);
+        return dot >= tolerance;
+    }
+
+
 
     protected void Update()
     {

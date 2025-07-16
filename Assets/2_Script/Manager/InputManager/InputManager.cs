@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour
 
     public bool isDashKeyDown { get; protected set; }
     protected void InputDash()
-    { isDashKeyDown = Input.GetKeyDown(KeyCode.LeftShift); }
+    { isDashKeyDown = Input.GetMouseButtonDown(1); }
 
 
 

@@ -31,6 +31,9 @@ public class DashAction : ActorAction
     // 미끄러지기 시간 (마찰계수 줄이기 시간)
     [SerializeField] protected float dashSlideTime = 0.2f;
 
+    // 땃쥐 중
+    [HideInInspector] public bool isDodge = false;
+
     // 마찰계수
     private PhysicMaterial originalMaterial;   // 원래 Material 저장
     private PhysicMaterial zeroFrictionMaterial;
@@ -48,7 +51,8 @@ public class DashAction : ActorAction
 
             // 마찰계수 조정
             myCollider.material = zeroFrictionMaterial;
-            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; });
+            isDodge = true;
+            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; isDodge = false; });
         }
     }
 

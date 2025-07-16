@@ -46,7 +46,7 @@ public class Player : Actor
         {
             animator.PlayAnimation("DoAttack");
             attackAction.Attack();
-            moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack);
+            // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack);
         }
 
         if (input.isDashKeyDown) { dashAction.Dash(); }
