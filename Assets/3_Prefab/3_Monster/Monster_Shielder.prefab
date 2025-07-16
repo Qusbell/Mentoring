@@ -956,9 +956,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.65
-  m_Height: 2.463179
+  m_Height: 2.6835597
   m_Direction: 1
-  m_Center: {x: 0, y: 1.2315271, z: 0}
+  m_Center: {x: 0, y: 1.3417174, z: 0}
 --- !u!195 &4788860662003758590
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1022,6 +1022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 3
   nowHp: 3
+  bouncePowerWhenDie: 10
 --- !u!114 &7540323481133770776
 MonoBehaviour:
   m_ObjectHideFlags: 0
