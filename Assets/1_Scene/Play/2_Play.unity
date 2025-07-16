@@ -512,7 +512,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 59194458}
-  - component: {fileID: 59194459}
   m_Layer: 0
   m_Name: Cube_4_1
   m_TagString: Untagged
@@ -540,25 +539,6 @@ Transform:
   - {fileID: 971463151}
   m_Father: {fileID: 483479354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &59194459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 59194457}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerType: 0
-  playerTag: Player
-  triggerDistance: 2
-  warningDelay: 20
-  triggerArea: {fileID: 1069017543}
-  oneTimeUse: 1
-  showDebugLog: 0
 --- !u!1001 &64738116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -652,7 +632,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 76365034}
-  - component: {fileID: 76365035}
   m_Layer: 0
   m_Name: Cube_3_1
   m_TagString: Untagged
@@ -679,25 +658,6 @@ Transform:
   - {fileID: 1338674366}
   m_Father: {fileID: 1839568052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &76365035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 76365033}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerType: 0
-  playerTag: Player
-  triggerDistance: 2
-  warningDelay: 20
-  triggerArea: {fileID: 1069017543}
-  oneTimeUse: 1
-  showDebugLog: 0
 --- !u!1001 &80110339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5933,10 +5893,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Skeleton
       objectReference: {fileID: 0}
-    - target: {fileID: 7741900305207183450, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: weaponBeforeDelay
-      value: 0.1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9528,6 +9484,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 847086922}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 847086930}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &847086920 stripped
 Transform:
@@ -9591,6 +9550,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &847086930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847086921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 20
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &862923273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10183,6 +10161,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 895387874}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 895387882}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &895387872 stripped
 Transform:
@@ -10246,6 +10227,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &895387882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895387873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 26
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &898608703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11125,7 +11125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11514,6 +11514,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 971463153}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 971463161}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &971463151 stripped
 Transform:
@@ -11577,6 +11580,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &971463161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971463152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 24
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &983565174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12045,7 +12067,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1019422742}
-  - component: {fileID: 1019422743}
   m_Layer: 0
   m_Name: Cube_4_2
   m_TagString: Untagged
@@ -12075,25 +12096,6 @@ Transform:
   - {fileID: 1337831012}
   m_Father: {fileID: 483479354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1019422743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019422741}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerType: 0
-  playerTag: Player
-  triggerDistance: 2
-  warningDelay: 20
-  triggerArea: {fileID: 1069017543}
-  oneTimeUse: 1
-  showDebugLog: 0
 --- !u!1001 &1040466678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12261,7 +12263,7 @@ Transform:
   m_GameObject: {fileID: 1069017543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 1}
+  m_LocalPosition: {x: 0, y: 6.36, z: 1}
   m_LocalScale: {x: 12, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12300,8 +12302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b13f029a4ebe2dc4081cee30413d62dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetCollapsers:
-  - {fileID: 0}
+  targetCollapsers: []
   playerTag: Player
   showDebugLog: 0
 --- !u!1001 &1076620578
@@ -14118,6 +14119,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288388147}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1288388155}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1288388145 stripped
 Transform:
@@ -14181,6 +14185,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1288388155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288388146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 26
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1289512258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14567,7 +14590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefabs:
-  - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+  - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -15695,6 +15718,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1377300967}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1377300975}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1377300965 stripped
 Transform:
@@ -15758,6 +15784,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1377300975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377300966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 24
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1387397182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16541,6 +16586,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1428368123}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1428368131}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1428368121 stripped
 Transform:
@@ -16604,6 +16652,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1428368131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428368122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 26
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1432848776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17088,6 +17155,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1458010547}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1458010555}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1458010545 stripped
 Transform:
@@ -17151,6 +17221,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1458010555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458010546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 26
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1463953937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18602,6 +18691,75 @@ Transform:
   - {fileID: 1836774516}
   m_Father: {fileID: 627283753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1632399050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1632399051}
+  - component: {fileID: 1632399053}
+  - component: {fileID: 1632399052}
+  m_Layer: 0
+  m_Name: CubeCollapserTrigger_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1632399051
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632399050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.04, y: 11.39, z: 28.5}
+  m_LocalScale: {x: 3, y: 3, z: 9}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959205632}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1632399052
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632399050}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1632399053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632399050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13f029a4ebe2dc4081cee30413d62dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCollapsers: []
+  playerTag: Player
+  showDebugLog: 0
 --- !u!1001 &1633141164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20294,7 +20452,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1737748837}
-  - component: {fileID: 1737748838}
   m_Layer: 0
   m_Name: Cube_4_3
   m_TagString: Untagged
@@ -20326,25 +20483,6 @@ Transform:
   - {fileID: 393426439}
   m_Father: {fileID: 483479354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1737748838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737748836}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerType: 0
-  playerTag: Player
-  triggerDistance: 2
-  warningDelay: 20
-  triggerArea: {fileID: 1069017543}
-  oneTimeUse: 1
-  showDebugLog: 0
 --- !u!1001 &1742291410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22605,6 +22743,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1914653968}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1914653976}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1914653966 stripped
 Transform:
@@ -22668,6 +22809,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1914653976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914653967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1918980544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22874,6 +23034,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1069017544}
+  - {fileID: 1632399051}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1960426780
@@ -23759,7 +23920,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2019582537}
-  - component: {fileID: 2019582538}
   m_Layer: 0
   m_Name: Cube_4_4
   m_TagString: Untagged
@@ -23793,25 +23953,6 @@ Transform:
   - {fileID: 217370039}
   m_Father: {fileID: 483479354}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2019582538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2019582536}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerType: 0
-  playerTag: Player
-  triggerDistance: 2
-  warningDelay: 20
-  triggerArea: {fileID: 1069017543}
-  oneTimeUse: 1
-  showDebugLog: 0
 --- !u!1001 &2022761419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24029,6 +24170,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2024017776}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2024017784}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &2024017774 stripped
 Transform:
@@ -24092,6 +24236,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &2024017784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024017775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &2024980064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25311,6 +25474,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2089955078}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2089955086}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &2089955076 stripped
 Transform:
@@ -25374,6 +25540,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &2089955086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089955077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 24
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &2110227242
 PrefabInstance:
   m_ObjectHideFlags: 0
