@@ -15,7 +15,7 @@ public class Player : Actor
 {
     protected InputManager input;
     protected JumpAction jumpAction;
-    protected DodgeAction dashAction;
+    protected DodgeAction dodgeAction;
 
     // 생성 초기화
     protected override void Awake()
@@ -23,7 +23,7 @@ public class Player : Actor
         base.Awake();
         input = GetComponent<InputManager>();
         jumpAction = GetComponent<JumpAction>();
-        dashAction = GetComponent<DodgeAction>();
+        dodgeAction = GetComponent<DodgeAction>();
     }
 
     [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
@@ -50,8 +50,8 @@ public class Player : Actor
         }
 
 
-        if (input.isDashKeyDown) { dashAction.Dash(); animator.PlayAnimation("DoDodge"); }
-        animator.PlayAnimation("IsDodge", dashAction.isDodge);
+        if (input.isDashKeyDown && dodgeAction.isCanDash) { dodgeAction.Dodge(); animator.PlayAnimation("DoDodge"); }
+        animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
         
     }
 }

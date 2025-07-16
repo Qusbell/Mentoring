@@ -171,6 +171,7 @@ public class ChaseAction : MoveAction
     }
 
 
+
     public bool IsFacingTarget(float tolerance = 0.99f)
     {
         Vector3 toTarget = (target.position - transform.position);
