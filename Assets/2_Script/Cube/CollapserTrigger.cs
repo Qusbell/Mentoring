@@ -2,124 +2,159 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// CubeCollapser 전용 간단한 트리거
-/// 이 에리어를 triggerArea로 설정한 모든 CubeCollapser를 자동으로 찾아서 처리
-/// 비활성화된 큐브도 지원
+/// 간단한 캐싱 방식의 CollapseTrigger
+/// 필수 기능만 유지, 디버그 로그 최소화
 /// </summary>
 public class CollapseTrigger : MonoBehaviour
 {
     [Tooltip("플레이어 태그")]
     public string playerTag = "Player";
-    
+
     [Tooltip("디버그 로그 출력")]
     public bool showDebugLog = true;
-    
+
     [Tooltip("한 번만 트리거되는지 여부")]
     public bool oneTimeUse = true;
-    
+
     private bool hasTriggered = false;
 
-    // CollapseTrigger.cs 수정 - TriggerType 체크 추가
+    // 캐싱 관련
+    private List<CubeCollapser> cachedCollapsers = null;
+    private bool cacheBuilt = false;
+
+    void Start()
+    {
+        BuildCache();
+    }
+
+    // 캐시 구축
+    private void BuildCache()
+    {
+        cachedCollapsers = new List<CubeCollapser>();
+
+        CubeCollapser[] allCollapsers = FindObjectsOfType<CubeCollapser>(true);
+
+        foreach (CubeCollapser collapser in allCollapsers)
+        {
+            if (collapser != null &&
+                collapser.triggerArea == this.gameObject &&
+                collapser.triggerType == CubeCollapser.TriggerType.AreaTrigger)
+            {
+                cachedCollapsers.Add(collapser);
+            }
+        }
+
+        cacheBuilt = true;
+
+        if (showDebugLog)
+            Debug.Log($"[{gameObject.name}] 캐시 구축 완료: {cachedCollapsers.Count}개 큐브 등록");
+    }
+
+    // 캐시 갱신이 필요한지 체크
+    private bool ShouldRefreshCache()
+    {
+        if (!cacheBuilt || cachedCollapsers == null) return true;
+
+        // null 참조가 30% 넘으면 갱신
+        int nullCount = 0;
+        foreach (var collapser in cachedCollapsers)
+        {
+            if (collapser == null) nullCount++;
+        }
+
+        return cachedCollapsers.Count > 0 && (float)nullCount / cachedCollapsers.Count > 0.3f;
+    }
+
+    // null 참조 정리
+    private void CleanupCache()
+    {
+        if (cachedCollapsers != null)
+        {
+            cachedCollapsers.RemoveAll(collapser => collapser == null);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(playerTag))
         {
-            // 한 번만 트리거 확인
             if (oneTimeUse && hasTriggered) return;
 
             hasTriggered = true;
 
             if (showDebugLog)
-                Debug.Log($"[{gameObject.name}] 플레이어 감지! 연결된 CubeCollapser들 찾는 중...");
+                Debug.Log($"[{gameObject.name}] 플레이어 감지!");
 
-            // 이 에리어를 triggerArea로 설정한 모든 CubeCollapser 찾기 (비활성화된 것도 포함)
-            CubeCollapser[] allCollapsers = FindObjectsOfType<CubeCollapser>(true);
-
-            int foundCount = 0;
-
-            foreach (CubeCollapser collapser in allCollapsers)
+            // 캐시 상태 체크 및 갱신
+            if (ShouldRefreshCache())
             {
-                // 이 에리어를 참조하고 AND AreaTrigger 모드인 CubeCollapser만 처리
-                if (collapser != null &&
-                    collapser.triggerArea == this.gameObject &&
-                    collapser.triggerType == CubeCollapser.TriggerType.AreaTrigger)  // 이 조건 추가!
+                BuildCache();
+            }
+            else
+            {
+                CleanupCache();
+            }
+
+            // 캐시된 큐브들 처리
+            int processedCount = 0;
+            foreach (CubeCollapser collapser in cachedCollapsers)
+            {
+                if (collapser != null)
                 {
-                    foundCount++;
+                    processedCount++;
 
-                    if (showDebugLog)
-                        Debug.Log($"[{gameObject.name}] 연결된 AreaTrigger 큐브 발견: [{collapser.gameObject.name}] - 워닝딜레이 {collapser.warningDelay}초 후 붕괴 시작");
-
-                    // 각 큐브의 워닝딜레이만큼 기다린 후 붕괴 시작
                     Timer.Instance.StartTimer(this, collapser.warningDelay, () => {
-                        if (collapser == null) return;
-
-                        // 큐브가 비활성화되어 있다면 활성화
-                        if (!collapser.gameObject.activeInHierarchy)
+                        if (collapser != null && collapser.gameObject != null)
                         {
-                            collapser.gameObject.SetActive(true);
-                            if (showDebugLog)
-                                Debug.Log($"[{gameObject.name}] 워닝딜레이 완료 - 큐브 [{collapser.gameObject.name}] 활성화 후 붕괴");
-                        }
-                        else
-                        {
-                            if (showDebugLog)
-                                Debug.Log($"[{gameObject.name}] 워닝딜레이 완료 - 큐브 [{collapser.gameObject.name}] 붕괴 시작");
-                        }
+                            // 큐브 활성화 (필요시)
+                            if (!collapser.gameObject.activeInHierarchy)
+                            {
+                                collapser.gameObject.SetActive(true);
+                            }
 
-                        // 붕괴 트리거 (AreaTrigger 모드에서 상태 무관하게 작동)
-                        collapser.TriggerCollapse();
+                            collapser.TriggerCollapse();
+                        }
                     });
-                }
-                // Time 모드나 다른 모드는 무시
-                else if (collapser != null &&
-                         collapser.triggerArea == this.gameObject &&
-                         collapser.triggerType != CubeCollapser.TriggerType.AreaTrigger)
-                {
-                    if (showDebugLog)
-                        Debug.Log($"[{gameObject.name}] 큐브 [{collapser.gameObject.name}]는 {collapser.triggerType} 모드이므로 CollapseTrigger에서 처리하지 않음");
                 }
             }
 
             if (showDebugLog)
-            {
-                if (foundCount > 0)
-                    Debug.Log($"[{gameObject.name}] 총 {foundCount}개의 AreaTrigger 큐브 발견!");
-                else
-                    Debug.LogWarning($"[{gameObject.name}] 이 에리어를 참조하는 AreaTrigger 모드 CubeCollapser를 찾을 수 없습니다.");
-            }
+                Debug.Log($"[{gameObject.name}] {processedCount}개 큐브 처리 완료!");
         }
     }
-    // 트리거 상태 리셋 (재사용을 위해)
+
+    // 수동 캐시 갱신 (보스 스킬 등에서 큐브 생성 후 호출)
+    public void RefreshCache()
+    {
+        BuildCache();
+    }
+
+    // 트리거 상태 리셋
     public void ResetTrigger()
     {
         hasTriggered = false;
-        if (showDebugLog)
-            Debug.Log($"[{gameObject.name}] 트리거 상태 리셋");
     }
-    
-    // 디버그: 현재 이 에리어를 참조하는 CubeCollapser 목록 출력
-    [ContextMenu("연결된 CubeCollapser 목록 확인")]
+
+    // 디버그: 연결된 큐브 목록 확인
+    [ContextMenu("연결된 큐브 목록 확인")]
     public void ShowConnectedCollapsers()
     {
-        CubeCollapser[] allCollapsers = FindObjectsOfType<CubeCollapser>(true);
-        int count = 0;
-        
-        Debug.Log($"[{gameObject.name}] 연결된 CubeCollapser 목록:");
-        
-        foreach (CubeCollapser collapser in allCollapsers)
+        if (!cacheBuilt) BuildCache();
+
+        Debug.Log($"[{gameObject.name}] 연결된 큐브 목록:");
+
+        for (int i = 0; i < cachedCollapsers.Count; i++)
         {
-            if (collapser != null && collapser.triggerArea == this.gameObject)
+            var collapser = cachedCollapsers[i];
+            if (collapser != null)
             {
-                count++;
                 string status = collapser.gameObject.activeInHierarchy ? "활성화" : "비활성화";
-                Debug.Log($"  {count}. [{collapser.gameObject.name}] - {status}, 워닝딜레이: {collapser.warningDelay}초");
+                Debug.Log($"  {i + 1}. [{collapser.gameObject.name}] - {status}, 딜레이: {collapser.warningDelay}초");
+            }
+            else
+            {
+                Debug.Log($"  {i + 1}. [NULL 참조]");
             }
         }
-        
-        if (count == 0)
-            Debug.LogWarning($"[{gameObject.name}] 이 에리어를 참조하는 CubeCollapser가 없습니다.");
-        else
-            Debug.Log($"[{gameObject.name}] 총 {count}개의 CubeCollapser가 연결되어 있습니다.");
     }
 }
