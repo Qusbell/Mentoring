@@ -5933,6 +5933,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Skeleton
       objectReference: {fileID: 0}
+    - target: {fileID: 7741900305207183450, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
+      propertyPath: weaponBeforeDelay
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16886,7 +16890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8191306383856861375, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 8191306383856861375, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18437,7 +18441,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 15
+  warningDelay: 17
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -20886,7 +20890,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 18
+  warningDelay: 19
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -25629,7 +25633,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 14
+  warningDelay: 15
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
