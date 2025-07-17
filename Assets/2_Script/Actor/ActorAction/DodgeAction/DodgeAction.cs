@@ -27,9 +27,7 @@ public class DodgeAction : ActorAction
     [SerializeField] protected float dodgeRecupTime = 3;
 
     // 대시 스택
-    [SerializeField]
-    protected int dodgeMaxStatck = 2;
-    [SerializeField]
+    [SerializeField] protected int dodgeMaxStatck = 2;
     protected int _dodgeStack = 2; // 최대 스택
 
     protected int dodgeStack
@@ -51,6 +49,8 @@ public class DodgeAction : ActorAction
     // 미끄러지기 시간 (마찰계수 줄이기 시간)
     [SerializeField] protected float dodgeSlideTime = 0.2f;
 
+    // 콤보 넣기 시간
+    [SerializeField] protected float dodgeComboTime = 0.4f;
 
     // 땃쥐 중?
     public bool isDodge { get; protected set; }
@@ -80,12 +80,14 @@ public class DodgeAction : ActorAction
             Timer.Instance.StartEndlessTimer(this, "_Recup", dodgeRecupTime, () => { dodgeStack++; }); // 스택 재생 시작
 
             // 마찰계수 조정
+            // 중력 미적용
             myCollider.material = zeroFrictionMaterial;
-            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; });
+            rigid.useGravity = false;
+            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; rigid.useGravity = true; });
 
             // 땃쥐 지속시간 (콤보 넣기 시간)
             isDodge = true;
-            Timer.Instance.StartTimer(this, "_IsDodge", 1, () => { isDodge = false; }); // <- 나중에 지속시간 정정
+            Timer.Instance.StartTimer(this, "_IsDodge", dodgeComboTime, () => { isDodge = false; }); // <- 나중에 지속시간 정정
         }
     }
 
