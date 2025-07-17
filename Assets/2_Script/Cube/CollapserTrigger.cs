@@ -106,12 +106,6 @@ public class CollapseTrigger : MonoBehaviour
                     Timer.Instance.StartTimer(this, collapser.warningDelay, () => {
                         if (collapser != null && collapser.gameObject != null)
                         {
-                            // 큐브 활성화 (필요시)
-                            if (!collapser.gameObject.activeInHierarchy)
-                            {
-                                collapser.gameObject.SetActive(true);
-                            }
-
                             collapser.TriggerCollapse();
                         }
                     });
