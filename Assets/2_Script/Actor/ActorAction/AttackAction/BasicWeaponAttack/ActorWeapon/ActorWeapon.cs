@@ -93,4 +93,29 @@ public class ActorWeapon : MonoBehaviour
         attackDamage = p_attackDamage;
         maxHitCount = p_maxHitCount;
     }
+
+
+
+
+    // 디버그 기즈모
+    void OnDrawGizmos()
+    {
+        if (weaponCollider == null)
+        { weaponCollider = GetComponent<Collider>(); }
+
+        // 콜라이더가 비활성화되어 있으면 표시X
+        if (weaponCollider != null && weaponCollider.enabled)
+        {
+            Gizmos.color = Color.red;
+            // BoxCollider 예시(다른 콜라이더는 각각 맞게 구현)
+            if (weaponCollider is BoxCollider box)
+            {
+                Matrix4x4 oldMatrix = Gizmos.matrix;
+                Gizmos.matrix = transform.localToWorldMatrix;
+                Gizmos.DrawWireCube(box.center, box.size);
+                Gizmos.matrix = oldMatrix;
+            }
+            // SphereCollider, CapsuleCollider 등도 필요시 추가
+        }
+    }
 }

@@ -115,8 +115,6 @@ public class Timer : SingletonT<Timer>
 
 
 
-
-
     // ===== 무한반복 타이머 (중복방지) =====
 
     // ----- 중복 실행 방지 EndlessTimer 시작 -----
@@ -148,6 +146,7 @@ public class Timer : SingletonT<Timer>
     // ----- EndlessTimer 코루틴 (중복 실행 방지) -----
     private IEnumerator EndlessTimerCoroutine((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(duration);
         while (true)
         {
             if (component == null)
@@ -155,7 +154,7 @@ public class Timer : SingletonT<Timer>
                 continuousTimers.Remove(key);
                 yield break;
             }
-            yield return new WaitForSeconds(duration);
+            yield return waitForSeconds;
             callback?.Invoke();
         }
     }
@@ -173,7 +172,6 @@ public class Timer : SingletonT<Timer>
         yield return new WaitForSeconds(duration);
         if (component != null)
         { callback?.Invoke(); }
-            
     }
 
     // 제네릭 버전
@@ -188,6 +186,5 @@ public class Timer : SingletonT<Timer>
         if (component != null)
         { callback?.Invoke(param); }
     }
-
 
 }

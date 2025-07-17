@@ -45,7 +45,8 @@ public class Player : Actor
         if (input.isAttackKeyDown && attackAction.isCanAttack)
         {
             animator.PlayAnimation("DoAttack");
-            attackAction.Attack();
+            // attackAction.Attack();
+            attackActions[AttackName.Player_BasicAttack].Attack();
             // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack);
         }
 

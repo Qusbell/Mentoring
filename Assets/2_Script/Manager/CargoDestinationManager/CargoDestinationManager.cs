@@ -18,7 +18,7 @@ public class CargoDestinationManager : MonoBehaviour
         // ----- 호위 화물 저장 -----
 
         // 호위 화물을 가져와서 저장
-        Cargo[] cargos = FindObjectsOfType<Cargo>();
+        Cargo[] cargos = FindObjectsOfType<Cargo>(); // <- 나중에 빼기. 인스펙터 창에 직접 화물 대입
         foreach (var tempCargo in cargos)
         { cargo = tempCargo; }
 

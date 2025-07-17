@@ -6,11 +6,28 @@ using UnityEngine;
 
 
 
+// 공격 명칭
+public enum AttackName
+{
+    Player_BasicAttack,
+    Player_JumpAttack,
+    Player_DodgeAttack,
+
+    Monster_MinionNormalAttack,
+    Monster_ShieldChargeAttack,
+    Monster_ArcherFireAttack,
+    Monster_MageSpellAttack
+}
+
+
 //==================================================
 // 공격 행동
 //==================================================
 abstract public class AttackAction : ActorAction
 {
+    // 해당 공격의 명칭
+    [field: SerializeField] public AttackName attackName { get; private set; }
+    
     // 공격력
     [SerializeField] protected int attackDamage = 1;
 
