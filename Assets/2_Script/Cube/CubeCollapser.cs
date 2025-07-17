@@ -108,22 +108,6 @@ public class CubeCollapser : MonoBehaviour
                 SetupSelfTrigger();
                 break;
         }
-
-
-        // 상태 변화 메서드 (<- 이후 람다식이 아니라 정식 메서드로 편입 가능)
-        changeToShaking = () => {
-            currentState = CubeState.Shaking;
-            shakeTimer = 0f;
-            currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
-        };
-
-        changeToFalling = () =>
-        {
-            if (currentState != CubeState.Collapsed)
-            {
-                DeactivateCube();
-            }
-        };
     }
 
 
@@ -139,18 +123,29 @@ public class CubeCollapser : MonoBehaviour
         // 시간 트리거인 경우 자동으로 붕괴 시작
         if (triggerType == TriggerType.Time)
         {
-            StartCoroutine(StartCollapseProcedure());
+            StartCollapse();
         }
     }
 
 
-    Action changeToShaking;
-    Action changeToFalling;
+
+    void ChangeToShaking()
+    {
+        currentState = CubeState.Shaking;
+        shakeTimer = 0f;
+        currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
+    }
+
+    void ChangeToFalling()
+    {
+        if (currentState != CubeState.Collapsed)
+        { currentState = CubeState.Collapsed; }
+    }
 
     private void StartCollapse()
     {
-        Timer.Instance.StartTimer(this, "_StartCollase", warningDelay, changeToShaking);
-        Timer.Instance.StartTimer(this, "_StartFalling", warningDelay + SHAKE_DURATION + DEACTIVATE_TIME, changeToFalling);
+        Timer.Instance.StartTimer(this, "_Collase", warningDelay, ChangeToShaking);
+        Timer.Instance.StartTimer(this, "_Falling", warningDelay + SHAKE_DURATION + DEACTIVATE_TIME, ChangeToFalling);
     }
 
 
@@ -197,7 +192,7 @@ public class CubeCollapser : MonoBehaviour
             if (sqrDistance <= sqrTriggerDistance)
             {
                 Debug.Log($"{this.gameObject.name} : StartCollapseProcedure");
-                StartCoroutine(StartCollapseProcedure());
+                StartCollapse();
             }
         }
     }
@@ -349,8 +344,6 @@ public class CubeCollapser : MonoBehaviour
 
 
 
-
-
     // 붕괴 절차 시작
     private IEnumerator StartCollapseProcedure()
     {
@@ -381,6 +374,7 @@ public class CubeCollapser : MonoBehaviour
         }
     }
 
+
     // 큐브 비활성화 
     private void DeactivateCube()
     {
@@ -406,7 +400,7 @@ public class CubeCollapser : MonoBehaviour
 
             // 상태 초기화 후 붕괴 시작
             currentState = CubeState.Idle;
-            StartCoroutine(StartCollapseProcedure());
+            StartCollapse();
             return;
         }
 
