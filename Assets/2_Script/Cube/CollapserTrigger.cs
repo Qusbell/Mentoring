@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,53 +19,62 @@ public class CollapseTrigger : MonoBehaviour
 
     private bool hasTriggered = false;
 
+    CubeCollapser[] allCollapsers;
+
+
+    private void Start()
+    {
+        // 캐시 없이 바로 검색 및 처리
+        allCollapsers = FindObjectsOfType<CubeCollapser>(true);
+    }
+
+
+
     private void OnTriggerEnter(Collider other)
     {
+        // 플레이어인지 감지하고
         if (other.CompareTag(playerTag))
         {
+            // 이미 감지했으면 리턴
             if (oneTimeUse && hasTriggered) return;
             hasTriggered = true;
 
-            if (showDebugLog)
-                Debug.Log($"[{gameObject.name}] 플레이어 감지!");
+            // if (showDebugLog)
+            //     Debug.Log($"[{gameObject.name}] 플레이어 감지!");
 
-            // 캐시 없이 바로 검색 및 처리
-            CubeCollapser[] allCollapsers = FindObjectsOfType<CubeCollapser>(true);
-
-            int processedCount = 0;
-            foreach (CubeCollapser collapser in allCollapsers)
+            foreach (CubeCollapser currentCollapser in allCollapsers)
             {
-                if (collapser != null &&
-                    collapser.triggerArea == this.gameObject &&
-                    collapser.triggerType == CubeCollapser.TriggerType.AreaTrigger)
+                if (currentCollapser.triggerArea == this.gameObject &&
+                    currentCollapser.triggerType == CubeCollapser.TriggerType.AreaTrigger)
                 {
-                    processedCount++;
+                    // if (showDebugLog)
+                    //     Debug.Log($"[{gameObject.name}] 타이머 시작: {currentCollapser.gameObject.name}, 딜레이: {currentCollapser.warningDelay}초");
 
-                    if (showDebugLog)
-                        Debug.Log($"[{gameObject.name}] 타이머 시작: {collapser.gameObject.name}, 딜레이: {collapser.warningDelay}초");
-
-                    // 람다 캡처 문제 해결
-                    CubeCollapser currentCollapser = collapser;
-                    string uniqueKey = $"{currentCollapser.gameObject.GetInstanceID()}_{Time.time}_{processedCount}";
-
-                    Timer.Instance.StartTimer(this, uniqueKey, currentCollapser.warningDelay, () => {
-                        if (currentCollapser != null && currentCollapser.gameObject.activeInHierarchy)
+                    string uniqueKey = $"{currentCollapser.gameObject.GetInstanceID()}_{Time.time}";
+                    Action tempAction = () => {
+                        if (currentCollapser.gameObject.activeInHierarchy)
                         {
                             currentCollapser.TriggerCollapse();
+                            // if (showDebugLog)
+                            //     Debug.Log($"[{gameObject.name}] 붕괴 실행됨: {currentCollapser.gameObject.name}");
+                        }
+                        // else if (showDebugLog)
+                        // {
+                        //     Debug.Log($"[{gameObject.name}] 큐브 비활성화 상태라서 붕괴 안함: {currentCollapser?.gameObject.name}");
+                        // }
+                    };
 
-                            if (showDebugLog)
-                                Debug.Log($"[{gameObject.name}] 붕괴 실행됨: {currentCollapser.gameObject.name}");
-                        }
-                        else if (showDebugLog)
-                        {
-                            Debug.Log($"[{gameObject.name}] 큐브 비활성화 상태라서 붕괴 안함: {currentCollapser?.gameObject.name}");
-                        }
-                    });
+                    Timer.Instance.StartTimer(this, uniqueKey, currentCollapser.warningDelay, tempAction);
+                }
+                else
+                {
+                    Debug.Log($"{currentCollapser.gameObject.name}의 트리거 영역 != {this.gameObject.name}" +
+                        $" 또는 {currentCollapser.gameObject.name}의 트리거 타입 != {CubeCollapser.TriggerType.AreaTrigger}");
                 }
             }
 
-            if (showDebugLog)
-                Debug.Log($"[{gameObject.name}] {processedCount}개 큐브 처리 완료!");
+            // if (showDebugLog)
+            //     Debug.Log($"[{gameObject.name}] {processedCount}개 큐브 처리 완료!");
         }
     }
 
