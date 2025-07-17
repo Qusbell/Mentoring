@@ -7064,6 +7064,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 612391129}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 612391137}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &612391127 stripped
 Transform:
@@ -7127,6 +7130,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &612391137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612391128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &618632881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7408,6 +7430,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 634718598}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 634718606}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &634718596 stripped
 Transform:
@@ -7471,6 +7496,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &634718606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634718597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 24
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &652570698
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8339,6 +8383,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 735006037}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 735006045}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &735006035 stripped
 Transform:
@@ -8402,6 +8449,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &735006045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735006036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &742642430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12351,6 +12417,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1040466681}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1040466689}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1040466679 stripped
 Transform:
@@ -12414,6 +12483,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1040466689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040466680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 24
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1 &1069017543
 GameObject:
   m_ObjectHideFlags: 0
@@ -13261,6 +13349,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1184335367}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1184335375}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1184335365 stripped
 Transform:
@@ -13324,6 +13415,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1184335375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184335366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1188703609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16264,6 +16374,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1391487573}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1391487581}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1391487571 stripped
 Transform:
@@ -16327,6 +16440,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1391487581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391487572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &1392944652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17667,6 +17799,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1471235370}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1471235378}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1471235368 stripped
 Transform:
@@ -17730,6 +17865,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1471235378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471235369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1 &1472275112
 GameObject:
   m_ObjectHideFlags: 0
@@ -23669,6 +23823,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1992940708}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1992940716}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &1992940706 stripped
 Transform:
@@ -23732,6 +23889,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &1992940716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992940707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 22
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &2000097594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25443,6 +25619,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2070572669}
+    - targetCorrespondingSourceObject: {fileID: 8855921217142381061, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2070572677}
   m_SourcePrefab: {fileID: 100100000, guid: 0c54dec4589d06b48adb8e40dc461120, type: 3}
 --- !u!4 &2070572667 stripped
 Transform:
@@ -25506,6 +25685,25 @@ MonoBehaviour:
   spawnOnActivation: 1
   delayBeforeSpawn: 0
   showDebugLog: 1
+--- !u!114 &2070572677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070572668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerType: 3
+  playerTag: Player
+  triggerDistance: 2
+  warningDelay: 23
+  triggerArea: {fileID: 1632399050}
+  oneTimeUse: 1
+  showDebugLog: 0
 --- !u!1001 &2071688670
 PrefabInstance:
   m_ObjectHideFlags: 0
