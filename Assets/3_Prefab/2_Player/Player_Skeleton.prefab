@@ -1353,6 +1353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 100
   nowHp: 100
+  bouncePowerWhenDie: 10
 --- !u!114 &3696162683426923108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1391,6 +1392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 0
   attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
@@ -1411,10 +1413,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashPower: 6
-  dashRecupTime: 3
-  dashStack: 2
-  dashSlideTime: 0.2
+  dodgePower: 8
+  dodgeRecupTime: 3
+  dodgeMaxStatck: 2
+  _dodgeStack: 2
+  dodgeSlideTime: 0.2
 --- !u!1 &5359304219147062780
 GameObject:
   m_ObjectHideFlags: 0
