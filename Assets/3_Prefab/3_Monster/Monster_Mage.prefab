@@ -504,7 +504,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotationSpeed: 3
+  target: {fileID: 0}
+  rotationSpeed: 5
 --- !u!114 &3237082938306507263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1
   nowHp: 1
+  bouncePowerWhenDie: 10
 --- !u!114 &3085591412297278114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,6 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc59da16eb1c1b41a0b967eea06cdaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 0
   attackDamage: 1
   <attackRange>k__BackingField: 30
   targetTag: 
