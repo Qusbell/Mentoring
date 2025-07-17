@@ -47,12 +47,12 @@ public class Monster : Actor
 
         chaseAction = moveAction as ChaseAction;
         if (chaseAction == null) { Debug.Log(this.gameObject.name + " : ChaseAction 아님"); }
+
+        TurnWhenStart();
     }
 
     private void Update()
-    {
-        actionStatus();
-    }
+    { actionStatus(); }
 
 
     // 공격 사거리 계산
@@ -75,7 +75,6 @@ public class Monster : Actor
         }
     }
 
-
     // 재생 중 애니메이션 확인
     protected bool animationPlayCheck = false;
 
@@ -96,6 +95,16 @@ public class Monster : Actor
         { SwitchStatus(nextStatus); }
     }
 
+    protected void TurnWhenStart()
+    {
+        Vector3 targetPos = target.position;
+        targetPos.y = this.transform.position.y; // y값을 동일하게 고정
+        this.transform.LookAt(targetPos); // 평면상에서만 타겟을 바라봄
+    }
+
+
+
+
 
     // ===== 상태 =====
 
@@ -107,6 +116,7 @@ public class Monster : Actor
         if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
         { SwitchStatus(IdleStatus); }
     }
+
 
     // 대기 상태
     protected void IdleStatus()

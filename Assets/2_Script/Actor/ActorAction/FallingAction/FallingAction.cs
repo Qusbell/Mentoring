@@ -9,7 +9,7 @@ public class FallingAction : ActorAction
         if(this.transform.position.y < -40)
         {
             Destroy(this.gameObject);
-            Debug.Log("삭제됨");
+            // Debug.Log("삭제됨");
         }
     }
 }

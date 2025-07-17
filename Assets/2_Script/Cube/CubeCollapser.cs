@@ -131,9 +131,7 @@ public class CubeCollapser : MonoBehaviour
             case CubeState.Idle:
                 // 성능 최적화: PlayerProximity만 Update에서 거리 체크
                 if (triggerType == TriggerType.PlayerProximity)
-                {
-                    CheckPlayerProximity();
-                }
+                { CheckPlayerProximity(); }
                 // 다른 트리거 타입들은 Idle 상태에서만 Update 불필요
                 // Shaking이나 Falling 상태가 되면 Update 필요함
                 break;
@@ -147,6 +145,10 @@ public class CubeCollapser : MonoBehaviour
                 break;
         }
     }
+
+
+
+
 
     // 성능 최적화된 플레이어 근접 확인
     private void CheckPlayerProximity()
@@ -167,6 +169,7 @@ public class CubeCollapser : MonoBehaviour
             }
         }
     }
+
 
     // 에리어 트리거용 설정
     private void SetupAreaTrigger()

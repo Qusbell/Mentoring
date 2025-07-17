@@ -52,6 +52,8 @@ public class DodgeAction : ActorAction
     // 콤보 넣기 시간
     [SerializeField] protected float dodgeComboTime = 0.4f;
 
+    [SerializeField] protected float dodgeAngle = 30f;
+
     // 땃쥐 중?
     public bool isDodge { get; protected set; }
 
@@ -71,7 +73,7 @@ public class DodgeAction : ActorAction
     {
         if (isCanDash)
         {
-            // 대시
+            // 닷지
             rigid.velocity = Vector3.zero;
             rigid.AddForce(this.transform.forward * dodgePower, ForceMode.Impulse);
 
@@ -79,16 +81,22 @@ public class DodgeAction : ActorAction
             dodgeStack--;  // -1스택
             Timer.Instance.StartEndlessTimer(this, "_Recup", dodgeRecupTime, () => { dodgeStack++; }); // 스택 재생 시작
 
-            // 마찰계수 조정
-            // 중력 미적용
+            // 물리 조정
             myCollider.material = zeroFrictionMaterial;
             rigid.useGravity = false;
-            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; rigid.useGravity = true; });
+            transform.Rotate(dodgeAngle, 0, 0);
+
+            Timer.Instance.StartTimer(this, "_Material", dodgeSlideTime,
+                () => {
+                    myCollider.material = originalMaterial; // 마찰계수 제거
+                    rigid.useGravity = true;                // 다시 중력 사용
+                    transform.Rotate(-dodgeAngle, 0, 0);    // 회전 제거
+                    rigid.velocity = Vector3.zero;          // 종료 시 힘 제거
+                });
 
             // 땃쥐 지속시간 (콤보 넣기 시간)
             isDodge = true;
-            Timer.Instance.StartTimer(this, "_IsDodge", dodgeComboTime, () => { isDodge = false; rigid.velocity = Vector3.zero; }); // <- 나중에 지속시간 정정
+            Timer.Instance.StartTimer(this, "_IsDodge", dodgeComboTime, () => { isDodge = false; }); // <- 나중에 지속시간 정정
         }
     }
-
 }

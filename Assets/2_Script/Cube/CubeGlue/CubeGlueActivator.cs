@@ -16,6 +16,8 @@ public class CubeGlueActivator : MonoBehaviour
     private CubeMover cubeMover;
     private CubeGlue cubeGlue;
 
+    private bool activatePlag = true;
+
     private void Awake()
     {
         cubeMover = GetComponent<CubeMover>();
@@ -29,25 +31,33 @@ public class CubeGlueActivator : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // 태그 확인
-        if (!IsValidTarget(collision.transform)) return;
-        cubeGlue.enabled = true;
+        if (activatePlag && cubeGlue != null && IsValidTarget(collision.transform))
+        {
+            cubeGlue.enabled = true;
+            activatePlag = false;
+        }
     }
 
     private bool IsValidTarget(Transform target)
     {
         foreach (string tag in glueTags)
         {
-            if (target.CompareTag(tag)) return true;
+            if (target.CompareTag(tag))
+            { return true; }
         }
+        
         return false;
     }
 
     private void Update()
     {
         if (cubeMover.HasArrived)
-        { this.enabled = false; }
+        {
+            Timer.Instance.StartTimer(this, "_StopGlue", 0.1f,
+                () => {
+                    cubeGlue.enabled = false;
+                    this.enabled = false;
+                });
+        }
     }
-
-    private void OnDisable()
-    { cubeGlue.enabled = false; }
 }

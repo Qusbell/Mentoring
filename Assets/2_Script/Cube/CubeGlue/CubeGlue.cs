@@ -13,8 +13,7 @@ public class CubeGlue : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         // Player, Monster 태그만 허용
-        if (!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Monster"))
-            return;
+        if (!collision.transform.CompareTag("Player") && !collision.transform.CompareTag("Monster")) { return; }
 
         // 접촉한 콜라이더 오브젝트에
         // RigidBody가 있다면
@@ -44,7 +43,5 @@ public class CubeGlue : MonoBehaviour
     // 이전 위치 - 현재 위치
     // 이러면 Vector3값으로 현재 향하고 있는 방향이 나옴
     private Vector3 GetDirection()
-    {
-        return this.transform.position - beforePos;
-    }
+    { return this.transform.position - beforePos; }
 }
