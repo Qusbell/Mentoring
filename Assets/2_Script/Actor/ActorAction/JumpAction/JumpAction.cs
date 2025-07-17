@@ -66,7 +66,7 @@ public class JumpAction : ActorAction
             isJump = true;
 
             // 불필요한 물리 초기화
-            rigid.velocity = Vector3.zero;
+            //  rigid.velocity = Vector3.zero;
             // 위쪽 방향으로 jumpHeight만큼 힘을 가함
             rigid.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
         }

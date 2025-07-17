@@ -28,7 +28,7 @@ public class DodgeAction : ActorAction
 
     // 대시 스택
     [SerializeField] protected int dodgeMaxStatck = 2;
-    protected int _dodgeStack = 2; // 최대 스택
+    [SerializeField] protected int _dodgeStack = 2;
 
     protected int dodgeStack
     {
@@ -87,7 +87,7 @@ public class DodgeAction : ActorAction
 
             // 땃쥐 지속시간 (콤보 넣기 시간)
             isDodge = true;
-            Timer.Instance.StartTimer(this, "_IsDodge", dodgeComboTime, () => { isDodge = false; }); // <- 나중에 지속시간 정정
+            Timer.Instance.StartTimer(this, "_IsDodge", dodgeComboTime, () => { isDodge = false; rigid.velocity = Vector3.zero; }); // <- 나중에 지속시간 정정
         }
     }
 
