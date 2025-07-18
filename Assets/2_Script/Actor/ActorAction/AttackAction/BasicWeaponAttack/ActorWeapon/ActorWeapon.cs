@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -14,22 +15,7 @@ public class ActorWeapon : MonoBehaviour
     // 공격 대상(key) / 히트 횟수(value)
     private Dictionary<GameObject, int> hitTargets = null;
 
-    // 무기 콜라이더의 활성/비활성 여부
-    public bool isActivate
-    {
-        set
-        {
-            weaponCollider.enabled = value;
 
-            // 활성화 시
-            if (value)
-            { hitTargets = new Dictionary<GameObject, int>(); }
-
-            // 비활성화 시
-            else
-            { hitTargets = null; }
-        }
-    }
 
     private void Awake()
     {
@@ -43,11 +29,72 @@ public class ActorWeapon : MonoBehaviour
         { Debug.Log("ActorWeapon에 콜라이더 미존재 : " + this.gameObject.name); }
     }
 
-    
-    // ===== 콜라이더 활성화 / 비활성화 =====
 
-    public void UseWeapon() { isActivate = true; }
-    public void NotUseWeapon() { isActivate = false; }
+
+    // ===== 무기 콜라이더 활성화 / 비활성화 =====
+    public bool isActivate
+    {
+        set
+        {
+            weaponCollider.enabled = value;
+
+            // 활성화 시
+            if (value) { hitTargets = new Dictionary<GameObject, int>(); }
+
+            // 비활성화 시
+            else { hitTargets = null; }
+        }
+    }
+
+    // 활성화된 횟수
+    private int _activateStack = 0;
+    private int activateStack
+    {
+        get { return _activateStack; }
+        set
+        {
+            if (value < 0) { value = 0; }
+            _activateStack = value;
+        }
+    }
+
+    public void UseWeapon()
+    {
+        activateStack++;
+        isActivate = true;
+    }
+
+    public void UseWeapon(int p_attackDamage, int p_maxHitCount = 1)
+    {
+        activateStack++;
+        isActivate = true;
+
+        attackDamage = p_attackDamage;
+        maxHitCount = p_maxHitCount;
+    }
+
+    public void NotUseWeapon()
+    {
+        activateStack--;
+        if(activateStack == 0)
+        { isActivate = false; }
+    }
+    
+
+
+    // ===== 무기 설정 (기존 버전) =====
+
+    // attackAction으로부터 가져올 정보
+    private string targetTag = "";
+    private int attackDamage = 0;
+    private int maxHitCount = 1; // 최대 히트 횟수
+
+    public void SetWeapon(string p_targetTag, int p_attackDamage, int p_maxHitCount = 1)
+    {
+        targetTag = p_targetTag;
+        attackDamage = p_attackDamage;
+        maxHitCount = p_maxHitCount;
+    }
 
 
 
@@ -78,23 +125,6 @@ public class ActorWeapon : MonoBehaviour
             }
         }
     }
-
-
-    // ===== 무기 설정 =====
-
-    // attackAction으로부터 가져올 정보
-    private string targetTag = "";
-    private int attackDamage = 0;
-    private int maxHitCount = 1; // 최대 히트 횟수
-
-    public void SetWeapon(string p_targetTag, int p_attackDamage, int p_maxHitCount = 1)
-    {
-        targetTag = p_targetTag;
-        attackDamage = p_attackDamage;
-        maxHitCount = p_maxHitCount;
-    }
-
-
 
 
     // 디버그 기즈모

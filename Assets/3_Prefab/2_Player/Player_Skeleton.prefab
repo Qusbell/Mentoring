@@ -1199,6 +1199,7 @@ GameObject:
   - component: {fileID: 7741900305207183450}
   - component: {fileID: 2727264550505396054}
   - component: {fileID: 4090338657157569667}
+  - component: {fileID: 1833944609532144370}
   m_Layer: 7
   m_Name: Player_Skeleton
   m_TagString: Player
@@ -1461,6 +1462,27 @@ MonoBehaviour:
   myWeapon: {fileID: 1507084875693659171}
   weaponBeforeDelay: 0.2
   weaponActiveTime: 0.8
+  maxHitCount: 1
+--- !u!114 &1833944609532144370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333357997323496402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 3
+  attackDamage: 1
+  <attackRange>k__BackingField: 3
+  targetTag: 
+  attackRate: 0.1
+  myWeapon: {fileID: 1507084875693659171}
+  weaponBeforeDelay: 0.01
+  weaponActiveTime: 0.35
   maxHitCount: 1
 --- !u!1 &5359304219147062780
 GameObject:

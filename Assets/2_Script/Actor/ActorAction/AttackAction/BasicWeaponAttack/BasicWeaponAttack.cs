@@ -40,11 +40,11 @@ public class BasicWeaponAttack : AttackAction
         Timer.Instance.StartTimer(
                 this, "_Use",
                 weaponBeforeDelay,
-                weapon.UseWeapon);
+                () => weapon.UseWeapon(attackDamage, maxHitCount));
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
-                weaponBeforeDelay + weaponActiveTime,
+                weaponActiveTime,
                 weapon.NotUseWeapon);
 
         //  StartCoroutine(Timer.StartTimer(weaponBeforeDelay, weapon.UseWeapon));

@@ -10,8 +10,10 @@ using UnityEngine;
 public enum AttackName
 {
     Player_BasicAttack,
-    Player_JumpAttack,
-    Player_DodgeAttack,
+    Player_JumpComboAttack,
+    Player_DodgeComboAttack,
+
+    Player_WhenDodge,
 
     Monster_MinionNormalAttack,
     Monster_ShieldChargeAttack,

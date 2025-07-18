@@ -45,6 +45,11 @@ public class Player : Actor
 
         if (input.isDodgeKeyDown && dodgeAction.isCanDash)
         {
+            // Debug.Log("닷지");
+            nowAttackKey = AttackName.Player_WhenDodge;
+            attackAction.Attack();
+
+            // 닷지 시 피해
             dodgeAction.Dodge();
             animator.PlayAnimation("DoDodge");
         }
@@ -56,20 +61,14 @@ public class Player : Actor
         {
             // 닷지공격 최우선
             if (dodgeAction.isDodge)
-            {
-                nowAttackKey = AttackName.Player_DodgeAttack;
-            }
+            { nowAttackKey = AttackName.Player_DodgeComboAttack; }
 
             else if (jumpAction.isJump)
-            {
-                nowAttackKey = AttackName.Player_JumpAttack;
-            }
+            { nowAttackKey = AttackName.Player_JumpComboAttack; }
+
             // Basic
             else
-            {
-                nowAttackKey = AttackName.Player_BasicAttack;
-            }
-
+            { nowAttackKey = AttackName.Player_BasicAttack; }
 
             animator.PlayAnimation("DoAttack");
             attackAction.Attack();
