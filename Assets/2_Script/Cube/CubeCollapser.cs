@@ -135,6 +135,8 @@ public class CubeCollapser : MonoBehaviour
         currentState = CubeState.Shaking;
         shakeTimer = 0f;
         currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
+
+        Timer.Instance.StartTimer(this, "_Falling", SHAKE_DURATION + DEACTIVATE_TIME, ChangeToFalling);
     }
 
     void ChangeToFalling()
@@ -149,7 +151,7 @@ public class CubeCollapser : MonoBehaviour
     private void StartCollapse()
     {
         Timer.Instance.StartTimer(this, "_Shaking", warningDelay, ChangeToShaking);
-        Timer.Instance.StartTimer(this, "_Falling", warningDelay + SHAKE_DURATION + DEACTIVATE_TIME, ChangeToFalling);
+        // Timer.Instance.StartTimer(this, "_Falling", warningDelay + SHAKE_DURATION + DEACTIVATE_TIME, ChangeToFalling);
     }
 
 
@@ -286,48 +288,50 @@ public class CubeCollapser : MonoBehaviour
                 originalPosition.z
             );
 
+            // 자신 레이어 디폴트화
             SetLayerRecursively(this.gameObject, LayerMask.NameToLayer("Default"));
 
             // NavMesh 리빌드 - 발판 사라짐
             if (NavMeshManager.instance != null)
             { NavMeshManager.instance.Rebuild(); }
-
-            return;
         }
-
-        // 진행률에 따라 흔들림 강도 계산 (지수적으로 증가)
-        float progress = shakeTimer / SHAKE_DURATION; // 0 ~ 1 범위
-
-        // 비선형 흔들림 강도 (시간이 지날수록 더 빨리 증가)
-        float intensityFactor = Mathf.Pow(progress, SHAKE_ACCELERATION);
-
-        // 초기 강도에서 최대 강도로 증가
-        currentShakeIntensity = Mathf.Lerp(INITIAL_SHAKE_INTENSITY, MAX_SHAKE_INTENSITY, intensityFactor);
-
-        // 시간 경과에 따라 더 빠르게 흔들림 (진행률에 따라 속도 증가)
-        float currentShakeSpeed = SHAKE_SPEED * (1f + progress);
-
-        // 시간에 따른 흔들림 위치 계산
-        float time = Time.time * currentShakeSpeed;
-        float xOffset = Mathf.Sin(time * 0.9f) * currentShakeIntensity;
-        float zOffset = Mathf.Sin(time * 1.1f) * currentShakeIntensity;
-
-        // 진행률이 높아질수록 더 무작위적인 움직임 추가
-        if (progress > 0.7f)
+        else
         {
-            xOffset += Mathf.Sin(time * 2.7f) * currentShakeIntensity * 0.3f;
-            zOffset += Mathf.Sin(time * 3.1f) * currentShakeIntensity * 0.3f;
-        }
+            // 진행률에 따라 흔들림 강도 계산 (지수적으로 증가)
+            float progress = shakeTimer / SHAKE_DURATION; // 0 ~ 1 범위
 
-        // 위치 적용 (Y축은 유지, X와 Z만 변경)
-        transform.position = new Vector3(
-            originalPosition.x + xOffset,
-            transform.position.y,  // Y축은 현재 높이 유지
-            originalPosition.z + zOffset
-        );
+            // 비선형 흔들림 강도 (시간이 지날수록 더 빨리 증가)
+            float intensityFactor = Mathf.Pow(progress, SHAKE_ACCELERATION);
+
+            // 초기 강도에서 최대 강도로 증가
+            currentShakeIntensity = Mathf.Lerp(INITIAL_SHAKE_INTENSITY, MAX_SHAKE_INTENSITY, intensityFactor);
+
+            // 시간 경과에 따라 더 빠르게 흔들림 (진행률에 따라 속도 증가)
+            float currentShakeSpeed = SHAKE_SPEED * (1f + progress);
+
+            // 시간에 따른 흔들림 위치 계산
+            float time = Time.time * currentShakeSpeed;
+            float xOffset = Mathf.Sin(time * 0.9f) * currentShakeIntensity;
+            float zOffset = Mathf.Sin(time * 1.1f) * currentShakeIntensity;
+
+            // 진행률이 높아질수록 더 무작위적인 움직임 추가
+            if (progress > 0.7f)
+            {
+                xOffset += Mathf.Sin(time * 2.7f) * currentShakeIntensity * 0.3f;
+                zOffset += Mathf.Sin(time * 3.1f) * currentShakeIntensity * 0.3f;
+            }
+
+            // 위치 적용 (Y축은 유지, X와 Z만 변경)
+            transform.position = new Vector3(
+                originalPosition.x + xOffset,
+                transform.position.y,  // Y축은 현재 높이 유지
+                originalPosition.z + zOffset
+            );
+        }
     }
 
     // 떨어지는 상태 업데이트
+    // <- 호출 자체가 안 되고 있는 경우가 있음
     private void UpdateFalling()
     {
         // 이전 위치 저장
@@ -339,9 +343,12 @@ public class CubeCollapser : MonoBehaviour
         // 떨어진 거리 누적 계산
         fallenDistance += (prevY - transform.position.y);
 
+        // Debug.Log($"{this.gameObject.name} : 붕괴 중");
+
         // 거리 기반 비활성화 체크
         if (fallenDistance >= DEACTIVATE_DISTANCE)
         {
+            Debug.Log($"{this.gameObject.name} : 붕괴 후 비활성화");
             DeactivateCube();
         }
     }
@@ -349,34 +356,34 @@ public class CubeCollapser : MonoBehaviour
 
 
     // 붕괴 절차 시작
-    private IEnumerator StartCollapseProcedure()
-    {
-        if (currentState != CubeState.Idle)
-        {
-            // 중복 붕괴 방지
-            yield break;
-        }
-
-        if (showDebugLog)
-            Debug.Log($"[{gameObject.name}] 붕괴 시작! 트리거 타입: {triggerType}");
-
-        // 경고 대기 시간
-        yield return new WaitForSeconds(warningDelay);
-
-        // 흔들림 단계 시작
-        currentState = CubeState.Shaking;
-        shakeTimer = 0f;
-        currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
-
-        // 시간 기반 비활성화 설정
-        yield return new WaitForSeconds(SHAKE_DURATION + DEACTIVATE_TIME);
-
-        // 아직 비활성화되지 않았다면
-        if (currentState != CubeState.Collapsed)
-        {
-            DeactivateCube();
-        }
-    }
+    //  private IEnumerator StartCollapseProcedure()
+    //  {
+    //      if (currentState != CubeState.Idle)
+    //      {
+    //          // 중복 붕괴 방지
+    //          yield break;
+    //      }
+    //  
+    //      if (showDebugLog)
+    //          Debug.Log($"[{gameObject.name}] 붕괴 시작! 트리거 타입: {triggerType}");
+    //  
+    //      // 경고 대기 시간
+    //      yield return new WaitForSeconds(warningDelay);
+    //  
+    //      // 흔들림 단계 시작
+    //      currentState = CubeState.Shaking;
+    //      shakeTimer = 0f;
+    //      currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
+    //  
+    //      // 시간 기반 비활성화 설정
+    //      yield return new WaitForSeconds(SHAKE_DURATION + DEACTIVATE_TIME);
+    //  
+    //      // 아직 비활성화되지 않았다면
+    //      if (currentState != CubeState.Collapsed)
+    //      {
+    //          DeactivateCube();
+    //      }
+    //  }
 
 
     // 큐브 비활성화 
@@ -393,6 +400,7 @@ public class CubeCollapser : MonoBehaviour
         this.enabled = false;
     }
 
+
     // 직접 붕괴 트리거 
     public void TriggerCollapse()
     {
@@ -401,6 +409,8 @@ public class CubeCollapser : MonoBehaviour
         //  {
             // if (showDebugLog)
             //     Debug.Log($"[{gameObject.name}] 에리어 트리거에 의한 강제 붕괴!");
+
+            // Debug.Log($"{this.gameObject.name} : 붕괴 시작");
 
             // 상태 초기화 후 붕괴 시작
             currentState = CubeState.Idle;

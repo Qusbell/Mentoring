@@ -58,22 +58,14 @@ public class CollapseTrigger : MonoBehaviour
             {
                 // if (showDebugLog)
                 //     Debug.Log($"[{gameObject.name}] 타이머 시작: {currentCollapser.gameObject.name}, 딜레이: {currentCollapser.warningDelay}초");
-                
 
                 string uniqueKey = $"{currentCollapser.gameObject.GetInstanceID()}_{Time.time}";
                 Action tempAction = () => {
-                    if (!currentCollapser.gameObject.activeInHierarchy)
-                    {
-                        currentCollapser.gameObject.SetActive(true);
-                        // if (showDebugLog)
-                        //     Debug.Log($"[{gameObject.name}] 붕괴 실행됨: {currentCollapser.gameObject.name}");
-                    }
-
+                    currentCollapser.TriggerCollapse();
                     // else if (showDebugLog)
                     // {
                     //     Debug.Log($"[{gameObject.name}] 큐브 비활성화 상태라서 붕괴 안함: {currentCollapser?.gameObject.name}");
                     // }
-                    currentCollapser.TriggerCollapse();
                 };
                 
                 Timer.Instance.StartTimer(this, uniqueKey, currentCollapser.warningDelay, tempAction);
