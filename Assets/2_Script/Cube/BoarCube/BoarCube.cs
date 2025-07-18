@@ -114,11 +114,6 @@ public class BoarCube : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void Start()
-    {
-        FindPlayer();
-    }
-
     /// <summary>
     /// 컴포넌트 초기화
     /// </summary>
