@@ -25,19 +25,19 @@ public class Monster : Actor
             return _target;
         }
         set
-        {
-            _target = value;
-        }
+        { _target = value; }
     }
 
     // 추격 행동
-    ChaseAction chaseAction;
+    protected ChaseAction chaseAction;
+
 
     protected override void Awake()
     {
         base.Awake();
         actionStatus = SpawnState; // 생성부터 시작
 
+        // 피격 시 애니메이션 메서드
         damageReaction.hitAnimation = () => SwitchStatus(HitStatus);
         damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
 
@@ -45,9 +45,11 @@ public class Monster : Actor
         if(GetComponent<FallingAction>() == null)
         { this.AddComponent<FallingAction>(); }
 
+        // moveAction에서 chaseAction 분리
         chaseAction = moveAction as ChaseAction;
         if (chaseAction == null) { Debug.Log(this.gameObject.name + " : ChaseAction 아님"); }
 
+        // 시작 시 1회, 타겟 방향 바라봄
         TurnWhenStart();
     }
 

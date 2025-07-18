@@ -357,7 +357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &109443375
 Transform:
   m_ObjectHideFlags: 0
@@ -1271,10 +1271,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_Shielder
       objectReference: {fileID: 0}
-    - target: {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.47
@@ -1315,15 +1311,68 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7540323481133770776, guid: 489dff6294583ba43893e073aadec084, type: 3}
-      propertyPath: attackRate
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 489dff6294583ba43893e073aadec084, type: 3}
+--- !u!1001 &1143078052
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.018663
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8886752
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040585352637831353, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: m_Name
+      value: Monster_Minion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
 --- !u!1001 &1153213875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1561,18 +1610,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_Archer
       objectReference: {fileID: 0}
-    - target: {fileID: 4196742738127299694, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4717604142083378933, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
-      propertyPath: weaponBeforeDelay
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7202377034654116973, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
-      propertyPath: rotationSpeed
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 7762890709775158706, guid: 7a3637b457e0c7c4993e13be53eb52f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.22
@@ -1747,7 +1784,6 @@ GameObject:
   - component: {fileID: 1866683702}
   - component: {fileID: 1866683704}
   - component: {fileID: 1866683703}
-  - component: {fileID: 1866683705}
   m_Layer: 9
   m_Name: TestMap
   m_TagString: Cube
@@ -1818,18 +1854,6 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
---- !u!114 &1866683705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1866683701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101892760ac3e974e99c54dd2785e3da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1935292241
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1838,25 +1862,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3959130391364565562, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: dodgePower
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 3959130391364565562, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: dodgeRecupTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3959130391364565562, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: dodgeSlideTime
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.71
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.01
+      value: 1.39
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1893,22 +1905,6 @@ PrefabInstance:
     - target: {fileID: 5333357997323496402, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_Name
       value: Player_Skeleton
-      objectReference: {fileID: 0}
-    - target: {fileID: 6621235718818591380, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: m_Size.x
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6621235718818591380, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: m_Size.z
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6621235718818591380, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: m_Center.z
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 7741900305207183450, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: <attackName>k__BackingField
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2075,10 +2071,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster_Mage
       objectReference: {fileID: 0}
-    - target: {fileID: 2801390549913854848, guid: d0439793edeb04c4589d4bc499d4dcbb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2187,8 +2179,9 @@ SceneRoots:
   - {fileID: 1866683702}
   - {fileID: 1343171882}
   - {fileID: 76647379}
-  - {fileID: 1105015462}
-  - {fileID: 1728107046}
   - {fileID: 1774294848}
   - {fileID: 1935292241}
+  - {fileID: 1105015462}
+  - {fileID: 1728107046}
   - {fileID: 1978693190}
+  - {fileID: 1143078052}

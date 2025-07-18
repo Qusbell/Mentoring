@@ -61,7 +61,7 @@ public class CollapseTrigger : MonoBehaviour
 
                 string uniqueKey = $"{currentCollapser.gameObject.GetInstanceID()}_{Time.time}";
                 Action tempAction = () => {
-                    currentCollapser.TriggerCollapse();
+                    currentCollapser.TriggerCollapse(); // <-
                     // else if (showDebugLog)
                     // {
                     //     Debug.Log($"[{gameObject.name}] 큐브 비활성화 상태라서 붕괴 안함: {currentCollapser?.gameObject.name}");

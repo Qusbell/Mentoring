@@ -24,10 +24,12 @@ public class Player : Actor
         input = GetComponent<InputManager>();
         jumpAction = GetComponent<JumpAction>();
         dodgeAction = GetComponent<DodgeAction>();
+
+         // <- 기본 공격
     }
 
-    [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
-    [SerializeField] protected float slowTimeOnAttack = 2;  // 공격 중 슬로우 시간
+    // [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
+    // [SerializeField] protected float slowTimeOnAttack = 2;  // 공격 중 슬로우 시간
 
     // 프레임당 업데이트
     protected virtual void Update()
@@ -41,18 +43,37 @@ public class Player : Actor
         if (input.isJumpKeyDown) { jumpAction.Jump(); }
         animator.PlayAnimation("IsJump", jumpAction.isJump);
 
+        if (input.isDodgeKeyDown && dodgeAction.isCanDash)
+        {
+            dodgeAction.Dodge();
+            animator.PlayAnimation("DoDodge");
+        }
+        animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
+
+
         // 공격
         if (input.isAttackKeyDown && attackAction.isCanAttack)
         {
+            // 닷지공격 최우선
+            if (dodgeAction.isDodge)
+            {
+                nowAttackKey = AttackName.Player_DodgeAttack;
+            }
+
+            else if (jumpAction.isJump)
+            {
+                nowAttackKey = AttackName.Player_JumpAttack;
+            }
+            // Basic
+            else
+            {
+                nowAttackKey = AttackName.Player_BasicAttack;
+            }
+
+
             animator.PlayAnimation("DoAttack");
-            // attackAction.Attack();
-            attackActions[AttackName.Player_BasicAttack].Attack();
-            // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack);
+            attackAction.Attack();
+            // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack); // <- 공격 중 슬로우 (였던 것)
         }
-
-
-        if (input.isDodgeKeyDown && dodgeAction.isCanDash) { dodgeAction.Dodge(); animator.PlayAnimation("DoDodge"); }
-        animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
-        
     }
 }

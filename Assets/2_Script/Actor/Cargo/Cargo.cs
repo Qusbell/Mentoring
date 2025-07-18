@@ -59,7 +59,10 @@ public class Cargo : Actor
     protected void SetNext()
     {
         if (nowDestination.nextDestination != null)
-        { nowDestination = nowDestination.nextDestination; Debug.Log("목적지 할당 : " + nowDestination.name); }
+        {
+            nowDestination = nowDestination.nextDestination;
+            // Debug.Log("목적지 할당 : " + nowDestination.name);
+        }
     }
 
     // 일시 정지

@@ -400,7 +400,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.1, z: 0.4}
+  m_Size: {x: 0.7, y: 0.1, z: 0.7}
   m_Center: {x: 0, y: 0, z: 0.05}
 --- !u!114 &3451742319746817384
 MonoBehaviour:
@@ -1195,8 +1195,10 @@ GameObject:
   - component: {fileID: 8766476169735018083}
   - component: {fileID: 3696162683426923108}
   - component: {fileID: 2169939233528477970}
-  - component: {fileID: 7741900305207183450}
   - component: {fileID: 3959130391364565562}
+  - component: {fileID: 7741900305207183450}
+  - component: {fileID: 2727264550505396054}
+  - component: {fileID: 4090338657157569667}
   m_Layer: 7
   m_Name: Player_Skeleton
   m_TagString: Player
@@ -1366,8 +1368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3031383d75882f47a1f31f66ed64fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowPercentOnAttack: 20
-  slowTimeOnAttack: 1
 --- !u!114 &2169939233528477970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1380,6 +1380,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3959130391364565562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333357997323496402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodgePower: 16
+  dodgeRecupTime: 3
+  dodgeMaxStatck: 2
+  _dodgeStack: 2
+  dodgeSlideTime: 0.4
+  dodgeComboTime: 0.4
+  dodgeAngle: 40
 --- !u!114 &7741900305207183450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1399,9 +1418,9 @@ MonoBehaviour:
   attackRate: 0.6
   myWeapon: {fileID: 1507084875693659171}
   weaponBeforeDelay: 0.1
-  weaponActiveTime: 0.5
+  weaponActiveTime: 0.3
   maxHitCount: 1
---- !u!114 &3959130391364565562
+--- !u!114 &2727264550505396054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1410,16 +1429,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 5333357997323496402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
+  m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgePower: 12
-  dodgeRecupTime: 2
-  dodgeMaxStatck: 2
-  _dodgeStack: 2
-  dodgeSlideTime: 0.3
-  dodgeComboTime: 0.4
-  dodgeAngle: 40
+  <attackName>k__BackingField: 1
+  attackDamage: 1
+  <attackRange>k__BackingField: 3
+  targetTag: 
+  attackRate: 0.5
+  myWeapon: {fileID: 1507084875693659171}
+  weaponBeforeDelay: 0.2
+  weaponActiveTime: 0.35
+  maxHitCount: 1
+--- !u!114 &4090338657157569667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333357997323496402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 2
+  attackDamage: 1
+  <attackRange>k__BackingField: 3
+  targetTag: 
+  attackRate: 0.5
+  myWeapon: {fileID: 1507084875693659171}
+  weaponBeforeDelay: 0.2
+  weaponActiveTime: 0.8
+  maxHitCount: 1
 --- !u!1 &5359304219147062780
 GameObject:
   m_ObjectHideFlags: 0

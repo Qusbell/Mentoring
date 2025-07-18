@@ -348,7 +348,7 @@ public class CubeCollapser : MonoBehaviour
         // 거리 기반 비활성화 체크
         if (fallenDistance >= DEACTIVATE_DISTANCE)
         {
-            Debug.Log($"{this.gameObject.name} : 붕괴 후 비활성화");
+            // Debug.Log($"{this.gameObject.name} : 붕괴 후 비활성화");
             DeactivateCube();
         }
     }
