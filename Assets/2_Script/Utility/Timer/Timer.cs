@@ -85,6 +85,7 @@ public class Timer : SingletonT<Timer>
         {
             if (component == null)
             {
+                Debug.Log($"{key} : 타이머 일시 중지");
                 continuousTimers.Remove(key);
                 yield break;
             }

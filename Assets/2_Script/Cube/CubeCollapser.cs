@@ -131,6 +131,7 @@ public class CubeCollapser : MonoBehaviour
 
     void ChangeToShaking()
     {
+        // Debug.Log($"{this.gameObject.name} : 흔들림으로 전환");
         currentState = CubeState.Shaking;
         shakeTimer = 0f;
         currentShakeIntensity = INITIAL_SHAKE_INTENSITY;
@@ -139,12 +140,15 @@ public class CubeCollapser : MonoBehaviour
     void ChangeToFalling()
     {
         if (currentState != CubeState.Collapsed)
-        { currentState = CubeState.Collapsed; }
+        {
+            // Debug.Log($"{this.gameObject.name} : 붕괴로 전환");
+            currentState = CubeState.Collapsed;
+        }
     }
 
     private void StartCollapse()
     {
-        Timer.Instance.StartTimer(this, "_Collase", warningDelay, ChangeToShaking);
+        Timer.Instance.StartTimer(this, "_Shaking", warningDelay, ChangeToShaking);
         Timer.Instance.StartTimer(this, "_Falling", warningDelay + SHAKE_DURATION + DEACTIVATE_TIME, ChangeToFalling);
     }
 
@@ -393,16 +397,16 @@ public class CubeCollapser : MonoBehaviour
     public void TriggerCollapse()
     {
         // AreaTrigger 모드는 상태 체크 없이 강제 진행
-        if (triggerType == TriggerType.AreaTrigger)
-        {
+        //  if (triggerType == TriggerType.AreaTrigger)
+        //  {
             // if (showDebugLog)
             //     Debug.Log($"[{gameObject.name}] 에리어 트리거에 의한 강제 붕괴!");
 
             // 상태 초기화 후 붕괴 시작
             currentState = CubeState.Idle;
             StartCollapse();
-            return;
-        }
+            //  return;
+        //  }
 
         // 다른 트리거 모드는 기존 로직 유지
         // if (currentState != CubeState.Idle)

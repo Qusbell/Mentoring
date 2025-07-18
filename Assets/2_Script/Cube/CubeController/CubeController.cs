@@ -233,8 +233,8 @@ public class CubeController : MonoBehaviour
             data.hasActivated = true;
             activatedCubeCount++;
 
-            Debug.Log($"[{gameObject.name}] 큐브 [{data.targetCube.name}]가 활성화되었습니다." +
-                $" ({activatedCubeCount}/{activationSettings.Count})");
+            // Debug.Log($"[{gameObject.name}] 큐브 [{data.targetCube.name}]가 활성화되었습니다." +
+            //     $" ({activatedCubeCount}/{activationSettings.Count})");
         }
     }
 
