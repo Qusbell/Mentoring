@@ -1393,11 +1393,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgePower: 16
+  dodgePower: 14
   dodgeRecupTime: 3
   dodgeMaxStatck: 2
   _dodgeStack: 2
-  dodgeSlideTime: 0.4
+  dodgeSlideTime: 0.3
   dodgeComboTime: 0.4
   dodgeAngle: 40
 --- !u!114 &7741900305207183450
@@ -1416,7 +1416,7 @@ MonoBehaviour:
   attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
-  attackRate: 0.6
+  attackRate: 0.7
   myWeapon: {fileID: 1507084875693659171}
   weaponBeforeDelay: 0.1
   weaponActiveTime: 0.3
@@ -1440,7 +1440,7 @@ MonoBehaviour:
   attackRate: 0.5
   myWeapon: {fileID: 1507084875693659171}
   weaponBeforeDelay: 0.2
-  weaponActiveTime: 0.35
+  weaponActiveTime: 0.5
   maxHitCount: 1
 --- !u!114 &4090338657157569667
 MonoBehaviour:
@@ -1455,7 +1455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <attackName>k__BackingField: 2
-  attackDamage: 1
+  attackDamage: 2
   <attackRange>k__BackingField: 3
   targetTag: 
   attackRate: 0.5
