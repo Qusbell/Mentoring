@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum AttackWeaponType
+{
+    BasicAttack,
+    DropAttack
+}
+
 
 
 // 무기 오브젝트에 장착 (자동 포함)
@@ -14,6 +20,8 @@ public class BasicActorWeapon : MonoBehaviour
     // 공격의 판정 횟수 체크
     // 공격 대상(key) / 히트 횟수(value)
     private Dictionary<GameObject, int> hitTargets = null;
+
+    protected AttackWeaponType attackWeaponType;
 
 
     private void Awake()
@@ -27,7 +35,6 @@ public class BasicActorWeapon : MonoBehaviour
         else
         { Debug.Log("ActorWeapon에 콜라이더 미존재 : " + this.gameObject.name); }
     }
-
 
 
     // ===== 무기 콜라이더 활성화 / 비활성화 =====
@@ -57,22 +64,17 @@ public class BasicActorWeapon : MonoBehaviour
         }
     }
 
-    public void UseWeapon()
+    public virtual void UseWeapon(int p_attackDamage, int p_maxHitCount, AttackWeaponType type)
     {
         activateStack++;
         isActivate = true;
-    }
-
-    public void UseWeapon(int p_attackDamage, int p_maxHitCount = 1)
-    {
-        activateStack++;
-        isActivate = true;
+        attackWeaponType = type;
 
         attackDamage = p_attackDamage;
         maxHitCount = p_maxHitCount;
     }
 
-    public void NotUseWeapon()
+    public virtual void NotUseWeapon()
     {
         activateStack--;
         if(activateStack == 0)
@@ -80,26 +82,20 @@ public class BasicActorWeapon : MonoBehaviour
     }
     
 
-
     // ===== 무기 설정 (기존 버전) =====
 
     // attackAction으로부터 가져올 정보
-    private string targetTag = "";
-    private int attackDamage = 0;
-    private int maxHitCount = 1; // 최대 히트 횟수
+    protected string targetTag = "";
+    protected int attackDamage = 0;
+    protected int maxHitCount = 1; // 최대 히트 횟수
 
-    public void SetWeapon(string p_targetTag, int p_attackDamage, int p_maxHitCount = 1)
-    {
-        targetTag = p_targetTag;
-        attackDamage = p_attackDamage;
-        maxHitCount = p_maxHitCount;
-    }
-
+    public virtual void SetWeapon(string p_targetTag)
+    { targetTag = p_targetTag; }
 
 
     // ===== 콜라이더 기반 실제 데미지 판정 =====
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         // 대상 태그가 일치하면
         if (other.CompareTag(targetTag))
@@ -126,7 +122,8 @@ public class BasicActorWeapon : MonoBehaviour
     }
 
 
-    // 디버그 기즈모
+
+    // ===== 디버그 기즈모 =====
     void OnDrawGizmos()
     {
         if (weaponCollider == null)

@@ -33,8 +33,6 @@ public class JumpAction : ActorAction
             enabled = false; // 생성 취소
         }
 
-        // ----- 레이어 백업 (점프 공격 시 레이어 문제) -----
-        originalLayer = this.gameObject.layer;
 
         // ----- 마찰 -----
         myCollider = GetComponent<Collider>();
@@ -63,8 +61,6 @@ public class JumpAction : ActorAction
     // 점프 높이
     [SerializeField] float jumpHeight = 13;
 
-    int originalLayer;
-
     // 점프
     // 위치 += 위쪽 방향 * 점프높이
     // 힘을 가함 (물리효과)
@@ -92,9 +88,6 @@ public class JumpAction : ActorAction
         protected set { _isJump = value; }
     }
     
-    // 디버그용
-    int count = 0;
-
     // FootCollider으로 전달되는 용도
     protected void Grounded()
     {
@@ -102,7 +95,6 @@ public class JumpAction : ActorAction
         {
             isJump = false;
             myCollider.material = originalMaterial;
-            Debug.Log($"착지 : {count++}회");
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BasicWeaponAttack : AttackAction
 {
@@ -26,9 +27,9 @@ public class BasicWeaponAttack : AttackAction
         base.Awake();
 
         weapon = myWeapon.GetComponent<BasicActorWeapon>();
-        if (weapon == null)
-        { weapon = myWeapon.AddComponent<BasicActorWeapon>(); }
-        weapon.SetWeapon(targetTag, attackDamage, maxHitCount);
+        if (weapon == null) { weapon = myWeapon.AddComponent<BasicActorWeapon>(); }
+        weapon.SetWeapon(targetTag);
+
 
         // <- 여기서 애니메이션 길이를 체크하고
         // ActiveTime이 애니메이션 길이보다 더 길다면 맞춰주기?
@@ -39,7 +40,7 @@ public class BasicWeaponAttack : AttackAction
         Timer.Instance.StartTimer(
                 this, "_Use",
                 weaponBeforeDelay,
-                () => weapon.UseWeapon(attackDamage, maxHitCount));
+                () => weapon.UseWeapon(attackDamage, maxHitCount, AttackWeaponType.BasicAttack));
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
