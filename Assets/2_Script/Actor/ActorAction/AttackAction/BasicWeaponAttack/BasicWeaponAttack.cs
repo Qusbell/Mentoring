@@ -17,17 +17,17 @@ public class BasicWeaponAttack : AttackAction
     // 최대 히트 가능 횟수
     [SerializeField] private int maxHitCount = 1;
 
-    // ActorWeapon 캐시
-    private ActorWeapon weapon = null;
+    // BasicActorWeapon 캐시
+    private BasicActorWeapon weapon = null;
 
 
     protected override void Awake()
     {
         base.Awake();
 
-        weapon = myWeapon.GetComponent<ActorWeapon>();
+        weapon = myWeapon.GetComponent<BasicActorWeapon>();
         if (weapon == null)
-        { weapon = myWeapon.AddComponent<ActorWeapon>(); }
+        { weapon = myWeapon.AddComponent<BasicActorWeapon>(); }
         weapon.SetWeapon(targetTag, attackDamage, maxHitCount);
 
         // <- 여기서 애니메이션 길이를 체크하고

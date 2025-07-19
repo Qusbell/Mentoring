@@ -14,6 +14,13 @@ public class JumpAction : ActorAction
     // 오브젝트에 대한 물리효과
     protected Rigidbody rigid;
 
+    // 콜라이더
+    private Collider myCollider;
+    // 마찰계수 <- 나중에 Dodge와 통합
+    private PhysicMaterial originalMaterial;   // 원래 Material 저장
+    private PhysicMaterial zeroFrictionMaterial;
+
+
     // 생성 시 초기화
     protected virtual void Awake()
     {
@@ -26,14 +33,23 @@ public class JumpAction : ActorAction
             enabled = false; // 생성 취소
         }
 
-        // 바닥 레이 사이의 간격
-        // 너무 넓으면, 다른 큐브와 걸치는 경우 2중 점프 등 문제 발생
-        // 너무 좁으면, 끄트머리에 걸쳤을 때 점프 불가능한 문제 발생
-        raySpacing = (transform.localScale.x + transform.localScale.z) * 0.22f;
+        // ----- 레이어 백업 (점프 공격 시 레이어 문제) -----
+        originalLayer = this.gameObject.layer;
 
-        // 착지 확인
-        bottomRayDistance = transform.localScale.y * 1.05f;
+        // ----- 마찰 -----
+        myCollider = GetComponent<Collider>();
 
+        // 기존 마찰값 백업
+        originalMaterial = myCollider.material;
+
+        // 마찰 0인 Material 생성
+        zeroFrictionMaterial = new PhysicMaterial();
+        zeroFrictionMaterial.dynamicFriction = 0f;
+        zeroFrictionMaterial.staticFriction = 0f;
+        zeroFrictionMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
+
+
+        // ----- 바닥 콜라이더 설정 -----
         FootCollider foot = GetComponentInChildren<FootCollider>();
         if (foot == null) { Debug.Log(this.gameObject.name + " : 착지 판정용 콜라이더 부재"); }
         foot.ground = Grounded;
@@ -47,13 +63,7 @@ public class JumpAction : ActorAction
     // 점프 높이
     [SerializeField] float jumpHeight = 13;
 
-    // 착지했는가에 대한 거리 기준
-    protected float bottomRayDistance;
-
-    // 다중 레이캐스트 (착지 판정)
-    // 각 레이 사이의 간격
-    protected float raySpacing;
-
+    int originalLayer;
 
     // 점프
     // 위치 += 위쪽 방향 * 점프높이
@@ -64,6 +74,8 @@ public class JumpAction : ActorAction
         if (!isJump)
         {
             isJump = true;
+            // 마찰계수 없애기
+            myCollider.material = zeroFrictionMaterial;
 
             // 불필요한 물리 초기화
             //  rigid.velocity = Vector3.zero;
@@ -79,9 +91,18 @@ public class JumpAction : ActorAction
         get { return _isJump; }
         protected set { _isJump = value; }
     }
-
+    
+    // 디버그용
+    int count = 0;
 
     // FootCollider으로 전달되는 용도
     protected void Grounded()
-    { isJump = false; }
+    {
+        if (isJump) // 점프 상태일 때에만
+        {
+            isJump = false;
+            myCollider.material = originalMaterial;
+            Debug.Log($"착지 : {count++}회");
+        }
+    }
 }

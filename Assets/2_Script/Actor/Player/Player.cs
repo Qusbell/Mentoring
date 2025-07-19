@@ -59,8 +59,8 @@ public class Player : Actor
             attackAction.Attack();
 
             // Debug.Log("닷지");
-            dodgeAction.Dodge();
             animator.PlayAnimation("DoDodge");  // 트리거 애니메이션
+            dodgeAction.Dodge();
         }
 
 
