@@ -78,8 +78,7 @@ public class BoarTrigger : MonoBehaviour
     private bool IsConnectedBoarCube(BoarCube boarCube)
     {
         return boarCube != null &&
-               boarCube.triggerArea == this.gameObject &&
-               boarCube.triggerType == BoarCube.TriggerType.AreaTrigger;
+               boarCube.triggerArea == this.gameObject;
     }
 
     #endregion

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// 멧돼지 넉백 시스템 관리
-/// 돌진 중 경로상의 대상들에게 넉백 효과 적용
+/// 현재 위치에서 startPositionOffset 방향으로 돌진하며 경로상의 대상들에게 넉백 효과 적용
 /// </summary>
 public class BoarKnockback : MonoBehaviour
 {
@@ -38,7 +38,7 @@ public class BoarKnockback : MonoBehaviour
     {
         knockbackedObjects.Clear();
 
-        if (main.showDebugLog)
+        if (main != null && main.showDebugLog)
             Debug.Log($"[{gameObject.name}] BoarKnockback 리셋 완료");
     }
 
@@ -51,9 +51,6 @@ public class BoarKnockback : MonoBehaviour
     /// </summary>
     public void CheckKnockback()
     {
-        if (!main.enableKnockback)
-            return;
-
         PerformKnockbackDetection();
     }
 
@@ -107,31 +104,16 @@ public class BoarKnockback : MonoBehaviour
                 ExecuteKnockback(hitObject, direction);
                 knockbackedObjects.Add(hitObject);
                 knockbackCount++;
-
-                if (main.showDebugLog)
-                    Debug.Log($"[{gameObject.name}] {hitObject.name} 넉백 적용!");
             }
-        }
-
-        // 이번 프레임에 넉백한 대상 수 로그
-        if (knockbackCount > 0 && main.showDebugLog)
-        {
-            Debug.Log($"[{gameObject.name}] 이번 프레임 넉백 대상: {knockbackCount}개");
         }
     }
 
     /// <summary>
-    /// 넉백 대상 유효성 검사
+    /// 넉백 대상 유효성 검사 (Player와 Monster만)
     /// </summary>
     private bool IsValidKnockbackTarget(GameObject target)
     {
-        // 설정된 태그들 중 하나와 일치하는지 확인
-        foreach (string tag in main.knockbackTags)
-        {
-            if (target.CompareTag(tag))
-                return true;
-        }
-        return false;
+        return target.CompareTag("Player") || target.CompareTag("Monster");
     }
 
     #endregion
@@ -247,12 +229,12 @@ public class BoarKnockback : MonoBehaviour
     #region ===== 유틸리티 메서드 =====
 
     /// <summary>
-    /// 현재 이동 방향 계산
+    /// 현재 이동 방향 계산 (현재 위치에서 startPositionOffset 방향으로)
     /// </summary>
     private Vector3 GetMovementDirection()
     {
-        Vector3 endPos = transform.position;
-        Vector3 startPos = transform.position + main.startPositionOffset;
+        Vector3 startPos = transform.position;                      // 현재 위치
+        Vector3 endPos = transform.position + main.startPositionOffset;  // 목표 위치
         return (endPos - startPos).normalized;
     }
 
@@ -306,7 +288,7 @@ public class BoarKnockback : MonoBehaviour
     /// </summary>
     private void OnDrawGizmos()
     {
-        if (main == null || !main.enableKnockback) return;
+        if (main == null) return;
 
         Vector3 direction = GetMovementDirection();
         float actualWidth = GetActualAttackWidth();
@@ -346,8 +328,8 @@ public class BoarKnockback : MonoBehaviour
         UnityEditor.Handles.Label(
             transform.position + Vector3.up * 3f,
             $"넉백 대상 수: {knockbackedObjects.Count}\n" +
-            $"넉백 활성화: {main.enableKnockback}\n" +
-            $"넉백 힘: {main.knockbackForce}"
+            $"넉백 힘: {main.knockbackForce}\n" +
+            $"돌진 방향: {GetMovementDirection()}"
         );
     }
 #endif

@@ -3,7 +3,7 @@ using System.Collections;
 
 /// <summary>
 /// 멧돼지 이동 관리
-/// CubeMover 스타일의 이동 시스템 - 시작 위치에서 목표 위치까지 직선 이동
+/// 현재 위치에서 startPositionOffset 방향으로 직선 돌진
 /// </summary>
 public class BoarMovement : MonoBehaviour
 {
@@ -13,8 +13,8 @@ public class BoarMovement : MonoBehaviour
     private BoarCube main;
 
     // 위치 관리
-    private Vector3 startPosition;    // 계산된 시작 위치
-    private Vector3 endPosition;      // 목표 위치 (원래 큐브 위치)
+    private Vector3 startPosition;    // 돌진 시작 위치 (현재 큐브 위치)
+    private Vector3 endPosition;      // 돌진 목표 위치 (현재 위치 + 오프셋)
 
     // 상태 관리
     private bool isLaunching = false; // 현재 돌진 중인지 여부
@@ -32,9 +32,6 @@ public class BoarMovement : MonoBehaviour
 
         // 초기 위치 설정
         UpdatePositions(main.startPositionOffset);
-
-        // 시작 위치로 이동
-        transform.position = startPosition;
     }
 
     /// <summary>
@@ -44,11 +41,11 @@ public class BoarMovement : MonoBehaviour
     {
         Vector3 currentPosition = transform.position;
 
-        // 목표 위치는 현재 위치
-        endPosition = currentPosition;
+        // 시작 위치는 현재 큐브 위치
+        startPosition = currentPosition;
 
-        // 시작 위치는 현재 위치 + 오프셋
-        startPosition = currentPosition + offset;
+        // 목표 위치는 현재 위치 + 오프셋
+        endPosition = currentPosition + offset;
     }
 
     #endregion
@@ -77,7 +74,7 @@ public class BoarMovement : MonoBehaviour
     {
         isLaunching = false;
 
-        // 시작 위치로 복귀
+        // 시작 위치로 복귀 (원래 위치)
         transform.position = startPosition;
     }
 
@@ -92,14 +89,19 @@ public class BoarMovement : MonoBehaviour
     {
         isLaunching = true;
 
-        Vector3 launchStartPos = transform.position;
-        float totalDistance = Vector3.Distance(launchStartPos, endPosition);
+        // 돌진 시작 전 위치 업데이트
+        UpdatePositions(main.startPositionOffset);
+
+        Vector3 launchStartPos = startPosition;  // 현재 큐브 위치
+        Vector3 launchEndPos = endPosition;      // 현재 위치 + 오프셋
+
+        float totalDistance = Vector3.Distance(launchStartPos, launchEndPos);
         float journeyProgress = 0f;
 
         if (main.showDebugLog)
         {
             Debug.Log($"[{gameObject.name}] 멧돼지 돌진 시작!");
-            Debug.Log($"[{gameObject.name}] 경로: {launchStartPos} → {endPosition} (거리: {totalDistance:F2})");
+            Debug.Log($"[{gameObject.name}] 경로: {launchStartPos} → {launchEndPos} (거리: {totalDistance:F2})");
         }
 
         // 거리 기반 이동 (속도 일정)
@@ -113,19 +115,16 @@ public class BoarMovement : MonoBehaviour
             float progress = Mathf.Clamp01(journeyProgress / totalDistance);
 
             // 위치 보간
-            transform.position = Vector3.Lerp(launchStartPos, endPosition, progress);
+            transform.position = Vector3.Lerp(launchStartPos, launchEndPos, progress);
 
-            // 넉백 시스템 체크 (활성화되어 있다면)
-            if (main.enableKnockback)
-            {
-                CheckAndPerformKnockback();
-            }
+            // 넉백 시스템 체크 (항상 활성화)
+            CheckAndPerformKnockback();
 
             yield return null;
         }
 
         // 정확한 목표 위치로 설정
-        transform.position = endPosition;
+        transform.position = launchEndPos;
         isLaunching = false;
 
         if (main.showDebugLog)

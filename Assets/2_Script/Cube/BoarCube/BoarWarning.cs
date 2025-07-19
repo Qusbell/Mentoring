@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// 멧돼지 경고 표시 관리
-/// 돌진 경로에 시각적 경고 효과를 표시하는 시스템
+/// 현재 위치에서 startPositionOffset 방향으로의 돌진 경로에 경고 효과 표시
 /// </summary>
 public class BoarWarning : MonoBehaviour
 {
@@ -12,6 +12,13 @@ public class BoarWarning : MonoBehaviour
     [Header("경고 시간 설정")]
     [Tooltip("경고 표시 지속 시간 (초)")]
     public float warningDuration = 1f;
+
+    [Header("경고 표시 설정")]
+    [Tooltip("경고 평면을 바닥에서 얼마나 띄울지 (미터)")]
+    public float warningHeightOffset = 0.1f;
+
+    [Tooltip("지면 높이 (Y 좌표) - 레이캐스트 대신 사용")]
+    public float groundLevel = 0f;
 
     #endregion
 
@@ -164,12 +171,15 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     private void CreateWarningPlanesAlongPath(Vector3 direction, float pathLength, float actualWidth)
     {
-        // 세그먼트 수 계산 (폭을 기준으로)
-        int segmentCount = Mathf.CeilToInt(pathLength / actualWidth);
+        // 경고 평면 간격 설정 (더 촘촘하게)
+        float segmentSpacing = Mathf.Min(actualWidth * 0.5f, 2f); // 폭의 절반 또는 최대 2미터
+        
+        // 세그먼트 수 계산 (더 촘촘한 간격으로)
+        int segmentCount = Mathf.CeilToInt(pathLength / segmentSpacing);
         segmentCount = Mathf.Max(1, segmentCount);
 
-        Vector3 startPos = GetStartPosition();
-        Vector3 endPos = GetEndPosition();
+        Vector3 startPos = GetStartPosition();  // 현재 큐브 위치
+        Vector3 endPos = GetEndPosition();      // 현재 위치 + 오프셋
 
         // 각 세그먼트마다 경고 평면 생성
         for (int i = 0; i < segmentCount; i++)
@@ -182,37 +192,35 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 지정된 위치에 경고 평면 생성
+    /// 지정된 위치에 경고 평면 생성 (멧돼지 밑바닥 높이 사용)
     /// </summary>
     private void CreateWarningPlaneAt(Vector3 position, float width)
     {
-        // 지면 탐지를 위한 레이어마스크
-        LayerMask groundLayerMask = (1 << 0) | (1 << 8); // Default + Cube 레이어
+        GameObject warningPlane = GetWarningPlaneFromPool();
 
-        // 위에서 아래로 레이캐스트하여 지면 찾기
-        if (Physics.Raycast(position + Vector3.up * 10f, Vector3.down, out RaycastHit hit, 20f, groundLayerMask))
+        // 멧돼지 큐브의 밑바닥 높이 계산
+        float boarBottomY = transform.position.y - 1.5f; // 멧돼지 중앙에서 Y -1.5
+        Vector3 warningPos = new Vector3(position.x, boarBottomY + warningHeightOffset, position.z);
+        warningPlane.transform.position = warningPos;
+
+        // 회전 설정 (지면과 평행)
+        warningPlane.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+        // 크기 설정
+        warningPlane.transform.localScale = new Vector3(width, width, 1f);
+
+        // 간단한 빨간 머티리얼 적용
+        Renderer renderer = warningPlane.GetComponent<Renderer>();
+        if (renderer != null)
         {
-            GameObject warningPlane = GetWarningPlaneFromPool();
-
-            // 위치 설정 (지면 바로 위)
-            warningPlane.transform.position = hit.point + Vector3.up * 0.01f;
-
-            // 회전 설정 (지면과 평행)
-            warningPlane.transform.rotation = Quaternion.Euler(90, 0, 0);
-
-            // 크기 설정
-            warningPlane.transform.localScale = new Vector3(width, width, 1f);
-
-            // 색상 적용
             UpdateWarningPlaneColor(warningPlane);
+        }
 
-            // 활성 리스트에 추가
-            activeWarningPlanes.Add(warningPlane);
-        }
-        else if (main.showDebugLog)
-        {
-            Debug.LogWarning($"[{gameObject.name}] 위치 {position}에서 지면을 찾을 수 없습니다");
-        }
+        // 활성 리스트에 추가
+        activeWarningPlanes.Add(warningPlane);
+
+        if (main.showDebugLog)
+            Debug.Log($"[{gameObject.name}] 경고 평면 생성 완료! 위치: {warningPos}");
     }
 
     /// <summary>
@@ -302,19 +310,19 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 시작 위치 계산
+    /// 시작 위치 계산 (현재 큐브 위치)
     /// </summary>
     private Vector3 GetStartPosition()
     {
-        return transform.position + main.startPositionOffset;
+        return transform.position;  // 현재 큐브 위치
     }
 
     /// <summary>
-    /// 목표 위치 계산
+    /// 목표 위치 계산 (현재 위치 + 오프셋)
     /// </summary>
     private Vector3 GetEndPosition()
     {
-        return transform.position;
+        return transform.position + main.startPositionOffset;  // 목표 지점
     }
 
     /// <summary>
@@ -362,14 +370,14 @@ public class BoarWarning : MonoBehaviour
     #region ===== 생명주기 관리 =====
 
     /// <summary>
-    /// 오브젝트 파괴 시 정리
+    /// 컴포넌트 비활성화 시 정리 (OnDestroy 대신 OnDisable 사용)
     /// </summary>
-    void OnDestroy()
+    void OnDisable()
     {
         ClearWarning();
 
         if (main != null && main.showDebugLog)
-            Debug.Log($"[{gameObject.name}] BoarWarning 파괴 시 정리 완료");
+            Debug.Log($"[{gameObject.name}] BoarWarning 비활성화 시 정리 완료");
     }
 
     #endregion
@@ -384,8 +392,8 @@ public class BoarWarning : MonoBehaviour
     {
         if (main == null) return;
 
-        Vector3 startPos = GetStartPosition();
-        Vector3 endPos = GetEndPosition();
+        Vector3 startPos = GetStartPosition();  // 현재 큐브 위치
+        Vector3 endPos = GetEndPosition();      // 현재 위치 + 오프셋
         float width = GetActualAttackWidth();
 
         // 경로 선 그리기

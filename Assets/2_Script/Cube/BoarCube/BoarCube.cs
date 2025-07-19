@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 멧돼지 큐브 - 메인 컴포넌트
-/// 에리어 트리거 또는 보스 호출로 활성화되는 돌진 공격 시스템
+/// 멧돼지 큐브 - 메인 컴포넌트 (간소화 버전)
+/// 현재 위치에서 startPositionOffset 방향으로 돌진
 /// </summary>
 [RequireComponent(typeof(BoarMovement))]
 [RequireComponent(typeof(BoarWarning))]
@@ -13,23 +13,10 @@ public class BoarCube : MonoBehaviour
     #region ===== 트리거 설정 =====
 
     [Header("트리거 설정")]
-    [Tooltip("멧돼지 트리거 유형")]
-    public TriggerType triggerType = TriggerType.AreaTrigger;
-
-    /// <summary>
-    /// 멧돼지 큐브 트리거 타입
-    /// </summary>
-    public enum TriggerType
-    {
-        AreaTrigger,     // 에리어 트리거 (플레이어가 지정된 영역에 들어오면 발사)
-        BossCall         // 보스 호출 (보스가 직접 호출하여 발사)
-    }
-
     [Tooltip("발사 전 대기 시간 (초) - 워닝딜레이")]
     public float warningDelay = 1f;
 
-    [Header("에리어 트리거 설정")]
-    [Tooltip("트리거 영역 오브젝트 (빈 오브젝트 + 콜라이더) - AreaTrigger 모드용")]
+    [Tooltip("트리거 영역 오브젝트 (빈 오브젝트 + 콜라이더)")]
     public GameObject triggerArea;
 
     [Tooltip("한 번만 트리거되는지 여부")]
@@ -40,7 +27,7 @@ public class BoarCube : MonoBehaviour
     #region ===== 이동 및 공격 설정 =====
 
     [Header("이동 설정")]
-    [Tooltip("시작 위치 오프셋 (현재 위치 기준)")]
+    [Tooltip("돌진 방향 오프셋 (현재 위치에서 이 방향으로 돌진)")]
     public Vector3 startPositionOffset = new Vector3(10, 0, 0);
 
     [Tooltip("돌진 속도")]
@@ -62,9 +49,6 @@ public class BoarCube : MonoBehaviour
     #region ===== 넉백 시스템 =====
 
     [Header("넉백 시스템")]
-    [Tooltip("넉백 시스템 활성화")]
-    public bool enableKnockback = true;
-
     [Tooltip("넉백 힘")]
     public float knockbackForce = 12f;
 
@@ -74,9 +58,6 @@ public class BoarCube : MonoBehaviour
     [Tooltip("넉백 판정 반지름")]
     public float knockbackRadius = 0.3f;
 
-    [Tooltip("넉백 대상 태그들")]
-    public string[] knockbackTags = { "Player", "Monster" };
-
     #endregion
 
     #region ===== 디버그 설정 =====
@@ -84,6 +65,13 @@ public class BoarCube : MonoBehaviour
     [Header("디버그")]
     [Tooltip("디버그 로그 출력")]
     public bool showDebugLog = true;
+
+    [Header("에디터 시각화")]
+    [Tooltip("씬에서 이동 경로 표시")]
+    public bool showPathInScene = true;
+
+    [Tooltip("경로 표시 색상")]
+    public Color pathColor = Color.cyan;
 
     #endregion
 
@@ -98,6 +86,9 @@ public class BoarCube : MonoBehaviour
     private bool hasTriggered = false;  // 트리거 발동 여부
     private bool isLaunched = false;    // 발사 진행 여부
 
+    // 자식 큐브들 (그룹 발사용)
+    private BoarCube[] childBoarCubes;
+
     // 외부 참조
     private Transform playerTransform;
 
@@ -108,7 +99,7 @@ public class BoarCube : MonoBehaviour
     void Awake()
     {
         InitializeComponents();
-        SetupTriggerType();
+        DetermineChildCubes();
 
         // 시작 시 모든 모드에서 비활성화
         gameObject.SetActive(false);
@@ -131,53 +122,21 @@ public class BoarCube : MonoBehaviour
     }
 
     /// <summary>
-    /// 트리거 타입에 따른 설정
+    /// 자식 큐브들 찾기
     /// </summary>
-    private void SetupTriggerType()
+    private void DetermineChildCubes()
     {
-        switch (triggerType)
+        // 자식에 BoarCube가 있는지 확인
+        childBoarCubes = GetComponentsInChildren<BoarCube>(true);
+
+        // 자기 자신 제외
+        var filteredChildren = new System.Collections.Generic.List<BoarCube>();
+        foreach (var child in childBoarCubes)
         {
-            case TriggerType.AreaTrigger:
-                SetupAreaTrigger();
-                break;
-            case TriggerType.BossCall:
-                // BossCall은 별도 설정 불필요
-                break;
+            if (child != this)
+                filteredChildren.Add(child);
         }
-    }
-
-    #endregion
-
-    #region ===== 트리거 설정 메서드 =====
-
-    /// <summary>
-    /// 에리어 트리거 설정
-    /// </summary>
-    private void SetupAreaTrigger()
-    {
-        if (triggerArea == null)
-        {
-            Debug.LogWarning($"[{gameObject.name}] AreaTrigger 모드이지만 triggerArea가 설정되지 않았습니다!");
-            return;
-        }
-
-        // 트리거 영역의 콜라이더 확인
-        Collider triggerCol = triggerArea.GetComponent<Collider>();
-        if (triggerCol == null)
-        {
-            Debug.LogError($"[{gameObject.name}] 트리거 영역에 콜라이더가 없습니다!");
-            return;
-        }
-
-        // 트리거로 설정
-        triggerCol.isTrigger = true;
-
-        // BoarTrigger 컴포넌트 확인
-        BoarTrigger triggerComponent = triggerArea.GetComponent<BoarTrigger>();
-        if (triggerComponent == null && showDebugLog)
-        {
-            Debug.LogWarning($"[{gameObject.name}] 트리거 영역에 BoarTrigger 컴포넌트가 필요합니다!");
-        }
+        childBoarCubes = filteredChildren.ToArray();
     }
 
     #endregion
@@ -185,42 +144,13 @@ public class BoarCube : MonoBehaviour
     #region ===== 공개 메서드 - 외부 호출용 =====
 
     /// <summary>
-    /// 보스가 멧돼지 큐브를 호출할 때 사용하는 메서드
-    /// 비활성화된 큐브를 활성화하고 발사
-    /// </summary>
-    public void BossCallLaunch()
-    {
-        // 모드 확인
-        if (triggerType != TriggerType.BossCall)
-        {
-            if (showDebugLog)
-                Debug.LogWarning($"[{gameObject.name}] BossCall 모드가 아닙니다. 현재 모드: {triggerType}");
-            return;
-        }
-
-        // 큐브 활성화 (필요시)
-        if (!gameObject.activeInHierarchy)
-        {
-            gameObject.SetActive(true);
-        }
-
-        StartLaunch();
-    }
-
-    /// <summary>
-    /// 에리어 트리거에서 호출하는 메서드 (BoarTrigger에서 사용)
+    /// 에리어 트리거에서 호출하는 메서드
     /// </summary>
     public void TriggerLaunch()
     {
-        // 모드 확인
-        if (triggerType != TriggerType.AreaTrigger)
-        {
-            if (showDebugLog)
-                Debug.LogWarning($"[{gameObject.name}] AreaTrigger 모드가 아닙니다. 현재 모드: {triggerType}");
-            return;
-        }
+        if (showDebugLog)
+            Debug.Log($"[{gameObject.name}] 멧돼지 발사 시작!");
 
-        // 상태 초기화 후 발사 시작
         hasTriggered = false;
         StartLaunch();
     }
@@ -230,15 +160,18 @@ public class BoarCube : MonoBehaviour
     /// </summary>
     public void LaunchImmediately()
     {
-        if (isLaunched)
-        {
-            if (showDebugLog)
-                Debug.LogWarning($"[{gameObject.name}] 이미 발사된 상태입니다.");
-            return;
-        }
+        if (isLaunched) return;
 
         isLaunched = true;
-        StartCoroutine(ImmediateLaunchSequence());
+
+        if (HasChildCubes())
+        {
+            StartCoroutine(ImmediateGroupLaunchSequence());
+        }
+        else
+        {
+            StartCoroutine(ImmediateLaunchSequence());
+        }
     }
 
     /// <summary>
@@ -255,18 +188,25 @@ public class BoarCube : MonoBehaviour
     /// </summary>
     public void ResetBoarCube()
     {
-        // 모든 코루틴 및 타이머 정지
         StopAllCoroutines();
         Timer.Instance.StopTimer(this, "Launch");
 
-        // 각 컴포넌트 리셋
         warning.ClearWarning();
         knockback.Reset();
         movement.Reset();
 
-        // 상태 초기화
         hasTriggered = false;
         isLaunched = false;
+
+        // 자식 큐브들도 리셋
+        if (HasChildCubes())
+        {
+            foreach (var child in childBoarCubes)
+            {
+                if (child != null)
+                    child.ResetBoarCube();
+            }
+        }
     }
 
     #endregion
@@ -278,17 +218,9 @@ public class BoarCube : MonoBehaviour
     /// </summary>
     private void StartLaunch()
     {
-        // 중복 실행 방지
-        if (hasTriggered && oneTimeUse)
-        {
-            if (showDebugLog)
-                Debug.LogWarning($"[{gameObject.name}] 이미 발사된 상태입니다. (oneTimeUse 설정됨)");
-            return;
-        }
+        if (hasTriggered && oneTimeUse) return;
 
         hasTriggered = true;
-
-        // 워닝딜레이 후 실제 발사
         Timer.Instance.StartTimer(this, "Launch", warningDelay, LaunchBoarCube);
     }
 
@@ -297,23 +229,26 @@ public class BoarCube : MonoBehaviour
     /// </summary>
     private void LaunchBoarCube()
     {
-        if (isLaunched)
-        {
-            if (showDebugLog)
-                Debug.LogWarning($"[{gameObject.name}] 이미 발사 진행 중입니다.");
-            return;
-        }
+        if (isLaunched) return;
 
         isLaunched = true;
-        StartCoroutine(BoarCubeSequence());
+
+        if (HasChildCubes())
+        {
+            StartCoroutine(GroupBoarCubeSequence());
+        }
+        else
+        {
+            StartCoroutine(BoarCubeSequence());
+        }
     }
 
     #endregion
 
-    #region ===== 코루틴 - 발사 시퀀스 =====
+    #region ===== 코루틴 - 단일 발사 시퀀스 =====
 
     /// <summary>
-    /// 멧돼지 큐브 발사 시퀀스 (경고 → 돌진 → 비활성화)
+    /// 단일 멧돼지 큐브 발사 시퀀스 (간소화 버전)
     /// </summary>
     private System.Collections.IEnumerator BoarCubeSequence()
     {
@@ -327,7 +262,7 @@ public class BoarCube : MonoBehaviour
         // 3단계: 경고 제거
         warning.ClearWarning();
 
-        // 4단계: 돌진 실행
+        // 4단계: 돌진 실행 (현재 위치에서 startPositionOffset 방향으로)
         yield return StartCoroutine(movement.ExecuteLaunch());
 
         // 5단계: 완료 후 대기 및 비활성화
@@ -336,17 +271,177 @@ public class BoarCube : MonoBehaviour
     }
 
     /// <summary>
-    /// 즉시 발사 시퀀스 (경고 없이 바로 돌진)
+    /// 즉시 단일 발사 시퀀스
     /// </summary>
     private System.Collections.IEnumerator ImmediateLaunchSequence()
     {
-        // 즉시 돌진
         yield return StartCoroutine(movement.ExecuteLaunch());
-
-        // 완료 후 비활성화
         yield return new WaitForSeconds(deactivateDelay);
         gameObject.SetActive(false);
     }
+
+    #endregion
+
+    #region ===== 코루틴 - 그룹 발사 시퀀스 =====
+
+    /// <summary>
+    /// 그룹 멧돼지 큐브 발사 시퀀스
+    /// </summary>
+    private System.Collections.IEnumerator GroupBoarCubeSequence()
+    {
+        if (childBoarCubes == null || childBoarCubes.Length == 0)
+        {
+            yield break;
+        }
+
+        // 1단계: 모든 자식 큐브 경고 표시
+        ShowGroupWarning();
+
+        // 2단계: 경고 시간 대기
+        float warningDuration = warning.GetWarningDuration();
+        yield return new WaitForSeconds(warningDuration);
+
+        // 3단계: 경고 제거
+        ClearGroupWarning();
+
+        // 4단계: 자식 큐브들 동시 발사
+        yield return StartCoroutine(SimultaneousGroupLaunch());
+
+        // 5단계: 완료 후 대기 및 비활성화
+        yield return new WaitForSeconds(deactivateDelay);
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 즉시 그룹 발사 시퀀스
+    /// </summary>
+    private System.Collections.IEnumerator ImmediateGroupLaunchSequence()
+    {
+        yield return StartCoroutine(SimultaneousGroupLaunch());
+        yield return new WaitForSeconds(deactivateDelay);
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 동시 그룹 발사
+    /// </summary>
+    private System.Collections.IEnumerator SimultaneousGroupLaunch()
+    {
+        var launchCoroutines = new System.Collections.Generic.List<Coroutine>();
+
+        // 모든 자식 큐브 동시 발사
+        foreach (var child in childBoarCubes)
+        {
+            if (child != null)
+            {
+                var childMovement = child.GetComponent<BoarMovement>();
+                if (childMovement != null)
+                {
+                    launchCoroutines.Add(StartCoroutine(childMovement.ExecuteLaunch()));
+                }
+            }
+        }
+
+        // 모든 발사 완료 대기
+        foreach (var coroutine in launchCoroutines)
+        {
+            yield return coroutine;
+        }
+    }
+
+    #endregion
+
+    #region ===== 그룹 경고 관리 =====
+
+    /// <summary>
+    /// 그룹 경고 표시
+    /// </summary>
+    private void ShowGroupWarning()
+    {
+        foreach (var child in childBoarCubes)
+        {
+            if (child != null)
+            {
+                var childWarning = child.GetComponent<BoarWarning>();
+                if (childWarning != null)
+                {
+                    childWarning.ShowWarning();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 그룹 경고 제거
+    /// </summary>
+    private void ClearGroupWarning()
+    {
+        foreach (var child in childBoarCubes)
+        {
+            if (child != null)
+            {
+                var childWarning = child.GetComponent<BoarWarning>();
+                if (childWarning != null)
+                {
+                    childWarning.ClearWarning();
+                }
+            }
+        }
+    }
+
+    #endregion
+
+    #region ===== 유틸리티 메서드 =====
+
+    /// <summary>
+    /// 자식 큐브가 있는지 확인
+    /// </summary>
+    private bool HasChildCubes()
+    {
+        return childBoarCubes != null && childBoarCubes.Length > 0;
+    }
+
+    #endregion
+
+    #region ===== 에디터 시각화 =====
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 씬에서 이동 경로 간단 표시
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        if (!showPathInScene) return;
+
+        Vector3 currentPos = transform.position;
+        Vector3 startPos = currentPos;                              // 현재 위치
+        Vector3 endPos = currentPos + startPositionOffset;         // 현재 위치 + 오프셋
+
+        // 경로 선 그리기 (반투명 청록색)
+        Gizmos.color = new Color(pathColor.r, pathColor.g, pathColor.b, 0.5f);
+        Gizmos.DrawLine(startPos, endPos);
+
+        // 시작점 (작은 초록 구체) - 현재 위치
+        Gizmos.color = new Color(0f, 1f, 0f, 0.7f);
+        Gizmos.DrawSphere(startPos, 0.2f);
+
+        // 목표점 (작은 빨간 구체) - 돌진 목표
+        Gizmos.color = new Color(1f, 0f, 0f, 0.7f);
+        Gizmos.DrawSphere(endPos, 0.2f);
+
+        // 간단한 화살표
+        Vector3 direction = (endPos - startPos).normalized;
+        Vector3 arrowPos = Vector3.Lerp(startPos, endPos, 0.7f);
+
+        Gizmos.color = new Color(1f, 1f, 0f, 0.8f);
+        Vector3 right = Vector3.Cross(direction, Vector3.up).normalized * 0.3f;
+        Vector3 left = -right;
+        Vector3 back = -direction * 0.4f;
+
+        Gizmos.DrawLine(arrowPos, arrowPos + back + right);
+        Gizmos.DrawLine(arrowPos, arrowPos + back + left);
+    }
+#endif
 
     #endregion
 }
