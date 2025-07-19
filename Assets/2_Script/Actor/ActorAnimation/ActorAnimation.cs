@@ -11,8 +11,6 @@ public class ActorAnimation : MonoBehaviour
     // 애니메이터
     protected Animator animator;
 
-
-
     //  public RuntimeAnimatorController baseController; // 원본 Animator Controller
     //  public AnimationClip newAttackClip; // 교체할 애니메이션 클립
 

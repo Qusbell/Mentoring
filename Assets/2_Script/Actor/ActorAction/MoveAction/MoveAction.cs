@@ -28,30 +28,21 @@ public class MoveAction : ActorAction
     // 이동 메서드
     //==================================================
 
-    private Vector3 _moveVec;
     // 이동할 방향
     // zero면 move 상태 false
-    public virtual Vector3 moveVec
-    {
-        get { return _moveVec; }
-        set
-        {
-            isMove = (value != Vector3.zero); // <- 나중에 isMove에서 따로 판정시킬 것
-            _moveVec = value;
-        }
-    }
+    public virtual Vector3 moveVec { get; set; }
 
     // 현재 이동 속도
     [SerializeField] protected float moveSpeed = 5;
 
 
-
-    // 이동 상태 여부
+    // 이동 상태 여부 <- 이후 좀 더 깔@쌈하게 만들 걸 생각해보자
+    protected bool _isMove = false;
     public virtual bool isMove
     {
-        get;
-        set;
-    } = false;
+        get { return _isMove; }
+        set { _isMove = value; }
+    }
 
 
     // 이동 메서드

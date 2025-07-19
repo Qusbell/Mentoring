@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MoveAction
 {
-    // <- 레이어 마스크
+    // 레이어 마스크
     private LayerMask canMoveLayer;
 
 
@@ -49,7 +49,11 @@ public class PlayerMove : MoveAction
     public override void Move()
     {
         // dodge 중이라면
-        if (dodgeAction.isDodge) { isMove = false; return; }
+        if (dodgeAction.isDodge)
+        {
+            isMove = false;
+            return;
+        }
 
         // 이동 불가능하면 리턴
         isMove = CanMove();

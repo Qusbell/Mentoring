@@ -38,19 +38,18 @@ public class Player : Actor
         input.SetInput();
 
         // ----- 이동 -----
-        moveAction.moveVec = input.moveVec;
-        if (moveAction.isMove)
+        if (input.isMoveKeyDown && !dodgeAction.isDodge)
         {
+            moveAction.moveVec = input.moveVec;
+            moveAction.isMove = true;
             moveAction.Move();
             moveAction.Turn();
         }
-        animator.PlayAnimation("IsMove", moveAction.isMove);
-
+        else { moveAction.isMove = false; }
 
         // ----- 점프 -----
-        if (input.isJumpKeyDown) { jumpAction.Jump(); }
-        animator.PlayAnimation("IsJump", jumpAction.isJump);
-
+        if (input.isJumpKeyDown)
+        { jumpAction.Jump(); }
 
         // ----- 닷지 -----
         if (input.isDodgeKeyDown && dodgeAction.isCanDash)
@@ -61,19 +60,18 @@ public class Player : Actor
 
             // Debug.Log("닷지");
             dodgeAction.Dodge();
-            animator.PlayAnimation("DoDodge");
+            animator.PlayAnimation("DoDodge");  // 트리거 애니메이션
         }
-        animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
 
 
         // ----- 공격 -----
-        if (input.isAttackKeyDown)
+        if (input.isAttackKeyDown) // 우선 키 누름 체크
         {
-            // 닷지공격 최우선
+            // 닷지 중 공격 최우선
             if (dodgeAction.isDodge)
             { nowAttackKey = AttackName.Player_DodgeComboAttack; }
 
-            // 그 후 점프공격 여부 확인
+            // 그 후 점프 중 공격 여부 확인
             else if (jumpAction.isJump)
             { nowAttackKey = AttackName.Player_JumpComboAttack; }
 
@@ -81,13 +79,18 @@ public class Player : Actor
             else
             { nowAttackKey = AttackName.Player_BasicAttack; }
 
-            // 공격 가능한 상태라면 : 공격
+            // 공격 가능한 상태라면 : 실제 공격 발생
             if (attackAction.isCanAttack)
             {
-                animator.PlayAnimation("DoAttack");
+                animator.PlayAnimation("DoAttack");  // 트리거 애니메이션
                 attackAction.Attack();
             }
             // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack); // <- 공격 중 슬로우 (였던 것)
         }
+
+        // ----- bool 애니메이션 처리 -----
+        animator.PlayAnimation("IsMove", moveAction.isMove);
+        animator.PlayAnimation("IsJump", jumpAction.isJump);
+        animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
     }
 }

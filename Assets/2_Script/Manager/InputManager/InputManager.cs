@@ -13,6 +13,10 @@ public class InputManager : MonoBehaviour
     protected float moveVertical;
     public Vector3 moveVec { get; protected set; }
 
+    // 이동 키 입력
+    public bool isMoveKeyDown
+    { get { return moveVec != Vector3.zero; } }
+
     // 입력 데드존
     [SerializeField] protected float inputDeadZone = 0.1f;
 
@@ -70,7 +74,7 @@ public class InputManager : MonoBehaviour
     //==========
 
     public bool isDodgeKeyDown { get; protected set; }
-    protected void InputDash()
+    protected void InputDodge()
     {
         if(Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.LeftShift))
         { isDodgeKeyDown = true; }
@@ -89,5 +93,5 @@ public class InputManager : MonoBehaviour
     // Jump(Space Bar)
     // AttackAction(좌클릭)
     public void SetInput()
-    { InputWASD(); InputJump(); InputAttack(); InputDash(); }
+    { InputWASD(); InputJump(); InputAttack(); InputDodge(); }
 }
