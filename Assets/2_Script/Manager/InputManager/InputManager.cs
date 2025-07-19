@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    protected virtual void Update()
-    { SetInput(); }
-    
     //==========
     // 방향 입력
     //==========
@@ -34,7 +31,7 @@ public class InputManager : MonoBehaviour
 
         // 방향 대입
         // 45도(쿼터뷰) 틀어진 방향
-        // <- 실제 카메라 각도에 대응하도록 바꿀 것
+        // <- 현재 상수 상태, 이후 실제 카메라 각도에 대응하도록 바꿀 것
         moveVec = (Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도)
             * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // 입력된 방향벡터
     }
@@ -91,6 +88,6 @@ public class InputManager : MonoBehaviour
     // WASD || ↑↓←→
     // Jump(Space Bar)
     // AttackAction(좌클릭)
-    protected void SetInput()
+    public void SetInput()
     { InputWASD(); InputJump(); InputAttack(); InputDash(); }
 }

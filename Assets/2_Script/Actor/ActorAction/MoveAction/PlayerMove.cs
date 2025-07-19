@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMove : MoveAction
 {
     // <- 레이어 마스크
+    private LayerMask canMoveLayer;
+
 
     protected override void Awake()
     {
@@ -13,6 +15,7 @@ public class PlayerMove : MoveAction
         frontRayDistance = transform.localScale.z * 0.6f;
 
         dodgeAction = GetComponent<DodgeAction>();
+        canMoveLayer = LayerMask.NameToLayer("Cube");
     }
 
 
@@ -29,8 +32,8 @@ public class PlayerMove : MoveAction
     // 전방 확인 - 이동 가능하면 true 반환
     protected virtual bool CanMove()
     {
-        // <- 레이어마스크 : 큐브
-        if (Physics.Raycast(transform.position, moveVec, out frontRayHit, frontRayDistance))
+        // 레이어마스크 : 큐브
+        if (Physics.Raycast(transform.position, moveVec, out frontRayHit, frontRayDistance, canMoveLayer))
         {
             // 트리거 콜라이더는 무시 (통과 가능)
             if (frontRayHit.collider.isTrigger) { return true; }
@@ -45,11 +48,8 @@ public class PlayerMove : MoveAction
     // 이동
     public override void Move()
     {
-        // 이동 방향이 없다면 / dodge 중이라면
-        if (moveVec == Vector3.zero || dodgeAction.isDodge) { isMove = false; return; }
-
-        // 회전
-        Turn();
+        // dodge 중이라면
+        if (dodgeAction.isDodge) { isMove = false; return; }
 
         // 이동 불가능하면 리턴
         isMove = CanMove();
@@ -58,5 +58,4 @@ public class PlayerMove : MoveAction
         // 이동
         base.Move();
     }
-
 }

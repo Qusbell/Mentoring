@@ -34,7 +34,6 @@ public class BasicWeaponAttack : AttackAction
         // ActiveTime이 애니메이션 길이보다 더 길다면 맞춰주기?
     }
 
-
     protected override void DoAttack()
     {
         Timer.Instance.StartTimer(

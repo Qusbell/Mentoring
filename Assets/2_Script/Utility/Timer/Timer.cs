@@ -41,8 +41,7 @@ public class Timer : SingletonT<Timer>
     // ----- 타이머 시작 -----
     protected void StartTimer((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
-        if (continuousTimers.ContainsKey(key))
-        { return; }
+        if (continuousTimers.ContainsKey(key)) { return; }
 
         Coroutine timer = StartCoroutine(TimerCoroutine(key, component, duration, callback));
         continuousTimers[key] = timer;
@@ -86,7 +85,7 @@ public class Timer : SingletonT<Timer>
         {
             if (component == null)
             {
-                Debug.Log($"{key} : 타이머 일시 중지");
+                // Debug.Log($"{key.ToString()} : 타이머 일시 중지");
                 continuousTimers.Remove(key);
                 yield break;
             }

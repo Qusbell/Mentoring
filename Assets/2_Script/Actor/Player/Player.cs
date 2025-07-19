@@ -34,44 +34,59 @@ public class Player : Actor
     // 프레임당 업데이트
     protected virtual void Update()
     {
-        // 이동
+        // ----- 입력 -----
+        input.SetInput();
+
+        // ----- 이동 -----
         moveAction.moveVec = input.moveVec;
-        moveAction.Move();
+        if (moveAction.isMove)
+        {
+            moveAction.Move();
+            moveAction.Turn();
+        }
         animator.PlayAnimation("IsMove", moveAction.isMove);
 
-        // 점프
+
+        // ----- 점프 -----
         if (input.isJumpKeyDown) { jumpAction.Jump(); }
         animator.PlayAnimation("IsJump", jumpAction.isJump);
 
+
+        // ----- 닷지 -----
         if (input.isDodgeKeyDown && dodgeAction.isCanDash)
         {
-            // Debug.Log("닷지");
+            // 닷지 시 공격 활성화
             nowAttackKey = AttackName.Player_WhenDodge;
             attackAction.Attack();
 
-            // 닷지 시 피해
+            // Debug.Log("닷지");
             dodgeAction.Dodge();
             animator.PlayAnimation("DoDodge");
         }
         animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
 
 
-        // 공격
-        if (input.isAttackKeyDown && attackAction.isCanAttack)
+        // ----- 공격 -----
+        if (input.isAttackKeyDown)
         {
             // 닷지공격 최우선
             if (dodgeAction.isDodge)
             { nowAttackKey = AttackName.Player_DodgeComboAttack; }
 
+            // 그 후 점프공격 여부 확인
             else if (jumpAction.isJump)
             { nowAttackKey = AttackName.Player_JumpComboAttack; }
 
-            // Basic
+            // Basic 공격
             else
             { nowAttackKey = AttackName.Player_BasicAttack; }
 
-            animator.PlayAnimation("DoAttack");
-            attackAction.Attack();
+            // 공격 가능한 상태라면 : 공격
+            if (attackAction.isCanAttack)
+            {
+                animator.PlayAnimation("DoAttack");
+                attackAction.Attack();
+            }
             // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack); // <- 공격 중 슬로우 (였던 것)
         }
     }
