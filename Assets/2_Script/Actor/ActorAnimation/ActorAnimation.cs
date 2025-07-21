@@ -20,12 +20,21 @@ public class ActorAnimation : MonoBehaviour
     
 
     AnimatorStateInfo animationState
-    { get { return animator.GetCurrentAnimatorStateInfo(0); } }
+    {
+        get { return animator.GetCurrentAnimatorStateInfo(0); }
+    }
 
     // 레이어 0번에서
     // 현재 재생되고 있는 애니메이션 이름 확인
     public virtual bool CheckAnimationName(string animationStateName)
     { return animationState.IsName(animationStateName); }
+
+
+    public virtual bool CheckAnimationName(int layer, string animationStateName)
+    {
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(layer);
+        return stateInfo.IsName(animationStateName);
+    }
 
     public virtual bool CheckAnimationTime()
     { return animationState.normalizedTime < 1.0f; }

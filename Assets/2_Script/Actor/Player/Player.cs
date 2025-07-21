@@ -49,46 +49,65 @@ public class Player : Actor
         if (input.isJumpKeyDown)
         { jumpAction.Jump(); }
 
-
-        // ----- 닷지 -----
-        if (input.isDodgeKeyDown && dodgeAction.isCanDash)
+        // ----- 특정 애니메이션 중 닷지 && 어택 실행 불가 -----
+        if (!isAnimatePlay)
         {
-            // 닷지 시 공격 활성화
-            nowAttackKey = AttackName.Player_WhenDodge;
-            attackAction.Attack();
-
-            // Debug.Log("닷지");
-            animator.PlayAnimation("DoDodge");  // 애니메이션 트리거
-            dodgeAction.Dodge();
-        }
-
-
-        // ----- 공격 -----
-        if (input.isAttackKeyDown) // 키 누름 체크
-        {
-            // 닷지 중 공격 최우선
-            if (dodgeAction.isDodge)
-            { nowAttackKey = AttackName.Player_DodgeComboAttack; }
-
-            // 그 후 점프 중 공격 여부 확인
-            else if (jumpAction.isJump)
-            { nowAttackKey = AttackName.Player_JumpComboAttack; }
-
-            // Basic 공격
-            else
-            { nowAttackKey = AttackName.Player_BasicAttack; }
-
-            // 공격 가능한 상태라면 : 실제 공격 발생
-            if (attackAction.isCanAttack)
+            // ----- 닷지 -----
+            if (input.isDodgeKeyDown && dodgeAction.isCanDash)
             {
+                // 닷지 시 공격 활성화
+                nowAttackKey = AttackName.Player_WhenDodge;
                 attackAction.Attack();
-                animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
+
+                // Debug.Log("닷지");
+                animator.PlayAnimation("DoDodge");  // 애니메이션 트리거
+                dodgeAction.Dodge();
+            }
+
+
+            // ----- 공격 -----
+            if (input.isAttackKeyDown) // 키 누름 체크
+            {
+                // 닷지 중 공격 최우선
+                if (dodgeAction.isDodge)
+                { nowAttackKey = AttackName.Player_DodgeComboAttack; }
+
+                // 그 후 점프 중 공격 여부 확인
+                else if (jumpAction.isJump)
+                { nowAttackKey = AttackName.Player_JumpComboAttack; }
+
+                // Basic 공격
+                else
+                { nowAttackKey = AttackName.Player_BasicAttack; }
+
+                // 공격 가능한 상태라면 : 실제 공격 발생
+                if (attackAction.isCanAttack)
+                {
+                    attackAction.Attack();
+                    animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
+                }
             }
         }
+
 
         // ----- bool 애니메이션 처리 -----
         animator.PlayAnimation("IsMove", moveAction.isMove);
         animator.PlayAnimation("IsJump", jumpAction.isJump);
         animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
     }
+
+
+   
+    // 애니메이션 재생 시작 시 true
+    protected bool isAnimatePlay
+    {
+        get
+        {
+            return animator.CheckAnimationName(1, "Attack") ||
+                   animator.CheckAnimationName(1, "Attack_Dodge") ||
+                   animator.CheckAnimationName(1, "Attack_Jump");
+        }
+    }
+    
+
 }
