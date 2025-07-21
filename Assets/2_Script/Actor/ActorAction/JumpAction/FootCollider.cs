@@ -20,13 +20,16 @@ public class FootCollider : MonoBehaviour
     }
 
     // 착지 판정 시 액션
-    public System.Action ground;
+    public List<System.Action> ground { get; set; } = new List<System.Action>();
 
     private void OnTriggerEnter(Collider other)
     {
         // 큐브인 경우
         if (other.tag == "Cube")
-        { ground?.Invoke(); }
+        {
+            foreach (System.Action action in ground.ToArray())
+            { action?.Invoke(); }
+        }
 
         // <- 몬스터인 경우?
         //  else if (other.tag == "Monster")

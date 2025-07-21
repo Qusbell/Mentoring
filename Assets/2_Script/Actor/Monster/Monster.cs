@@ -66,17 +66,6 @@ public class Monster : Actor
     protected Action actionStatus;
 
 
-    // 애니메이션 트리거의 단일 활성화 보장
-    protected bool animationTrigger = true;
-    protected void PlayAnimationTriggerOnce(string animationName)
-    {
-        if (animationTrigger)
-        {
-            animationTrigger = false;
-            animator.PlayAnimation(animationName);
-        }
-    }
-
     // 재생 중 애니메이션 확인
     protected bool animationPlayCheck = false;
 
