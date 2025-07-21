@@ -22,6 +22,8 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
+    // 피격 시 넉백 높이
+    [SerializeField] protected float knockBackHeight = 0.65f;
 
 
     // 피격
@@ -71,7 +73,7 @@ public class DamageReaction : ActorAction
         if (0 < nowHp)
         {
             Hit();
-            vector.y += 0.5f; // 약간 위로 넉백
+            vector.y += knockBackHeight; // 약간 위로 넉백
             rigid.AddForce(vector * knockBackPower, ForceMode.Impulse);
         }
         else
