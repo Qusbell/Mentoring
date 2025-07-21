@@ -13,9 +13,11 @@ public class DropActorWeapon : BasicActorWeapon
     // 원래 레이어
     public int originalLayer { get; set; } = -1;
 
+
     // ===== 낙하 완료 시 (검에 뭔가 닿았을 경우) 발생 =====
     protected override void OnTriggerEnter(Collider other)
     {
+        // <- 이후 Drop과 Basic 분리
         switch(attackWeaponType)
         {
             case AttackWeaponType.BasicAttack:
@@ -47,7 +49,7 @@ public class DropActorWeapon : BasicActorWeapon
     protected void DropAttack()
     {
         // 무기 레이어 원복 (Drop 충돌 직후 처리)
-        LayerNameChanger.ChangeLayerWithAll(this.gameObject, originalLayer);
+        LayerChanger.ChangeLayerWithAll(this.gameObject, originalLayer);
 
         // 콜라이더 탐색
         Collider[] colliders = Physics.OverlapSphere(this.transform.position, attackRange);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LayerNameChanger
+public class LayerChanger
 {
     /// <summary>
     /// 지정된 게임오브젝트와 그 모든 자식 오브젝트들의 레이어를 변경합니다.

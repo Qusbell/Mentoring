@@ -17,11 +17,8 @@ public class SetMaterials : MonoBehaviour
         foreach (var mat in materials)
         { SetMaterialToFade(mat); }
 
-
         FadeOut();
     }
-
-
 
     // 머티리얼을 Fade 모드로 설정하는 함수
     void SetMaterialToFade(Material mat)
@@ -75,10 +72,8 @@ public class SetMaterials : MonoBehaviour
                 }
             }
         };
-
-
-
     }
+
 
 }
 

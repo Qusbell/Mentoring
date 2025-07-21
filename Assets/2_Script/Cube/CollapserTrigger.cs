@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using UnityEngine;
 
 /// <summary>
@@ -60,13 +61,7 @@ public class CollapseTrigger : MonoBehaviour
                 //     Debug.Log($"[{gameObject.name}] 타이머 시작: {currentCollapser.gameObject.name}, 딜레이: {currentCollapser.warningDelay}초");
 
                 string uniqueKey = $"{currentCollapser.gameObject.GetInstanceID()}_{Time.time}";
-                Action tempAction = () => {
-                    currentCollapser.TriggerCollapse(); // <-
-                    // else if (showDebugLog)
-                    // {
-                    //     Debug.Log($"[{gameObject.name}] 큐브 비활성화 상태라서 붕괴 안함: {currentCollapser?.gameObject.name}");
-                    // }
-                };
+                Action tempAction = () => { currentCollapser.TriggerCollapse(); };
                 
                 Timer.Instance.StartTimer(this, uniqueKey, currentCollapser.warningDelay, tempAction);
             }
