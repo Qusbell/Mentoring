@@ -50,7 +50,7 @@ public class JumpAction : ActorAction
         // ----- 바닥 콜라이더 설정 -----
         FootCollider foot = GetComponentInChildren<FootCollider>();
         if (foot == null) { Debug.Log(this.gameObject.name + " : 착지 판정용 콜라이더 부재"); }
-        foot.ground = Grounded;
+        foot.ground.Add(Grounded);
     }
 
 

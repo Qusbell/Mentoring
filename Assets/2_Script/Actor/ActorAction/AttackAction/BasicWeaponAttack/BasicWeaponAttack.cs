@@ -19,18 +19,25 @@ public class BasicWeaponAttack : AttackAction
     [SerializeField] private int maxHitCount = 1;
 
     // BasicActorWeapon 캐시
-    private BasicActorWeapon weapon = null;
+    private BasicActorWeapon _weapon = null;
+    protected BasicActorWeapon weapon
+    {
+        get
+        {
+            if (_weapon == null)
+            {
+                _weapon = myWeapon.GetComponent<BasicActorWeapon>();
+                if(_weapon == null ) { _weapon = myWeapon.AddComponent<BasicActorWeapon>(); }
+            }
+            return _weapon;
+        }
+    }
 
 
     protected override void Awake()
     {
         base.Awake();
-
-        weapon = myWeapon.GetComponent<BasicActorWeapon>();
-        if (weapon == null) { weapon = myWeapon.AddComponent<BasicActorWeapon>(); }
-        weapon.SetWeapon(targetTag);
-
-
+        weapon.SetWeapon(targetTag, this.gameObject);
         // <- 여기서 애니메이션 길이를 체크하고
         // ActiveTime이 애니메이션 길이보다 더 길다면 맞춰주기?
     }
@@ -40,7 +47,7 @@ public class BasicWeaponAttack : AttackAction
         Timer.Instance.StartTimer(
                 this, "_Use",
                 weaponBeforeDelay,
-                () => weapon.UseWeapon(attackDamage, maxHitCount, AttackWeaponType.BasicAttack));
+                () => weapon.UseWeapon(attackDamage, maxHitCount));
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
