@@ -22,6 +22,8 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
+
+
     // 피격
     public virtual void TakeDamage(int damage)
     {
@@ -42,7 +44,7 @@ public class DamageReaction : ActorAction
 
 
     // 피격 (야매)
-    public virtual void TakeDamage(int damage, GameObject enemy) // <- 넉백 계수 매개변수 추가?
+    public virtual void TakeDamage(int damage, GameObject enemy, float knockBackPower = 0f)
     {
         // 마지막으로 공격한 적을 타겟팅
         // <- 야매 코딩. 이후 수정
@@ -54,25 +56,31 @@ public class DamageReaction : ActorAction
             monster.target = lastAttackedEnemy.transform;
         }
 
-        // 피격
+        // ----- 피해 적용 -----
         if (damage <= nowHp)
         { nowHp -= damage; }
         else
         { nowHp = 0; }
-        
-        // <- 넉백
 
+
+        // 넉백 준비
+        Vector3 vector = (this.transform.position - enemy.transform.position).normalized;
+        Rigidbody rigid = GetComponent<Rigidbody>();
+
+        // ----- 피격/사망 시 처리 ------
         if (0 < nowHp)
-        { Hit(); }
+        {
+            Hit();
+            vector.y += 0.5f; // 약간 위로 넉백
+            rigid.AddForce(vector * knockBackPower, ForceMode.Impulse);
+        }
         else
         {
-            // <- 야매
             Die();
-            Vector3 vector = (this.transform.position - enemy.transform.position).normalized;
-            Rigidbody rigid = GetComponent<Rigidbody>();
             rigid.AddForce(vector * bouncePowerWhenDie, ForceMode.Impulse);
         }
     }
+
 
 
     protected void Hit()

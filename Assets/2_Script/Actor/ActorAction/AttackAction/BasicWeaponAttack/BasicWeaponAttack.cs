@@ -38,8 +38,6 @@ public class BasicWeaponAttack : AttackAction
     {
         base.Awake();
         weapon.SetWeapon(targetTag, this.gameObject);
-        // <- 여기서 애니메이션 길이를 체크하고
-        // ActiveTime이 애니메이션 길이보다 더 길다면 맞춰주기?
     }
 
     protected override void DoAttack()
@@ -47,14 +45,11 @@ public class BasicWeaponAttack : AttackAction
         Timer.Instance.StartTimer(
                 this, "_Use",
                 weaponBeforeDelay,
-                () => weapon.UseWeapon(attackDamage, maxHitCount));
+                () => weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower));
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
                 weaponActiveTime,
                 weapon.NotUseWeapon);
-
-        //  StartCoroutine(Timer.StartTimer(weaponBeforeDelay, weapon.UseWeapon));
-        //  StartCoroutine(Timer.StartTimer(weaponBeforeDelay + weaponActiveTime, weapon.NotUseWeapon));
     }
 }

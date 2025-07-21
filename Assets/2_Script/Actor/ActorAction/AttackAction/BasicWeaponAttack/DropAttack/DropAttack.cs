@@ -57,7 +57,7 @@ public class DropAttack : AttackAction
         System.Action dropAttackAction = () =>
         {
             this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
-            weapon.UseWeapon(attackDamage, maxHitCount);
+            weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower);
 
 
             // 레이캐스트 정보

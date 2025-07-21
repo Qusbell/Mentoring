@@ -30,9 +30,9 @@ public class DropActorWeapon : ActorWeapon
     }
 
 
-    public override void UseWeapon(int p_attackDamage, int p_maxHitCount)
+    public override void UseWeapon(int p_attackDamage, int p_maxHitCount, float p_knockBackPower = 0)
     {
-        base.UseWeapon(p_attackDamage, p_maxHitCount);
+        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower);
         if (foot != null)
         {
             foot.ground.Add(DropAttack);
@@ -79,7 +79,7 @@ public class DropActorWeapon : ActorWeapon
             // DamageReaction 컴포넌트가 있으면
             DamageReaction reaction = target.GetComponent<DamageReaction>();
             if (reaction != null && reaction.gameObject.layer != originalLayer)
-            { reaction.TakeDamage(attackDamage, owner); }
+            { reaction.TakeDamage(attackDamage, owner, knockBack); }
         }
 
         // ----- 착지 이벤트 제거 -----

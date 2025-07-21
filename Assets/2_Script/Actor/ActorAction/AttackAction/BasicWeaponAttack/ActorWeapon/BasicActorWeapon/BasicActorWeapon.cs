@@ -27,7 +27,7 @@ public class BasicActorWeapon : ActorWeapon
         if (hitCount < maxHitCount)
         {
             hitTargets[other.gameObject] = hitCount + 1; // hitCount += 1
-            damageReaction.TakeDamage(attackDamage, owner); // 데미지 적용
+            damageReaction.TakeDamage(attackDamage, owner, knockBack); // 데미지 적용
         }
         // else: 최대 히트 횟수 도달 시 추가 동작 없음(무시)
     }

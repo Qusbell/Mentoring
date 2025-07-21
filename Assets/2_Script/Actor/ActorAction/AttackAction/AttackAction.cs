@@ -45,6 +45,9 @@ abstract public class AttackAction : ActorAction
     // 공격 간격 (== 공격 속도)
     [SerializeField] protected float attackRate = 0.5f;
 
+    // 넉백 거리
+    [SerializeField] protected float knockBackPower = 0f;
+
 
     // 공격 가능 여부
     protected bool _isCanAttack = true;
