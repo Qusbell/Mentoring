@@ -48,10 +48,17 @@ public class Monster : Actor
         // moveAction에서 chaseAction 분리
         chaseAction = moveAction as ChaseAction;
         if (chaseAction == null) { Debug.Log(this.gameObject.name + " : ChaseAction 아님"); }
+    }
 
+    protected void Start()
+    {
         // 시작 시 1회, 타겟 방향 바라봄
         TurnWhenStart();
     }
+
+
+    // 현재 수행 중인 행동
+    protected Action actionStatus;
 
     private void Update()
     { actionStatus(); }
@@ -62,8 +69,18 @@ public class Monster : Actor
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
-    // 현재 수행 중인 행동
-    protected Action actionStatus;
+
+    // 트리거 애니메이션의 단일 활성화 보장
+    protected bool animationTrigger = true;
+    protected void PlayAnimationTriggerOnce(string animationName)
+    {
+        if (animationTrigger)
+        {
+            animationTrigger = false;
+            animator.PlayAnimation(animationName);
+        }
+    }
+
 
 
     // 재생 중 애니메이션 확인
@@ -86,13 +103,14 @@ public class Monster : Actor
         { SwitchStatus(nextStatus); }
     }
 
+
+
     protected void TurnWhenStart()
     {
         Vector3 targetPos = target.position;
         targetPos.y = this.transform.position.y; // y값을 동일하게 고정
         this.transform.LookAt(targetPos); // 평면상에서만 타겟을 바라봄
     }
-
 
 
 

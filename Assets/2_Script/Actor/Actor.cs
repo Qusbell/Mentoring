@@ -48,19 +48,6 @@ abstract public class Actor : MonoBehaviour
 
 
 
-    // 애니메이션 트리거의 단일 활성화 보장
-    protected bool animationTrigger = true;
-    protected void PlayAnimationTriggerOnce(string animationName)
-    {
-        if (animationTrigger)
-        {
-            animationTrigger = false;
-            animator.PlayAnimation(animationName);
-        }
-    }
-
-
-
     // 생성 초기화
     protected virtual void Awake()
     {

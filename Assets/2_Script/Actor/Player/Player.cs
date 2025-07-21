@@ -24,17 +24,6 @@ public class Player : Actor
         input = GetComponent<InputManager>();
         jumpAction = GetComponent<JumpAction>();
         dodgeAction = GetComponent<DodgeAction>();
-
-         // <- 기본 공격
-    }
-
-
-
-    protected bool IsAttackAnimationPlaying()
-    {
-        return animator.CheckAnimationName("Attack") ||
-            animator.CheckAnimationName("Attack_Dodge") ||
-            animator.CheckAnimationName("Attack_Jump");
     }
 
 
@@ -90,10 +79,10 @@ public class Player : Actor
             { nowAttackKey = AttackName.Player_BasicAttack; }
 
             // 공격 가능한 상태라면 : 실제 공격 발생
-            if (attackAction.isCanAttack && !IsAttackAnimationPlaying())
+            if (attackAction.isCanAttack)
             {
-                animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
                 attackAction.Attack();
+                animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
             }
         }
 
