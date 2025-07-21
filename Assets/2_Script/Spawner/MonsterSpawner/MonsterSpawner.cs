@@ -80,7 +80,7 @@ public class MonsterSpawner : Spawner
     // 3. 생성 시작
     public override void SpawnTriggerOn()
     {
-        Debug.Log($"[{gameObject.name}] MonsterSpawner 활성화됨! 스폰을 시작합니다.");
+        // Debug.Log($"[{gameObject.name}] MonsterSpawner 활성화됨! 스폰을 시작합니다.");
         base.SpawnTriggerOn();
         SetSpawnLocation(); // 스폰 위치 재설정 (하위 콜라이더 기반)
         SpawnObject();

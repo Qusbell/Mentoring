@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public class DodgeAction : ActorAction
 {
     private Rigidbody rigid;
@@ -11,6 +12,9 @@ public class DodgeAction : ActorAction
     {
         rigid = GetComponent<Rigidbody>();
         myCollider = GetComponent<Collider>();
+
+        // 기존 마찰값 백업
+        originalMaterial = myCollider.material;
 
         // 마찰 0인 Material 생성
         zeroFrictionMaterial = new PhysicMaterial();
@@ -27,10 +31,8 @@ public class DodgeAction : ActorAction
     [SerializeField] protected float dodgeRecupTime = 3;
 
     // 대시 스택
-    [SerializeField]
-    protected int dodgeMaxStatck = 2;
-    [SerializeField]
-    protected int _dodgeStack = 2; // 최대 스택
+    [SerializeField] protected int dodgeMaxStatck = 2;
+    [SerializeField] protected int _dodgeStack = 2;
 
     protected int dodgeStack
     {
@@ -51,6 +53,10 @@ public class DodgeAction : ActorAction
     // 미끄러지기 시간 (마찰계수 줄이기 시간)
     [SerializeField] protected float dodgeSlideTime = 0.2f;
 
+    // 콤보 넣기 시간
+    [SerializeField] protected float dodgeComboTime = 0.4f;
+
+    [SerializeField] protected float dodgeAngle = 30f;
 
     // 땃쥐 중?
     public bool isDodge { get; protected set; }
@@ -67,11 +73,12 @@ public class DodgeAction : ActorAction
     }
 
 
+
     public void Dodge()
     {
         if (isCanDash)
         {
-            // 대시
+            // 닷지
             rigid.velocity = Vector3.zero;
             rigid.AddForce(this.transform.forward * dodgePower, ForceMode.Impulse);
 
@@ -79,14 +86,27 @@ public class DodgeAction : ActorAction
             dodgeStack--;  // -1스택
             Timer.Instance.StartEndlessTimer(this, "_Recup", dodgeRecupTime, () => { dodgeStack++; }); // 스택 재생 시작
 
-            // 마찰계수 조정
-            myCollider.material = zeroFrictionMaterial;
-            Timer.Instance.StartTimer(this, "_Material", 0.2f, () => { myCollider.material = originalMaterial; });
+            // 닷지 시 적용
+            myCollider.material = zeroFrictionMaterial;  // 마찰계수 제거
+            rigid.useGravity = false;                    // 중력 미사용
+            transform.Rotate(dodgeAngle, 0, 0);          // 앞으로 기울기
+
+            int originalLayer = this.gameObject.layer;
+            this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
+
+            Timer.Instance.StartTimer(this, "_DodgeTime", dodgeSlideTime,
+                () => {
+                    // 원상복구
+                    myCollider.material = originalMaterial;
+                    rigid.useGravity = true;
+                    transform.Rotate(-dodgeAngle, 0, 0);
+                    this.gameObject.layer = originalLayer;
+                    rigid.velocity = Vector3.zero; // 종료 시 힘 제거
+                });
 
             // 땃쥐 지속시간 (콤보 넣기 시간)
             isDodge = true;
-            Timer.Instance.StartTimer(this, "_IsDodge", 1, () => { isDodge = false; }); // <- 나중에 지속시간 정정
+            Timer.Instance.StartTimer(this, "_ComboTime", dodgeComboTime, () => { isDodge = false; }); // <- 나중에 지속시간 정정
         }
     }
-
 }

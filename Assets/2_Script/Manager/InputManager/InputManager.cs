@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    protected virtual void Update()
-    { SetInput(); }
-    
     //==========
     // 방향 입력
     //==========
@@ -15,6 +12,10 @@ public class InputManager : MonoBehaviour
     protected float moveHorizontal;
     protected float moveVertical;
     public Vector3 moveVec { get; protected set; }
+
+    // 이동 키 입력
+    public bool isMoveKeyDown
+    { get { return moveVec != Vector3.zero; } }
 
     // 입력 데드존
     [SerializeField] protected float inputDeadZone = 0.1f;
@@ -34,7 +35,7 @@ public class InputManager : MonoBehaviour
 
         // 방향 대입
         // 45도(쿼터뷰) 틀어진 방향
-        // <- 실제 카메라 각도에 대응하도록 바꿀 것
+        // <- 현재 상수 상태, 이후 실제 카메라 각도에 대응하도록 바꿀 것
         moveVec = (Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도)
             * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // 입력된 방향벡터
     }
@@ -73,7 +74,7 @@ public class InputManager : MonoBehaviour
     //==========
 
     public bool isDodgeKeyDown { get; protected set; }
-    protected void InputDash()
+    protected void InputDodge()
     {
         if(Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.LeftShift))
         { isDodgeKeyDown = true; }
@@ -91,6 +92,6 @@ public class InputManager : MonoBehaviour
     // WASD || ↑↓←→
     // Jump(Space Bar)
     // AttackAction(좌클릭)
-    protected void SetInput()
-    { InputWASD(); InputJump(); InputAttack(); InputDash(); }
+    public void SetInput()
+    { InputWASD(); InputJump(); InputAttack(); InputDodge(); }
 }

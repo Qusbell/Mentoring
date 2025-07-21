@@ -22,23 +22,27 @@ public class MoveAction : ActorAction
         rigid = GetComponent<Rigidbody>();
         originMoveSpeed = moveSpeed;
     }
-    
+
 
     //==================================================
     // 이동 메서드
     //==================================================
 
     // 이동할 방향
-    public Vector3 moveVec { get; set; }
+    // zero면 move 상태 false
+    public virtual Vector3 moveVec { get; set; }
 
     // 현재 이동 속도
     [SerializeField] protected float moveSpeed = 5;
 
-    // 원래 이동 속도
-    protected float originMoveSpeed;
 
-    // 이동 상태 여부
-    public bool isMove { get; set; } = false;
+    // 이동 상태 여부 <- 이후 좀 더 깔@쌈하게 만들 걸 생각해보자
+    protected bool _isMove = false;
+    public virtual bool isMove
+    {
+        get { return _isMove; }
+        set { _isMove = value; }
+    }
 
 
     // 이동 메서드
@@ -50,6 +54,14 @@ public class MoveAction : ActorAction
     public virtual void Turn()
     { transform.LookAt(transform.position + moveVec); }
 
+
+
+    // ==========
+    // 슬로우 관련 시스템
+    // ==========
+
+    // 원래 이동 속도
+    protected float originMoveSpeed;
 
     // 슬로우 리스트
     // 인덱스(key) / 슬로우가 적용된 이동속도(value)

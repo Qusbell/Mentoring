@@ -11,7 +11,7 @@ public class FootCollider : MonoBehaviour
     {
         Collider collider = GetComponent<Collider>();
 
-        // <- null인 경우
+        // <- null인 경우?
 
         if (collider != null)
         { collider.isTrigger = true; }
@@ -19,22 +19,21 @@ public class FootCollider : MonoBehaviour
         // rigid = GetComponentInParent<Rigidbody>();
     }
 
-    // 착지 판정으로 정정
+    // 착지 판정 시 액션
     public System.Action ground;
 
     private void OnTriggerEnter(Collider other)
     {
         // 큐브인 경우
-        if (other.tag == "Cube" ||
-            other.gameObject.layer == LayerMask.NameToLayer("Cube")) // <- 나중에 레이어 체크는 제거해도 상관없지 않나?
+        if (other.tag == "Cube")
         { ground?.Invoke(); }
 
         // <- 몬스터인 경우?
-        else if (other.tag == "Monster")
-        {
-            // 불필요한 물리 초기화
-            //  rigid.velocity = Vector3.zero;
-            //  rigid.AddForce(Vector3.up * 13, ForceMode.Impulse);
-        }
+        //  else if (other.tag == "Monster")
+        //  {
+        //      // 불필요한 물리 초기화
+        //      //  rigid.velocity = Vector3.zero;
+        //      //  rigid.AddForce(Vector3.up * 13, ForceMode.Impulse);
+        //  }
     }
 }

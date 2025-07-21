@@ -24,34 +24,73 @@ public class Player : Actor
         input = GetComponent<InputManager>();
         jumpAction = GetComponent<JumpAction>();
         dodgeAction = GetComponent<DodgeAction>();
+
+         // <- 기본 공격
     }
 
-    [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
-    [SerializeField] protected float slowTimeOnAttack = 2;  // 공격 중 슬로우 시간
+    // [SerializeField] protected int slowPercentOnAttack = 30; // 공격 중 슬로우 강도
+    // [SerializeField] protected float slowTimeOnAttack = 2;  // 공격 중 슬로우 시간
 
     // 프레임당 업데이트
     protected virtual void Update()
     {
-        // 이동
-        moveAction.moveVec = input.moveVec;
-        moveAction.Move();
-        animator.PlayAnimation("IsMove", moveAction.isMove);
+        // ----- 입력 -----
+        input.SetInput();
 
-        // 점프
-        if (input.isJumpKeyDown) { jumpAction.Jump(); }
-        animator.PlayAnimation("IsJump", jumpAction.isJump);
-
-        // 공격
-        if (input.isAttackKeyDown && attackAction.isCanAttack)
+        // ----- 이동 -----
+        if (input.isMoveKeyDown && !dodgeAction.isDodge)
         {
-            animator.PlayAnimation("DoAttack");
+            moveAction.moveVec = input.moveVec;
+            moveAction.isMove = true;
+            moveAction.Move();
+            moveAction.Turn();
+        }
+        else { moveAction.isMove = false; }
+
+        // ----- 점프 -----
+        if (input.isJumpKeyDown)
+        { jumpAction.Jump(); }
+
+        // ----- 닷지 -----
+        if (input.isDodgeKeyDown && dodgeAction.isCanDash)
+        {
+            // 닷지 시 공격 활성화
+            nowAttackKey = AttackName.Player_WhenDodge;
             attackAction.Attack();
-            // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack);
+
+            // Debug.Log("닷지");
+            animator.PlayAnimation("DoDodge");  // 트리거 애니메이션
+            dodgeAction.Dodge();
         }
 
 
-        if (input.isDodgeKeyDown && dodgeAction.isCanDash) { dodgeAction.Dodge(); animator.PlayAnimation("DoDodge"); }
+        // ----- 공격 -----
+        if (input.isAttackKeyDown) // 우선 키 누름 체크
+        {
+            // 닷지 중 공격 최우선
+            if (dodgeAction.isDodge)
+            { nowAttackKey = AttackName.Player_DodgeComboAttack; }
+
+            // 그 후 점프 중 공격 여부 확인
+            else if (jumpAction.isJump)
+            { nowAttackKey = AttackName.Player_JumpComboAttack; }
+
+            // Basic 공격
+            else
+            { nowAttackKey = AttackName.Player_BasicAttack; }
+
+            // 공격 가능한 상태라면 : 실제 공격 발생
+            if (attackAction.isCanAttack)
+            {
+                animator.PlayAnimation("DoAttack");  // 트리거 애니메이션
+                attackAction.Attack();
+            }
+            // moveAction.Slow(slowPercentOnAttack, slowTimeOnAttack); // <- 공격 중 슬로우 (였던 것)
+        }
+
+        // ----- bool 애니메이션 처리 -----
+        animator.PlayAnimation("IsMove", moveAction.isMove);
+        animator.PlayAnimation("IsJump", jumpAction.isJump);
         animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
-        
     }
 }

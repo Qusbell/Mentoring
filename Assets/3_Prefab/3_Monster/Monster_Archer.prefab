@@ -937,7 +937,7 @@ GameObject:
   - component: {fileID: 4744986361193923189}
   - component: {fileID: 7482809049616863677}
   - component: {fileID: 4717604142083378933}
-  - component: {fileID: 2586929545677485907}
+  - component: {fileID: 1260656170718980920}
   m_Layer: 8
   m_Name: Monster_Archer
   m_TagString: Monster
@@ -1075,7 +1075,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  rotationSpeed: 3
+  target: {fileID: 0}
+  rotationSpeed: 6
 --- !u!114 &4744986361193923189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1102,6 +1103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 1
   nowHp: 1
+  bouncePowerWhenDie: 10
 --- !u!114 &4717604142083378933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1114,14 +1116,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a25a2a44bf444f4b9507be02706c5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 6
   attackDamage: 1
   <attackRange>k__BackingField: 30
   targetTag: 
   attackRate: 2
-  weaponBeforeDelay: 0.35
+  weaponBeforeDelay: 0.4
   projectile: {fileID: 2336828060849677753, guid: 4ab66f9db6bf98f42a28d46a2f4a6611, type: 3}
   firePos: {fileID: 4441979137934070190}
---- !u!114 &2586929545677485907
+--- !u!114 &1260656170718980920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1130,7 +1133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4196742738127299694}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9bb30b0f93aed4b95d093a41e3b0c3, type: 3}
+  m_Script: {fileID: 11500000, guid: a3c8e74aebe41794ea3c7172054405be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4750183518291090577

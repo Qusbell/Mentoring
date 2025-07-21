@@ -55,7 +55,7 @@ public class MonsterCube : MonoBehaviour
         if (showDebugLog)
         {
             string timing = spawnOnActivation ? "즉시 스폰" : "이동 완료 후 스폰";
-            Debug.Log($"[{gameObject.name}] MonsterCube 초기화 완료. 스폰 타이밍: {timing}");
+            // Debug.Log($"[{gameObject.name}] MonsterCube 초기화 완료. 스폰 타이밍: {timing}");
         }
 
         // 정적 큐브 케이스를 Start에서 한 번만 처리
@@ -162,11 +162,11 @@ public class MonsterCube : MonoBehaviour
         {
             monsterSpawner.SpawnTriggerOn();
 
-            if (showDebugLog)
-            {
-                string timing = spawnOnActivation ? "즉시 스폰" : "이동 완료 후 스폰";
-                Debug.Log($"[{gameObject.name}] 몬스터 스포너 활성화 완료 (타이밍: {timing})");
-            }
+            //  if (showDebugLog)
+            //  {
+            //      string timing = spawnOnActivation ? "즉시 스폰" : "이동 완료 후 스폰";
+            //      Debug.Log($"[{gameObject.name}] 몬스터 스포너 활성화 완료 (타이밍: {timing})");
+            //  }
         }
     }
 

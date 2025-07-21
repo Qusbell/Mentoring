@@ -854,7 +854,7 @@ GameObject:
   - component: {fileID: 5038519080904345008}
   - component: {fileID: 1373652728143536970}
   - component: {fileID: 7540323481133770776}
-  - component: {fileID: 6742516724164528065}
+  - component: {fileID: 5097308888875272474}
   m_Layer: 8
   m_Name: Monster_Shielder
   m_TagString: Monster
@@ -956,9 +956,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.65
-  m_Height: 2.463179
+  m_Height: 2.6835597
   m_Direction: 1
-  m_Center: {x: 0, y: 1.2315271, z: 0}
+  m_Center: {x: 0, y: 1.3417174, z: 0}
 --- !u!195 &4788860662003758590
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -993,9 +993,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbba28b69903264cbebb911fd9e5bfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 3
   target: {fileID: 0}
-  rotationSpeed: 4
+  rotationSpeed: 7
 --- !u!114 &5038519080904345008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,6 +1022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 3
   nowHp: 3
+  bouncePowerWhenDie: 10
 --- !u!114 &7540323481133770776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,16 +1035,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed65f788e1545c147bed680f2041edcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 5
   attackDamage: 1
   <attackRange>k__BackingField: 8
   targetTag: 
-  attackRate: 4
+  attackRate: 2
   myWeapon: {fileID: 9215819455182724303}
   weaponBeforeDelay: 0.2
   weaponActiveTime: 1
   maxHitCount: 1
   chargeSpeed: 15
---- !u!114 &6742516724164528065
+--- !u!114 &5097308888875272474
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1052,7 +1054,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2384884184112096675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9bb30b0f93aed4b95d093a41e3b0c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d6220fc927a7dd44827c153b983d45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2910221618307621725

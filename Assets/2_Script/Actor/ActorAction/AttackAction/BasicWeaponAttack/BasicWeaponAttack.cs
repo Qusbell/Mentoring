@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BasicWeaponAttack : AttackAction
 {
@@ -17,34 +18,33 @@ public class BasicWeaponAttack : AttackAction
     // 최대 히트 가능 횟수
     [SerializeField] private int maxHitCount = 1;
 
-    // ActorWeapon 캐시
-    private ActorWeapon weapon = null;
+    // BasicActorWeapon 캐시
+    private BasicActorWeapon weapon = null;
 
 
     protected override void Awake()
     {
         base.Awake();
 
-        weapon = myWeapon.GetComponent<ActorWeapon>();
-        if (weapon == null)
-        { weapon = myWeapon.AddComponent<ActorWeapon>(); }
-        weapon.SetWeapon(targetTag, attackDamage, maxHitCount);
+        weapon = myWeapon.GetComponent<BasicActorWeapon>();
+        if (weapon == null) { weapon = myWeapon.AddComponent<BasicActorWeapon>(); }
+        weapon.SetWeapon(targetTag);
+
 
         // <- 여기서 애니메이션 길이를 체크하고
         // ActiveTime이 애니메이션 길이보다 더 길다면 맞춰주기?
     }
-
 
     protected override void DoAttack()
     {
         Timer.Instance.StartTimer(
                 this, "_Use",
                 weaponBeforeDelay,
-                weapon.UseWeapon);
+                () => weapon.UseWeapon(attackDamage, maxHitCount, AttackWeaponType.BasicAttack));
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
-                weaponBeforeDelay + weaponActiveTime,
+                weaponActiveTime,
                 weapon.NotUseWeapon);
 
         //  StartCoroutine(Timer.StartTimer(weaponBeforeDelay, weapon.UseWeapon));
