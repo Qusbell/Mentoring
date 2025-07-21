@@ -41,8 +41,8 @@ public class DamageReaction : ActorAction
     }
 
 
-    // 피격
-    public virtual void TakeDamage(int damage, GameObject enemy)
+    // 피격 (야매)
+    public virtual void TakeDamage(int damage, GameObject enemy) // <- 넉백 계수 매개변수 추가?
     {
         // 마지막으로 공격한 적을 타겟팅
         // <- 야매 코딩. 이후 수정
@@ -59,6 +59,8 @@ public class DamageReaction : ActorAction
         { nowHp -= damage; }
         else
         { nowHp = 0; }
+        
+        // <- 넉백
 
         if (0 < nowHp)
         { Hit(); }
@@ -106,7 +108,9 @@ public class DamageReaction : ActorAction
         // StartCoroutine(Timer.StartTimer(2f, () => Destroy(this.gameObject)));
 
         // 모든 마테리얼 투명화 (2초)
-        //GetComponent<SetMaterials>().SetAllMaterialsToFadeOut();
+        SetMaterials setMaterials = GetComponent<SetMaterials>();
+        if(setMaterials != null)
+        { setMaterials.SetAllMaterialsToFadeOut(); }
     }
 
 
