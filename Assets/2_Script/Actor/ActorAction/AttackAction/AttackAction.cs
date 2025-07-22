@@ -51,6 +51,10 @@ abstract public class AttackAction : ActorAction
     // 넉백 거리
     [SerializeField] protected float knockBackPower = 0f;
 
+    // 이펙트 프리펩
+    [SerializeField] protected GameObject hitEffect = null;
+    [SerializeField] protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
+
 
     // 공격 가능 여부
     protected bool _isCanAttack = true;
@@ -88,7 +92,7 @@ abstract public class AttackAction : ActorAction
     // 공격 불가 : false
     private bool CheckCanAttack()
     {
-        if (isCanAttack == true)
+        if (isCanAttack)
         {
             isCanAttack = false;
             Timer.Instance.StartTimer(
@@ -96,7 +100,6 @@ abstract public class AttackAction : ActorAction
                 attackRate,
                 () => { isCanAttack = true; });
 
-            // StartCoroutine(Timer.StartTimer(attackRate, () => { isCanAttack = true; }));
             return true;
         }
         else { return false; }

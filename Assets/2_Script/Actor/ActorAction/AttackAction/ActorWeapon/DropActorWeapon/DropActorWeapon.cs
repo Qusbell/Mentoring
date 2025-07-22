@@ -30,9 +30,13 @@ public class DropActorWeapon : ActorWeapon
     }
 
 
-    public override void UseWeapon(int p_attackDamage, int p_maxHitCount, float p_knockBackPower = 0)
+    public override void UseWeapon(
+        int p_attackDamage,
+        int p_maxHitCount, float p_knockBackPower = 0,
+        GameObject p_hitEffect = null,
+        float p_effectDestoryTime = 1f)
     {
-        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower);
+        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_hitEffect, p_effectDestoryTime);
         if (foot != null)
         {
             foot.ground.Add(DropAttack);

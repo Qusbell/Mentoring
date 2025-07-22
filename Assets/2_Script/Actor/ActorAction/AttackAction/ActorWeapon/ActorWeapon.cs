@@ -83,7 +83,12 @@ abstract public class ActorWeapon : MonoBehaviour
         }
     }
 
-    public virtual void UseWeapon(int p_attackDamage, int p_maxHitCount, float p_knockBackPower = 0)
+    public virtual void UseWeapon(
+        int p_attackDamage,
+        int p_maxHitCount,
+        float p_knockBackPower,
+        GameObject p_hitEffect = null,
+        float p_effectDestoryTime = 1f)
     {
         activateStack++;
         isActivate = true;
@@ -92,6 +97,8 @@ abstract public class ActorWeapon : MonoBehaviour
         attackDamage = p_attackDamage;
         maxHitCount = p_maxHitCount;
         knockBack = p_knockBackPower;
+        hitEffect = p_hitEffect;
+        effectDestoryTime = p_effectDestoryTime;
     }
 
     public virtual void NotUseWeapon()
