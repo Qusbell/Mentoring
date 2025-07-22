@@ -47,19 +47,22 @@ public class DropActorWeapon : ActorWeapon
     }
 
 
-    // <- 콜라이더 Enter 기반이 아니라, 착지 기반 Attack
-    protected override void WeaponCollisionEnterAction(Collider other, DamageReaction damageReaction) { }
+    protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)
+    {
+        base.WeaponCollisionEnterAction(damageReaction);
+        DropAttack();
+    }
 
 
     public void SetWeapon(string p_targetTag, float p_attackRange, int p_originalLayer, GameObject p_owner)
     {
         SetWeapon(p_targetTag, p_owner);
-
         attackRange = p_attackRange;
-        if (attackRange <= 0) { Debug.Log($"{this.gameObject.name} : DropActorWeapon의 attackRange가 0 이하"); attackRange = 1; }
-
         originalLayer = p_originalLayer;
-        if (originalLayer <= -1) { Debug.Log($"{this.gameObject.name} : DropActorWeapon의 originalLayer 이상"); originalLayer = -1; }
+
+        // 오류거리 정정
+        if (attackRange <= 0) { Debug.Log($"{this.owner.name} : DropActorWeapon의 attackRange가 0 이하"); attackRange = 1; }
+        if (originalLayer <= -1) { Debug.Log($"{this.owner.name} : DropActorWeapon의 originalLayer 이상"); originalLayer = -1; }
     }
 
 
@@ -84,7 +87,6 @@ public class DropActorWeapon : ActorWeapon
 
         // ----- 착지 이벤트 제거 -----
         foot.ground.Remove(DropAttack);
-
 
         // ----- 디버그 -----
         showGizmo = true;

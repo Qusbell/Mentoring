@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(ProjectileHitAttack))]
-public class Projectile : Actor
+public class Projectile : ActorWeapon
 {
     // 투사체 유지 시간
     [SerializeField] protected float projectileTimer = 10f;
+
+    // 이동
+    protected MoveAction moveAction;
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+        moveAction = GetComponent<MoveAction>();
+    }
+
 
     private void Start()
     {
@@ -16,16 +26,22 @@ public class Projectile : Actor
         Timer.Instance.StartTimer(this, projectileTimer, () => Destroy(this.gameObject));
     }
 
-
     // 매 프레임 이동
     protected virtual void Update()
     {
         if (moveAction.isMove) { moveAction.Move(); }
     }
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+        if (other.CompareTag("Cube"))
+        { Destroy(this.gameObject); }
+    }
 
-    // protected void OnDestroy()
-    // {
-    //    // <- 끝났을 때 이펙트 
-    // }
+    protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)
+    {
+        base.WeaponCollisionEnterAction(damageReaction);
+        Destroy(this.gameObject);
+    }
 }

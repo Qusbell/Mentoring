@@ -8,6 +8,21 @@ abstract public class ActorWeapon : MonoBehaviour
     // 무기의 콜라이더
     protected Collider weaponCollider = null;
 
+    // 이펙트 프리펩
+    [SerializeField] protected GameObject hitEffect = null;
+    [SerializeField] protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
+
+    // 이펙트 발생
+    protected void InstantHitEffect()
+    {
+        // Quaternion.identity : 회전값 (0, 0, 0)
+        if (hitEffect != null)
+        {
+            GameObject effect = Instantiate(hitEffect, transform.position, transform.rotation);
+            Destroy(effect, effectDestoryTime);
+        }
+    }
+
 
     protected virtual void Awake()
     {
@@ -95,8 +110,19 @@ abstract public class ActorWeapon : MonoBehaviour
         if (other.CompareTag(targetTag) && // 공격 대상 태그 일치 확인
             damageReaction != null &&      // 데미지 입히기 가능 확인
             hitTargets != null)
-        { WeaponCollisionEnterAction(other, damageReaction); }
+        { WeaponCollisionEnterAction(damageReaction); }
     }
 
-    protected abstract void WeaponCollisionEnterAction(Collider other, DamageReaction damageReaction);
+    protected virtual void WeaponCollisionEnterAction(DamageReaction damageReaction)
+    {
+        int hitCount = 0;
+        hitTargets.TryGetValue(damageReaction.gameObject, out hitCount);
+
+        // 최대 히트 횟수 확인 및 처리
+        if (hitCount < maxHitCount)
+        {
+            hitTargets[damageReaction.gameObject] = hitCount + 1; // hitCount += 1
+            damageReaction.TakeDamage(attackDamage, owner, knockBack); // 데미지 적용
+        }
+    }
 }

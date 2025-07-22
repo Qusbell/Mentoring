@@ -19,6 +19,14 @@ public class CastingFireAction : FireAction
             if (moveAction != null)
             { moveAction.SetTargetTransform(target); }
             else { Debug.Log("FireAction : 잘못된 Projectile 등록됨 : " + gameObject.name); }
+
+            // 투사체 활성화
+            Projectile tempProjectile = instantProjectile.GetComponent<Projectile>();
+            if (tempProjectile != null)
+            {
+                tempProjectile.SetWeapon(targetTag, this.gameObject);
+                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower);
+            }
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }
     }

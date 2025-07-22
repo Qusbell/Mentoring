@@ -18,21 +18,6 @@ public class BasicActorWeapon : ActorWeapon
 
     // ===== 콜라이더 기반 실제 데미지 판정 =====
 
-    protected override void WeaponCollisionEnterAction(Collider other, DamageReaction damageReaction)
-    {
-        int hitCount = 0;
-        hitTargets.TryGetValue(other.gameObject, out hitCount);
-        
-        // 최대 히트 횟수 확인 및 처리
-        if (hitCount < maxHitCount)
-        {
-            hitTargets[other.gameObject] = hitCount + 1; // hitCount += 1
-            damageReaction.TakeDamage(attackDamage, owner, knockBack); // 데미지 적용
-        }
-        // else: 최대 히트 횟수 도달 시 추가 동작 없음(무시)
-    }
-
-
 
     // ===== 디버그 기즈모 =====
     void OnDrawGizmos()

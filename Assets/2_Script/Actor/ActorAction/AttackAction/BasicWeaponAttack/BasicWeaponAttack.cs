@@ -15,8 +15,7 @@ public class BasicWeaponAttack : AttackAction
     // 무기가 활성화되어있을 시간
     [SerializeField] private float weaponActiveTime = 1f;
 
-    // 최대 히트 가능 횟수
-    [SerializeField] private int maxHitCount = 1;
+    
 
     // BasicActorWeapon 캐시
     private BasicActorWeapon _weapon = null;

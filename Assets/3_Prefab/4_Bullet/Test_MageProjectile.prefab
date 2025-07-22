@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3769159430697994385}
   - component: {fileID: 2980804934258919113}
   - component: {fileID: 3622948917723811777}
-  - component: {fileID: 3952229913574008438}
   - component: {fileID: 3308421188823659441}
   - component: {fileID: 2319956381385852335}
   m_Layer: 0
@@ -139,22 +138,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1.0929235}
   m_Center: {x: 0, y: 0.5, z: 0.04646176}
---- !u!114 &3952229913574008438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2382953001386444822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38f9bef1eb3dc540865beb8bac95bc2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 1
-  <attackRange>k__BackingField: 3
-  targetTag: Player
-  attackRate: 0.5
 --- !u!114 &3308421188823659441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,6 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4777821a047e90b46993d79733aa15f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectWhenHit: {fileID: 0}
+  effectDestoryTime: 1
   projectileTimer: 4
 --- !u!114 &2319956381385852335
 MonoBehaviour:

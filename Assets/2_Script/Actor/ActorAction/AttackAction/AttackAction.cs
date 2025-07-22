@@ -40,6 +40,9 @@ abstract public class AttackAction : ActorAction
     // 공격 대상 태그 (해당 태그를 가진 오브젝트만 공격)
     [SerializeField] protected string targetTag = "";
 
+    // 최대 히트 가능 횟수
+    [SerializeField] protected int maxHitCount = 1;
+
     // <- 공격 대상의 레이어
 
     // 공격 간격 (== 공격 속도)

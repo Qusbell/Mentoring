@@ -17,9 +17,6 @@ public class DropAttack : AttackAction
     // 낙하 속도
     [SerializeField] private float dropSpeed = 13f;
 
-    // 최대 히트 가능 횟수
-    [SerializeField] private int maxHitCount = 1;
-
     // 낙하 가능한 최대 거리
     [SerializeField] private float maxDropDistance = 20f;
 
