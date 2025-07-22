@@ -9,8 +9,8 @@ abstract public class ActorWeapon : MonoBehaviour
     protected Collider weaponCollider = null;
 
     // 이펙트 프리펩
-    [SerializeField] protected GameObject hitEffect = null;
-    [SerializeField] protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
+    protected GameObject hitEffect = null;
+    protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
 
     // 이펙트 발생
     protected void InstantHitEffect()

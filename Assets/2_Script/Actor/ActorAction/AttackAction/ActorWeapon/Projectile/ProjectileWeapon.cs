@@ -42,7 +42,7 @@ public class ProjectileWeapon : ActorWeapon
     protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)
     {
         base.WeaponCollisionEnterAction(damageReaction);
-        InstantHitEffect();
+        InstantHitEffect(); // 이펙트 발생
         Destroy(this.gameObject);
     }
 }
