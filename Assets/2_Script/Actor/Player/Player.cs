@@ -88,8 +88,11 @@ public class Player : Actor
                 }
             }
         }
+    }
 
 
+    protected void LateUpdate()
+    {
         // ----- bool 애니메이션 처리 -----
         animator.PlayAnimation("IsMove", moveAction.isMove);
         animator.PlayAnimation("IsJump", jumpAction.isJump);
@@ -97,7 +100,7 @@ public class Player : Actor
     }
 
 
-   
+
     // 애니메이션 재생 시작 시 true
     protected bool isAnimatePlay
     {
