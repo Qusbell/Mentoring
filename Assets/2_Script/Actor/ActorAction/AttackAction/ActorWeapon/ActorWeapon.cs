@@ -12,6 +12,7 @@ abstract public class ActorWeapon : MonoBehaviour
     protected GameObject hitEffect = null;
     protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
 
+
     // 이펙트 발생
     protected void InstantHitEffect()
     {
@@ -22,6 +23,21 @@ abstract public class ActorWeapon : MonoBehaviour
             Destroy(effect, effectDestoryTime);
         }
     }
+
+    // 이펙트 발생 (상대와 가장 가까운 위치)
+    protected void InstantHitEffect(Vector3 otherPosition)
+    {
+        Vector3 effectPos = weaponCollider.ClosestPoint(otherPosition);
+
+        // Quaternion.identity : 회전값 (0, 0, 0)
+        if (hitEffect != null)
+        {
+            GameObject effect = Instantiate(hitEffect, effectPos, transform.rotation);
+            Destroy(effect, effectDestoryTime);
+        }
+    }
+
+
 
 
     protected virtual void Awake()

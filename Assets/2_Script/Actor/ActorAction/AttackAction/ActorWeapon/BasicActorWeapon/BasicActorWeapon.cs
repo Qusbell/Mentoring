@@ -15,6 +15,15 @@ public class BasicActorWeapon : ActorWeapon
     }
 
 
+    protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)
+    {
+        Debug.Log("실행");
+        base.WeaponCollisionEnterAction(damageReaction);
+        InstantHitEffect(damageReaction.transform.position);
+    }
+
+
+
 
     // ===== 콜라이더 기반 실제 데미지 판정 =====
 

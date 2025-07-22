@@ -95,6 +95,9 @@ public class DropActorWeapon : ActorWeapon
         // ----- 디버그 -----
         showGizmo = true;
         Timer.Instance.StartTimer(this, "_기즈모", 0.2f, () => showGizmo = false);
+
+        // ----- 이펙트 -----
+        InstantHitEffect();
     }
 
 

@@ -60,7 +60,7 @@ public class FireAction : AttackAction
             if (tempProjectile != null)
             {
                 tempProjectile.SetWeapon(targetTag, this.gameObject);
-                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower);
+                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
             }
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }
