@@ -34,11 +34,8 @@ public class FootCollider : MonoBehaviour
         {
             rands.Add(other);
 
-            if (isRand)
-            {
-                foreach (System.Action action in ground.ToArray())
-                { action?.Invoke(); }
-            }
+            foreach (System.Action action in ground.ToArray())
+            { action?.Invoke(); }
         }
     }
 
