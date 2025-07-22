@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class FootCollider : MonoBehaviour
 {
-    // Rigidbody rigid; // <- 몬스터 밟고 튀어오르기
-
     private void Awake()
     {
         Collider collider = GetComponent<Collider>();
@@ -15,9 +13,16 @@ public class FootCollider : MonoBehaviour
 
         if (collider != null)
         { collider.isTrigger = true; }
-
-        // rigid = GetComponentInParent<Rigidbody>();
     }
+
+
+    // 현재 접촉 중인 지형들
+    private List<Collider> rands = new List<Collider>();
+    public bool isRand
+    {
+        get { return 0 < rands.Count; }
+    }
+
 
     // 착지 판정 시 액션
     public List<System.Action> ground { get; set; } = new List<System.Action>();
@@ -27,16 +32,21 @@ public class FootCollider : MonoBehaviour
         // 큐브인 경우
         if (other.tag == "Cube")
         {
-            foreach (System.Action action in ground.ToArray())
-            { action?.Invoke(); }
-        }
+            rands.Add(other);
 
-        // <- 몬스터인 경우?
-        //  else if (other.tag == "Monster")
-        //  {
-        //      // 불필요한 물리 초기화
-        //      //  rigid.velocity = Vector3.zero;
-        //      //  rigid.AddForce(Vector3.up * 13, ForceMode.Impulse);
-        //  }
+            if (isRand)
+            {
+                foreach (System.Action action in ground.ToArray())
+                { action?.Invoke(); }
+            }
+        }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        // 큐브인 경우
+        if (other.tag == "Cube")
+        { rands.Remove(other); }
     }
 }

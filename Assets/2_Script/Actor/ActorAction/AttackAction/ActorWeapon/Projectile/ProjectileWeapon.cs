@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Projectile : ActorWeapon
+public class ProjectileWeapon : ActorWeapon
 {
     // 투사체 유지 시간
     [SerializeField] protected float projectileTimer = 10f;

@@ -20,6 +20,9 @@ public class JumpAction : ActorAction
     private PhysicMaterial originalMaterial;   // 원래 Material 저장
     private PhysicMaterial zeroFrictionMaterial;
 
+    // 지형과 접촉 판정을 내릴 콜라이더
+    FootCollider foot;
+
 
     // 생성 시 초기화
     protected virtual void Awake()
@@ -48,7 +51,7 @@ public class JumpAction : ActorAction
 
 
         // ----- 바닥 콜라이더 설정 -----
-        FootCollider foot = GetComponentInChildren<FootCollider>();
+        foot = GetComponentInChildren<FootCollider>();
         if (foot == null) { Debug.Log(this.gameObject.name + " : 착지 판정용 콜라이더 부재"); }
         foot.ground.Add(Grounded);
     }
@@ -69,7 +72,6 @@ public class JumpAction : ActorAction
         // 점프 상태가 아니라면
         if (!isJump)
         {
-            isJump = true;
             // 마찰계수 없애기
             myCollider.material = zeroFrictionMaterial;
 
@@ -80,21 +82,14 @@ public class JumpAction : ActorAction
         }
     }
 
-    // 점프 상태 확인
-    private bool _isJump = false;
     public bool isJump
     {
-        get { return _isJump; }
-        protected set { _isJump = value; }
+        get { return !foot.isRand; }
     }
     
     // FootCollider으로 전달되는 용도
     protected void Grounded()
     {
-        if (isJump) // 점프 상태일 때에만
-        {
-            isJump = false;
-            myCollider.material = originalMaterial;
-        }
+        myCollider.material = originalMaterial;
     }
 }

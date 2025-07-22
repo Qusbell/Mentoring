@@ -56,7 +56,7 @@ public class FireAction : AttackAction
             else { Debug.Log("FireAction : 잘못된 Projectile 등록됨 : " + gameObject.name); }
 
             // 투사체 활성화
-            Projectile tempProjectile = instantProjectile.GetComponent<Projectile>();
+            ProjectileWeapon tempProjectile = instantProjectile.GetComponent<ProjectileWeapon>();
             if (tempProjectile != null)
             {
                 tempProjectile.SetWeapon(targetTag, this.gameObject);
