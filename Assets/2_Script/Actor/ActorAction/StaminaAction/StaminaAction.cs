@@ -10,11 +10,11 @@ public class StaminaAction : ActorAction
     [SerializeField] private float staminaRecupRate = 1f;
     [SerializeField] private int recupStamina = 1;
 
-    protected int stamina
+    public int stamina
     {
         get
         { return nowStamina; }
-        set
+        protected set
         {
             // 최대치 초과 회복 방지
             if (maxStamina <= value)

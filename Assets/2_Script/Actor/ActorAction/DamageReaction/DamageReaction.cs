@@ -14,6 +14,21 @@ public class DamageReaction : ActorAction
     [SerializeField] protected int maxHp = 10;  // 최대 생명력
     [SerializeField] protected int nowHp = 10;  // 현재 생명력
 
+    public int healthPoint
+    {
+        get
+        {
+            return nowHp;
+        }
+        private set
+        {
+            // <- value 조건
+            nowHp = value;
+        }
+    }
+
+
+
     // 외부에서부터 가져올 피격/사망 시 액션
     // 애니메이션 요소로 사용 중
     public Action hitAnimation { private get; set; }
