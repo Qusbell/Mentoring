@@ -556,7 +556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -1064,11 +1064,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
-  triggerArea: {fileID: 0}
+  warningDelay: 2
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &84451444
@@ -4883,7 +4883,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -6269,7 +6269,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -6698,7 +6698,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -8139,7 +8139,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -8331,7 +8331,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -10246,7 +10246,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -66.5
+      value: -65.84
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10254,7 +10254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -38.5
+      value: -37.62
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10535,11 +10535,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
-  triggerArea: {fileID: 0}
+  warningDelay: 2
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &526475019
@@ -11695,6 +11695,73 @@ MonoBehaviour:
   triggerArea: {fileID: 1632399050}
   oneTimeUse: 1
   showDebugLog: 0
+--- !u!1 &570300777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 570300778}
+  - component: {fileID: 570300780}
+  - component: {fileID: 570300779}
+  m_Layer: 0
+  m_Name: CubeMoveTrigger_-1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &570300778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570300777}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -45.22, y: 6.93, z: -32.16}
+  m_LocalScale: {x: 3, y: 3, z: 15}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2015041645}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &570300779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570300777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a17879718d23664ba7ae29ca42f88ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1725448634}
+--- !u!65 &570300780
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570300777}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &579466158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13238,28 +13305,28 @@ MonoBehaviour:
   - targetCube: {fileID: 526475016}
     triggerType: 0
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 2015041644}
     delayTime: 7
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 84451441}
     triggerType: 0
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 2015041644}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1714369992}
     triggerType: 0
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 2015041644}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 852575646}
     triggerType: 0
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 2015041644}
     delayTime: 0
     timer: 0
     hasActivated: 0
@@ -13450,7 +13517,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -13726,6 +13793,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
   m_PrefabInstance: {fileID: 694764977}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &699317491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 699317492}
+  - component: {fileID: 699317494}
+  - component: {fileID: 699317493}
+  m_Layer: 0
+  m_Name: CubeCollapserTrigger_-1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &699317492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699317491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -48.47, y: 6.39, z: -32.16}
+  m_LocalScale: {x: 3, y: 3, z: 15}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1959205632}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &699317493
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699317491}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &699317494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699317491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13f029a4ebe2dc4081cee30413d62dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  showDebugLog: 0
+  oneTimeUse: 1
 --- !u!1 &703365757
 GameObject:
   m_ObjectHideFlags: 0
@@ -16059,7 +16195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
@@ -16432,11 +16568,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
-  triggerArea: {fileID: 0}
+  warningDelay: 2
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &852575649
@@ -17038,7 +17174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -18301,7 +18437,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -20948,7 +21084,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1036471634128290457, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1036471634128290457, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: targetPrefabs.Array.data[0]
@@ -21028,7 +21164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25694,7 +25830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -29440,7 +29576,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -29811,7 +29947,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -30877,7 +31013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -31964,7 +32100,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1036471634128290457, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1036471634128290457, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: targetPrefabs.Array.data[0]
@@ -32044,7 +32180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32221,11 +32357,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
-  triggerArea: {fileID: 0}
+  warningDelay: 2
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &1714369995
@@ -32378,166 +32514,166 @@ MonoBehaviour:
   nextCubeControllerActivate:
     m_PersistentCalls:
       m_Calls: []
-  sharingDelayTime: 0.4
+  sharingDelayTime: 0.3
   activationSettings:
   - targetCube: {fileID: 1819235973}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2083974860}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 339506751}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 426195356}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1554421900}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 952541701}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2060616950}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 672169021}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 265120056}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 418995508}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1888153090}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1567507463}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2001335425}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 359640705}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 843657159}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1648684385}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 892576304}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1367259743}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2065236490}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2037665936}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1788303708}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 45645668}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2110227244}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
-    triggerArea: {fileID: 0}
+    triggerArea: {fileID: 570300777}
     delayTime: 0
     timer: 0
     hasActivated: 0
@@ -33578,7 +33714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -34307,7 +34443,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -35763,7 +35899,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -36560,6 +36696,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 699317492}
   - {fileID: 1069017544}
   - {fileID: 1632399051}
   - {fileID: 1229039129}
@@ -37400,7 +37537,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -37651,6 +37788,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 570300778}
   - {fileID: 1244307931}
   - {fileID: 93884338}
   - {fileID: 912373225}
@@ -38370,7 +38508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
@@ -38735,7 +38873,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -38944,7 +39082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -39460,7 +39598,7 @@ MonoBehaviour:
   triggerType: 0
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 100
   triggerArea: {fileID: 0}
   oneTimeUse: 1
   showDebugLog: 1
@@ -39938,7 +40076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9213004719966924289, guid: a5114481bd58d0841a6ecb77037f7286, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
