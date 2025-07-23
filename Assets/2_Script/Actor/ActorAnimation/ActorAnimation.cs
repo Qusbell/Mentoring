@@ -16,6 +16,8 @@ public class ActorAnimation : MonoBehaviour
     {
         // 애니메이터 컴포넌트 get
         animator = GetComponent<Animator>();
+
+        this.enabled = false; // pause용(코루틴 대용)
     }
     
 
@@ -36,9 +38,9 @@ public class ActorAnimation : MonoBehaviour
         return stateInfo.IsName(animationStateName);
     }
 
+
     public virtual bool CheckAnimationTime()
     { return animationState.normalizedTime < 1.0f; }
-
 
     // SetBool 재생
     public virtual void PlayAnimation(string animationName, bool p_bool)
@@ -47,4 +49,20 @@ public class ActorAnimation : MonoBehaviour
     // SetTrigger 재생
     public virtual void PlayAnimation(string animationName)
     { animator.SetTrigger(animationName); }
+
+
+    public void PauseUntilGrounded()
+    {
+        FootCollider foot = GetComponentInChildren<FootCollider>();
+
+        // 착지 상태가 아니라면
+        if (!foot.isRand)
+        {
+            animator.speed = 0f;
+            System.Action resumeAction = null;
+
+            resumeAction = () => { animator.speed = 1f; foot.ground.Remove(resumeAction); };
+            foot.ground.Add(resumeAction);
+        }
+    }
 }
