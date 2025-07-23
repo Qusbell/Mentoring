@@ -51,6 +51,9 @@ abstract public class AttackAction : ActorAction
     // 넉백 거리
     [SerializeField] protected float knockBackPower = 0f;
 
+    // 공격 코스트
+    [field: SerializeField] public int attackCost { get; set; } = 0;
+
     // 이펙트 프리펩
     [SerializeField] protected GameObject hitEffect = null;
     [SerializeField] protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려

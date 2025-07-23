@@ -4,20 +4,64 @@ using UnityEngine;
 
 public class StaminaAction : ActorAction
 {
-    [SerializeField] protected int maxStamina = 3;
-    [SerializeField] protected int nowStamina = 0;
+    [SerializeField] private int maxStamina = 3;
+    [SerializeField] private int nowStamina = 0;
+
+    [SerializeField] private float staminaRecupRate = 1f;
+    [SerializeField] private int recupStamina = 1;
 
     protected int stamina
     {
-        get { return nowStamina; }
+        get
+        { return nowStamina; }
         set
         {
-            if (value <= maxStamina)
-            { value = maxStamina; }
+            // 최대치 초과 회복 방지
+            if (maxStamina <= value)
+            {
+                value = maxStamina;
+                Timer.Instance.StopEndlessTimer(this, "_Recup");
+            }
 
+            // 0 미만 떨어짐 방지
+            else if (value < 0)
+            { value = 0; }
+
+            // (기존 스태미나가 max였을 경우) 스태미나 회복 타이머 시작
+            else if (nowStamina == maxStamina &&
+                value < maxStamina)
+            {
+                Timer.Instance.StartEndlessTimer(this, "_Recup",
+                    staminaRecupRate,
+                    () => { stamina += recupStamina; });
+            }
+
+
+            // --- 스태미나 적용 ---
             nowStamina = value;
         }
     }
+
+    protected void Awake()
+    { stamina = maxStamina; }
+
+
+    public bool UseStamina(int cost)
+    {
+        // --- 소모값 검사 ---
+        if (cost < 0) { cost = 0; Debug.Log($"{this.gameObject.name} : 스태미나 소모값이 음수 상태"); }
+
+        // --- 스태미나 부족 ---
+        if (stamina < cost) { return false; }
+
+        // --- 스태미나 충분 ---
+        else
+        {
+            stamina -= cost;
+            return true;
+        }
+    }
+
 
 
 
