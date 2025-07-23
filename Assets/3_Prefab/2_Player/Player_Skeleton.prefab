@@ -1269,6 +1269,7 @@ GameObject:
   - component: {fileID: 4090338657157569667}
   - component: {fileID: 1833944609532144370}
   - component: {fileID: 4006904744375403826}
+  - component: {fileID: 5069313832189576641}
   m_Layer: 7
   m_Name: Player_Skeleton
   m_TagString: Player
@@ -1464,12 +1465,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dodgePower: 14
-  dodgeRecupTime: 1.5
-  dodgeMaxStatck: 2
-  _dodgeStack: 2
   dodgeSlideTime: 0.3
   dodgeComboTime: 0.4
   dodgeAngle: 50
+  <dodgeCost>k__BackingField: 1
 --- !u!114 &7741900305207183450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1489,6 +1488,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 0.7
   knockBackPower: 5
+  <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 1507084875693659171}
@@ -1513,6 +1513,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 0.5
   knockBackPower: 0
+  <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 1507084875693659171}
@@ -1537,6 +1538,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 0.3
   knockBackPower: 0
+  <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 2640455322755094372}
@@ -1561,12 +1563,29 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 0.4
   knockBackPower: 0
+  <attackCost>k__BackingField: 0
   hitEffect: {fileID: 7274776019300387116, guid: 894f5a15982a8fc4c97677510b5c60fb, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 1507084875693659171}
   dropSpeed: 30
   maxDropDistance: 20
   dropBeforeTime: 0.25
+--- !u!114 &5069313832189576641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5333357997323496402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a05acdee6f595409b632b279df8aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 3
+  nowStamina: 0
+  staminaRecupRate: 1
+  recupStamina: 1
 --- !u!1 &5359304219147062780
 GameObject:
   m_ObjectHideFlags: 0

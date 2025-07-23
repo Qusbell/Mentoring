@@ -90,8 +90,11 @@ public class Player : Actor
             // 공격 가능한 상태라면 : 실제 공격 발생
             if (attackAction.isCanAttack)
             {
-                attackAction.Attack();
-                animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
+                if (staminaAction.UseStamina(attackAction.attackCost))
+                {
+                    attackAction.Attack();
+                    animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
+                }
             }
         }
 
