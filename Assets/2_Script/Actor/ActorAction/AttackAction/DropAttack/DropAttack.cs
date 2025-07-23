@@ -51,18 +51,21 @@ public class DropAttack : AttackAction
 
     protected override void DoAttack()
     {
+        // 레이캐스트 정보
+        RaycastHit tempHit;
+        Vector3 rayOrigin = this.transform.position;
+        Vector3 rayDirection = Vector3.down;
+
+        // 낙하 시도 여부
+        bool isCanUseDropAttack = Physics.Raycast(rayOrigin, rayDirection, out tempHit, maxDropDistance);
+
+
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
         weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
 
+
         System.Action dropAttackAction = () =>
         {
-            // 레이캐스트 정보
-            RaycastHit tempHit;
-            Vector3 rayOrigin = this.transform.position;
-            Vector3 rayDirection = Vector3.down;
-
-            // 낙하 시도 여부
-            bool isCanUseDropAttack = Physics.Raycast(rayOrigin, rayDirection, out tempHit, maxDropDistance);
             if (isCanUseDropAttack) { rigid.AddForce(Vector3.down * dropSpeed, ForceMode.Impulse); }
 
             // 디버그
@@ -70,6 +73,7 @@ public class DropAttack : AttackAction
             Color rayColor = isCanUseDropAttack ? Color.red : Color.yellow;
             Debug.DrawRay(rayOrigin, rayDirection * maxDropDistance, rayColor, 1.0f);
         };
+
 
         Timer.Instance.StartTimer(this, "_DropAttackAction", dropBeforeTime, dropAttackAction);
     }
