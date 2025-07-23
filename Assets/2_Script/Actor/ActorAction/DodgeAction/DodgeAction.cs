@@ -62,6 +62,8 @@ public class DodgeAction : ActorAction
     // 닷지 코스트
     [field: SerializeField] public int dodgeCost { get; set; } = 1;
 
+    // 프리펩에서 지정해서, 실제로 회전시킬 오브젝트
+    [SerializeField] private GameObject ratateObjectWhenDodge;
 
 
     // 땃쥐 중?
@@ -93,7 +95,7 @@ public class DodgeAction : ActorAction
         // ----- 닷지 시 적용 물리/기울기 등 -----
         myCollider.material = zeroFrictionMaterial;  // 마찰계수 제거
         rigid.useGravity = false;                    // 중력 미사용
-        transform.Rotate(dodgeAngle, 0, 0);          // 앞으로 기울기
+        ratateObjectWhenDodge.transform.Rotate(dodgeAngle, 0, 0); // 앞으로 기울기
 
         int originalLayer = this.gameObject.layer;
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
@@ -103,7 +105,7 @@ public class DodgeAction : ActorAction
                 // 원상복구
                 myCollider.material = originalMaterial;
                 rigid.useGravity = true;
-                transform.Rotate(-dodgeAngle, 0, 0);
+                ratateObjectWhenDodge.transform.Rotate(-dodgeAngle, 0, 0);
                 this.gameObject.layer = originalLayer;
                 rigid.velocity = Vector3.zero; // 종료 시 힘 제거
             });
