@@ -1079,8 +1079,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.5
-  m_fontSizeBase: 0.5
+  m_fontSize: 0.3
+  m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1708,8 +1708,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  nowHp: 100
+  maxHp: 10
+  nowHp: 10
   bouncePowerWhenDie: 13
   knockBackHeight: 0.55
 --- !u!114 &3696162683426923108
@@ -1868,8 +1868,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxStamina: 3
-  nowStamina: 0
-  staminaRecupRate: 1
+  nowStamina: 3
+  staminaRecupRate: 1.5
   recupStamina: 1
 --- !u!114 &6550980931285902158
 MonoBehaviour:

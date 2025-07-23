@@ -1582,7 +1582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   target: {fileID: 0}
-  rotationSpeed: 5
+  rotationSpeed: 10
 --- !u!114 &-4275034679557372163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1610,6 +1610,7 @@ MonoBehaviour:
   maxHp: 1
   nowHp: 1
   bouncePowerWhenDie: 10
+  knockBackHeight: 0.65
 --- !u!114 &5954479926083274602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1626,11 +1627,15 @@ MonoBehaviour:
   attackDamage: 1
   <attackRange>k__BackingField: 3
   targetTag: 
+  maxHitCount: 1
   attackRate: 2
+  knockBackPower: 0
+  <attackCost>k__BackingField: 0
+  hitEffect: {fileID: 0}
+  effectDestoryTime: 1
   myWeapon: {fileID: 8939563338791786793}
   weaponBeforeDelay: 0.2
   weaponActiveTime: 1
-  maxHitCount: 1
 --- !u!114 &8075370776093852105
 MonoBehaviour:
   m_ObjectHideFlags: 0
