@@ -367,7 +367,6 @@ GameObject:
   - component: {fileID: 2392287228515701913}
   - component: {fileID: 8039404801137072288}
   - component: {fileID: 4922285313347925585}
-  - component: {fileID: 3988781327925803458}
   m_Layer: 8
   m_Name: Monster_Mage
   m_TagString: Monster
@@ -554,6 +553,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 5
   knockBackPower: 0
+  <attackCost>k__BackingField: 0
   hitEffect: {fileID: 7274776019300387116, guid: 88639d536973a7546b9fa19a865138bc, type: 3}
   effectDestoryTime: 1
   weaponBeforeDelay: 0.35
@@ -569,18 +569,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 081ab53fe94ce454e81e60981b543d28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3988781327925803458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801390549913854848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034e920db34c014489f0dcbcdd3f72cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3037311676926964130
