@@ -20,9 +20,8 @@ public class SendPlayerInfoToUI : MonoBehaviour
     }
 
 
-    void Update()
+    void Update()  // <- 이후 이벤트 형식으로 변경
     {
         statusText.text = $"HP: {damageReaction.healthPoint} | SP: {staminaAction.stamina}";
     }
-
 }

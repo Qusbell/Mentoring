@@ -51,12 +51,11 @@ public class DropAttack : AttackAction
 
     protected override void DoAttack()
     {
+        this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
+        weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
+
         System.Action dropAttackAction = () =>
         {
-            this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
-            weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
-
-
             // 레이캐스트 정보
             RaycastHit tempHit;
             Vector3 rayOrigin = this.transform.position;
