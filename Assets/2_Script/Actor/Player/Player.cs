@@ -92,12 +92,6 @@ public class Player : Actor
                     attackAction.Attack();
                     animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
                 }
-                else
-                {
-                    nowAttackKey = AttackName.Player_BasicAttack;
-                    attackAction.Attack();
-                    animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
-                }
             }
         }
     }

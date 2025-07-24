@@ -75,7 +75,6 @@ public class DropAttack : AttackAction
             Debug.DrawRay(rayOrigin, rayDirection * maxDropDistance, rayColor, 1.0f);
         };
 
-
         Timer.Instance.StartTimer(this, "_DropAttackAction", dropBeforeTime, dropAttackAction);
     }
 }
