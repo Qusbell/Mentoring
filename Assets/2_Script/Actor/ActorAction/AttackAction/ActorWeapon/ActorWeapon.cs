@@ -38,8 +38,6 @@ abstract public class ActorWeapon : MonoBehaviour
     }
 
 
-
-
     protected virtual void Awake()
     {
         weaponCollider = GetComponent<Collider>();
@@ -108,22 +106,23 @@ abstract public class ActorWeapon : MonoBehaviour
         GameObject p_hitEffect = null,
         float p_effectDestoryTime = 1f)
     {
-        activateStack++;
-        isActivate = true;
-        // attackWeaponType = type;
+        if (0 < ++activateStack)
+        {
+            isActivate = true;
 
-        attackDamage = p_attackDamage;
-        maxHitCount = p_maxHitCount;
-        knockBackPower = p_knockBackPower;
-        knockBackHeight = p_knockBackHeight;
-        hitEffect = p_hitEffect;
-        effectDestoryTime = p_effectDestoryTime;
+            // 무기 능력치 대입
+            attackDamage = p_attackDamage;
+            maxHitCount = p_maxHitCount;
+            knockBackPower = p_knockBackPower;
+            knockBackHeight = p_knockBackHeight;
+            hitEffect = p_hitEffect;
+            effectDestoryTime = p_effectDestoryTime;
+        }
     }
 
     public virtual void NotUseWeapon()
     {
-        activateStack--;
-        if (activateStack == 0)
+        if (--activateStack == 0)
         { isActivate = false; }
     }
 

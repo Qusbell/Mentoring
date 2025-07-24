@@ -42,12 +42,12 @@ public class BasicWeaponAttack : AttackAction
     protected override void DoAttack()
     {
         Timer.Instance.StartTimer(
-                this, "_Use",
+                this,
                 weaponBeforeDelay,
                 () => weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime));
 
         Timer.Instance.StartTimer(
-                this, "_NotUse",
+                this,
                 weaponActiveTime,
                 weapon.NotUseWeapon);
     }
