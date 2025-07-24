@@ -78,7 +78,8 @@ abstract public class ActorWeapon : MonoBehaviour
     protected int attackDamage = 0;
     protected int maxHitCount = 1; // 최대 히트 횟수
     protected Actor owner = null; // 해당 무기를 소유하고 있는 개체
-    protected float knockBack = 0;
+    protected float knockBackPower = 0f;
+    protected float knockBackHeight = 0f;
 
     public virtual void SetWeapon(string p_targetTag, Actor p_owner)
     {
@@ -103,6 +104,7 @@ abstract public class ActorWeapon : MonoBehaviour
         int p_attackDamage,
         int p_maxHitCount,
         float p_knockBackPower,
+        float p_knockBackHeight,
         GameObject p_hitEffect = null,
         float p_effectDestoryTime = 1f)
     {
@@ -112,7 +114,8 @@ abstract public class ActorWeapon : MonoBehaviour
 
         attackDamage = p_attackDamage;
         maxHitCount = p_maxHitCount;
-        knockBack = p_knockBackPower;
+        knockBackPower = p_knockBackPower;
+        knockBackHeight = p_knockBackHeight;
         hitEffect = p_hitEffect;
         effectDestoryTime = p_effectDestoryTime;
     }
@@ -145,7 +148,7 @@ abstract public class ActorWeapon : MonoBehaviour
         if (hitCount < maxHitCount)
         {
             hitTargets[damageReaction.gameObject] = hitCount + 1; // hitCount += 1
-            damageReaction.TakeDamage(attackDamage, owner, knockBack); // 데미지 적용
+            damageReaction.TakeDamage(attackDamage, owner, knockBackPower, knockBackHeight); // 데미지 적용
         }
     }
 }

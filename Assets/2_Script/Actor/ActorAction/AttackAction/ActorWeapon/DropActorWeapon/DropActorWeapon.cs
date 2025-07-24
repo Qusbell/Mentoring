@@ -29,11 +29,11 @@ public class DropActorWeapon : ActorWeapon
 
     public override void UseWeapon(
         int p_attackDamage,
-        int p_maxHitCount, float p_knockBackPower = 0,
+        int p_maxHitCount, float p_knockBackPower = 0, float p_knockBackHeight = 0,
         GameObject p_hitEffect = null,
         float p_effectDestoryTime = 1f)
     {
-        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_hitEffect, p_effectDestoryTime);
+        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_knockBackHeight, p_hitEffect, p_effectDestoryTime);
         if (foot != null)
         {
             foot.ground.Add(DropAttack);   // 먼저 드랍어택
@@ -82,7 +82,7 @@ public class DropActorWeapon : ActorWeapon
             // DamageReaction 컴포넌트가 있으면
             DamageReaction reaction = target.GetComponent<DamageReaction>();
             if (reaction != null && reaction.gameObject.layer != originalLayer)
-            { reaction.TakeDamage(splashDamage, owner, knockBack); }
+            { reaction.TakeDamage(splashDamage, owner, knockBackPower, knockBackHeight); }
         }
 
         // ----- 디버그 -----

@@ -27,7 +27,7 @@ public class CastingFireAction : FireAction
             if (tempProjectile != null)
             {
                 tempProjectile.SetWeapon(targetTag, GetComponent<Actor>());
-                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
+                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
             }
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }

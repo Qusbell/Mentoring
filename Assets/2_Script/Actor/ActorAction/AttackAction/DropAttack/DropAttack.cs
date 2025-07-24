@@ -62,10 +62,8 @@ public class DropAttack : AttackAction
         // 낙하 시도 여부
         bool isCanUseDropAttack = Physics.Raycast(rayOrigin, rayDirection, out tempHit, maxDropDistance);
 
-
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
-        weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
-
+        weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
 
         System.Action dropAttackAction = () =>
         {

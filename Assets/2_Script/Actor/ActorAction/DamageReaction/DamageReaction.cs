@@ -37,10 +37,6 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
-    // 피격 시 넉백 높이
-    [SerializeField] protected float knockBackHeight = 0.65f;
-
-
     // 피격
     public virtual void TakeDamage(int damage)
     {
@@ -61,7 +57,7 @@ public class DamageReaction : ActorAction
 
 
     // 피격 (야매)
-    public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f)
+    public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f, float knockBackHeight = 0f)
     {
         // 몬스터: 마지막으로 공격한 적을 타겟팅
         // <- 야매 코딩. 이후 수정

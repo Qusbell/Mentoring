@@ -44,7 +44,7 @@ public class BasicWeaponAttack : AttackAction
         Timer.Instance.StartTimer(
                 this, "_Use",
                 weaponBeforeDelay,
-                () => weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime));
+                () => weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime));
 
         Timer.Instance.StartTimer(
                 this, "_NotUse",
