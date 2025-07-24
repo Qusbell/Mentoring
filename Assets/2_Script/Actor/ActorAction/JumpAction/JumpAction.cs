@@ -108,5 +108,6 @@ public class JumpAction : ActorAction
     {
         myCollider.material = originalMaterial;
         // <- 착지 시마다?
+        // this.rigid.velocity = Vector3.zero;
     }
 }
