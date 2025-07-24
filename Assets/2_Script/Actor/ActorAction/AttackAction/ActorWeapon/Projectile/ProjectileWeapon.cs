@@ -46,7 +46,5 @@ public class ProjectileWeapon : ActorWeapon
     }
 
     private void OnDestroy()
-    {
-        InstantHitEffect();
-    }
+    { InstantHitEffect(); }
 }

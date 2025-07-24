@@ -107,7 +107,7 @@ public class DodgeAction : ActorAction
                 rigid.useGravity = true;
                 ratateObjectWhenDodge.transform.Rotate(-dodgeAngle, 0, 0);
                 this.gameObject.layer = originalLayer;
-                // rigid.velocity = Vector3.zero; // 종료 시 힘 제거
+                rigid.velocity = Vector3.zero; // 종료 시 힘 제거
             });
 
         // ----- 땃쥐 지속시간 (콤보 넣기 시간) -----
