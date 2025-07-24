@@ -1696,6 +1696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 14
+  maxHorizontalSpeed: 6
 --- !u!114 &8766476169735018083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,7 +1712,7 @@ MonoBehaviour:
   maxHp: 20
   nowHp: 20
   bouncePowerWhenDie: 13
-  knockBackHeight: 0.55
+  knockBackHeight: 3
 --- !u!114 &3696162683426923108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1772,7 +1773,7 @@ MonoBehaviour:
   targetTag: 
   maxHitCount: 1
   attackRate: 0.7
-  knockBackPower: 5
+  knockBackPower: 2
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
@@ -1797,7 +1798,7 @@ MonoBehaviour:
   targetTag: 
   maxHitCount: 1
   attackRate: 0.5
-  knockBackPower: 0
+  knockBackPower: 2
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
@@ -1822,7 +1823,7 @@ MonoBehaviour:
   targetTag: 
   maxHitCount: 1
   attackRate: 0.3
-  knockBackPower: 0
+  knockBackPower: 1
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
@@ -1852,6 +1853,7 @@ MonoBehaviour:
   hitEffect: {fileID: 7274776019300387116, guid: 894f5a15982a8fc4c97677510b5c60fb, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 1507084875693659171}
+  splashDamage: 1
   dropSpeed: 30
   maxDropDistance: 20
   dropBeforeTime: 0.25

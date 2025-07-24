@@ -1023,7 +1023,7 @@ MonoBehaviour:
   maxHp: 3
   nowHp: 3
   bouncePowerWhenDie: 10
-  knockBackHeight: 0.65
+  knockBackHeight: 40
 --- !u!114 &7540323481133770776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   attackRate: 2
   knockBackPower: 13
   <attackCost>k__BackingField: 0
-  hitEffect: {fileID: 0}
+  hitEffect: {fileID: 757547568125524834, guid: 7dddcdbfd5836da43a4512fbec18ea46, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 9215819455182724303}
   weaponBeforeDelay: 0.2
