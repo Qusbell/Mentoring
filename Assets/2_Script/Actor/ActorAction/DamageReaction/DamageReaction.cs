@@ -80,20 +80,21 @@ public class DamageReaction : ActorAction
 
 
         // 넉백 준비
-        Vector3 vector = (this.transform.position - enemy.transform.position).normalized;
+        Vector3 tempVector = (this.transform.position - enemy.transform.position).normalized;
         Rigidbody rigid = GetComponent<Rigidbody>(); // <- null인 경우 생각
 
         // ----- 피격/사망 시 처리 ------
         if (0 < nowHp)
         {
             Hit();
-            vector.y += knockBackHeight; // 약간 위로 넉백
-            rigid.AddForce(vector * knockBackPower, ForceMode.Impulse);
+            tempVector *= knockBackPower;
+            tempVector.y = knockBackHeight; // 약간 위로 넉백
+            rigid.velocity = tempVector;
         }
         else
         {
             Die();
-            rigid.AddForce(vector * bouncePowerWhenDie, ForceMode.Impulse);
+            rigid.AddForce(tempVector * bouncePowerWhenDie, ForceMode.Impulse);
         }
     }
 
