@@ -41,7 +41,6 @@ public class SingletonT<T> : MonoBehaviour where T : MonoBehaviour
                         // GameObject의 이름을 "T (Singleton)"으로 지정
                         singletonObj.name = typeof(T).ToString() + " (Singleton)";
 
-
                         // 씬 전환 시 파괴되지 않도록 설정
                         DontDestroyOnLoad(singletonObj); // <- 필요한가?
                     }

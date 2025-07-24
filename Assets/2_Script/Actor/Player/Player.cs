@@ -79,10 +79,6 @@ public class Player : Actor
             if (jumpAction.isJump)
             { nowAttackKey = AttackName.Player_JumpComboAttack; }
 
-            // 닷지 중 공격 여부 확인
-            else if (dodgeAction.isDodge)
-            { nowAttackKey = AttackName.Player_DodgeComboAttack; }
-
             // Basic 공격
             else
             { nowAttackKey = AttackName.Player_BasicAttack; }
@@ -90,14 +86,20 @@ public class Player : Actor
             // 공격 가능한 상태라면 : 실제 공격 발생
             if (attackAction.isCanAttack)
             {
+                // 스테미나 사용 여부
                 if (staminaAction.UseStamina(attackAction.attackCost))
                 {
                     attackAction.Attack();
                     animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
                 }
+                else
+                {
+                    nowAttackKey = AttackName.Player_BasicAttack;
+                    attackAction.Attack();
+                    animator.PlayAnimation("DoAttack");  // 애니메이션 트리거
+                }
             }
         }
-
     }
 
 
@@ -121,6 +123,4 @@ public class Player : Actor
                    animator.CheckAnimationName(1, "Attack_Jump");
         }
     }
-    
-
 }
