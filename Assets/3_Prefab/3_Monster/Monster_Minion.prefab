@@ -1607,10 +1607,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 1
-  nowHp: 1
+  maxHp: 2
+  nowHp: 2
   bouncePowerWhenDie: 10
-  knockBackHeight: 0.65
 --- !u!114 &5954479926083274602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1630,6 +1629,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 2
   knockBackPower: 0
+  knockBackHeight: 0
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 4791832901258035022, guid: 293a63e5413b8a444b9bba485398c5ae, type: 3}
   effectDestoryTime: 1
