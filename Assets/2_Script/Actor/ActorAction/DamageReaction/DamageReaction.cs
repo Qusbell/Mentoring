@@ -61,16 +61,15 @@ public class DamageReaction : ActorAction
 
 
     // 피격 (야매)
-    public virtual void TakeDamage(int damage, GameObject enemy, float knockBackPower = 0f)
+    public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f)
     {
-        // 마지막으로 공격한 적을 타겟팅
+        // 몬스터: 마지막으로 공격한 적을 타겟팅
         // <- 야매 코딩. 이후 수정
-        GameObject lastAttackedEnemy = enemy;
         Monster monster = GetComponent<Monster>();
         if (monster != null)
         {
             Transform tempTrans = monster.target;
-            monster.target = lastAttackedEnemy.transform;
+            monster.target = enemy.transform;
         }
 
         // ----- 피해 적용 -----
@@ -82,7 +81,7 @@ public class DamageReaction : ActorAction
 
         // 넉백 준비
         Vector3 vector = (this.transform.position - enemy.transform.position).normalized;
-        Rigidbody rigid = GetComponent<Rigidbody>();
+        Rigidbody rigid = GetComponent<Rigidbody>(); // <- null인 경우 생각
 
         // ----- 피격/사망 시 처리 ------
         if (0 < nowHp)

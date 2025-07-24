@@ -1306,7 +1306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1368,6 +1368,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4324133006189494714, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+      propertyPath: nowHp
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5954479926083274602, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
       propertyPath: hitEffect
       value: 
@@ -1989,6 +1993,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4006904744375403826, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
+      propertyPath: splashDamage
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.14

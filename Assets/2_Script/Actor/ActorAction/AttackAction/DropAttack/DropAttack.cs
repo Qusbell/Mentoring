@@ -14,6 +14,9 @@ public class DropAttack : AttackAction
     // 반드시 인스펙터 창에서 지정되어 있어야 함
     [SerializeField] private GameObject myWeapon = null;
 
+    // 광역 피해량
+    [SerializeField] private int splashDamage = 1;
+
     // 낙하 속도
     [SerializeField] private float dropSpeed = 13f;
 
@@ -44,7 +47,7 @@ public class DropAttack : AttackAction
     protected override void Awake()
     {
         base.Awake();
-        weapon.SetWeapon(targetTag, attackRange, this.gameObject.layer, this.gameObject);
+        weapon.SetWeapon(targetTag, attackRange, this.gameObject.layer, GetComponent<Actor>(), splashDamage);
         rigid = GetComponent<Rigidbody>();
     }
 

@@ -77,10 +77,10 @@ abstract public class ActorWeapon : MonoBehaviour
     protected string targetTag = "";
     protected int attackDamage = 0;
     protected int maxHitCount = 1; // 최대 히트 횟수
-    protected GameObject owner = null; // 해당 무기를 소유하고 있는 개체
+    protected Actor owner = null; // 해당 무기를 소유하고 있는 개체
     protected float knockBack = 0;
 
-    public virtual void SetWeapon(string p_targetTag, GameObject p_owner)
+    public virtual void SetWeapon(string p_targetTag, Actor p_owner)
     {
         targetTag = p_targetTag;
         owner = p_owner;
