@@ -67,7 +67,11 @@ public class DropAttack : AttackAction
 
         System.Action dropAttackAction = () =>
         {
-            if (isCanUseDropAttack) { rigid.AddForce(Vector3.down * dropSpeed, ForceMode.Impulse); }
+            if (isCanUseDropAttack)
+            {
+                Vector3 force = Vector3.down * dropSpeed;
+                rigid.velocity = force;
+            }
 
             // 디버그
             // Ray 그리기(맞으면 빨간색, 아니면 노란색)
