@@ -1712,7 +1712,7 @@ MonoBehaviour:
   maxHp: 20
   nowHp: 20
   bouncePowerWhenDie: 13
-  knockBackHeight: 3
+  knockBackHeight: 10
 --- !u!114 &3696162683426923108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1751,7 +1751,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodgePower: 14
   dodgeSlideTime: 0.3
-  dodgeComboTime: 0.4
   dodgeAngle: 50
   <dodgeCost>k__BackingField: 1
   ratateObjectWhenDodge: {fileID: 3152555145020637132}
