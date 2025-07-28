@@ -364,9 +364,9 @@ GameObject:
   - component: {fileID: 411016965163252633}
   - component: {fileID: 2235218766167420711}
   - component: {fileID: 3237082938306507263}
-  - component: {fileID: 2392287228515701913}
   - component: {fileID: 8039404801137072288}
   - component: {fileID: 4922285313347925585}
+  - component: {fileID: 1343354582304582897}
   m_Layer: 8
   m_Name: Monster_Mage
   m_TagString: Monster
@@ -518,22 +518,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2392287228515701913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801390549913854848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 1
-  nowHp: 1
-  bouncePowerWhenDie: 10
-  knockBackHeight: 0.65
 --- !u!114 &8039404801137072288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +537,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 5
   knockBackPower: 0
+  knockBackHeight: 0
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 7274776019300387116, guid: 88639d536973a7546b9fa19a865138bc, type: 3}
   effectDestoryTime: 1
@@ -571,6 +556,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ab53fe94ce454e81e60981b543d28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1343354582304582897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2801390549913854848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d19e017f0fce6e48bc866a10a76c98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 1
+  nowHp: 1
+  bouncePowerWhenDie: 10
 --- !u!1 &3037311676926964130
 GameObject:
   m_ObjectHideFlags: 0

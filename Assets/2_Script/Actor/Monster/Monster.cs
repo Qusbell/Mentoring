@@ -37,11 +37,21 @@ public class Monster : Actor
         base.Awake();
         actionStatus = SpawnState; // 생성부터 시작
 
-        // 피격 시 애니메이션 메서드
-        damageReaction.hitAnimation = () => SwitchStatus(HitStatus);
-        damageReaction.dieAnimation = () => SwitchStatus(DieStatus);
+        // --- hit/die 등록 ---
+        System.Action hitAction = () => { SwitchStatus(HitStatus); };
+        System.Action dieAction = null;
+        dieAction = () => {
+            SwitchStatus(DieStatus);
+            // event 구독 해제
+            damageReaction.whenHitEvent -= hitAction;
+            damageReaction.whenDieEvent -= dieAction;
+        };
 
-        // 낙사 추가
+        damageReaction.whenHitEvent += hitAction;
+        damageReaction.whenDieEvent += dieAction;
+
+
+        // --- 낙사 추가 ---
         if(GetComponent<FallingAction>() == null)
         { this.AddComponent<FallingAction>(); }
 
