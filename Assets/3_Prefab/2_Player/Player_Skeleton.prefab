@@ -400,7 +400,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.1, z: 0.4}
+  m_Size: {x: 0.3, y: 0.2, z: 0.4}
   m_Center: {x: 0, y: 0, z: 0.05}
 --- !u!114 &3451742319746817384
 MonoBehaviour:
@@ -1668,7 +1668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1c9ea500b304149aff6ffd47879d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
+  moveSpeed: 7
 --- !u!114 &8983823797723537583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,6 +1681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c44f27acedfc6644aa1fc689006e645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   inputDeadZone: 0.1
 --- !u!114 &6271566806972766735
 MonoBehaviour:
@@ -1747,7 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ed9b6c846f17142bbff98b3f3b81ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgePower: 14
+  dodgePower: 15
   dodgeSlideTime: 0.3
   dodgeAngle: 55
   <dodgeCost>k__BackingField: 1

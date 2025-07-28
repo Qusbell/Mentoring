@@ -11315,10 +11315,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_Skeleton
       objectReference: {fileID: 0}
-    - target: {fileID: 6621235718818591380, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: m_Size.y
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24227,6 +24223,10 @@ PrefabInstance:
     - target: {fileID: 5628392651492190630, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5628392651492190630, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8252234624388704648, guid: 34013df40f2a3da458571e7d355a511d, type: 3}
       propertyPath: m_LocalPosition.x
