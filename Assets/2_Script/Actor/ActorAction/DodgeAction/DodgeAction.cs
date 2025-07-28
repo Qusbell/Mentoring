@@ -22,15 +22,14 @@ public class DodgeAction : ActorAction
     // 대시 거리
     [SerializeField] protected float dodgePower = 8;
 
-    // 미끄러지기 시간
+    // 닷지 시간
     [SerializeField] protected float dodgeSlideTime = 0.4f;
-
     [SerializeField] protected float dodgeAngle = 30f;
 
     // 닷지 코스트
     [field: SerializeField] public int dodgeCost { get; set; } = 1;
 
-    // 프리펩에서 지정해서, 실제로 회전시킬 오브젝트
+    // 인스펙터에서 지정해서, 실제로 회전시킬 오브젝트
     [SerializeField] private GameObject ratateObjectWhenDodge;
 
 
