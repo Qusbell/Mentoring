@@ -61,7 +61,7 @@ public class DamageReaction : ActorAction
         {
             Hit();
             tempVector *= knockBackPower;
-            tempVector.y = knockBackHeight; // 약간 위로 넉백
+            tempVector.y = knockBackHeight + rigid.velocity.y; // 약간 위로 넉백
             rigid.velocity = tempVector;
         }
         else
