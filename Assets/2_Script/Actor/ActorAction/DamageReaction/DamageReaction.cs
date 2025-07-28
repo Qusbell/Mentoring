@@ -37,10 +37,6 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
-    // 피격 시 넉백 높이
-    [SerializeField] protected float knockBackHeight = 0.65f;
-
-
     // 피격
     public virtual void TakeDamage(int damage)
     {
@@ -61,16 +57,15 @@ public class DamageReaction : ActorAction
 
 
     // 피격 (야매)
-    public virtual void TakeDamage(int damage, GameObject enemy, float knockBackPower = 0f)
+    public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f, float knockBackHeight = 0f)
     {
-        // 마지막으로 공격한 적을 타겟팅
+        // 몬스터: 마지막으로 공격한 적을 타겟팅
         // <- 야매 코딩. 이후 수정
-        GameObject lastAttackedEnemy = enemy;
         Monster monster = GetComponent<Monster>();
         if (monster != null)
         {
             Transform tempTrans = monster.target;
-            monster.target = lastAttackedEnemy.transform;
+            monster.target = enemy.transform;
         }
 
         // ----- 피해 적용 -----
@@ -81,20 +76,21 @@ public class DamageReaction : ActorAction
 
 
         // 넉백 준비
-        Vector3 vector = (this.transform.position - enemy.transform.position).normalized;
-        Rigidbody rigid = GetComponent<Rigidbody>();
+        Vector3 tempVector = (this.transform.position - enemy.transform.position).normalized;
+        Rigidbody rigid = GetComponent<Rigidbody>(); // <- null인 경우 생각
 
         // ----- 피격/사망 시 처리 ------
         if (0 < nowHp)
         {
             Hit();
-            vector.y += knockBackHeight; // 약간 위로 넉백
-            rigid.AddForce(vector * knockBackPower, ForceMode.Impulse);
+            tempVector *= knockBackPower;
+            tempVector.y = knockBackHeight; // 약간 위로 넉백
+            rigid.velocity = tempVector;
         }
         else
         {
             Die();
-            rigid.AddForce(vector * bouncePowerWhenDie, ForceMode.Impulse);
+            rigid.AddForce(tempVector * bouncePowerWhenDie, ForceMode.Impulse);
         }
     }
 

@@ -50,6 +50,7 @@ abstract public class AttackAction : ActorAction
 
     // 넉백 거리
     [SerializeField] protected float knockBackPower = 0f;
+    [SerializeField] protected float knockBackHeight = 0f;
 
     // 공격 코스트
     [field: SerializeField] public int attackCost { get; set; } = 0;

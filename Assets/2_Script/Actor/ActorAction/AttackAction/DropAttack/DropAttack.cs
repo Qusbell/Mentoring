@@ -14,6 +14,9 @@ public class DropAttack : AttackAction
     // 반드시 인스펙터 창에서 지정되어 있어야 함
     [SerializeField] private GameObject myWeapon = null;
 
+    // 광역 피해량
+    [SerializeField] private int splashDamage = 1;
+
     // 낙하 속도
     [SerializeField] private float dropSpeed = 13f;
 
@@ -44,7 +47,7 @@ public class DropAttack : AttackAction
     protected override void Awake()
     {
         base.Awake();
-        weapon.SetWeapon(targetTag, attackRange, this.gameObject.layer, this.gameObject);
+        weapon.SetWeapon(targetTag, attackRange, this.gameObject.layer, GetComponent<Actor>(), splashDamage);
         rigid = GetComponent<Rigidbody>();
     }
 
@@ -59,21 +62,22 @@ public class DropAttack : AttackAction
         // 낙하 시도 여부
         bool isCanUseDropAttack = Physics.Raycast(rayOrigin, rayDirection, out tempHit, maxDropDistance);
 
-
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
-        weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
-
+        weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
 
         System.Action dropAttackAction = () =>
         {
-            if (isCanUseDropAttack) { rigid.AddForce(Vector3.down * dropSpeed, ForceMode.Impulse); }
+            if (isCanUseDropAttack)
+            {
+                Vector3 force = Vector3.down * dropSpeed;
+                rigid.velocity = force;
+            }
 
             // 디버그
             // Ray 그리기(맞으면 빨간색, 아니면 노란색)
             Color rayColor = isCanUseDropAttack ? Color.red : Color.yellow;
             Debug.DrawRay(rayOrigin, rayDirection * maxDropDistance, rayColor, 1.0f);
         };
-
 
         Timer.Instance.StartTimer(this, "_DropAttackAction", dropBeforeTime, dropAttackAction);
     }

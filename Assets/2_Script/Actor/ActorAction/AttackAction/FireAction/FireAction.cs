@@ -59,8 +59,8 @@ public class FireAction : AttackAction
             ProjectileWeapon tempProjectile = instantProjectile.GetComponent<ProjectileWeapon>();
             if (tempProjectile != null)
             {
-                tempProjectile.SetWeapon(targetTag, this.gameObject);
-                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime);
+                tempProjectile.SetWeapon(targetTag, GetComponent<Actor>());
+                tempProjectile.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
             }
         }
         else { Debug.Log("Projectile 지정되지 않음 : " + gameObject.name); }

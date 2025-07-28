@@ -8,14 +8,11 @@ using UnityEngine;
 
 public class DropActorWeapon : ActorWeapon
 {
-    // 범위
-    protected float attackRange = 5f;
+    protected int splashDamage = 1;   // 범위 공격 피해
+    protected float attackRange = 5f; // 범위
+    protected int originalLayer = -1; // 원래 레이어
 
-    // 원래 레이어
-    protected int originalLayer = -1;
-
-    // 착지판정
-    protected FootCollider foot;
+    protected FootCollider foot;  // 착지판정
 
 
     private void Start()
@@ -32,41 +29,40 @@ public class DropActorWeapon : ActorWeapon
 
     public override void UseWeapon(
         int p_attackDamage,
-        int p_maxHitCount, float p_knockBackPower = 0,
+        int p_maxHitCount, float p_knockBackPower = 0, float p_knockBackHeight = 0,
         GameObject p_hitEffect = null,
         float p_effectDestoryTime = 1f)
     {
-        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_hitEffect, p_effectDestoryTime);
+        base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_knockBackHeight, p_hitEffect, p_effectDestoryTime);
         if (foot != null)
         {
-            foot.ground.Add(DropAttack);
-            foot.ground.Add(NotUseWeapon);
+            foot.ground.Add(DropAttack);   // 먼저 드랍어택
+            foot.ground.Add(NotUseWeapon); // 그 후 무기 사용 종료
         }
     }
+
 
     public override void NotUseWeapon()
     {
         base.NotUseWeapon();
+        this.owner.rigid.velocity = Vector3.zero;
+
+        foot.ground.Remove(DropAttack);
         foot.ground.Remove(NotUseWeapon);
     }
 
 
-    protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)
-    {
-        base.WeaponCollisionEnterAction(damageReaction);
-        DropAttack();
-    }
-
-
-    public void SetWeapon(string p_targetTag, float p_attackRange, int p_originalLayer, GameObject p_owner)
+    public void SetWeapon(string p_targetTag, float p_attackRange, int p_originalLayer, Actor p_owner, int p_splashDamage = 1) // <- splashDamage: 야매
     {
         SetWeapon(p_targetTag, p_owner);
         attackRange = p_attackRange;
         originalLayer = p_originalLayer;
+        splashDamage = p_splashDamage;
 
-        // 오류거리 정정
+        // 오류 정정
         if (attackRange <= 0) { Debug.Log($"{this.owner.name} : DropActorWeapon의 attackRange가 0 이하"); attackRange = 1; }
         if (originalLayer <= -1) { Debug.Log($"{this.owner.name} : DropActorWeapon의 originalLayer 이상"); originalLayer = -1; }
+        if (splashDamage <= 0) { Debug.Log($"{this.owner.name} : DropActorWeapon의 splashDamage가 0 이하"); splashDamage = 0; }
     }
 
 
@@ -74,7 +70,7 @@ public class DropActorWeapon : ActorWeapon
     protected void DropAttack()
     {
         // ----- 레이어 원복 (Drop 충돌 직후 처리) -----
-        owner.layer = originalLayer;
+        owner.gameObject.layer = originalLayer;
 
         // ----- 콜라이더 탐색 -----
         Collider[] colliders = Physics.OverlapSphere(this.transform.position, attackRange);
@@ -86,11 +82,8 @@ public class DropActorWeapon : ActorWeapon
             // DamageReaction 컴포넌트가 있으면
             DamageReaction reaction = target.GetComponent<DamageReaction>();
             if (reaction != null && reaction.gameObject.layer != originalLayer)
-            { reaction.TakeDamage(attackDamage, owner, knockBack); }
+            { reaction.TakeDamage(splashDamage, owner, knockBackPower, knockBackHeight); }
         }
-
-        // ----- 착지 이벤트 제거 -----
-        foot.ground.Remove(DropAttack);
 
         // ----- 디버그 -----
         showGizmo = true;

@@ -22,6 +22,12 @@ public class DodgeAction : ActorAction
         zeroFrictionMaterial.dynamicFriction = 0f;
         zeroFrictionMaterial.staticFriction = 0f;
         zeroFrictionMaterial.frictionCombine = PhysicMaterialCombine.Minimum;
+
+        // 비활성화 상태
+        this.enabled = false;
+
+        // 기존 레이어 저장
+        originalLayer = this.gameObject.layer;
     }
 
 
@@ -51,11 +57,8 @@ public class DodgeAction : ActorAction
     // 대시 거리
     [SerializeField] protected float dodgePower = 8;
 
-    // 미끄러지기 시간 (마찰계수 줄이기 시간)
-    [SerializeField] protected float dodgeSlideTime = 0.2f;
-
-    // 콤보 넣기 시간
-    [SerializeField] protected float dodgeComboTime = 0.4f;
+    // 미끄러지기 시간
+    [SerializeField] protected float dodgeSlideTime = 0.4f;
 
     [SerializeField] protected float dodgeAngle = 30f;
 
@@ -80,38 +83,56 @@ public class DodgeAction : ActorAction
     //      { return 0 < dodgeStack; }
     //  }
 
+    private int originalLayer = -1;
 
 
     public void Dodge()
     {
-        // ----- 닷지 -----
-        rigid.velocity = Vector3.zero;
-        rigid.AddForce(this.transform.forward * dodgePower, ForceMode.Impulse);
+        // --- 닷지 ---
+        rigid.velocity = this.transform.forward * dodgePower;
 
-        // ----- 스택 -----
-        //  dodgeStack--;  // -1스택
-        //  Timer.Instance.StartEndlessTimer(this, "_Recup", dodgeRecupTime, () => { dodgeStack++; }); // 스택 재생 시작
-
-        // ----- 닷지 시 적용 물리/기울기 등 -----
+        // --- 닷지 시 적용 물리/기울기 등 ---
         myCollider.material = zeroFrictionMaterial;  // 마찰계수 제거
         rigid.useGravity = false;                    // 중력 미사용
         ratateObjectWhenDodge.transform.Rotate(dodgeAngle, 0, 0); // 앞으로 기울기
-
-        int originalLayer = this.gameObject.layer;
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
 
-        Timer.Instance.StartTimer(this, "_DodgeTime", dodgeSlideTime,
-            () => {
-                // 원상복구
-                myCollider.material = originalMaterial;
-                rigid.useGravity = true;
-                ratateObjectWhenDodge.transform.Rotate(-dodgeAngle, 0, 0);
-                this.gameObject.layer = originalLayer;
-                rigid.velocity = Vector3.zero; // 종료 시 힘 제거
-            });
-
-        // ----- 땃쥐 지속시간 (콤보 넣기 시간) -----
+        this.enabled = true;
         isDodge = true;
-        Timer.Instance.StartTimer(this, "_ComboTime", dodgeComboTime, () => { isDodge = false; });
+
+        // --- n초 후 물리 적용 ---
+        Timer.Instance.StartTimer(this, "_Dodge", dodgeSlideTime, () => { rigid.velocity = Vector3.zero; });
+    }
+
+
+
+    // 닷지가 멈출 속도
+    private float dodgeStopSpeed = 1f;
+
+    // 현재 x/z 벡터값
+    Vector2 horizontalVelocity;
+
+    // dodge 정지 판정
+    private void FixedUpdate()
+    {
+        // 현재 속도에서 x,z축만 분리
+        horizontalVelocity = new Vector2(rigid.velocity.x, rigid.velocity.z);
+
+        // 속도가 작으면 대시 중지
+        if (horizontalVelocity.sqrMagnitude < dodgeStopSpeed)
+        {
+            // 원상복구
+            myCollider.material = originalMaterial;
+            rigid.useGravity = true;
+            ratateObjectWhenDodge.transform.Rotate(-dodgeAngle, 0, 0);
+            this.gameObject.layer = originalLayer;
+
+            // 타이머 종료
+            Timer.Instance.StopEndlessTimer(this, "_Dodge");
+
+            // 추가로 대시 종료 시 필요한 처리 (이펙트, 애니메이션 등)
+            this.enabled = false;
+            isDodge = false;
+        }
     }
 }

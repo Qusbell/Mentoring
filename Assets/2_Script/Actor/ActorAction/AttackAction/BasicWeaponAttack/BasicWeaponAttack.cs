@@ -36,18 +36,18 @@ public class BasicWeaponAttack : AttackAction
     protected override void Awake()
     {
         base.Awake();
-        weapon.SetWeapon(targetTag, this.gameObject);
+        weapon.SetWeapon(targetTag, GetComponent<Actor>());
     }
 
     protected override void DoAttack()
     {
         Timer.Instance.StartTimer(
-                this, "_Use",
+                this,
                 weaponBeforeDelay,
-                () => weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, hitEffect, effectDestoryTime));
+                () => weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime));
 
         Timer.Instance.StartTimer(
-                this, "_NotUse",
+                this,
                 weaponActiveTime,
                 weapon.NotUseWeapon);
     }

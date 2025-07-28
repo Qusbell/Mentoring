@@ -5,7 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// 멧돼지 큐브용 에리어 트리거
-/// 플레이어가 트리거 영역에 진입하면 연결된 멧돼지 큐브들을 활성화
+/// 플레이어 또는 큐브가 트리거 영역에 진입하면 연결된 멧돼지 큐브들을 활성화
 /// CollapseTrigger와 동일한 방식으로 작동
 /// </summary>
 public class BoarTrigger : MonoBehaviour
@@ -15,6 +15,9 @@ public class BoarTrigger : MonoBehaviour
     [Header("트리거 설정")]
     [Tooltip("플레이어 태그")]
     public string playerTag = "Player";
+
+    [Tooltip("큐브 태그")]
+    public string cubeTag = "Cube";
 
     [Tooltip("한 번만 트리거되는지 여부")]
     public bool oneTimeUse = true;
@@ -86,12 +89,12 @@ public class BoarTrigger : MonoBehaviour
     #region ===== 트리거 이벤트 =====
 
     /// <summary>
-    /// 플레이어가 트리거 영역에 진입했을 때 호출
+    /// 플레이어 또는 큐브가 트리거 영역에 진입했을 때 호출
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        // 플레이어인지 확인
-        if (!other.CompareTag(playerTag))
+        // 플레이어 또는 큐브인지 확인
+        if (!other.CompareTag(playerTag) && !other.CompareTag(cubeTag))
             return;
 
         // 이미 트리거되었고 한 번만 사용 설정이면 무시

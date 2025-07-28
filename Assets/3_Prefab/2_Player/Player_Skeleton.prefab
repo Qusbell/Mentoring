@@ -1079,8 +1079,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.5
-  m_fontSizeBase: 0.5
+  m_fontSize: 0.3
+  m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1556,7 +1556,6 @@ GameObject:
   - component: {fileID: 2169939233528477970}
   - component: {fileID: 3959130391364565562}
   - component: {fileID: 7741900305207183450}
-  - component: {fileID: 4090338657157569667}
   - component: {fileID: 1833944609532144370}
   - component: {fileID: 4006904744375403826}
   - component: {fileID: 5069313832189576641}
@@ -1696,6 +1695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 14
+  maxHorizontalSpeed: 6
 --- !u!114 &8766476169735018083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1708,10 +1708,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  nowHp: 100
+  maxHp: 30
+  nowHp: 30
   bouncePowerWhenDie: 13
-  knockBackHeight: 0.55
 --- !u!114 &3696162683426923108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1750,8 +1749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dodgePower: 14
   dodgeSlideTime: 0.3
-  dodgeComboTime: 0.4
-  dodgeAngle: 50
+  dodgeAngle: 55
   <dodgeCost>k__BackingField: 1
   ratateObjectWhenDodge: {fileID: 3152555145020637132}
 --- !u!114 &7741900305207183450
@@ -1772,38 +1770,14 @@ MonoBehaviour:
   targetTag: 
   maxHitCount: 1
   attackRate: 0.7
-  knockBackPower: 5
+  knockBackPower: 2
+  knockBackHeight: 0
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 1507084875693659171}
-  weaponBeforeDelay: 0.2
-  weaponActiveTime: 0.8
---- !u!114 &4090338657157569667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5333357997323496402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e21933f5303c0614099731a23ad17dbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <attackName>k__BackingField: 2
-  attackDamage: 2
-  <attackRange>k__BackingField: 3
-  targetTag: 
-  maxHitCount: 1
-  attackRate: 0.5
-  knockBackPower: 0
-  <attackCost>k__BackingField: 0
-  hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
-  effectDestoryTime: 1
-  myWeapon: {fileID: 1507084875693659171}
-  weaponBeforeDelay: 0.2
-  weaponActiveTime: 0.8
+  weaponBeforeDelay: 0.1
+  weaponActiveTime: 0.3
 --- !u!114 &1833944609532144370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1822,7 +1796,8 @@ MonoBehaviour:
   targetTag: 
   maxHitCount: 1
   attackRate: 0.3
-  knockBackPower: 0
+  knockBackPower: 1
+  knockBackHeight: 0
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
@@ -1848,10 +1823,12 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 0.4
   knockBackPower: 0
-  <attackCost>k__BackingField: 1
+  knockBackHeight: 0
+  <attackCost>k__BackingField: 3
   hitEffect: {fileID: 7274776019300387116, guid: 894f5a15982a8fc4c97677510b5c60fb, type: 3}
   effectDestoryTime: 1
   myWeapon: {fileID: 1507084875693659171}
+  splashDamage: 3
   dropSpeed: 30
   maxDropDistance: 20
   dropBeforeTime: 0.25
@@ -1867,9 +1844,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a05acdee6f595409b632b279df8aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStamina: 3
-  nowStamina: 0
-  staminaRecupRate: 1
+  maxStamina: 4
+  nowStamina: 4
+  staminaRecupRate: 1.5
   recupStamina: 1
 --- !u!114 &6550980931285902158
 MonoBehaviour:

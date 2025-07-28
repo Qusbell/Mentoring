@@ -38,8 +38,6 @@ abstract public class ActorWeapon : MonoBehaviour
     }
 
 
-
-
     protected virtual void Awake()
     {
         weaponCollider = GetComponent<Collider>();
@@ -77,10 +75,11 @@ abstract public class ActorWeapon : MonoBehaviour
     protected string targetTag = "";
     protected int attackDamage = 0;
     protected int maxHitCount = 1; // 최대 히트 횟수
-    protected GameObject owner = null; // 해당 무기를 소유하고 있는 개체
-    protected float knockBack = 0;
+    protected Actor owner = null; // 해당 무기를 소유하고 있는 개체
+    protected float knockBackPower = 0f;
+    protected float knockBackHeight = 0f;
 
-    public virtual void SetWeapon(string p_targetTag, GameObject p_owner)
+    public virtual void SetWeapon(string p_targetTag, Actor p_owner)
     {
         targetTag = p_targetTag;
         owner = p_owner;
@@ -103,24 +102,27 @@ abstract public class ActorWeapon : MonoBehaviour
         int p_attackDamage,
         int p_maxHitCount,
         float p_knockBackPower,
+        float p_knockBackHeight,
         GameObject p_hitEffect = null,
         float p_effectDestoryTime = 1f)
     {
-        activateStack++;
-        isActivate = true;
-        // attackWeaponType = type;
+        if (0 < ++activateStack)
+        {
+            isActivate = true;
 
-        attackDamage = p_attackDamage;
-        maxHitCount = p_maxHitCount;
-        knockBack = p_knockBackPower;
-        hitEffect = p_hitEffect;
-        effectDestoryTime = p_effectDestoryTime;
+            // 무기 능력치 대입
+            attackDamage = p_attackDamage;
+            maxHitCount = p_maxHitCount;
+            knockBackPower = p_knockBackPower;
+            knockBackHeight = p_knockBackHeight;
+            hitEffect = p_hitEffect;
+            effectDestoryTime = p_effectDestoryTime;
+        }
     }
 
     public virtual void NotUseWeapon()
     {
-        activateStack--;
-        if (activateStack == 0)
+        if (--activateStack == 0)
         { isActivate = false; }
     }
 
@@ -145,7 +147,7 @@ abstract public class ActorWeapon : MonoBehaviour
         if (hitCount < maxHitCount)
         {
             hitTargets[damageReaction.gameObject] = hitCount + 1; // hitCount += 1
-            damageReaction.TakeDamage(attackDamage, owner, knockBack); // 데미지 적용
+            damageReaction.TakeDamage(attackDamage, owner, knockBackPower, knockBackHeight); // 데미지 적용
         }
     }
 }

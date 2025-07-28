@@ -9,7 +9,7 @@ using UnityEngine;
 abstract public class Actor : MonoBehaviour
 {
     // 오브젝트에 대한 물리효과
-    protected Rigidbody rigid;
+    public Rigidbody rigid { get; set; }
 
     // 이동
     protected MoveAction moveAction;

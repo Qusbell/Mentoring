@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// 멧돼지 경고 표시 관리
-/// 현재 위치에서 startPositionOffset 방향으로의 돌진 경로에 경고 효과 표시
+/// 멧돼지 경고 표시 관리 (XYZ 개별 조절 버전)
+/// 멧돼지 실제 이동 거리와 경고 표시 거리를 X, Y, Z 개별로 설정 가능
 /// </summary>
 public class BoarWarning : MonoBehaviour
 {
@@ -12,6 +12,10 @@ public class BoarWarning : MonoBehaviour
     [Header("경고 시간 설정")]
     [Tooltip("경고 표시 지속 시간 (초)")]
     public float warningDuration = 1f;
+
+    [Header("경고 거리 설정 (기획자 조절)")]
+    [Tooltip("경고 표시 거리 (멧돼지 이동 거리와 독립적)")]
+    public Vector3 warningDistance = new Vector3(10, 0, 0);
 
     [Header("경고 표시 설정")]
     [Tooltip("경고 평면을 바닥에서 얼마나 띄울지 (미터)")]
@@ -123,9 +127,9 @@ public class BoarWarning : MonoBehaviour
         // 기존 경고 제거
         ClearWarning();
 
-        // 경로 계산
-        Vector3 direction = GetMovementDirection();
-        float pathLength = GetPathLength();
+        // 경로 계산 (경고용 별도 계산)
+        Vector3 direction = GetWarningDirection();
+        float pathLength = GetWarningPathLength();
         float actualWidth = GetActualAttackWidth();
 
         // 경고 평면 생성
@@ -134,7 +138,8 @@ public class BoarWarning : MonoBehaviour
         if (main.showDebugLog)
         {
             Debug.Log($"[{gameObject.name}] 경고 표시 생성 완료");
-            Debug.Log($"[{gameObject.name}] 경로 길이: {pathLength:F2}, 폭: {actualWidth:F2}, 평면 수: {activeWarningPlanes.Count}");
+            Debug.Log($"[{gameObject.name}] 경고 길이: {pathLength:F2}, 폭: {actualWidth:F2}, 평면 수: {activeWarningPlanes.Count}");
+            Debug.Log($"[{gameObject.name}] 멧돼지 이동거리: {main.startPositionOffset.magnitude:F2}, 경고 거리: {pathLength:F2}");
         }
     }
 
@@ -173,13 +178,13 @@ public class BoarWarning : MonoBehaviour
     {
         // 경고 평면 간격 설정 (더 촘촘하게)
         float segmentSpacing = Mathf.Min(actualWidth * 0.5f, 2f); // 폭의 절반 또는 최대 2미터
-        
+
         // 세그먼트 수 계산 (더 촘촘한 간격으로)
         int segmentCount = Mathf.CeilToInt(pathLength / segmentSpacing);
         segmentCount = Mathf.Max(1, segmentCount);
 
-        Vector3 startPos = GetStartPosition();  // 현재 큐브 위치
-        Vector3 endPos = GetEndPosition();      // 현재 위치 + 오프셋
+        Vector3 startPos = GetWarningStartPosition();  // 경고 시작 위치
+        Vector3 endPos = GetWarningEndPosition();      // 경고 끝 위치
 
         // 각 세그먼트마다 경고 평면 생성
         for (int i = 0; i < segmentCount; i++)
@@ -291,10 +296,43 @@ public class BoarWarning : MonoBehaviour
 
     #endregion
 
-    #region ===== 유틸리티 메서드 =====
+    #region ===== 유틸리티 메서드 - 경고용 별도 계산 =====
 
     /// <summary>
-    /// 이동 방향 계산
+    /// 경고 표시용 이동 방향 계산 (오프셋 적용)
+    /// </summary>
+    private Vector3 GetWarningDirection()
+    {
+        return (GetWarningEndPosition() - GetWarningStartPosition()).normalized;
+    }
+
+    /// <summary>
+    /// 경고 표시용 경로 총 길이 계산 (오프셋 적용)
+    /// </summary>
+    private float GetWarningPathLength()
+    {
+        return Vector3.Distance(GetWarningStartPosition(), GetWarningEndPosition());
+    }
+
+    /// <summary>
+    /// 경고 표시용 시작 위치 계산 (현재 큐브 위치)
+    /// </summary>
+    private Vector3 GetWarningStartPosition()
+    {
+        return transform.position;  // 현재 큐브 위치
+    }
+
+    /// <summary>
+    /// 경고 표시용 목표 위치 계산 (독립적인 경고 거리)
+    /// </summary>
+    private Vector3 GetWarningEndPosition()
+    {
+        // 경고 거리 독립적으로 설정
+        return transform.position + warningDistance;
+    }
+
+    /// <summary>
+    /// 멧돼지 실제 이동 방향 계산 (기존 방식)
     /// </summary>
     private Vector3 GetMovementDirection()
     {
@@ -302,7 +340,7 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 경로 총 길이 계산
+    /// 멧돼지 실제 경로 총 길이 계산 (기존 방식)
     /// </summary>
     private float GetPathLength()
     {
@@ -310,7 +348,7 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 시작 위치 계산 (현재 큐브 위치)
+    /// 멧돼지 실제 시작 위치 계산 (현재 큐브 위치)
     /// </summary>
     private Vector3 GetStartPosition()
     {
@@ -318,7 +356,7 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 목표 위치 계산 (현재 위치 + 오프셋)
+    /// 멧돼지 실제 목표 위치 계산 (현재 위치 + 원본 오프셋)
     /// </summary>
     private Vector3 GetEndPosition()
     {
@@ -382,40 +420,59 @@ public class BoarWarning : MonoBehaviour
 
     #endregion
 
-    #region ===== 디버그 시각화 =====
+    #region ===== 에디터 시각화 =====
 
 #if UNITY_EDITOR
     /// <summary>
-    /// 에디터에서 경고 경로 시각화
+    /// 씬에서 경고 경로 시각화
     /// </summary>
     private void OnDrawGizmos()
     {
         if (main == null) return;
 
-        Vector3 startPos = GetStartPosition();  // 현재 큐브 위치
-        Vector3 endPos = GetEndPosition();      // 현재 위치 + 오프셋
+        // 멧돼지 실제 이동 경로 (청록색)
+        Vector3 boarStartPos = GetStartPosition();
+        Vector3 boarEndPos = GetEndPosition();
         float width = GetActualAttackWidth();
 
-        // 경로 선 그리기
-        Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
-        Gizmos.DrawLine(startPos, endPos);
+        Gizmos.color = new Color(0f, 1f, 1f, 0.5f); // 청록색
+        Gizmos.DrawLine(boarStartPos, boarEndPos);
+
+        // 경고 표시 경로 (빨간색)
+        Vector3 warningStartPos = GetWarningStartPosition();
+        Vector3 warningEndPos = GetWarningEndPosition();
+
+        Gizmos.color = new Color(1f, 0f, 0f, 0.7f); // 빨간색
+        Gizmos.DrawLine(warningStartPos, warningEndPos);
 
         // 경고 영역 표시
-        Vector3 direction = GetMovementDirection();
-        Vector3 perpendicular = Vector3.Cross(direction, Vector3.up).normalized * (width / 2f);
+        Vector3 warningDirection = GetWarningDirection();
+        Vector3 perpendicular = Vector3.Cross(warningDirection, Vector3.up).normalized * (width / 2f);
 
         Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
         Vector3[] corners = {
-            startPos + perpendicular,
-            startPos - perpendicular,
-            endPos - perpendicular,
-            endPos + perpendicular
+            warningStartPos + perpendicular,
+            warningStartPos - perpendicular,
+            warningEndPos - perpendicular,
+            warningEndPos + perpendicular
         };
 
         for (int i = 0; i < corners.Length; i++)
         {
             Gizmos.DrawLine(corners[i], corners[(i + 1) % corners.Length]);
         }
+
+        // 시작점들 표시
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(boarStartPos, 0.2f);
+        Gizmos.DrawSphere(warningStartPos, 0.2f);
+
+        // 끝점들 표시
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(boarEndPos, 0.2f);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(warningEndPos, 0.2f);
     }
 
     /// <summary>
@@ -440,7 +497,9 @@ public class BoarWarning : MonoBehaviour
             transform.position + Vector3.up * 4f,
             $"경고 평면 수: {activeWarningPlanes.Count}\n" +
             $"경고 지속시간: {warningDuration}초\n" +
-            $"경로 길이: {GetPathLength():F2}m\n" +
+            $"멧돼지 이동거리: {GetPathLength():F2}m\n" +
+            $"경고 표시거리: {GetWarningPathLength():F2}m\n" +
+            $"경고 오프셋: {warningDistance}\n" +
             $"경고 폭: {GetActualAttackWidth():F2}m"
         );
     }
