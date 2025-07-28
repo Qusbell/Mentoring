@@ -1,10 +1,15 @@
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+
 
 public enum ItemType
 {
     HealthPotion,    // 체력 회복
     StaminaPotion    // 스태미나 회복
 }
+
 
 public class ItemPickup : MonoBehaviour
 {
@@ -24,7 +29,7 @@ public class ItemPickup : MonoBehaviour
         // 아이템 태그 자동 설정
         if (!gameObject.CompareTag("Item"))
         {
-            gameObject.tag = "Item";
+            Debug.LogWarning($"{this.gameObject.name} : 아이템의 태그가 일치하지 않음 (현재 : {this.gameObject.tag})");
         }
     }
 
