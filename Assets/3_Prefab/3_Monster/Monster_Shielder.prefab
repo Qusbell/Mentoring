@@ -852,9 +852,9 @@ GameObject:
   - component: {fileID: 4788860662003758590}
   - component: {fileID: 7055339038432512250}
   - component: {fileID: 5038519080904345008}
-  - component: {fileID: 1373652728143536970}
   - component: {fileID: 7540323481133770776}
   - component: {fileID: 5097308888875272474}
+  - component: {fileID: 8749030859189014446}
   m_Layer: 8
   m_Name: Monster_Shielder
   m_TagString: Monster
@@ -1008,21 +1008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1373652728143536970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2384884184112096675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 3
-  nowHp: 3
-  bouncePowerWhenDie: 10
 --- !u!114 &7540323481133770776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1062,6 +1047,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6220fc927a7dd44827c153b983d45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8749030859189014446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2384884184112096675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d19e017f0fce6e48bc866a10a76c98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 3
+  nowHp: 3
+  bouncePowerWhenDie: 10
 --- !u!1 &2910221618307621725
 GameObject:
   m_ObjectHideFlags: 0

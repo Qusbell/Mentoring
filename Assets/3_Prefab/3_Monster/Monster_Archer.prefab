@@ -935,9 +935,9 @@ GameObject:
   - component: {fileID: 1059437548714548137}
   - component: {fileID: 7202377034654116973}
   - component: {fileID: 4744986361193923189}
-  - component: {fileID: 7482809049616863677}
   - component: {fileID: 4717604142083378933}
   - component: {fileID: 1260656170718980920}
+  - component: {fileID: 6346123609836272362}
   m_Layer: 8
   m_Name: Monster_Archer
   m_TagString: Monster
@@ -1089,22 +1089,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7482809049616863677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4196742738127299694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 1
-  nowHp: 1
-  bouncePowerWhenDie: 10
-  knockBackHeight: 0.65
 --- !u!114 &4717604142083378933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1124,6 +1108,7 @@ MonoBehaviour:
   maxHitCount: 1
   attackRate: 2
   knockBackPower: 0
+  knockBackHeight: 0
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 1520428459269427019, guid: c2d85abc44627e849b74066ae29adcf7, type: 3}
   effectDestoryTime: 1
@@ -1142,6 +1127,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3c8e74aebe41794ea3c7172054405be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6346123609836272362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4196742738127299694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d19e017f0fce6e48bc866a10a76c98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 1
+  nowHp: 1
+  bouncePowerWhenDie: 10
 --- !u!1 &4750183518291090577
 GameObject:
   m_ObjectHideFlags: 0
