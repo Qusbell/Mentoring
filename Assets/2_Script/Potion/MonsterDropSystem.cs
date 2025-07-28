@@ -17,7 +17,7 @@ public class MonsterDropSystem : MonoBehaviour
     {
         DamageReaction damageReaction = GetComponent<DamageReaction>();
         if (damageReaction != null)
-        { damageReaction.whenDieEvent += DropPotions; }
+        { damageReaction.whenDieEvent.Add(DropPotions); }
     }
 
 

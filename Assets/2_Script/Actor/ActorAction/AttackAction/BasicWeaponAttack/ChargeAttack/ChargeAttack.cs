@@ -8,7 +8,6 @@ public class ChargeAttack : BasicWeaponAttack
     protected Rigidbody rigid;
     [SerializeField] protected float chargeSpeed = 20f;
 
-    [SerializeField] protected float pushMonsterPower = 8f;
     [SerializeField] protected float decelerateSpeed = 1f;
     [SerializeField] protected float decelerateRate = 0.1f;
 

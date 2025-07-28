@@ -35,8 +35,8 @@ public class DamageReaction : ActorAction
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
     // hit/die 이벤트
-    public event System.Action whenHitEvent = delegate { };
-    public event System.Action whenDieEvent = delegate { };
+    public List<System.Action> whenHitEvent = new List<Action>();
+    public List<System.Action> whenDieEvent = new List<Action>();
 
 
     // 피격
@@ -61,7 +61,7 @@ public class DamageReaction : ActorAction
         {
             Hit();
             tempVector *= knockBackPower;
-            tempVector.y = knockBackHeight; // 약간 위로 넉백
+            tempVector.y = knockBackHeight + rigid.velocity.y; // 약간 위로 넉백
             rigid.velocity = tempVector;
         }
         else
@@ -75,7 +75,8 @@ public class DamageReaction : ActorAction
     protected void Hit()
     {
         // --- hit 이벤트 호출 ---
-        whenHitEvent?.Invoke();
+        foreach (var hitEvent in whenHitEvent)
+        { hitEvent?.Invoke(); }
     }
 
 
@@ -83,7 +84,8 @@ public class DamageReaction : ActorAction
     protected virtual void Die()
     {
         // --- die 이벤트 호출 ---
-        whenDieEvent?.Invoke();
+        foreach (var dieEvent in whenDieEvent)
+        { dieEvent?.Invoke(); }
 
         // ----- 사망 시, 모든 ActorAction 비활성화 -----
         ActorAction[] actorActions = this.GetComponents<ActorAction>();
@@ -92,6 +94,10 @@ public class DamageReaction : ActorAction
             foreach (var item in actorActions)
             { item.enabled = false; }
         }
+
+        // 이벤트 전부 클리어
+        whenHitEvent.Clear();
+        whenDieEvent.Clear();
 
         // 레이어 변경
         int targetLayer = LayerMask.NameToLayer("DieActorLayer");

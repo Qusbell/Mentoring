@@ -39,16 +39,9 @@ public class Monster : Actor
 
         // --- hit/die 등록 ---
         System.Action hitAction = () => { SwitchStatus(HitStatus); };
-        System.Action dieAction = null;
-        dieAction = () => {
-            SwitchStatus(DieStatus);
-            // event 구독 해제
-            damageReaction.whenHitEvent -= hitAction;
-            damageReaction.whenDieEvent -= dieAction;
-        };
-
-        damageReaction.whenHitEvent += hitAction;
-        damageReaction.whenDieEvent += dieAction;
+        System.Action dieAction = () => { SwitchStatus(DieStatus); };
+        damageReaction.whenHitEvent.Add(hitAction);
+        damageReaction.whenDieEvent.Add(dieAction);
 
 
         // --- 낙사 추가 ---
