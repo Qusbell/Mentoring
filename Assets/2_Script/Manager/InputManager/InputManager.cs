@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    public Camera mainCamera; // 인스펙터에서 참조하거나, 코드로 할당
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
+
+
     //==========
     // 방향 입력
     //==========
@@ -20,25 +29,51 @@ public class InputManager : MonoBehaviour
     // 입력 데드존
     [SerializeField] protected float inputDeadZone = 0.1f;
 
+    //  protected void InputWASD()
+    //  {
+    //      // 방향 입력받음
+    //      moveHorizontal = Input.GetAxisRaw("Horizontal");
+    //      moveVertical = Input.GetAxisRaw("Vertical"); 
+    //  
+    //      // 데드존 검사
+    //      if (Mathf.Abs(moveHorizontal) < inputDeadZone) { moveHorizontal = 0; }
+    //      if (Mathf.Abs(moveVertical) < inputDeadZone) { moveVertical = 0; }
+    //  
+    //      // 방향 대입
+    //      // 45도(쿼터뷰) 틀어진 방향
+    //      // <- 현재 상수 상태, 이후 실제 카메라 각도에 대응하도록 바꿀 것
+    //      moveVec = (Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도)
+    //          * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // 입력된 방향벡터
+    //  }
+
+
     // 이동 방향 입력
     protected void InputWASD()
-    // 입력(WASD, ↑↓←→)으로 방향 지정
-    // 정규화된(모든 방향으로 크기가 1인) 방향벡터 생성
     {
-        // 방향 입력받음
+        // 입력(WASD, ↑↓←→)으로 방향 지정
+        // 정규화된(모든 방향으로 크기가 1인) 방향벡터 생성
         moveHorizontal = Input.GetAxisRaw("Horizontal"); // x축 (좌우)
         moveVertical = Input.GetAxisRaw("Vertical");     // z축 (앞뒤)
 
         // 데드존 검사
-        if (Mathf.Abs(moveHorizontal) < inputDeadZone) { moveHorizontal = 0; }
-        if (Mathf.Abs(moveVertical) < inputDeadZone) { moveVertical = 0; }
+        if (Mathf.Abs(moveHorizontal) < inputDeadZone) moveHorizontal = 0;
+        if (Mathf.Abs(moveVertical) < inputDeadZone) moveVertical = 0;
 
-        // 방향 대입
-        // 45도(쿼터뷰) 틀어진 방향
-        // <- 현재 상수 상태, 이후 실제 카메라 각도에 대응하도록 바꿀 것
-        moveVec = (Quaternion.Euler(0, 45, 0)  // 이동 방향을 y축 기준 45도 회전 (카메라 각도)
-            * (new Vector3(moveHorizontal, 0, moveVertical)).normalized); // 입력된 방향벡터
+        // 카메라 기준 forward/right의 y성분 제거
+        Vector3 camForward = mainCamera.transform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+
+        Vector3 camRight = mainCamera.transform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+
+        // 입력을 카메라 축에 적용
+        Vector3 desiredMove = (camForward * moveVertical + camRight * moveHorizontal).normalized;
+        moveVec = desiredMove;
     }
+
+
 
 
 
