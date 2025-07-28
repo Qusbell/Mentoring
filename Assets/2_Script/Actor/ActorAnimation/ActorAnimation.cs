@@ -51,18 +51,24 @@ public class ActorAnimation : MonoBehaviour
     { animator.SetTrigger(animationName); }
 
 
-    public void PauseUntilGrounded()
+
+
+    // 점프 콤보 어택 애니메이션
+    // 공중에서는 내려치는 시점에서 정지
+    public void PauseWhenJump()
     {
         FootCollider foot = GetComponentInChildren<FootCollider>();
 
-        // 착지 상태가 아니라면
-        if (!foot.isRand)
+        if (foot != null)
         {
             animator.speed = 0f;
-            System.Action resumeAction = null;
 
-            resumeAction = () => { animator.speed = 1f; foot.ground.Remove(resumeAction); };
+            // 점프 콤보 어택 시 사용할 액션
+            System.Action resumeAction = null;
+            resumeAction = () => { animator.speed = 1f; foot.ground.Remove(resumeAction); Debug.Log("착지"); };
             foot.ground.Add(resumeAction);
         }
     }
+
+
 }

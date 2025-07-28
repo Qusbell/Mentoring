@@ -33,10 +33,17 @@ public class FootCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 큐브인 경우
-        if (other.tag == "Cube")
+        if (other.CompareTag("Cube"))
         {
             rands.Add(other);
+        }
+    }
 
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (isRand)
+        {
             foreach (System.Action action in ground.ToArray())
             { action?.Invoke(); }
         }
@@ -46,7 +53,9 @@ public class FootCollider : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // 큐브인 경우
-        if (other.tag == "Cube")
-        { rands.Remove(other); }
+        if (other.CompareTag("Cube"))
+        {
+            rands.Remove(other);
+        }
     }
 }

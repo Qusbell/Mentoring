@@ -34,6 +34,8 @@ public class DropActorWeapon : ActorWeapon
         float p_effectDestoryTime = 1f)
     {
         base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_knockBackHeight, p_hitEffect, p_effectDestoryTime);
+        owner.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
+
         if (foot != null)
         {
             foot.ground.Add(DropAttack);   // 먼저 드랍어택

@@ -58,24 +58,19 @@ public class DropAttack : AttackAction
         RaycastHit tempHit;
         Vector3 rayOrigin = this.transform.position;
         Vector3 rayDirection = Vector3.down;
-
         // 낙하 시도 여부
         bool isCanUseDropAttack = Physics.Raycast(rayOrigin, rayDirection, out tempHit, maxDropDistance);
 
-        this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
+        // 무기 사용 시작
         weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
 
-        System.Action dropAttackAction = () =>
-        {
-            if (isCanUseDropAttack)
-            { rigid.velocity = Vector3.down * dropSpeed; }
+        // --- 낙하 여부 ---
+        if (!isCanUseDropAttack) { return; }
 
-            // 디버그
-            // Ray 그리기(맞으면 빨간색, 아니면 노란색)
-            Color rayColor = isCanUseDropAttack ? Color.red : Color.yellow;
-            Debug.DrawRay(rayOrigin, rayDirection * maxDropDistance, rayColor, 1.0f);
-        };
+        System.Action dropAttackAction = () =>
+        { rigid.velocity = Vector3.down * dropSpeed; };
 
         Timer.Instance.StartTimer(this, "_DropAttackAction", dropBeforeTime, dropAttackAction);
     }
 }
+
