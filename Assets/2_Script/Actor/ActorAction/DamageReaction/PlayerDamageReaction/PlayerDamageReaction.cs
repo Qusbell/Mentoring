@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDamageReaction : MonoBehaviour
+public class PlayerDamageReaction : DamageReaction
 {
     protected void Start()
     {
