@@ -20,32 +20,24 @@ public class FootCollider : MonoBehaviour
     private List<Collider> rands = new List<Collider>();
     public bool isRand
     {
-        get
-        {
-            return 0 < rands.Count;
-        }
+        get { return 0 < rands.Count; }
     }
 
 
-    // 착지 판정 시 액션
-    public List<System.Action> ground { get; set; } = new List<System.Action>();
+    // 착지 판정 시 이벤트
+    public List<System.Action> whenGroundEvent { get; set; } = new List<System.Action>();
 
     private void OnTriggerEnter(Collider other)
     {
         // 큐브인 경우
         if (other.CompareTag("Cube"))
         {
+            Debug.Log("착지!");
             rands.Add(other);
-        }
-    }
 
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (isRand)
-        {
-            foreach (System.Action action in ground.ToArray())
-            { action?.Invoke(); }
+            // 이벤트 일괄 발생
+            foreach (System.Action groundEvent in whenGroundEvent.ToArray())
+            { groundEvent?.Invoke(); }
         }
     }
 

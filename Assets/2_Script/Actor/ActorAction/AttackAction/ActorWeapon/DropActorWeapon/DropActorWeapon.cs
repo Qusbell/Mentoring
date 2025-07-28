@@ -38,19 +38,19 @@ public class DropActorWeapon : ActorWeapon
 
         if (foot != null)
         {
-            foot.ground.Add(DropAttack);   // 먼저 드랍어택
-            foot.ground.Add(NotUseWeapon); // 그 후 무기 사용 종료
+            foot.whenGroundEvent.Add(DropAttack);   // 먼저 드랍어택
+            foot.whenGroundEvent.Add(NotUseWeapon); // 그 후 무기 사용 종료
         }
     }
-
+    
 
     public override void NotUseWeapon()
     {
         base.NotUseWeapon();
         this.owner.rigid.velocity = Vector3.zero;
 
-        foot.ground.Remove(DropAttack);
-        foot.ground.Remove(NotUseWeapon);
+        foot.whenGroundEvent.Remove(DropAttack);
+        foot.whenGroundEvent.Remove(NotUseWeapon);
     }
 
 
@@ -75,6 +75,7 @@ public class DropActorWeapon : ActorWeapon
         owner.gameObject.layer = originalLayer;
 
         // ----- 콜라이더 탐색 -----
+        // <- 부모 쪽 메서드로 뺄 생각?
         Collider[] colliders = Physics.OverlapSphere(this.transform.position, attackRange);
 
         foreach (Collider collider in colliders)
@@ -83,13 +84,12 @@ public class DropActorWeapon : ActorWeapon
 
             // DamageReaction 컴포넌트가 있으면
             DamageReaction reaction = target.GetComponent<DamageReaction>();
-            if (reaction != null && reaction.gameObject.layer != originalLayer)
+            if (reaction != null && reaction.CompareTag(targetTag))
             { reaction.TakeDamage(splashDamage, owner, knockBackPower, knockBackHeight); }
         }
 
         // ----- 디버그 -----
         showGizmo = true;
-        Timer.Instance.StartTimer(this, "_기즈모", 0.2f, () => showGizmo = false);
 
         // ----- 이펙트 -----
         InstantHitEffect();
@@ -104,6 +104,7 @@ public class DropActorWeapon : ActorWeapon
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, attackRange);
+            Timer.Instance.StartTimer(this, "_기즈모", 0.2f, () => showGizmo = false);
         }
     }
 }

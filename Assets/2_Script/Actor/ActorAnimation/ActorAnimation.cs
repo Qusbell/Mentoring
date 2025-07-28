@@ -16,8 +16,6 @@ public class ActorAnimation : MonoBehaviour
     {
         // 애니메이터 컴포넌트 get
         animator = GetComponent<Animator>();
-
-        this.enabled = false; // pause용(코루틴 대용)
     }
     
 
@@ -31,7 +29,12 @@ public class ActorAnimation : MonoBehaviour
     public virtual bool CheckAnimationName(string animationStateName)
     { return animationState.IsName(animationStateName); }
 
+    public virtual bool CheckAnimationTime()
+    { return animationState.normalizedTime < 1.0f; }
 
+
+    // 레이어까지 체크하는
+    // 재생 중 애니메이션 이름 확인
     public virtual bool CheckAnimationName(int layer, string animationStateName)
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(layer);
@@ -39,8 +42,7 @@ public class ActorAnimation : MonoBehaviour
     }
 
 
-    public virtual bool CheckAnimationTime()
-    { return animationState.normalizedTime < 1.0f; }
+    // === 애니메이션 재생 ===
 
     // SetBool 재생
     public virtual void PlayAnimation(string animationName, bool p_bool)
@@ -53,20 +55,43 @@ public class ActorAnimation : MonoBehaviour
 
 
 
-    // 점프 콤보 어택 애니메이션
+
+    // === 점프 콤보 어택 애니메이션 이벤트 ===
+
+    private bool isJumpAttackPlag = false;
+
+    public void CheckWhenJump()
+    {
+        FootCollider foot = GetComponentInChildren<FootCollider>();
+        if (foot != null && !foot.isRand)
+        {
+            isJumpAttackPlag = true;
+            System.Action action = null;
+            action = () => { isJumpAttackPlag = false; foot.whenGroundEvent.Remove(action); };
+            foot.whenGroundEvent.Add(action);
+        }
+    }
+
     // 공중에서는 내려치는 시점에서 정지
     public void PauseWhenJump()
     {
         FootCollider foot = GetComponentInChildren<FootCollider>();
 
-        if (foot != null)
+        if (foot != null && isJumpAttackPlag)
         {
+            // 애니메이션 멈춤
             animator.speed = 0f;
+            // Debug.Log("점프어택 애니메이션 정지");
 
-            // 점프 콤보 어택 시 사용할 액션
+            // 착지 시 애니메이션 재개
             System.Action resumeAction = null;
-            resumeAction = () => { animator.speed = 1f; foot.ground.Remove(resumeAction); Debug.Log("착지"); };
-            foot.ground.Add(resumeAction);
+            resumeAction = () => {
+                animator.speed = 1f;
+                foot.whenGroundEvent.Remove(resumeAction);
+            };
+
+            // 이벤트 추가
+            foot.whenGroundEvent.Add(resumeAction);
         }
     }
 

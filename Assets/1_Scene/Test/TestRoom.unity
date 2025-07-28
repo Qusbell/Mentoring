@@ -146,7 +146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &76647371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1536,7 +1536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1343171881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1965,13 +1965,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4006904744375403826, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
+      propertyPath: attackRate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.14
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.z

@@ -106,7 +106,6 @@ public class Player : Actor
     }
 
 
-
     // 애니메이션 재생 시작 시 true
     protected bool isAnimatePlay
     {
