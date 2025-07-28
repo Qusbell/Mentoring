@@ -32,7 +32,7 @@ public class FootCollider : MonoBehaviour
         // 큐브인 경우
         if (other.CompareTag("Cube"))
         {
-            Debug.Log("착지!");
+            // Debug.Log("착지!");
             rands.Add(other);
 
             // 이벤트 일괄 발생

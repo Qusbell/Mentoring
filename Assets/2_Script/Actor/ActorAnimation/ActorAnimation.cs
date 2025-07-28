@@ -11,11 +11,14 @@ public class ActorAnimation : MonoBehaviour
     // 애니메이터
     protected Animator animator;
 
+    // <- 점프 관련 애니메이션 체크용
+    private FootCollider foot;
+
     // 초기화
     protected virtual void Awake()
     {
-        // 애니메이터 컴포넌트 get
         animator = GetComponent<Animator>();
+        foot = GetComponentInChildren<FootCollider>();
     }
     
 
@@ -60,9 +63,9 @@ public class ActorAnimation : MonoBehaviour
 
     private bool isJumpAttackPlag = false;
 
+    // 내려치는 시점 이전에 착지했는지 플래그
     public void CheckWhenJump()
     {
-        FootCollider foot = GetComponentInChildren<FootCollider>();
         if (foot != null && !foot.isRand)
         {
             isJumpAttackPlag = true;
@@ -75,8 +78,6 @@ public class ActorAnimation : MonoBehaviour
     // 공중에서는 내려치는 시점에서 정지
     public void PauseWhenJump()
     {
-        FootCollider foot = GetComponentInChildren<FootCollider>();
-
         if (foot != null && isJumpAttackPlag)
         {
             // 애니메이션 멈춤

@@ -18,18 +18,17 @@ public class ProjectileWeapon : ActorWeapon
         moveAction = GetComponent<MoveAction>();
     }
 
-
     private void Start()
     {
         // 타이머 후 해당 투사체 삭제
-        // StartCoroutine(Timer.StartTimer(projectileTimer, () => Destroy(this.gameObject)));
-        Timer.Instance.StartTimer(this, projectileTimer, () => { InstantHitEffect(); Destroy(this.gameObject); });
+        Timer.Instance.StartTimer(this, "_Projectile", projectileTimer, EffectAndDestory);
     }
 
     // 매 프레임 이동
     protected virtual void Update()
     {
         if (moveAction.isMove) { moveAction.Move(); }
+        if (owner == null) { EffectAndDestory(); }
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -37,14 +36,19 @@ public class ProjectileWeapon : ActorWeapon
         base.OnTriggerEnter(other);
         if (other.CompareTag("Cube"))
         {
-            InstantHitEffect();
-            Destroy(this.gameObject);
+            EffectAndDestory();
         }
     }
 
     protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)
     {
         base.WeaponCollisionEnterAction(damageReaction);
+        EffectAndDestory();
+    }
+
+
+    protected void EffectAndDestory()
+    {
         InstantHitEffect();
         Destroy(this.gameObject);
     }
