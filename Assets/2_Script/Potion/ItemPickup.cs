@@ -4,18 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public enum ItemType
+public class DropItem : MonoBehaviour
 {
-    HealthPotion,    // 체력 회복
-    StaminaPotion    // 스태미나 회복
-}
-
-
-public class ItemPickup : MonoBehaviour
-{
-    [Header("아이템 정보")]
-    public ItemType itemType = ItemType.HealthPotion;
-
     [Header("회복량 설정")]
     [SerializeField] private int healthHealAmount = 50;    // 체력 회복량
     [SerializeField] private int staminaHealAmount = 2;    // 스태미나 회복량
@@ -26,7 +16,7 @@ public class ItemPickup : MonoBehaviour
 
     private void Awake()
     {
-        // 아이템 태그 자동 설정
+        // 아이템 태그 안넣었을 때
         if (!gameObject.CompareTag("Item"))
         {
             Debug.LogWarning($"{this.gameObject.name} : 아이템의 태그가 일치하지 않음 (현재 : {this.gameObject.tag})");
@@ -47,25 +37,15 @@ public class ItemPickup : MonoBehaviour
 
     private bool ApplyItemEffect(GameObject player)
     {
-        switch (itemType)
-        {
-            case ItemType.HealthPotion:
-                DamageReaction damageReaction = player.GetComponent<DamageReaction>();
-                if (damageReaction != null)
-                {
-                    damageReaction.Heal(healthHealAmount); // 새 메서드 사용
-                    return true;
-                }
-                break;
 
-            case ItemType.StaminaPotion:
-                StaminaAction staminaAction = player.GetComponent<StaminaAction>();
-                if (staminaAction != null)
-                {
-                    staminaAction.RecoverStamina(staminaHealAmount); // 새 메서드 사용
-                    return true;
-                }
-                break;
+        DamageReaction damageReaction = player.GetComponent<DamageReaction>();
+        StaminaAction staminaAction = player.GetComponent<StaminaAction>();
+
+        if (damageReaction != null && staminaAction != null)
+        {
+            damageReaction.Heal(healthHealAmount); // 새 메서드 사용
+            staminaAction.RecoverStamina(staminaHealAmount); // 새 메서드 사용
+            return true;
         }
 
         return false;

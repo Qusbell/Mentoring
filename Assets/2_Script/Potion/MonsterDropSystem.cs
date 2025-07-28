@@ -7,10 +7,6 @@ public class MonsterDropSystem : MonoBehaviour
     [Header("드롭할 포션들")]
     public List<GameObject> itemPrefeb;
 
-    //  [Header("드롭 설정")]
-    //  public bool dropHealthPotion = false;    // 체력 포션 드롭 여부
-    //  public bool dropStaminaPotion = false;   // 스태미나 포션 드롭 여부
-
     [Header("물리 설정")]
     public float dropHeight = 0.5f;         // 드롭 높이
     public float scatterRadius = 1f;        // 흩어짐 반경
