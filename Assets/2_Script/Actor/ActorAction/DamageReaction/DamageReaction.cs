@@ -105,4 +105,9 @@ public class DamageReaction : ActorAction
         //  if(setMaterials != null)
         //  { setMaterials.SetAllMaterialsToFadeOut(); }
     }
+
+    public void Heal(int amount)
+    {
+        healthPoint += amount; // 내부에서는 private set 사용 가능
+    }
 }
