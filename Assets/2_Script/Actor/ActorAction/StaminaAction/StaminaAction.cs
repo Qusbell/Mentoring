@@ -62,7 +62,9 @@ public class StaminaAction : ActorAction
         }
     }
 
-
-
+    public void RecoverStamina(int amount)
+    {
+        stamina += amount; // 내부에서는 protected set 사용 가능
+    }
 
 }
