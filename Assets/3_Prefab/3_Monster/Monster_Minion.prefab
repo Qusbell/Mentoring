@@ -1439,9 +1439,9 @@ GameObject:
   - component: {fileID: -9184585946787287395}
   - component: {fileID: -1961226020710905288}
   - component: {fileID: -4275034679557372163}
-  - component: {fileID: -4324133006189494714}
   - component: {fileID: 5954479926083274602}
   - component: {fileID: 8075370776093852105}
+  - component: {fileID: 2307444567851262608}
   m_Layer: 8
   m_Name: Monster_Minion
   m_TagString: Monster
@@ -1595,21 +1595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-4324133006189494714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6143643343095581565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a17fe14cf8d22d47836ece187b2bee8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 1
-  nowHp: 1
-  bouncePowerWhenDie: 10
 --- !u!114 &5954479926083274602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1648,6 +1633,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5701916d8fa0964fbbfbb429148a7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2307444567851262608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6143643343095581565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d19e017f0fce6e48bc866a10a76c98a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 1
+  nowHp: 1
+  bouncePowerWhenDie: 10
 --- !u!1 &6628943230737950743
 GameObject:
   m_ObjectHideFlags: 0

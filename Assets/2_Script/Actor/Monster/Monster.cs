@@ -43,12 +43,12 @@ public class Monster : Actor
         dieAction = () => {
             SwitchStatus(DieStatus);
             // event 구독 해제
-            damageReaction.whenHit -= hitAction;
-            damageReaction.whenDie -= dieAction;
+            damageReaction.whenHitEvent -= hitAction;
+            damageReaction.whenDieEvent -= dieAction;
         };
 
-        damageReaction.whenHit += hitAction;
-        damageReaction.whenDie += dieAction;
+        damageReaction.whenHitEvent += hitAction;
+        damageReaction.whenDieEvent += dieAction;
 
 
         // --- 낙사 추가 ---
