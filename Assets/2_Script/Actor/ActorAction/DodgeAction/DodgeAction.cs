@@ -52,6 +52,8 @@ public class DodgeAction : ActorAction
         rigid.useGravity = false;
         ratateObjectWhenDodge.transform.Rotate(dodgeAngle, 0, 0); // 앞으로 기울기
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
+        rigid.velocity = Vector3.zero;
+
 
         // --- dodge false ---
         Timer.Instance.StartTimer(this, "_Dodge", dodgeSlideTime,
@@ -69,6 +71,11 @@ public class DodgeAction : ActorAction
 
 
     // dodge 시 이동
+    // x, z로만 힘
     private void FixedUpdate()
-    { rigid.velocity = this.transform.forward * dodgePower; }
+    {
+        Vector3 currentVelocity = rigid.velocity; // 현재 속도 저장
+        Vector3 forwardVelocity = transform.forward * dodgePower; // x,z 축 속도 계산
+        rigid.velocity = new Vector3(forwardVelocity.x, currentVelocity.y, forwardVelocity.z); // y 축은 그대로 유지
+    }
 }
