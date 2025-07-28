@@ -11,7 +11,7 @@ public class CubeGlueActivator : MonoBehaviour
 {
     [Header("글루 설정")]
     [Tooltip("글루할 오브젝트 태그들")]
-    public List<string> glueTags = new List<string> { "Player", "Monster" };
+    public List<string> glueTags = new List<string> { "Player", "Monster","Item" };
 
     private CubeMover cubeMover;
     private CubeGlue cubeGlue;
