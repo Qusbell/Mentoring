@@ -34,7 +34,6 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
-
     // hit/die 이벤트
     public event System.Action whenHitEvent = delegate { };
     public event System.Action whenDieEvent = delegate { };

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerDamageReaction : MonoBehaviour
 {
+    protected void Start()
+    {
+        
 
+    }
 
 
 }

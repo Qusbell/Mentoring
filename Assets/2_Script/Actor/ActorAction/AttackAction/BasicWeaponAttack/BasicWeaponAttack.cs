@@ -10,10 +10,10 @@ public class BasicWeaponAttack : AttackAction
     [SerializeField] private GameObject myWeapon = null;
 
     // 무기 활성화 이전 시간
-    [SerializeField] private float weaponBeforeDelay = 0.2f;
+    [SerializeField] protected float weaponBeforeDelay = 0.2f;
 
     // 무기가 활성화되어있을 시간
-    [SerializeField] private float weaponActiveTime = 1f;
+    [SerializeField] protected float weaponActiveTime = 1f;
 
     
 
