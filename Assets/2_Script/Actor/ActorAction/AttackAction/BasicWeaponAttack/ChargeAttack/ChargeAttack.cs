@@ -20,6 +20,8 @@ public class ChargeAttack : BasicWeaponAttack
     }
 
 
+    private System.Action whenNoLongerChargeAttack = null;
+
     protected override void DoAttack()
     {
         base.DoAttack();
@@ -30,15 +32,16 @@ public class ChargeAttack : BasicWeaponAttack
             () => {
                 this.enabled = true;
                 rigid.isKinematic = true;
+                whenNoLongerChargeAttack = () =>
+                {
+                    Timer.Instance.StopEndlessTimer(this, "_Decelerate");
+                    rigid.isKinematic = false;
+                    this.enabled = false;
+                    chargeSpeed = originalChargeSpeed;
+                    rigid.velocity = Vector3.zero;
+                };
 
-                Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime,
-                    () => {
-                        Timer.Instance.StopEndlessTimer(this, "_Decelerate");
-                        rigid.isKinematic = false;
-                        this.enabled = false;
-                        chargeSpeed = originalChargeSpeed;
-                        rigid.velocity = Vector3.zero;
-                    });
+                Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
             });
 
         // 0.1초마다 감속
