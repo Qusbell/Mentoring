@@ -15,7 +15,7 @@ public class BoarWarning : MonoBehaviour
     [Tooltip("경고 표시 지속 시간 (초)")]
     public float warningDuration = 1f;
 
-    [Tooltip("워닝 확장 시간 비율 (0~1, 전체 시간 중 확장에 사용할 비율)")]
+    [Tooltip("워닝 표시 시간 비율 (0~1, 전체 시간 높을 수록 빨리 생김)")]
     [Range(0.1f, 0.8f)]
     public float expansionRatio = 0.3f;
 
