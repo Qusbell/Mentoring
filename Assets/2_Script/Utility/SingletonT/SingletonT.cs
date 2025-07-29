@@ -10,7 +10,6 @@ public class SingletonT<T> : MonoBehaviour where T : MonoBehaviour
     // 애플리케이션이 종료 중임을 표시하는 플래그
     private static bool applicationIsQuitting = false;
 
-
     // 싱글톤 인스턴스에 접근하는 프로퍼티
     public static T Instance
     {

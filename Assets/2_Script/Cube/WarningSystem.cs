@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 /// <summary>
@@ -29,17 +30,33 @@ public class WarningSystem : MonoBehaviour
 
     // 경고 표시 관련
     private GameObject targetCube;          // 아래에 있는 큐브 (발판이 생성될 큐브)
-    private GameObject warningPlane;        // 현재 사용 중인 경고 표시 평면
+    private GameObject _warningPlane;       // 현재 사용 중인 경고 표시 평면
+    private GameObject warningPlane
+    {
+        get
+        {
+            if (_warningPlane == null || !_warningPlane.activeInHierarchy)
+            {
+                _warningPlane = WarningPlainPool.Instance.GetWarningPlaneFromPool();
+            }
+            return _warningPlane;
+        }
+        set
+        {
+            if (value == null)
+            { WarningPlainPool.Instance.ReturnWarningPlaneToPool(_warningPlane); }
+            _warningPlane = value;
+        }
+    }
+
     private Vector3 initialPosition;        // 떨어지는 큐브의 시작 위치
     private Vector3 targetPosition;         // 큐브가 착지할 목표 위치
     private float totalDistance;            // 시작 위치에서 목표까지 총 거리
     private float colorChangeStartDist;     // 색상 변화가 시작될 거리
     private bool isFading = false;          // 현재 페이드 아웃 중인지 여부
     private Material planeMaterial;         // 경고 표시의 머티리얼 (색상 조절용)
+    private CubeMover cubeMover;            // 정지/이동 상태 체크
 
-    // 오브젝트 풀링 관련
-    private List<GameObject> warningPool = new List<GameObject>();  // 재사용할 발판들을 보관하는 풀
-    private static WarningSystem poolOwner; // 풀을 관리할 첫 번째 인스턴스 (싱글톤 방식)
 
     // ==================== 고정 설정값들 ====================
 
@@ -51,131 +68,36 @@ public class WarningSystem : MonoBehaviour
 
     // ==================== Unity 생명주기 메서드들 ====================
 
+
     void Start()
     {
         // 떨어지는 큐브의 시작 위치 저장
         initialPosition = transform.position;
-
-        // 오브젝트 풀링: 첫 번째 WarningSystem만 풀 생성 (메모리 절약)
-        if (poolOwner == null)
-        {
-            poolOwner = this;
-            CreateWarningPool();
-        }
-
-        // 아래에 큐브가 있는지 확인하고 경고 표시 생성
-        CheckForCubeBelow();
-    }
-
-    void OnEnable()
-    {
-        // 오브젝트가 활성화될 때도 체크 (기존 기능 유지)
-        // 큐브가 비활성화→활성화되는 경우를 대비
-        if (transform.position == initialPosition)
-        {
-            CheckForCubeBelow();
-        }
+        cubeMover = GetComponent<CubeMover>();
+        SetupWarningMaterial();
     }
 
     void Update()
     {
-        // 경고 표시가 없거나 관련 데이터가 없으면 아무것도 하지 않음
-        if (warningPlane == null || targetCube == null || planeMaterial == null) return;
-
         // 현재 위치에서 목적지까지 남은 거리 계산
         float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
-        // 큐브가 실제로 움직이고 있는지 확인 (0.05유닛 이상 이동 시)
-        bool isMoving = Vector3.Distance(transform.position, initialPosition) > 0.05f;
-
         // 큐브가 움직이고 있고 아직 페이드 아웃 중이 아닐 때만 처리
-        if (isMoving && !isFading)
+        if (cubeMover.IsCurrentlyMoving)
         {
+            CheckUnderCube();
+
             // 착지 직전이면 페이드 아웃 시작
             if (distanceToTarget <= fadeStartDistance)
             {
-                StartCoroutine(FadeOutWarning());
+                RemoveWarning();
+                // StartCoroutine(FadeOutWarning());
             }
             else
             {
                 // 거리에 따라 경고 표시 강도 업데이트 (가까울수록 진해짐)
                 UpdateWarningIntensity(distanceToTarget);
             }
-        }
-    }
-
-    // ==================== 오브젝트 풀링 메서드들 ====================
-
-    /// <summary>
-    /// 게임 시작 시 경고 표시들을 미리 생성해서 풀에 보관
-    /// 성능 최적화: 게임 중 생성/파괴 반복을 줄임
-    /// </summary>
-    private void CreateWarningPool()
-    {
-        for (int i = 0; i < poolSize; i++)
-        {
-            // Unity 기본 평면(Quad) 생성
-            GameObject warning = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            warning.name = "PooledWarning_" + i;
-
-            // 불필요한 충돌체 제거 (레이캐스트 방해 방지)
-            Collider col = warning.GetComponent<Collider>();
-            if (col != null) Destroy(col);
-
-            // 레이캐스트에 감지되지 않도록 레이어 설정
-            warning.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-            // 비활성화해서 풀에 보관 (화면에 보이지 않음)
-            warning.SetActive(false);
-            warningPool.Add(warning);
-        }
-    }
-
-    /// <summary>
-    /// 풀에서 사용 가능한 경고 표시를 가져옴
-    /// 재사용 가능한 게 있으면 그걸 쓰고, 없으면 새로 생성
-    /// </summary>
-    private GameObject GetWarningFromPool()
-    {
-        // 다른 WarningSystem이 풀 오너라면 그쪽에 요청
-        if (poolOwner != this && poolOwner != null)
-        {
-            return poolOwner.GetWarningFromPool();
-        }
-
-        // 풀에서 비활성화된(사용 안 중인) 경고 표시 찾기
-        foreach (GameObject warning in warningPool)
-        {
-            if (!warning.activeInHierarchy)  // 비활성화 상태 = 사용 가능
-            {
-                return warning;  // 재사용!
-            }
-        }
-
-        // 풀이 모자라면 새로 생성해서 풀에 추가 (동적 확장)
-        GameObject newWarning = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        newWarning.name = "ExtraWarning";
-
-        // 기본 설정 적용
-        Collider col = newWarning.GetComponent<Collider>();
-        if (col != null) Destroy(col);
-        newWarning.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-        // 풀에 추가
-        warningPool.Add(newWarning);
-
-        return newWarning;
-    }
-
-    /// <summary>
-    /// 사용 완료된 경고 표시를 풀로 반환
-    /// Destroy 대신 SetActive(false)로 숨겨서 나중에 재사용
-    /// </summary>
-    private void ReturnWarningToPool(GameObject warning)
-    {
-        if (warning != null)
-        {
-            warning.SetActive(false);  // 파괴 대신 비활성화 (재사용을 위해)
         }
     }
 
@@ -189,14 +111,14 @@ public class WarningSystem : MonoBehaviour
     private void CheckForCubeBelow()
     {
         // 레이캐스트 시 자기 자신이 감지되지 않도록 임시로 레이어 변경
-        int originalLayer = gameObject.layer;
-        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        // int originalLayer = gameObject.layer;
+        // gameObject.layer = LayerMask.NameToLayer("Ignore Raycast"); // <- 얘는 왜 작동 안 함?
 
         // Default와 Cube 레이어 모두 감지하도록 레이어마스크 확장
         int defaultLayer = 1 << LayerMask.NameToLayer("Default");
         int cubeLayer = 1 << LayerMask.NameToLayer("Cube");
         int layerMask = defaultLayer | cubeLayer;
-
+        
         // 아래 방향으로 레이캐스트 발사 (무한 거리, Default + Cube 레이어)
         RaycastHit[] hits = Physics.RaycastAll(transform.position, Vector3.down, Mathf.Infinity, layerMask);
 
@@ -255,7 +177,7 @@ public class WarningSystem : MonoBehaviour
         }
 
         // 레이어 원상복구
-        gameObject.layer = originalLayer;
+        // gameObject.layer = originalLayer;
 
         // 적합한 큐브를 찾지 못한 경우 디버그 로그 출력
         if (!foundValidCube)
@@ -264,27 +186,38 @@ public class WarningSystem : MonoBehaviour
         }
     }
 
+
+    private void CheckUnderCube()
+    {
+        // Default와 Cube 레이어 모두 감지하도록 레이어마스크 확장
+        int defaultLayer = 1 << LayerMask.NameToLayer("Default");
+        int cubeLayer = 1 << LayerMask.NameToLayer("Cube");
+        int layerMask = defaultLayer | cubeLayer;
+
+        RaycastHit rayHit;
+        bool isRayHit = Physics.Raycast(transform.position, Vector3.down, out rayHit, 100f, layerMask);
+
+        if (isRayHit)
+        {
+            Debug.Log("레이히트");
+
+            // Vector3 hitPosition = rayHit.point;   // 충돌한 위치(월드 좌표)
+            Renderer hitRenderer = rayHit.collider.GetComponent<Renderer>();
+
+            CreateWarningPlane(rayHit, hitRenderer);
+        }
+    }
+
+
+
     /// <summary>
     /// 실제 경고 표시(빨간 평면)를 생성하고 설정하는 메서드
     /// 오브젝트 풀링을 사용해서 기존 발판 재사용
     /// </summary>
     private void CreateWarningPlane(RaycastHit hit, Renderer targetRenderer)
     {
-        if (targetCube == null) return;
-
-        // 이전에 사용 중인 경고 표시가 있으면 풀로 반환
-        if (warningPlane != null)
-        {
-            ReturnWarningToPool(warningPlane);
-        }
-
-        // 풀에서 경고 표시 가져오기 (재사용 또는 새로 생성)
-        warningPlane = GetWarningFromPool();
-        if (warningPlane == null) return;
-
-        // 경고 표시 활성화 및 이름 설정
+        // 경고 표시 활성화
         warningPlane.SetActive(true);
-        warningPlane.name = "Warning_" + targetCube.name;
 
         // 경고 표시가 생성될 위치 계산 (아래 큐브 윗면에 살짝 위)
         float targetTopY = targetRenderer.bounds.center.y + targetRenderer.bounds.extents.y;
@@ -301,10 +234,8 @@ public class WarningSystem : MonoBehaviour
         // 경고 표시 크기를 아래 큐브 크기에 맞게 조정
         float planeSize = targetRenderer.bounds.extents.x * 2;  // 큐브 너비
         warningPlane.transform.localScale = new Vector3(planeSize, planeSize, 1f);
-
-        // 경고 표시의 색상 및 투명도 설정
-        SetupWarningMaterial();
     }
+
 
     /// <summary>
     /// 경고 표시의 머티리얼(색상, 투명도, 발광 등) 설정
@@ -312,9 +243,8 @@ public class WarningSystem : MonoBehaviour
     /// </summary>
     private void SetupWarningMaterial()
     {
-        if (warningPlane == null) return;
-
         Renderer planeRenderer = warningPlane.GetComponent<Renderer>();
+
         if (planeRenderer != null)
         {
             // 새 머티리얼 생성 (Unity 표준 셰이더 사용)
@@ -432,11 +362,8 @@ public class WarningSystem : MonoBehaviour
     /// </summary>
     private void RemoveWarning()
     {
-        if (warningPlane != null)
-        {
-            ReturnWarningToPool(warningPlane);  // 파괴 대신 풀로 반환 (재사용)
-            warningPlane = null;                // 참조 해제
-        }
+        // 파괴 대신 풀로 반환 (재사용)
+        warningPlane = null;
         isFading = false;  // 페이드 상태 초기화
     }
 
