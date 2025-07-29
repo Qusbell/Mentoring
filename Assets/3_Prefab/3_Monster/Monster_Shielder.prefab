@@ -1035,6 +1035,8 @@ MonoBehaviour:
   weaponBeforeDelay: 0.2
   weaponActiveTime: 1
   chargeSpeed: 18
+  decelerateSpeed: 1
+  decelerateRate: 0.1
 --- !u!114 &5097308888875272474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,8 +1061,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d19e017f0fce6e48bc866a10a76c98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 3
-  nowHp: 3
+  maxHp: 2
+  nowHp: 2
   bouncePowerWhenDie: 10
 --- !u!1 &2910221618307621725
 GameObject:
