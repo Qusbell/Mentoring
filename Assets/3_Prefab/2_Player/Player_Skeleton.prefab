@@ -1696,8 +1696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ac90e9bd10cbe468ee2775f49ff0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 27
-  maxHorizontalSpeed: 6
+  jumpPower: 27
+  maxHorizontalSpeedWhenJump: 6
 --- !u!114 &3696162683426923108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1877,6 +1877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21f3ea0dbb5cd4418298779ae6fb887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sandwichedDamage: 3
 --- !u!1 &5359304219147062780
 GameObject:
   m_ObjectHideFlags: 0

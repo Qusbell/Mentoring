@@ -21,7 +21,7 @@ public class JumpAction : ActorAction
     private PhysicMaterial zeroFrictionMaterial;
 
     // 지형과 접촉 판정을 내릴 콜라이더
-    FootCollider foot;
+    private FootCollider foot;
 
 
     // 생성 시 초기화
@@ -62,8 +62,8 @@ public class JumpAction : ActorAction
     //==================================================
 
     // 점프 높이
-    [SerializeField] float jumpHeight = 13;
-    [SerializeField] float maxHorizontalSpeed = 6f;  // x,z 속도 최대 제한값
+    [SerializeField] float jumpPower = 13;
+    [SerializeField] float maxHorizontalSpeedWhenJump = 6f;  // x, z 속도 최대 제한값
 
     // 점프
     // 위치 += 위쪽 방향 * 점프높이
@@ -79,20 +79,19 @@ public class JumpAction : ActorAction
             // 현재 힘 확인
             Vector3 nowVelocity = rigid.velocity;
 
-            // 현재 x, z 속도 크기 계산 (수평속도)
             Vector2 horizontalVel = new Vector2(nowVelocity.x, nowVelocity.z);
-            float horizontalSpeed = horizontalVel.magnitude;
+            float horizontalSpeedSqr = horizontalVel.sqrMagnitude;
+            float maxSpeedSqr = maxHorizontalSpeedWhenJump * maxHorizontalSpeedWhenJump;
 
-            // 최대 속도 이상이면 비율에 맞게 축소
-            if (maxHorizontalSpeed < horizontalSpeed)
+            if (horizontalSpeedSqr > maxSpeedSqr)
             {
-                float scale = maxHorizontalSpeed / horizontalSpeed;
+                float scale = maxHorizontalSpeedWhenJump / Mathf.Sqrt(horizontalSpeedSqr);
                 nowVelocity.x *= scale;
                 nowVelocity.z *= scale;
             }
 
             // 상승 힘 생성
-            nowVelocity.y = jumpHeight;
+            nowVelocity.y = jumpPower;
 
             rigid.velocity = nowVelocity;
         }
