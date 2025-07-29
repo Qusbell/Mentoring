@@ -28,12 +28,6 @@ public class Timer : SingletonT<Timer>
         return endlessKey;
     }
 
-    //  protected (int, string) GetEndlessTimerKey(MonoBehaviour component, string key)
-    //  {
-    //      var tupleKey = GetTimerKeyAsMono(component, key);
-    //      return GetEndlessTimerKey(tupleKey);
-    //  }
-
 
 
     // ===== 단일 타이머 (중복 방지) =====
@@ -147,6 +141,8 @@ public class Timer : SingletonT<Timer>
     // ----- EndlessTimer 코루틴 (중복 실행 방지) -----
     private IEnumerator EndlessTimerCoroutine((int, string) key, MonoBehaviour component, float duration, Action callback)
     {
+        if (duration <= 0f) { Debug.Log($"{key}의 호출 대기시간이 {duration}");  yield break; }
+
         WaitForSeconds waitForSeconds = new WaitForSeconds(duration);
         while (true)
         {
@@ -160,7 +156,8 @@ public class Timer : SingletonT<Timer>
         }
     }
 
-    // ===== 타이머 (중복 가능, MonoBehaviour 체크 추가) =====
+
+    // ===== 타이머 (중복 가능) =====
 
     // MonoBehaviour를 파라미터로 받는 버전
     public void StartTimer(MonoBehaviour component, float duration, Action callback)
@@ -170,12 +167,19 @@ public class Timer : SingletonT<Timer>
 
     private IEnumerator TimerCoroutine(MonoBehaviour component, float duration, Action callback)
     {
-        yield return new WaitForSeconds(duration);
-        if (component != null)
-        { callback?.Invoke(); }
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (component == null)
+            { yield break;}
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        callback?.Invoke();
     }
 
-    // 제네릭 버전
+    // --- 제네릭 버전 ---
     public void StartTimer<T>(MonoBehaviour component, float duration, Action<T> callback, T param)
     {
         StartCoroutine(TimerCoroutine(component, duration, callback, param));
@@ -183,9 +187,17 @@ public class Timer : SingletonT<Timer>
 
     private IEnumerator TimerCoroutine<T>(MonoBehaviour component, float duration, Action<T> callback, T param)
     {
-        yield return new WaitForSeconds(duration);
-        if (component != null)
-        { callback?.Invoke(param); }
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (component == null)
+            {
+                yield break;
+            }
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        callback?.Invoke(param);
     }
 
 }

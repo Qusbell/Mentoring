@@ -61,16 +61,41 @@ public class ChaseAction : MoveAction
     //  }
 
     // 목적지 갱신
+    //  private void UpdateDestination()
+    //  {
+    //      if (target == null || nav == null || !nav.isOnNavMesh) { return; }
+    //  
+    //      NavMeshPath path = new NavMeshPath();
+    //  
+    //      if (NavMesh.CalculatePath(nav.transform.position, target.position, NavMesh.AllAreas, path)
+    //          && path.status == NavMeshPathStatus.PathComplete)
+    //      { nav.SetPath(path); }
+    //      
+    //  }
+
+
     private void UpdateDestination()
     {
-        if (target != null && nav != null && nav.isOnNavMesh)
+        if (target == null || nav == null || !nav.isOnNavMesh) { return; }
+
+        NavMeshHit hit;
+        Vector3 targetPosOnNav = nav.transform.position; ;
+
+        // target 주변 최대 20m 반경 내에서 NavMesh 가장 가까운 점을 찾음
+        if (NavMesh.SamplePosition(target.position, out hit, 20.0f, NavMesh.AllAreas))
+        { targetPosOnNav = hit.position; }
+
+        NavMeshPath path = new NavMeshPath();
+
+        // 목적지로 보정된 targetPosOnNav를 넣어 경로 계산
+        if (NavMesh.CalculatePath(nav.transform.position, targetPosOnNav, NavMesh.AllAreas, path)
+            && path.status == NavMeshPathStatus.PathComplete)
         {
-            NavMeshPath path = new NavMeshPath();
-            if (NavMesh.CalculatePath(nav.transform.position, target.position, NavMesh.AllAreas, path)
-                && path.status == NavMeshPathStatus.PathComplete)
-            { nav.SetPath(path); }
+            nav.SetPath(path);
         }
     }
+
+
 
 
     // 추격 가능 여부
@@ -144,10 +169,7 @@ public class ChaseAction : MoveAction
         {
             NavMeshHit hit;
             if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))
-            {
-                //Debug.Log(this.gameObject.name + "네비메쉬로 정상 되돌아옴");
-                nav.Warp(hit.position);
-            }
+            { nav.Warp(hit.position); } // 강제로 navMesh 위로 되돌아오기
         }
 
         if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }

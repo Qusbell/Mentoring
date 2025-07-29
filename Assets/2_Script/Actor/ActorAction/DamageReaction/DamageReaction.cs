@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 
 //==================================================
@@ -18,9 +19,7 @@ public class DamageReaction : ActorAction
     public int healthPoint
     {
         get
-        {
-            return nowHp;
-        }
+        { return nowHp; }
         protected set
         {
             // 최대/최소값 보정
@@ -30,6 +29,12 @@ public class DamageReaction : ActorAction
             nowHp = value;
         }
     }
+
+    public bool isDie
+    {
+        get { return healthPoint <= 0; }
+    }
+
 
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
@@ -52,24 +57,34 @@ public class DamageReaction : ActorAction
         // --- 피해 적용 ---
         healthPoint -= damage;
 
-        // 넉백 준비
-        Vector3 tempVector = (this.transform.position - enemy.transform.position).normalized;
-        Rigidbody rigid = GetComponent<Rigidbody>(); // <- null인 경우 생각
+        // --- 넉백 ---
+        KnockBackImpulse(enemy.gameObject, knockBackPower, knockBackHeight);
 
         // --- 피격/사망 시 처리 ---
-        if (0 < healthPoint)
-        {
-            Hit();
-            tempVector *= knockBackPower;
-            tempVector.y = knockBackHeight + rigid.velocity.y; // 약간 위로 넉백
-            rigid.velocity = tempVector;
-        }
-        else
-        {
-            Die();
-            rigid.velocity = tempVector * bouncePowerWhenDie;
-        }
+        if (isDie) { Die(); }
+        else { Hit(); }
     }
+
+
+    // 넉백 따로 만들기
+    public virtual void KnockBackImpulse(GameObject enemy, float knockBackPower, float knockBackHeight)
+    {
+        // 넉백 준비
+        Vector3 tempVector = (this.transform.position - enemy.transform.position).normalized;
+        Rigidbody rigid = GetComponent<Rigidbody>();
+
+        if (rigid == null) { return; } // null 처리 (넉백 없음)
+
+        tempVector *= knockBackPower;
+        tempVector.y = knockBackHeight + rigid.velocity.y; // 상/하 넉백
+        if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절
+        rigid.velocity = tempVector; // 넉백 적용
+
+        // 사망 시 추가넉백
+        if (isDie)
+        { rigid.velocity = tempVector * bouncePowerWhenDie; }
+    }
+
 
 
     protected void Hit()

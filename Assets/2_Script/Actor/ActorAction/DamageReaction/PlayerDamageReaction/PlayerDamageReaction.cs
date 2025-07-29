@@ -48,7 +48,7 @@ public class PlayerDamageReaction : DamageReaction
         foreach (var rend in targetRenderers)
         {
             if (rend != null)
-                rend.enabled = enabled;
+            { rend.enabled = enabled; }
         }
     }
 

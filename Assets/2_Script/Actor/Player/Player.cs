@@ -33,10 +33,10 @@ public class Player : Actor
     // 프레임당 업데이트
     protected virtual void Update()
     {
-        // ----- 입력 -----
+        // --- 입력 ---
         input.SetInput();
 
-        // ----- 이동 -----
+        // --- 이동 ---
         if (input.isMoveKeyDown && !dodgeAction.isDodge)
         {
             moveAction.moveVec = input.moveVec;
@@ -47,16 +47,16 @@ public class Player : Actor
         else { moveAction.isMove = false; }
 
 
-        // ----- 점프 -----
+        // --- 점프 ---
         if (input.isJumpKeyDown)
         { jumpAction.Jump(); }
 
 
-        // ----- 특정 애니메이션 중 닷지 && 어택 실행 불가 -----
+        // --- 특정 애니메이션 중 닷지 && 어택 실행 불가 ---
         if (isAnimatePlay) { return; }
 
 
-        // ----- 닷지 -----
+        // --- 닷지 ---
         if (input.isDodgeKeyDown && !dodgeAction.isDodge)
         {
             if (staminaAction.UseStamina(dodgeAction.dodgeCost))
@@ -72,8 +72,8 @@ public class Player : Actor
         }
 
 
-        // ----- 공격 -----
-        if (input.isAttackKeyDown) // 키 누름 체크
+        // --- 공격 ---
+        if (input.isAttackKeyDown && !dodgeAction.isDodge) // 키 누름 체크
         {
             // 점프 중 공격 여부 확인
             if (jumpAction.isJump)
@@ -99,7 +99,7 @@ public class Player : Actor
 
     protected void LateUpdate()
     {
-        // ----- bool 애니메이션 처리 -----
+        // --- bool 애니메이션 처리 ---
         animator.PlayAnimation("IsMove", moveAction.isMove);
         animator.PlayAnimation("IsJump", jumpAction.isJump);
         animator.PlayAnimation("IsDodge", dodgeAction.isDodge);
