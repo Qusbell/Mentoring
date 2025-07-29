@@ -9,10 +9,9 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
     // 재사용할 발판들을 보관하는 풀
     private List<GameObject> warningPool = new List<GameObject>();
 
-
     private void Awake()
     {
-        CreateWarningPlanes(5); // <- 10개 생성, 나중에 정정?
+        CreateWarningPlanes(5);
     }
 
     // 복수 생성
@@ -60,7 +59,7 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
     {
         if (warning != null)
         {
-            Debug.Log($"{warning.name} 반환");
+            // Debug.Log($"{warning.name} 반환");
             warning.SetActive(false);
         }
     }

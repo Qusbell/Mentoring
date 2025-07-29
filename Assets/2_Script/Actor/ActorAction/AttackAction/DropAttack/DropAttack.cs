@@ -68,7 +68,7 @@ public class DropAttack : AttackAction
         if (!isCanUseDropAttack) { return; }
 
         System.Action dropAttackAction = () =>
-        { rigid.velocity = Vector3.down * dropSpeed; };
+        { rigid.AddForce(Vector3.down * dropSpeed, ForceMode.Impulse); };
 
         Timer.Instance.StartTimer(this, "_DropAttackAction", dropBeforeTime, dropAttackAction);
     }
