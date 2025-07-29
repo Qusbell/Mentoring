@@ -599,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -695,6 +695,14 @@ PrefabInstance:
       value: Cube_0_23
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
       value: 2.5
       objectReference: {fileID: 0}
@@ -716,11 +724,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
-      value: 10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.z
@@ -934,7 +946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 6
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -1223,7 +1235,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 0.3
+  warningDelay: 0.1
   triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
@@ -1239,7 +1251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -3499,7 +3511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4255,7 +4267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 8
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -4540,7 +4552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1201777307464273119, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4427208750641841800, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5095,7 +5107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1201777307464273119, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4427208750641841800, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5234,7 +5246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 6
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5298,11 +5310,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.2
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &265120059
@@ -5317,7 +5329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: 0, z: 10}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -5430,7 +5442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6869,7 +6881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -6962,11 +6974,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 0.6
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &339506754
@@ -6981,7 +6993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -7396,11 +7408,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.7
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &359640708
@@ -7415,7 +7427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -8808,7 +8820,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 6
+  warningDelay: 2.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -8985,7 +8997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9049,11 +9061,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.3
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &418995511
@@ -9068,7 +9080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -9244,11 +9256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 0.7
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &426195359
@@ -9263,7 +9275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -9664,7 +9676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11344,7 +11356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 8
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -11661,7 +11673,7 @@ MonoBehaviour:
   triggerDistance: 2
   warningDelay: 0
   triggerArea: {fileID: 699317491}
-  oneTimeUse: 0
+  oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &526475019
 MonoBehaviour:
@@ -11675,7 +11687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -11762,7 +11774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 8
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12025,7 +12037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12401,7 +12413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12489,7 +12501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1201777307464273119, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: warningDelay
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4427208750641841800, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12673,7 +12685,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 8
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -12866,7 +12878,6 @@ GameObject:
   m_Component:
   - component: {fileID: 570300778}
   - component: {fileID: 570300780}
-  - component: {fileID: 570300779}
   - component: {fileID: 570300781}
   m_Layer: 0
   m_Name: CubeMoveTrigger_-1
@@ -12890,19 +12901,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 336878796}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &570300779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 570300777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a17879718d23664ba7ae29ca42f88ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 0}
 --- !u!65 &570300780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13591,7 +13589,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
+  warningDelay: 2
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -14327,7 +14325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14750,11 +14748,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.1
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &672169024
@@ -14769,7 +14767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: 0, z: 10}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -14936,7 +14934,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15064,7 +15062,7 @@ Transform:
   m_GameObject: {fileID: 699317491}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.49, y: 9.19, z: -32.16}
+  m_LocalPosition: {x: -45.86, y: 9.19, z: -32.16}
   m_LocalScale: {x: 6, y: 12, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15355,7 +15353,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 6
+  warningDelay: 2.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -15963,7 +15961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16779,7 +16777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -16969,7 +16967,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
+  warningDelay: 2
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -17635,8 +17633,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
@@ -17656,15 +17662,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18116,7 +18126,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 0.9
+  warningDelay: 0.3
   triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
@@ -18132,7 +18142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -18875,8 +18885,16 @@ PrefabInstance:
       value: Cube_0_18
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -18896,15 +18914,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19840,7 +19862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1201777307464273119, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: warningDelay
-      value: 6
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4427208750641841800, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20041,7 +20063,10 @@ PrefabInstance:
     - {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
     - {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1034761083}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
 --- !u!4 &946892368 stripped
@@ -20294,11 +20319,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 0.9
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &952541704
@@ -20313,7 +20338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: 0, z: 10}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -20548,7 +20573,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2
+  warningDelay: 0.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -21870,7 +21895,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2
+  warningDelay: 0.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -21948,7 +21973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22186,6 +22211,68 @@ MonoBehaviour:
   showPath: 0
   showLaserPath: 0
   showEditorPreview: 1
+--- !u!1001 &1034761082
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 946892368}
+    m_Modifications:
+    - target: {fileID: 7215718309076777231, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_Name
+      value: SP_Juice
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+--- !u!4 &1034761083 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8027861219014468533, guid: 9ff4e08cc27c204429dd83b64794cd03, type: 3}
+  m_PrefabInstance: {fileID: 1034761082}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1040466678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22533,7 +22620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 8
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -23118,7 +23205,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 1
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -23315,7 +23402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -23595,7 +23682,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 1
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -23685,7 +23772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 8
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -24013,7 +24100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 6
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -24700,7 +24787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -25044,7 +25131,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 6
+  warningDelay: 2.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -25929,7 +26016,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 4
+  warningDelay: 1.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -26176,7 +26263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26387,7 +26474,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
+  warningDelay: 2
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -26469,7 +26556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27460,7 +27547,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 4
+  warningDelay: 1.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -27538,7 +27625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28725,12 +28812,16 @@ PrefabInstance:
       value: Cube_0_19
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: triggerType
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -28754,11 +28845,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
-      value: 10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28957,7 +29052,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2
+  warningDelay: 0.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -29206,7 +29301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29399,7 +29494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -31489,7 +31584,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 4
+  warningDelay: 1.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -31987,7 +32082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -32192,7 +32287,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 4
+  warningDelay: 1.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -32465,7 +32560,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2
+  warningDelay: 0.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -32595,11 +32690,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 0.8
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &1554421903
@@ -32614,7 +32709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: 0, z: 10}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -32721,7 +32816,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 1
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -32988,11 +33083,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.5
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &1567507466
@@ -33007,7 +33102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -33362,7 +33457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -34122,7 +34217,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2
+  warningDelay: 0.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -34216,8 +34311,16 @@ PrefabInstance:
       value: Cube_0_17
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -34237,11 +34340,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
-      value: 10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34971,7 +35078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -35443,7 +35550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -35595,7 +35702,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
+  warningDelay: 2
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -35651,7 +35758,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 0.6
+  warningDelay: 0.2
   triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
@@ -35667,7 +35774,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -36446,7 +36553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -36815,7 +36922,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 1
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -37081,8 +37188,16 @@ PrefabInstance:
       value: Cube_0_22
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -37102,15 +37217,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37229,7 +37348,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 6
+  warningDelay: 2.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -37649,7 +37768,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 3
+  warningDelay: 1
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -37755,7 +37874,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 4
+  warningDelay: 1.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -37880,11 +37999,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 0.4
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &1819235976
@@ -37899,7 +38018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -39457,11 +39576,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.4
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &1888153093
@@ -39476,7 +39595,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -40160,7 +40279,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 5
+  warningDelay: 2
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -40462,7 +40581,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 6
+  warningDelay: 2.5
   triggerArea: {fileID: 949209203}
   oneTimeUse: 1
   showDebugLog: 1
@@ -40940,7 +41059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41145,11 +41264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1.6
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &2001335428
@@ -41164,7 +41283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -42398,8 +42517,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showPath
@@ -42419,11 +42546,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
-      value: 10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.z
@@ -42701,7 +42832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -42769,11 +42900,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 1
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &2060616953
@@ -42788,7 +42919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 0, y: 0, z: 10}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -42976,12 +43107,16 @@ PrefabInstance:
       value: Cube_0_20
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: triggerType
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 6595306105988616788, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: isCollapsible
@@ -43005,15 +43140,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
+      propertyPath: startPositionOffset.y
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8011189187450015457, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
       propertyPath: startPositionOffset.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43494,11 +43633,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180d0cb00a6942846b4e652905689b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerType: 0
+  triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 2.5
-  triggerArea: {fileID: 0}
+  warningDelay: 0.5
+  triggerArea: {fileID: 699317491}
   oneTimeUse: 1
   showDebugLog: 1
 --- !u!114 &2083974863
@@ -43513,7 +43652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22f4da34fb4541f4d984299ff43ed39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPositionOffset: {x: 10, y: 0, z: 0}
+  startPositionOffset: {x: 0, y: -15, z: 0}
   moveSpeed: 25
   showPath: 0
   showLaserPath: 0
@@ -43853,7 +43992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -43915,7 +44054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6259254657649524023, guid: a5114481bd58d0841a6ecb77037f7286, type: 3}
       propertyPath: showEditorPreview
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6259254657649524023, guid: a5114481bd58d0841a6ecb77037f7286, type: 3}
       propertyPath: startPositionOffset.y
@@ -43982,8 +44121,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9213004719966924289, guid: a5114481bd58d0841a6ecb77037f7286, type: 3}
+      propertyPath: triggerArea
+      value: 
+      objectReference: {fileID: 699317491}
+    - target: {fileID: 9213004719966924289, guid: a5114481bd58d0841a6ecb77037f7286, type: 3}
+      propertyPath: triggerType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213004719966924289, guid: a5114481bd58d0841a6ecb77037f7286, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 2.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
