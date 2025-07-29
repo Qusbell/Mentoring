@@ -17,10 +17,13 @@ public class FootCollider : MonoBehaviour
 
 
     // 현재 접촉 중인 지형들
-    private List<Collider> rands = new List<Collider>();
+    private HashSet<Collider> rands = new HashSet<Collider>();
     public bool isRand
     {
-        get { return 0 < rands.Count; }
+        get
+        {
+            return 0 < rands.Count;
+        }
     }
 
 
@@ -47,7 +50,8 @@ public class FootCollider : MonoBehaviour
         // 큐브인 경우
         if (other.CompareTag("Cube"))
         {
-            rands.Remove(other);
+            // 일시적인 유예시간 후 삭제
+            Timer.Instance.StartTimer(this, 0.05f, () => { rands.Remove(other); });
         }
     }
 }

@@ -11,7 +11,9 @@ public class CubeGlue : MonoBehaviour
 
     // 콜라이더가 접촉해있는 동안
     private void OnCollisionStay(Collision collision)
-    { 
+    {
+        if (!this.enabled) { return; }
+
         // Player, Monster, Item 태그 허용
         if (!collision.transform.CompareTag("Player") &&
             !collision.transform.CompareTag("Monster") &&

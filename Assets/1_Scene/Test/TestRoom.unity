@@ -357,7 +357,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &109443375
 Transform:
   m_ObjectHideFlags: 0
@@ -1968,18 +1968,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1130940622810720268, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: maxHp
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 1130940622810720268, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: nowHp
-      value: 30000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4006904744375403826, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
-      propertyPath: attackRate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.14
