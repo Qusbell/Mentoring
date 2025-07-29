@@ -611,9 +611,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5587114536990906654, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       insertIndex: -1
       addedObject: {fileID: 949209204}
-    - targetCorrespondingSourceObject: {fileID: 5587114536990906654, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 286715444}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6824868604381516052, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       insertIndex: 5
@@ -1209,7 +1206,7 @@ Transform:
   - {fileID: 546356903}
   - {fileID: 745994522}
   - {fileID: 1351108829}
-  m_Father: {fileID: 665060560}
+  m_Father: {fileID: 1725448633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &84451443
 MonoBehaviour:
@@ -5558,73 +5555,6 @@ Transform:
   - {fileID: 28194861}
   m_Father: {fileID: 1800632273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &286715443
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 286715444}
-  - component: {fileID: 286715446}
-  - component: {fileID: 286715445}
-  m_Layer: 0
-  m_Name: CubeMoveTrigger_-2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &286715444
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286715443}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.12, y: 1.84, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 2}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 35060740}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &286715445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286715443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a17879718d23664ba7ae29ca42f88ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 665060561}
---- !u!65 &286715446
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286715443}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &288845019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11712,7 +11642,7 @@ Transform:
   m_Children:
   - {fileID: 395426885}
   - {fileID: 694764978}
-  m_Father: {fileID: 665060560}
+  m_Father: {fileID: 1725448633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &526475018
 MonoBehaviour:
@@ -12937,6 +12867,7 @@ GameObject:
   - component: {fileID: 570300778}
   - component: {fileID: 570300780}
   - component: {fileID: 570300779}
+  - component: {fileID: 570300781}
   m_Layer: 0
   m_Name: CubeMoveTrigger_-1
   m_TagString: Untagged
@@ -12971,7 +12902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a17879718d23664ba7ae29ca42f88ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1725448634}
+  controller: {fileID: 0}
 --- !u!65 &570300780
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12993,6 +12924,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &570300781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570300777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a17879718d23664ba7ae29ca42f88ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1725448634}
 --- !u!1001 &579466158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14623,89 +14567,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 120208634372372592, guid: 7981b722997d41746bea01d73affdc9b, type: 3}
   m_PrefabInstance: {fileID: 664303138}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &665060559
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 665060560}
-  - component: {fileID: 665060561}
-  m_Layer: 0
-  m_Name: Part_-1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &665060560
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665060559}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42, y: 0, z: -30}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 526475017}
-  - {fileID: 84451442}
-  - {fileID: 1714369993}
-  - {fileID: 852575647}
-  m_Father: {fileID: 793561656}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &665060561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665060559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03b91f56da1dbd4499ee941cadb32632, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextController: {fileID: 0}
-  nextCubeControllerActivate:
-    m_PersistentCalls:
-      m_Calls: []
-  sharingDelayTime: 0.1
-  activationSettings:
-  - targetCube: {fileID: 526475016}
-    triggerType: 1
-    targetTag: Player
-    triggerArea: {fileID: 286715443}
-    delayTime: 0
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 84451441}
-    triggerType: 1
-    targetTag: Player
-    triggerArea: {fileID: 286715443}
-    delayTime: 0
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 1714369992}
-    triggerType: 1
-    targetTag: Player
-    triggerArea: {fileID: 286715443}
-    delayTime: 0
-    timer: 0
-    hasActivated: 0
-  - targetCube: {fileID: 852575646}
-    triggerType: 1
-    targetTag: Player
-    triggerArea: {fileID: 286715443}
-    delayTime: 0
-    timer: 0
-    hasActivated: 0
-  showTriggerAreas: 1
 --- !u!1001 &669373022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16762,7 +16623,6 @@ Transform:
   - {fileID: 1472329695}
   - {fileID: 1359040761}
   - {fileID: 471752392}
-  - {fileID: 665060560}
   - {fileID: 1725448633}
   - {fileID: 1804892398}
   - {fileID: 1686519112}
@@ -18239,7 +18099,7 @@ Transform:
   - {fileID: 923700365}
   - {fileID: 1840359916}
   - {fileID: 1063305067}
-  m_Father: {fileID: 665060560}
+  m_Father: {fileID: 1725448633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &852575648
 MonoBehaviour:
@@ -35774,7 +35634,7 @@ Transform:
   - {fileID: 311280126}
   - {fileID: 1361337786}
   - {fileID: 825906309}
-  m_Father: {fileID: 665060560}
+  m_Father: {fileID: 1725448633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1714369994
 MonoBehaviour:
@@ -35904,6 +35764,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 526475017}
+  - {fileID: 84451442}
+  - {fileID: 1714369993}
+  - {fileID: 852575647}
   - {fileID: 2018684274}
   - {fileID: 1819235974}
   - {fileID: 2083974861}
@@ -35948,6 +35812,34 @@ MonoBehaviour:
       m_Calls: []
   sharingDelayTime: 0.3
   activationSettings:
+  - targetCube: {fileID: 526475016}
+    triggerType: 1
+    targetTag: Player
+    triggerArea: {fileID: 570300777}
+    delayTime: 0
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 84451441}
+    triggerType: 1
+    targetTag: Player
+    triggerArea: {fileID: 570300777}
+    delayTime: 0
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 1714369992}
+    triggerType: 1
+    targetTag: Player
+    triggerArea: {fileID: 570300777}
+    delayTime: 0
+    timer: 0
+    hasActivated: 0
+  - targetCube: {fileID: 852575646}
+    triggerType: 1
+    targetTag: Player
+    triggerArea: {fileID: 570300777}
+    delayTime: 0
+    timer: 0
+    hasActivated: 0
   - targetCube: {fileID: 2018684275}
     triggerType: 1
     targetTag: Player
