@@ -6,10 +6,13 @@ using UnityEngine;
 public class DodgeAction : ActorAction
 {
     private Rigidbody rigid;
+    private FootCollider foot;
+
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
+        foot = GetComponentInChildren<FootCollider>();
 
         // 비활성화 상태
         this.enabled = false;
@@ -48,7 +51,7 @@ public class DodgeAction : ActorAction
         // --- dodge true ---
         this.enabled = true;
         isDodge = true;
-        rigid.useGravity = false;
+        if (!foot.isRand) { rigid.useGravity = false; } // 공중에 떠있는 경우: 중력 미사용
         ratateObjectWhenDodge.transform.Rotate(dodgeAngle, 0, 0); // 앞으로 기울기
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
         rigid.velocity = Vector3.zero;
@@ -56,7 +59,7 @@ public class DodgeAction : ActorAction
 
         // --- dodge false ---
         Timer.Instance.StartTimer(this, "_Dodge", dodgeSlideTime,
-            () => 
+            () =>
             {
                 this.enabled = false;
                 isDodge = false;
@@ -64,7 +67,10 @@ public class DodgeAction : ActorAction
                 ratateObjectWhenDodge.transform.Rotate(-dodgeAngle, 0, 0);
                 this.gameObject.layer = originalLayer;
 
-                rigid.velocity = Vector3.zero;
+                Vector3 vector = rigid.velocity;
+                vector.x = 0f;
+                vector.z = 0f;
+                rigid.velocity = vector;
             });
     }
 
@@ -77,4 +83,5 @@ public class DodgeAction : ActorAction
         Vector3 forwardVelocity = transform.forward * dodgePower; // x,z 축 속도 계산
         rigid.velocity = new Vector3(forwardVelocity.x, currentVelocity.y, forwardVelocity.z); // y 축은 그대로 유지
     }
+
 }
