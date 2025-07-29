@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// 멧돼지 경고 표시 관리 (XYZ 개별 조절 버전)
+/// 멧돼지 경고 표시 관리 (그라데이션 적용)
 /// 멧돼지 실제 이동 거리와 경고 표시 거리를 X, Y, Z 개별로 설정 가능
+/// 경고 표시에 그라데이션 효과 적용 (시작점: 진함 → 끝점: 연함)
 /// </summary>
 public class BoarWarning : MonoBehaviour
 {
@@ -23,6 +24,10 @@ public class BoarWarning : MonoBehaviour
 
     [Tooltip("지면 높이 (Y 좌표) - 레이캐스트 대신 사용")]
     public float groundLevel = 0f;
+
+    [Tooltip("그라데이션 끝쪽 투명도 (0~1)")]
+    [Range(0f, 1f)]
+    public float endAlpha = 0.1f;
 
     #endregion
 
@@ -50,12 +55,8 @@ public class BoarWarning : MonoBehaviour
     public void Initialize(BoarCube mainComponent)
     {
         main = mainComponent;
-
         InitializeSharedResources();
         EnsureWarningPlanePool();
-
-        if (main.showDebugLog)
-            Debug.Log($"[{gameObject.name}] BoarWarning 초기화 완료");
     }
 
     /// <summary>
@@ -78,8 +79,6 @@ public class BoarWarning : MonoBehaviour
 
         // 발광 효과 추가
         sharedWarningMaterial.EnableKeyword("_EMISSION");
-
-        Debug.Log("[BoarWarning] 공유 머티리얼 초기화 완료");
     }
 
     /// <summary>
@@ -132,15 +131,8 @@ public class BoarWarning : MonoBehaviour
         float pathLength = GetWarningPathLength();
         float actualWidth = GetActualAttackWidth();
 
-        // 경고 평면 생성
+        // 경고 평면 생성 (그라데이션 적용)
         CreateWarningPlanesAlongPath(direction, pathLength, actualWidth);
-
-        if (main.showDebugLog)
-        {
-            Debug.Log($"[{gameObject.name}] 경고 표시 생성 완료");
-            Debug.Log($"[{gameObject.name}] 경고 길이: {pathLength:F2}, 폭: {actualWidth:F2}, 평면 수: {activeWarningPlanes.Count}");
-            Debug.Log($"[{gameObject.name}] 멧돼지 이동거리: {main.startPositionOffset.magnitude:F2}, 경고 거리: {pathLength:F2}");
-        }
     }
 
     /// <summary>
@@ -154,9 +146,6 @@ public class BoarWarning : MonoBehaviour
         }
 
         activeWarningPlanes.Clear();
-
-        if (main.showDebugLog && activeWarningPlanes.Count > 0)
-            Debug.Log($"[{gameObject.name}] 경고 표시 제거 완료");
     }
 
     /// <summary>
@@ -169,10 +158,10 @@ public class BoarWarning : MonoBehaviour
 
     #endregion
 
-    #region ===== 내부 메서드 - 경고 생성 =====
+    #region ===== 내부 메서드 - 경고 생성 (그라데이션 적용) =====
 
     /// <summary>
-    /// 경로를 따라 경고 평면들 생성
+    /// 경로를 따라 경고 평면들 생성 (그라데이션 적용)
     /// </summary>
     private void CreateWarningPlanesAlongPath(Vector3 direction, float pathLength, float actualWidth)
     {
@@ -186,20 +175,24 @@ public class BoarWarning : MonoBehaviour
         Vector3 startPos = GetWarningStartPosition();  // 경고 시작 위치
         Vector3 endPos = GetWarningEndPosition();      // 경고 끝 위치
 
-        // 각 세그먼트마다 경고 평면 생성
+        // 각 세그먼트마다 경고 평면 생성 (그라데이션 적용)
         for (int i = 0; i < segmentCount; i++)
         {
-            float t = (float)i / segmentCount;
+            float t = (float)i / segmentCount; // 진행률 (0 ~ 1)
             Vector3 segmentPos = Vector3.Lerp(startPos, endPos, t);
 
-            CreateWarningPlaneAt(segmentPos, actualWidth);
+            // 그라데이션 알파값 계산 (인스펙터에서 조절 가능)
+            float curve = Mathf.Pow(t, 2.5f);
+            float alpha = Mathf.Lerp(main.warningAlpha, endAlpha, curve);
+
+            CreateWarningPlaneAt(segmentPos, actualWidth, alpha);
         }
     }
 
     /// <summary>
-    /// 지정된 위치에 경고 평면 생성 (멧돼지 밑바닥 높이 사용)
+    /// 지정된 위치에 경고 평면 생성 (그라데이션 알파 적용)
     /// </summary>
-    private void CreateWarningPlaneAt(Vector3 position, float width)
+    private void CreateWarningPlaneAt(Vector3 position, float width, float alpha)
     {
         GameObject warningPlane = GetWarningPlaneFromPool();
 
@@ -214,24 +207,21 @@ public class BoarWarning : MonoBehaviour
         // 크기 설정
         warningPlane.transform.localScale = new Vector3(width, width, 1f);
 
-        // 간단한 빨간 머티리얼 적용
+        // 그라데이션 색상 적용
         Renderer renderer = warningPlane.GetComponent<Renderer>();
         if (renderer != null)
         {
-            UpdateWarningPlaneColor(warningPlane);
+            UpdateWarningPlaneColor(warningPlane, alpha);
         }
 
         // 활성 리스트에 추가
         activeWarningPlanes.Add(warningPlane);
-
-        if (main.showDebugLog)
-            Debug.Log($"[{gameObject.name}] 경고 평면 생성 완료! 위치: {warningPos}");
     }
 
     /// <summary>
-    /// 경고 평면의 색상 업데이트
+    /// 경고 평면의 색상 업데이트 (그라데이션 알파 적용)
     /// </summary>
-    private void UpdateWarningPlaneColor(GameObject plane)
+    private void UpdateWarningPlaneColor(GameObject plane, float alpha)
     {
         Renderer renderer = plane.GetComponent<Renderer>();
         if (renderer == null) return;
@@ -239,13 +229,13 @@ public class BoarWarning : MonoBehaviour
         // 인스턴스 머티리얼 생성 (개별 색상 적용을 위해)
         Material instanceMaterial = new Material(sharedWarningMaterial);
 
-        // 색상 설정
+        // 그라데이션 색상 설정
         Color finalColor = warningColor;
-        finalColor.a = main.warningAlpha;
+        finalColor.a = alpha; // 개별 알파값 적용
         instanceMaterial.color = finalColor;
 
-        // 발광 색상 설정
-        instanceMaterial.SetColor("_EmissionColor", warningColor * 0.5f);
+        // 발광 색상 설정 (알파에 따라 발광도 조절)
+        instanceMaterial.SetColor("_EmissionColor", warningColor * (alpha * 0.5f));
 
         renderer.material = instanceMaterial;
     }
@@ -269,7 +259,6 @@ public class BoarWarning : MonoBehaviour
         }
 
         // 풀이 비어있으면 새로 생성
-        Debug.LogWarning("[BoarWarning] 경고 평면 풀이 부족합니다. 새로 생성합니다.");
         return CreateWarningPlane();
     }
 
@@ -413,9 +402,6 @@ public class BoarWarning : MonoBehaviour
     void OnDisable()
     {
         ClearWarning();
-
-        if (main != null && main.showDebugLog)
-            Debug.Log($"[{gameObject.name}] BoarWarning 비활성화 시 정리 완료");
     }
 
     #endregion
@@ -433,33 +419,29 @@ public class BoarWarning : MonoBehaviour
         // 멧돼지 실제 이동 경로 (청록색)
         Vector3 boarStartPos = GetStartPosition();
         Vector3 boarEndPos = GetEndPosition();
-        float width = GetActualAttackWidth();
 
         Gizmos.color = new Color(0f, 1f, 1f, 0.5f); // 청록색
         Gizmos.DrawLine(boarStartPos, boarEndPos);
 
-        // 경고 표시 경로 (빨간색)
+        // 경고 표시 경로 (빨간색 → 분홍색 그라데이션 표현)
         Vector3 warningStartPos = GetWarningStartPosition();
         Vector3 warningEndPos = GetWarningEndPosition();
 
-        Gizmos.color = new Color(1f, 0f, 0f, 0.7f); // 빨간색
-        Gizmos.DrawLine(warningStartPos, warningEndPos);
-
-        // 경고 영역 표시
-        Vector3 warningDirection = GetWarningDirection();
-        Vector3 perpendicular = Vector3.Cross(warningDirection, Vector3.up).normalized * (width / 2f);
-
-        Gizmos.color = new Color(1f, 0f, 0f, 0.2f);
-        Vector3[] corners = {
-            warningStartPos + perpendicular,
-            warningStartPos - perpendicular,
-            warningEndPos - perpendicular,
-            warningEndPos + perpendicular
-        };
-
-        for (int i = 0; i < corners.Length; i++)
+        // 그라데이션 느낌으로 여러 선분 그리기
+        int segments = 10;
+        for (int i = 0; i < segments; i++)
         {
-            Gizmos.DrawLine(corners[i], corners[(i + 1) % corners.Length]);
+            float t1 = (float)i / segments;
+            float t2 = (float)(i + 1) / segments;
+
+            Vector3 pos1 = Vector3.Lerp(warningStartPos, warningEndPos, t1);
+            Vector3 pos2 = Vector3.Lerp(warningStartPos, warningEndPos, t2);
+
+            // 알파값 계산 (그라데이션)
+            float alpha = Mathf.Lerp(1f, endAlpha, t1); // 인스펙터 값 사용
+
+            Gizmos.color = new Color(1f, 0f, 0f, alpha);
+            Gizmos.DrawLine(pos1, pos2);
         }
 
         // 시작점들 표시
@@ -473,35 +455,6 @@ public class BoarWarning : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(warningEndPos, 0.2f);
-    }
-
-    /// <summary>
-    /// 선택 시 상세 정보 표시
-    /// </summary>
-    private void OnDrawGizmosSelected()
-    {
-        if (main == null || !main.showDebugLog) return;
-
-        // 활성 경고 평면들 강조 표시
-        Gizmos.color = Color.yellow;
-        foreach (GameObject plane in activeWarningPlanes)
-        {
-            if (plane != null)
-            {
-                Gizmos.DrawWireCube(plane.transform.position, plane.transform.localScale);
-            }
-        }
-
-        // 상태 정보 텍스트
-        UnityEditor.Handles.Label(
-            transform.position + Vector3.up * 4f,
-            $"경고 평면 수: {activeWarningPlanes.Count}\n" +
-            $"경고 지속시간: {warningDuration}초\n" +
-            $"멧돼지 이동거리: {GetPathLength():F2}m\n" +
-            $"경고 표시거리: {GetWarningPathLength():F2}m\n" +
-            $"경고 오프셋: {warningDistance}\n" +
-            $"경고 폭: {GetActualAttackWidth():F2}m"
-        );
     }
 #endif
 
