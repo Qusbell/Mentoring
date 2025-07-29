@@ -12,7 +12,7 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
 
     private void Awake()
     {
-        CreateWarningPlanes(10); // <- 10개 생성, 나중에 정정?
+        CreateWarningPlanes(5); // <- 10개 생성, 나중에 정정?
     }
 
     // 복수 생성
@@ -28,6 +28,8 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
         // Unity 기본 평면(Quad) 생성
         GameObject warning = GameObject.CreatePrimitive(PrimitiveType.Quad);
         warning.name = "PooledWarning_" + warningPool.Count;
+        warning.layer = LayerMask.NameToLayer("IgnoreAll");
+
         // 비활성화해서 풀에 보관 (화면에 보이지 않음)
         warning.SetActive(false);
         warningPool.Add(warning);
