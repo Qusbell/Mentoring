@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// 멧돼지 경고 표시 관리 (그라데이션 적용)
+/// 멧돼지 경고 표시 관리 (점진적 그라데이션 적용)
 /// 멧돼지 실제 이동 거리와 경고 표시 거리를 X, Y, Z 개별로 설정 가능
-/// 경고 표시에 그라데이션 효과 적용 (시작점: 진함 → 끝점: 연함)
+/// 경고 표시가 점진적으로 확장되며 그라데이션 효과 적용
 /// </summary>
 public class BoarWarning : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class BoarWarning : MonoBehaviour
     [Tooltip("경고 표시 지속 시간 (초)")]
     public float warningDuration = 1f;
 
+    [Tooltip("워닝 확장 시간 비율 (0~1, 전체 시간 중 확장에 사용할 비율)")]
+    [Range(0.1f, 0.8f)]
+    public float expansionRatio = 0.3f;
+
     [Header("경고 거리 설정 (기획자 조절)")]
     [Tooltip("경고 표시 거리 (멧돼지 이동 거리와 독립적)")]
     public Vector3 warningDistance = new Vector3(10, 0, 0);
@@ -21,9 +26,6 @@ public class BoarWarning : MonoBehaviour
     [Header("경고 표시 설정")]
     [Tooltip("경고 평면을 바닥에서 얼마나 띄울지 (미터)")]
     public float warningHeightOffset = 0.1f;
-
-    [Tooltip("지면 높이 (Y 좌표) - 레이캐스트 대신 사용")]
-    public float groundLevel = 0f;
 
     [Tooltip("그라데이션 끝쪽 투명도 (0~1)")]
     [Range(0f, 1f)]
@@ -119,20 +121,15 @@ public class BoarWarning : MonoBehaviour
     #region ===== 공개 메서드 =====
 
     /// <summary>
-    /// 경고 표시 시작
+    /// 경고 표시 시작 (점진적으로 확장)
     /// </summary>
     public void ShowWarning()
     {
         // 기존 경고 제거
         ClearWarning();
 
-        // 경로 계산 (경고용 별도 계산)
-        Vector3 direction = GetWarningDirection();
-        float pathLength = GetWarningPathLength();
-        float actualWidth = GetActualAttackWidth();
-
-        // 경고 평면 생성 (그라데이션 적용)
-        CreateWarningPlanesAlongPath(direction, pathLength, actualWidth);
+        // 점진적 워닝 시작
+        StartCoroutine(GradualWarningCoroutine());
     }
 
     /// <summary>
@@ -140,6 +137,9 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     public void ClearWarning()
     {
+        // 진행 중인 코루틴 중지
+        StopAllCoroutines();
+
         foreach (GameObject plane in activeWarningPlanes)
         {
             ReturnWarningPlaneToPool(plane);
@@ -158,34 +158,51 @@ public class BoarWarning : MonoBehaviour
 
     #endregion
 
-    #region ===== 내부 메서드 - 경고 생성 (그라데이션 적용) =====
+    #region ===== 내부 메서드 - 점진적 워닝 =====
 
     /// <summary>
-    /// 경로를 따라 경고 평면들 생성 (그라데이션 적용)
+    /// 점진적으로 워닝을 표시하는 코루틴
     /// </summary>
-    private void CreateWarningPlanesAlongPath(Vector3 direction, float pathLength, float actualWidth)
+    private IEnumerator GradualWarningCoroutine()
     {
-        // 경고 평면 간격 설정 (더 촘촘하게)
-        float segmentSpacing = Mathf.Min(actualWidth * 0.5f, 2f); // 폭의 절반 또는 최대 2미터
+        // 경로 계산
+        Vector3 direction = GetWarningDirection();
+        float pathLength = GetWarningPathLength();
+        float actualWidth = GetActualAttackWidth();
 
-        // 세그먼트 수 계산 (더 촘촘한 간격으로)
-        int segmentCount = Mathf.CeilToInt(pathLength / segmentSpacing);
-        segmentCount = Mathf.Max(1, segmentCount);
+        // 전체 세그먼트 수 계산
+        float segmentSpacing = Mathf.Min(actualWidth * 0.5f, 2f);
+        int totalSegments = Mathf.CeilToInt(pathLength / segmentSpacing);
+        totalSegments = Mathf.Max(1, totalSegments);
 
-        Vector3 startPos = GetWarningStartPosition();  // 경고 시작 위치
-        Vector3 endPos = GetWarningEndPosition();      // 경고 끝 위치
+        Vector3 startPos = GetWarningStartPosition();
+        Vector3 endPos = GetWarningEndPosition();
 
-        // 각 세그먼트마다 경고 평면 생성 (그라데이션 적용)
-        for (int i = 0; i < segmentCount; i++)
+        // 워닝 확장 시간 설정
+        float expansionTime = warningDuration * expansionRatio;
+        float segmentDelay = expansionTime / totalSegments;
+
+        // 점진적으로 세그먼트 추가
+        for (int i = 0; i < totalSegments; i++)
         {
-            float t = (float)i / segmentCount; // 진행률 (0 ~ 1)
+            float t = (float)i / totalSegments;
             Vector3 segmentPos = Vector3.Lerp(startPos, endPos, t);
 
-            // 그라데이션 알파값 계산 (인스펙터에서 조절 가능)
+            // 그라데이션 알파값 계산
             float curve = Mathf.Pow(t, 2.5f);
             float alpha = Mathf.Lerp(main.warningAlpha, endAlpha, curve);
 
             CreateWarningPlaneAt(segmentPos, actualWidth, alpha);
+
+            // 다음 세그먼트까지 대기
+            yield return new WaitForSeconds(segmentDelay);
+        }
+
+        // 워닝 완료 후 남은 시간 대기
+        float remainingTime = warningDuration - expansionTime;
+        if (remainingTime > 0)
+        {
+            yield return new WaitForSeconds(remainingTime);
         }
     }
 
@@ -197,7 +214,7 @@ public class BoarWarning : MonoBehaviour
         GameObject warningPlane = GetWarningPlaneFromPool();
 
         // 멧돼지 큐브의 밑바닥 높이 계산
-        float boarBottomY = transform.position.y - 1.5f; // 멧돼지 중앙에서 Y -1.5
+        float boarBottomY = transform.position.y - 1.5f;
         Vector3 warningPos = new Vector3(position.x, boarBottomY + warningHeightOffset, position.z);
         warningPlane.transform.position = warningPos;
 
@@ -231,7 +248,7 @@ public class BoarWarning : MonoBehaviour
 
         // 그라데이션 색상 설정
         Color finalColor = warningColor;
-        finalColor.a = alpha; // 개별 알파값 적용
+        finalColor.a = alpha;
         instanceMaterial.color = finalColor;
 
         // 발광 색상 설정 (알파에 따라 발광도 조절)
@@ -258,7 +275,6 @@ public class BoarWarning : MonoBehaviour
             return plane;
         }
 
-        // 풀이 비어있으면 새로 생성
         return CreateWarningPlane();
     }
 
@@ -271,14 +287,12 @@ public class BoarWarning : MonoBehaviour
 
         plane.SetActive(false);
 
-        // 풀 크기 제한
         if (warningPlanePool.Count < POOL_SIZE * 2)
         {
             warningPlanePool.Enqueue(plane);
         }
         else
         {
-            // 풀이 너무 크면 파괴
             Object.Destroy(plane);
         }
     }
@@ -308,7 +322,7 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     private Vector3 GetWarningStartPosition()
     {
-        return transform.position;  // 현재 큐브 위치
+        return transform.position;
     }
 
     /// <summary>
@@ -316,7 +330,6 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     private Vector3 GetWarningEndPosition()
     {
-        // 경고 거리 독립적으로 설정
         return transform.position + warningDistance;
     }
 
@@ -341,7 +354,7 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     private Vector3 GetStartPosition()
     {
-        return transform.position;  // 현재 큐브 위치
+        return transform.position;
     }
 
     /// <summary>
@@ -349,7 +362,7 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     private Vector3 GetEndPosition()
     {
-        return transform.position + main.startPositionOffset;  // 목표 지점
+        return transform.position + main.startPositionOffset;
     }
 
     /// <summary>
@@ -357,18 +370,15 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     private float GetActualAttackWidth()
     {
-        // 설정된 값이 있으면 사용
         if (main.attackWidth > 0f)
             return main.attackWidth;
 
-        // 렌더러 크기 기반 계산
         Renderer cubeRenderer = GetComponent<Renderer>();
         if (cubeRenderer != null)
         {
             return Mathf.Max(cubeRenderer.bounds.size.x, cubeRenderer.bounds.size.z);
         }
 
-        // 기본값: Transform 스케일 기반
         return Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
     }
 
@@ -420,7 +430,7 @@ public class BoarWarning : MonoBehaviour
         Vector3 boarStartPos = GetStartPosition();
         Vector3 boarEndPos = GetEndPosition();
 
-        Gizmos.color = new Color(0f, 1f, 1f, 0.5f); // 청록색
+        Gizmos.color = new Color(0f, 1f, 1f, 0.5f);
         Gizmos.DrawLine(boarStartPos, boarEndPos);
 
         // 경고 표시 경로 (빨간색 → 분홍색 그라데이션 표현)
@@ -437,8 +447,7 @@ public class BoarWarning : MonoBehaviour
             Vector3 pos1 = Vector3.Lerp(warningStartPos, warningEndPos, t1);
             Vector3 pos2 = Vector3.Lerp(warningStartPos, warningEndPos, t2);
 
-            // 알파값 계산 (그라데이션)
-            float alpha = Mathf.Lerp(1f, endAlpha, t1); // 인스펙터 값 사용
+            float alpha = Mathf.Lerp(1f, endAlpha, t1);
 
             Gizmos.color = new Color(1f, 0f, 0f, alpha);
             Gizmos.DrawLine(pos1, pos2);
