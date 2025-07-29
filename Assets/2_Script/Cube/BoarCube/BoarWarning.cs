@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
-/// 멧돼지 경고 표시 관리 (점진적 그라데이션 적용)
+/// 멧돼지 경고 표시 관리 (점진적 표시)
 /// 멧돼지 실제 이동 거리와 경고 표시 거리를 X, Y, Z 개별로 설정 가능
-/// 경고 표시가 점진적으로 확장되며 그라데이션 효과 적용
+/// 경고 표시가 점진적으로 확장됨
 /// </summary>
 public class BoarWarning : MonoBehaviour
 {
@@ -26,10 +26,6 @@ public class BoarWarning : MonoBehaviour
     [Header("경고 표시 설정")]
     [Tooltip("경고 평면을 바닥에서 얼마나 띄울지 (미터)")]
     public float warningHeightOffset = 0.1f;
-
-    [Tooltip("그라데이션 끝쪽 투명도 (0~1)")]
-    [Range(0f, 1f)]
-    public float endAlpha = 0.1f;
 
     #endregion
 
@@ -188,11 +184,8 @@ public class BoarWarning : MonoBehaviour
             float t = (float)i / totalSegments;
             Vector3 segmentPos = Vector3.Lerp(startPos, endPos, t);
 
-            // 그라데이션 알파값 계산
-            float curve = Mathf.Pow(t, 2.5f);
-            float alpha = Mathf.Lerp(main.warningAlpha, endAlpha, curve);
-
-            CreateWarningPlaneAt(segmentPos, actualWidth, alpha);
+            // 그라데이션 없이 균일한 알파값 사용
+            CreateWarningPlaneAt(segmentPos, actualWidth, main.warningAlpha);
 
             // 다음 세그먼트까지 대기
             yield return new WaitForSeconds(segmentDelay);
@@ -207,7 +200,7 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 지정된 위치에 경고 평면 생성 (그라데이션 알파 적용)
+    /// 지정된 위치에 경고 평면 생성 (균일한 알파 적용)
     /// </summary>
     private void CreateWarningPlaneAt(Vector3 position, float width, float alpha)
     {
@@ -224,7 +217,7 @@ public class BoarWarning : MonoBehaviour
         // 크기 설정
         warningPlane.transform.localScale = new Vector3(width, width, 1f);
 
-        // 그라데이션 색상 적용
+        // 균일한 색상 적용
         Renderer renderer = warningPlane.GetComponent<Renderer>();
         if (renderer != null)
         {
@@ -236,7 +229,7 @@ public class BoarWarning : MonoBehaviour
     }
 
     /// <summary>
-    /// 경고 평면의 색상 업데이트 (그라데이션 알파 적용)
+    /// 경고 평면의 색상 업데이트 (균일한 알파 적용)
     /// </summary>
     private void UpdateWarningPlaneColor(GameObject plane, float alpha)
     {
@@ -246,12 +239,12 @@ public class BoarWarning : MonoBehaviour
         // 인스턴스 머티리얼 생성 (개별 색상 적용을 위해)
         Material instanceMaterial = new Material(sharedWarningMaterial);
 
-        // 그라데이션 색상 설정
+        // 균일한 색상 설정
         Color finalColor = warningColor;
-        finalColor.a = alpha;
+        finalColor.a = alpha; // 모든 평면이 같은 알파값
         instanceMaterial.color = finalColor;
 
-        // 발광 색상 설정 (알파에 따라 발광도 조절)
+        // 발광 색상 설정
         instanceMaterial.SetColor("_EmissionColor", warningColor * (alpha * 0.5f));
 
         renderer.material = instanceMaterial;
@@ -433,25 +426,12 @@ public class BoarWarning : MonoBehaviour
         Gizmos.color = new Color(0f, 1f, 1f, 0.5f);
         Gizmos.DrawLine(boarStartPos, boarEndPos);
 
-        // 경고 표시 경로 (빨간색 → 분홍색 그라데이션 표현)
+        // 경고 표시 경로 (균일한 빨간색)
         Vector3 warningStartPos = GetWarningStartPosition();
         Vector3 warningEndPos = GetWarningEndPosition();
 
-        // 그라데이션 느낌으로 여러 선분 그리기
-        int segments = 10;
-        for (int i = 0; i < segments; i++)
-        {
-            float t1 = (float)i / segments;
-            float t2 = (float)(i + 1) / segments;
-
-            Vector3 pos1 = Vector3.Lerp(warningStartPos, warningEndPos, t1);
-            Vector3 pos2 = Vector3.Lerp(warningStartPos, warningEndPos, t2);
-
-            float alpha = Mathf.Lerp(1f, endAlpha, t1);
-
-            Gizmos.color = new Color(1f, 0f, 0f, alpha);
-            Gizmos.DrawLine(pos1, pos2);
-        }
+        Gizmos.color = new Color(1f, 0f, 0f, 0.7f); // 균일한 빨간색
+        Gizmos.DrawLine(warningStartPos, warningEndPos);
 
         // 시작점들 표시
         Gizmos.color = Color.green;
