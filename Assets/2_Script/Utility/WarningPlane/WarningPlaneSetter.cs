@@ -48,6 +48,7 @@ public class WarningPlaneSetter
     public static void DelWarning(MonoBehaviour component, GameObject warningPlane)
     {
         Timer.Instance.StopTimer(component, "_Warning");
+        WarningPlaneCustom.Instance.SetBase(warningPlane);
 
         if (WarningPlainPool.Instance != null)
         { WarningPlainPool.Instance.ReturnWarningPlaneToPool(warningPlane); }

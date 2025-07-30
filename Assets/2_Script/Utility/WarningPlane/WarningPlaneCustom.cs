@@ -130,7 +130,6 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
     }
 
 
-
     public void UpdateRotation(GameObject warningPlane, Vector3 vec)
     {
         // 이동 벡터에서 각도(Yaw) 계산 (월드 Y축 기준)
@@ -140,7 +139,5 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
         // 평면이 '바닥에 평행'하게 하기 위해 기본은 (90, angleY, 0)
         warningPlane.transform.rotation = Quaternion.Euler(90f, angleY, 0f);
     }
-
-
 
 }
