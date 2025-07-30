@@ -12,10 +12,10 @@ public class PlayerMove : MoveAction
     {
         base.Awake();
         // 전방 주시 거리
-        frontRayDistance = transform.localScale.z * 0.6f;
+        frontRayDistance = transform.localScale.z * 0.7f;
 
         dodgeAction = GetComponent<DodgeAction>();
-        canMoveLayer = LayerMask.NameToLayer("Cube");
+        canMoveLayer = 1 << LayerMask.NameToLayer("Cube");
     }
 
 
@@ -56,10 +56,11 @@ public class PlayerMove : MoveAction
         }
 
         // 이동 불가능하면 리턴
-        isMove = CanMove();
-        if (!isMove) { return; }
+        //  isMove = CanMove();
+        //  if (!isMove) { return; }
 
         // 이동
-        base.Move();
+        if (CanMove())
+        { base.Move(); }
     }
 }
