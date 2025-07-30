@@ -16,6 +16,7 @@ public class ChargeAttack : BasicWeaponAttack
     {
         base.Awake();
         rigid = GetComponent<Rigidbody>();
+        checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
     }
 
@@ -49,9 +50,33 @@ public class ChargeAttack : BasicWeaponAttack
     }
 
 
+    private LayerMask checkLayer;
+    private float checkRadius = 0.1f;
+
+
     private void FixedUpdate()
     {
+        // --- 다음 위치 계산
         Vector3 nextPos = rigid.position + transform.forward * chargeSpeed * Time.fixedDeltaTime;
+        
+        // --- 다음 위치의 장애물 확인 ---
+        Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
+
+        foreach (var hit in hits)
+        {
+            // "Cube" 태그이거나, 검사 레이어에 속한다면
+            if (hit.CompareTag("Cube") || ((checkLayer.value & (1 << hit.gameObject.layer)) != 0))
+            {
+                // 자기 자신이 아닐 때(중복체크 방지)
+                if (hit.gameObject != this.gameObject)
+                {
+                    whenNoLongerChargeAttack();
+                    return; // 더 이상 실행할 필요 없습니다
+                }
+            }
+        }
+
+        // --- 이동 ---
         rigid.MovePosition(nextPos);
     }
 

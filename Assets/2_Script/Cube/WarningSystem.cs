@@ -34,15 +34,15 @@ public class WarningSystem : MonoBehaviour
     {
         get
         {
+            // 할당된 경고발판이 없음 || 씬 상에서 비활성화 상태
             if (_warningPlane == null || !_warningPlane.activeInHierarchy)
-            {
-                _warningPlane = WarningPlainPool.Instance.GetWarningPlaneFromPool();
-            }
+            { _warningPlane = WarningPlainPool.Instance.GetWarningPlaneFromPool(); }
+
             return _warningPlane;
         }
         set
         {
-            if (value == null)
+            if (WarningPlainPool.Instance != null && value == null)
             { WarningPlainPool.Instance.ReturnWarningPlaneToPool(_warningPlane); }
             _warningPlane = value;
         }
