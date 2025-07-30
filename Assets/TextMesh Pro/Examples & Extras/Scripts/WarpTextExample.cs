@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 
@@ -106,7 +106,7 @@ namespace TMPro.Examples
                     vertices[vertexIndex + 2] += -offsetToMidBaseline;
                     vertices[vertexIndex + 3] += -offsetToMidBaseline;
 
-                    // Compute the angle of rotation for each character based on the animation curve
+                    // Compute the angle of baseRotation for each character based on the animation curve
                     float x0 = (offsetToMidBaseline.x - boundsMinX) / (boundsMaxX - boundsMinX); // Character's position relative to the bounds of the mesh.
                     float x1 = x0 + 0.0001f;
                     float y0 = VertexCurve.Evaluate(x0) * CurveScale;

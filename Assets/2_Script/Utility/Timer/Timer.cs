@@ -200,4 +200,36 @@ public class Timer : SingletonT<Timer>
         callback?.Invoke(param);
     }
 
+
+
+    // ===== 지속시간 중 매 프레임마다 호출하는 타이머 =====
+
+    // 일정 시간 동안 지속하며, 매 프레임마다 callback 호출
+    public void StartRepeatTimer(MonoBehaviour component, string key, float duration, Action callback)
+    {
+        var timerKey = GetTimerKeyAsMono(component, key);
+        if (continuousTimers.ContainsKey(timerKey)) { return; }
+        Coroutine timer = StartCoroutine(RepeatTimerCoroutine(timerKey, component, duration, callback));
+        continuousTimers[timerKey] = timer;
+    }
+
+    private IEnumerator RepeatTimerCoroutine((int, string) key, MonoBehaviour component, float duration, Action callback)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            if (component == null)
+            {
+                continuousTimers.Remove(key);
+                yield break;
+            }
+            callback?.Invoke();
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        continuousTimers.Remove(key);
+    }
+
+
+
 }
