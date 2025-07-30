@@ -535,4 +535,21 @@ public class CubeCollapser : MonoBehaviour
         if (showDebugLog)
             Debug.Log($"[{gameObject.name}] 큐브 리셋 완료");
     }
+
+    /// <summary>
+    /// 현재 붕괴 중인지 확인
+    /// </summary>
+    public bool IsCollapsing
+    {
+        get { return currentState != CubeState.Idle; }
+    }
+
+    /// <summary>
+    /// 아직 붕괴되지 않은 안전한 상태인지 확인
+    /// </summary>
+    public bool IsSafe
+    {
+        get { return currentState == CubeState.Idle; }
+    }
+
 }
