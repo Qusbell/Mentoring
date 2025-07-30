@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// 멧돼지 큐브 - 메인 컴포넌트 (간소화 버전)
+/// 멧돼지 큐브 - 메인 컴포넌트 (MeshRenderer 제어 방식)
 /// 현재 위치에서 startPositionOffset 방향으로 돌진
+/// 워닝 시작과 동시에 큐브가 보이기 시작함
 /// </summary>
 [RequireComponent(typeof(BoarMovement))]
 [RequireComponent(typeof(BoarWarning))]
@@ -60,6 +61,17 @@ public class BoarCube : MonoBehaviour
 
     #endregion
 
+    #region ===== 시각 제어 설정 =====
+
+    [Header("시각 제어")]
+    [Tooltip("시작 시 큐브를 숨길지 여부")]
+    public bool startHidden = true;
+
+    [Tooltip("워닝 시작과 동시에 큐브 표시")]
+    public bool showOnWarningStart = true;
+
+    #endregion
+
     #region ===== 디버그 설정 =====
 
     [Header("디버그")]
@@ -85,6 +97,7 @@ public class BoarCube : MonoBehaviour
     // 상태 관리
     private bool hasTriggered = false;  // 트리거 발동 여부
     private bool isLaunched = false;    // 발사 진행 여부
+    private bool isVisible = true;      // 현재 표시 상태
 
     // 자식 큐브들 (그룹 발사용)
     private BoarCube[] childBoarCubes;
@@ -101,8 +114,11 @@ public class BoarCube : MonoBehaviour
         InitializeComponents();
         DetermineChildCubes();
 
-        // 시작 시 모든 모드에서 비활성화
-        gameObject.SetActive(false);
+        // 시작 시 숨김 설정이 켜져있으면 MeshRenderer만 비활성화
+        if (startHidden)
+        {
+            SetVisibility(false);
+        }
     }
 
     /// <summary>
@@ -141,6 +157,46 @@ public class BoarCube : MonoBehaviour
 
     #endregion
 
+    #region ===== 시각 제어 메서드 =====
+
+    /// <summary>
+    /// 큐브의 시각적 표시 제어 (자식 포함)
+    /// </summary>
+    private void SetVisibility(bool visible)
+    {
+        // 상태가 같다면 중복 처리 방지
+        if (isVisible == visible) return;
+
+        isVisible = visible;
+
+        // 자신의 MeshRenderer
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            meshRenderer.enabled = visible;
+        }
+
+        // 자식들의 MeshRenderer도 모두 제어
+        MeshRenderer[] childRenderers = GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer renderer in childRenderers)
+        {
+            renderer.enabled = visible;
+        }
+
+        if (showDebugLog)
+            Debug.Log($"[{gameObject.name}] 큐브 표시: {(visible ? "ON" : "OFF")}");
+    }
+
+    /// <summary>
+    /// 현재 표시 상태 반환
+    /// </summary>
+    public bool IsVisible
+    {
+        get { return isVisible; }
+    }
+
+    #endregion
+
     #region ===== 공개 메서드 - 외부 호출용 =====
 
     /// <summary>
@@ -163,6 +219,10 @@ public class BoarCube : MonoBehaviour
         if (isLaunched) return;
 
         isLaunched = true;
+
+        // 즉시 표시
+        if (!isVisible)
+            SetVisibility(true);
 
         if (HasChildCubes())
         {
@@ -197,6 +257,9 @@ public class BoarCube : MonoBehaviour
 
         hasTriggered = false;
         isLaunched = false;
+
+        // 시작 상태로 돌아가기 (숨김 여부에 따라)
+        SetVisibility(!startHidden);
 
         // 자식 큐브들도 리셋
         if (HasChildCubes())
@@ -248,26 +311,34 @@ public class BoarCube : MonoBehaviour
     #region ===== 코루틴 - 단일 발사 시퀀스 =====
 
     /// <summary>
-    /// 단일 멧돼지 큐브 발사 시퀀스 (간소화 버전)
+    /// 단일 멧돼지 큐브 발사 시퀀스 (MeshRenderer 제어 방식)
     /// </summary>
     private System.Collections.IEnumerator BoarCubeSequence()
     {
-        // 1단계: 경고 표시
+        // 1단계: 큐브 표시 (워닝 시작과 동시에)
+        if (showOnWarningStart && !isVisible)
+        {
+            SetVisibility(true);
+        }
+
+        // 2단계: 경고 표시
         warning.ShowWarning();
 
-        // 2단계: 경고 시간 대기
+        // 3단계: 경고 시간 대기
         float warningDuration = warning.GetWarningDuration();
         yield return new WaitForSeconds(warningDuration);
 
-        // 3단계: 경고 제거
+        // 4단계: 경고 제거
         warning.ClearWarning();
 
-        // 4단계: 돌진 실행 (현재 위치에서 startPositionOffset 방향으로)
+        // 5단계: 돌진 실행 (현재 위치에서 startPositionOffset 방향으로)
         yield return StartCoroutine(movement.ExecuteLaunch());
 
-        // 5단계: 완료 후 대기 및 비활성화
+        // 6단계: 완료 후 대기 및 숨김
         yield return new WaitForSeconds(deactivateDelay);
-        gameObject.SetActive(false);
+
+        // 다시 숨김 (재사용을 위해)
+        SetVisibility(false);
     }
 
     /// <summary>
@@ -277,7 +348,7 @@ public class BoarCube : MonoBehaviour
     {
         yield return StartCoroutine(movement.ExecuteLaunch());
         yield return new WaitForSeconds(deactivateDelay);
-        gameObject.SetActive(false);
+        SetVisibility(false);
     }
 
     #endregion
@@ -294,22 +365,28 @@ public class BoarCube : MonoBehaviour
             yield break;
         }
 
-        // 1단계: 모든 자식 큐브 경고 표시
+        // 1단계: 모든 큐브 표시 (워닝 시작과 동시에)
+        if (showOnWarningStart)
+        {
+            ShowGroupCubes();
+        }
+
+        // 2단계: 모든 자식 큐브 경고 표시
         ShowGroupWarning();
 
-        // 2단계: 경고 시간 대기
+        // 3단계: 경고 시간 대기
         float warningDuration = warning.GetWarningDuration();
         yield return new WaitForSeconds(warningDuration);
 
-        // 3단계: 경고 제거
+        // 4단계: 경고 제거
         ClearGroupWarning();
 
-        // 4단계: 자식 큐브들 동시 발사
+        // 5단계: 자식 큐브들 동시 발사
         yield return StartCoroutine(SimultaneousGroupLaunch());
 
-        // 5단계: 완료 후 대기 및 비활성화
+        // 6단계: 완료 후 대기 및 숨김
         yield return new WaitForSeconds(deactivateDelay);
-        gameObject.SetActive(false);
+        HideGroupCubes();
     }
 
     /// <summary>
@@ -319,7 +396,7 @@ public class BoarCube : MonoBehaviour
     {
         yield return StartCoroutine(SimultaneousGroupLaunch());
         yield return new WaitForSeconds(deactivateDelay);
-        gameObject.SetActive(false);
+        HideGroupCubes();
     }
 
     /// <summary>
@@ -346,6 +423,38 @@ public class BoarCube : MonoBehaviour
         foreach (var coroutine in launchCoroutines)
         {
             yield return coroutine;
+        }
+    }
+
+    #endregion
+
+    #region ===== 그룹 시각 제어 =====
+
+    /// <summary>
+    /// 그룹 큐브 표시
+    /// </summary>
+    private void ShowGroupCubes()
+    {
+        foreach (var child in childBoarCubes)
+        {
+            if (child != null && !child.IsVisible)
+            {
+                child.SetVisibility(true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 그룹 큐브 숨김
+    /// </summary>
+    private void HideGroupCubes()
+    {
+        foreach (var child in childBoarCubes)
+        {
+            if (child != null)
+            {
+                child.SetVisibility(false);
+            }
         }
     }
 
@@ -440,6 +549,13 @@ public class BoarCube : MonoBehaviour
 
         Gizmos.DrawLine(arrowPos, arrowPos + back + right);
         Gizmos.DrawLine(arrowPos, arrowPos + back + left);
+
+        // 숨김 상태 표시 (큐브 주변에 점선 박스)
+        if (!isVisible && startHidden)
+        {
+            Gizmos.color = new Color(1f, 0f, 1f, 0.3f); // 반투명 마젠타
+            Gizmos.DrawWireCube(currentPos, Vector3.one * 1.2f);
+        }
     }
 #endif
 
