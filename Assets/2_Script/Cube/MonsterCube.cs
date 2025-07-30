@@ -76,7 +76,7 @@ public class MonsterCube : MonoBehaviour
         if (spawnOnActivation)
         {
             // StartCoroutine(Timer.StartTimer(0.02f, CheckActivationSpawn));
-            Timer.Instance.StartTimer(this, 0.02f, CheckActivationSpawn);
+            Timer.Instance.StartTimer(this, 0.1f, CheckActivationSpawn);
         }
     }
 

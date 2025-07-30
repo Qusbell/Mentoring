@@ -15,7 +15,9 @@ public class BasicWeaponAttack : AttackAction
     // 무기가 활성화되어있을 시간
     [SerializeField] protected float weaponActiveTime = 1f;
 
+
     
+
 
     // BasicActorWeapon 캐시
     private BasicActorWeapon _weapon = null;
@@ -37,6 +39,9 @@ public class BasicWeaponAttack : AttackAction
     {
         base.Awake();
         weapon.SetWeapon(targetTag, GetComponent<Actor>());
+
+        weaponActiveTime += weaponBeforeDelay;
+        attackRate += weaponActiveTime;
     }
 
     protected override void DoAttack()

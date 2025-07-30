@@ -11,6 +11,9 @@ public class ChargeAttack : BasicWeaponAttack
     [SerializeField] protected float decelerateSpeed = 1f;
     [SerializeField] protected float decelerateRate = 0.1f;
 
+    // 경고 발판
+    private GameObject warningPlane = null;
+
 
     protected override void Awake()
     {
@@ -25,14 +28,18 @@ public class ChargeAttack : BasicWeaponAttack
 
     protected override void DoAttack()
     {
-        base.DoAttack();
         float originalChargeSpeed = chargeSpeed;
+        warningPlane = WarningPlaneSetter.SetWarning(this, 1f, attackRange, weaponBeforeDelay, transform.position, transform.forward);
+        base.DoAttack();
+
 
         // 돌진 활성화
         Timer.Instance.StartTimer(this, "_DoAttack", weaponBeforeDelay,
             () => {
                 this.enabled = true;
                 rigid.isKinematic = true;
+                WarningPlaneSetter.DelWarning(this, warningPlane);
+
                 whenNoLongerChargeAttack = () =>
                 {
                     Timer.Instance.StopEndlessTimer(this, "_Decelerate");
@@ -43,10 +50,11 @@ public class ChargeAttack : BasicWeaponAttack
                 };
 
                 Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
+
+                // 0.1초마다 감속
+                Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
             });
 
-        // 0.1초마다 감속
-        Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
     }
 
 

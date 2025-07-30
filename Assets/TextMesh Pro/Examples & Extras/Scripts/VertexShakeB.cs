@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 
@@ -153,7 +153,7 @@ namespace TMPro.Examples
                         copyOfVertices[materialIndex][vertexIndex + 2] -= centerOfLine;
                         copyOfVertices[materialIndex][vertexIndex + 3] -= centerOfLine;
 
-                        // Setup the matrix rotation.
+                        // Setup the matrix baseRotation.
                         matrix = Matrix4x4.TRS(Vector3.one, rotation, Vector3.one);
 
                         // Apply the matrix TRS to the individual characters relative to the center of the current line.

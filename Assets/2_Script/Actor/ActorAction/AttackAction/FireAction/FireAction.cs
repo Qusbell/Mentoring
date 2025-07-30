@@ -32,6 +32,13 @@ public class FireAction : AttackAction
         }
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        attackRate += weaponBeforeDelay;
+    }
+
+
 
     protected override void DoAttack()
     {

@@ -10,6 +10,7 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
     private MaterialPropertyBlock propBlock;
 
     private readonly Color warningColor = Color.red; // 경고 색상 (빨간색)
+    private readonly Quaternion baseRotation = Quaternion.Euler(90, 0, 0);
     private const float startAlpha = 0.3f;           // 초기 투명도 (30% 불투명)
     private const float maxAlpha = 0.8f;             // 최대 투명도 (80% 불투명)
     private const float emissionIntensity = 1f;      // 발광 강도
@@ -55,7 +56,7 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
     }
 
 
-    private void SetMaterial(GameObject warningPlane)
+    private void SetBaseMaterial(GameObject warningPlane)
     {
         Renderer planeRenderer = warningPlane.GetComponent<Renderer>();
         if (planeRenderer != null)
@@ -65,7 +66,7 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
         }
     }
 
-    private void SetRotation(GameObject warningPlane)
+    private void SetBaseRotation(GameObject warningPlane)
     {
         // 바닥에 평행
         // 90도 돌려주기
@@ -75,8 +76,8 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
 
     public void SetBase(GameObject warningPlane)
     {
-        SetMaterial(warningPlane);
-        SetRotation(warningPlane);
+        SetBaseMaterial(warningPlane);
+        SetBaseRotation(warningPlane);
     }
 
 
@@ -84,6 +85,8 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
     // 0이 최소, 1이 최대
     public void UpdateColor(GameObject warningPlane, float rate)
     {
+        if (rate < 0) { rate = 0; }
+
         // 임계값보다 비율이 클 때(멀리 있을 때)는 변화 없음, 초기상태 유지
         if (rate <= warningStartRate)
         {
@@ -121,14 +124,20 @@ public class WarningPlaneCustom : SingletonT<WarningPlaneCustom>
     }
 
 
-
-
-    public void UpdateSize(GameObject warningPlane, float width, float height)
+    public void UpdateSize(GameObject warningPlane, float width, float length)
     {
-        warningPlane.transform.localScale = new Vector3(width, height, 1);
+        warningPlane.transform.localScale = new Vector3(width, length, 1);
     }
 
 
+    public void UpdateRotation(GameObject warningPlane, Vector3 vec)
+    {
+        // 이동 벡터에서 각도(Yaw) 계산 (월드 Y축 기준)
+        float angleY = Mathf.Atan2(vec.x, vec.z) * Mathf.Rad2Deg;
+        // => (0,1)기준 앞, (1,0)기준 오른쪽, (-1,0)기준 왼쪽
 
+        // 평면이 '바닥에 평행'하게 하기 위해 기본은 (90, angleY, 0)
+        warningPlane.transform.rotation = Quaternion.Euler(90f, angleY, 0f);
+    }
 
 }
