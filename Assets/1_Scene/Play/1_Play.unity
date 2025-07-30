@@ -599,7 +599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -4954,7 +4954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1201777307464273119, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4427208750641841800, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7195,7 +7195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -13481,8 +13481,8 @@ Transform:
   m_GameObject: {fileID: 570300777}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 1.77, z: -0.33}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalPosition: {x: -0.96, y: -0.23, z: -1.07}
+  m_LocalScale: {x: 3, y: 3, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 336878796}
@@ -20551,7 +20551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1201777307464273119, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 4427208750641841800, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20790,8 +20790,8 @@ Transform:
   m_GameObject: {fileID: 949209203}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.84, y: 2.96, z: 0.02}
-  m_LocalScale: {x: 3, y: 3, z: 5}
+  m_LocalPosition: {x: -0.96, y: 1.55, z: 0.66}
+  m_LocalScale: {x: 3, y: 3, z: 9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 35060740}
@@ -24882,7 +24882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170909371802284441, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: warningDelay
-      value: 2.5
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 8327097625205974551, guid: 37ca08987ba5a5a4d9caf219cfa02588, type: 3}
       propertyPath: m_Enabled
@@ -36876,7 +36876,7 @@ MonoBehaviour:
     triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 570300777}
-    delayTime: 0
+    delayTime: 1
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1819235973}
