@@ -1,14 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
 public class BetweenCubeAction : MonoBehaviour
 {
-    [SerializeField] private int sandwichedDamage = 3;
-
+    // 끼었을 경우의 피해량
+    [SerializeField] protected int whenSandwichedDamage = 3;
 
 
     // 콜라이더가 접촉해온 방향
@@ -36,8 +34,7 @@ public class BetweenCubeAction : MonoBehaviour
 
 
     // 콜라이더와, 그 콜라이더가 접촉한 방향
-    private Dictionary<Collider, HashSet<ImpactDirection>> collisionDirections = new Dictionary<Collider, HashSet<ImpactDirection>>();
-
+    private Dictionary<Collider, ImpactDirection> collisionDirections = new Dictionary<Collider, ImpactDirection>();
 
     // collisionDirections에 반대 방향이 있는지 확인하는 함수
     //  true: 반대 방향 O
@@ -46,11 +43,9 @@ public class BetweenCubeAction : MonoBehaviour
     {
         ImpactDirection opposite = GetOppositeDirection(dir);
 
-        foreach (var dirSet in collisionDirections.Values)
-        {
-            if (dirSet.Contains(opposite))
-            { return true; }
-        }
+        foreach (var value in collisionDirections.Values)
+        { if (value == opposite) { return true; } }
+
         return false;
     }
 
@@ -71,54 +66,43 @@ public class BetweenCubeAction : MonoBehaviour
         return normal.z > 0 ? ImpactDirection.Forward : ImpactDirection.Back;
     }
 
+
     private void OnCollisionEnter(Collision collision)
-    { EnterUpdate(collision); }
+    {
+        // Debug.Log("enter");
+        EnterUpdate(collision);
+    }
 
     private void OnCollisionExit(Collision collision)
     { ExitUpdate(collision); }
 
 
-    // 콜라이더 접촉 시 추가 및 이벤트
+    // 콜라이더 접촉 시 추가
     private void EnterUpdate(Collision collision)
     {
         if (!collision.gameObject.CompareTag("Cube")) { return; }
 
-        Collider otherCollider = collision.collider;
-
-        // --- 존재하지 않던 콜라이더인지 체크 ---
-        if (!collisionDirections.ContainsKey(otherCollider))
-        { collisionDirections[otherCollider] = new HashSet<ImpactDirection>(); }
-
-        // --- 접촉한 부위들 체크 ---
         foreach (ContactPoint contact in collision.contacts)
         {
+            Collider otherCollider = contact.otherCollider;
+
+            // 키 추가
             ImpactDirection dir = GetDirectionFromWhereToThis(contact.normal);
-            collisionDirections[otherCollider].Add(dir);
-        }
 
-        // --- 전체 충돌 콜라이더를 순회하며 반대 방향 존재 여부를 체크 ---
-        foreach (var kvp in collisionDirections)
-        {
-            foreach (var dir in kvp.Value)
+            if (HasOppositeDirection(dir))
             {
-                if (HasOppositeDirection(dir))
-                {
-                    Debug.Log("충돌 발생");
+                Debug.Log("충돌 발생");
+                
+                DamageReaction damageReaction = GetComponent<DamageReaction>();
+                Actor actor = GetComponent<Actor>();
+                if (damageReaction != null && actor != null)
+                { damageReaction.TakeDamage(whenSandwichedDamage, actor); }
 
-                    // 자해로 데미지 처리
-                    DamageReaction damageReaction = GetComponent<DamageReaction>();
-                    Actor actor = GetComponent<Actor>();
-                    if (damageReaction != null)
-                    { damageReaction.TakeDamage(sandwichedDamage, actor); }
-
-                    // 텔레포트
-                    // <-
-
-                    return; // 중복 처리 방지를 위해 빠져나오기
-                }
+                // <- 텔포
             }
+            else
+            { collisionDirections[otherCollider] = dir; }
         }
-
     }
 
 
@@ -127,23 +111,12 @@ public class BetweenCubeAction : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Cube")) { return; }
 
-        Collider otherCollider = collision.collider;
-        if (collisionDirections.ContainsKey(otherCollider))
+        foreach (ContactPoint contact in collision.contacts)
         {
+            Collider otherCollider = contact.otherCollider;
+
+            // 키가 있으면 제거
             collisionDirections.Remove(otherCollider);
         }
     }
-
-
-    private void Update()
-    {
-        // --- null key 체크 ---
-        foreach (var key in collisionDirections.Keys.ToList())
-        {
-            if (key == null)
-            { collisionDirections.Remove(key); }
-        }
-    }
-
-
 }
