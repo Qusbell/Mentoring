@@ -1692,7 +1692,7 @@ Transform:
   m_GameObject: {fileID: 101146044}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: 9}
+  m_LocalPosition: {x: 9, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2296,7 +2296,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 9
+  warningDelay: 11.5
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -7472,7 +7472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefabs:
-  - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
+  - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -10273,7 +10273,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 8.5
+  warningDelay: 11
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -11695,6 +11695,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2357481347489433248, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
+      propertyPath: moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64.43
@@ -15444,7 +15448,7 @@ Transform:
   m_GameObject: {fileID: 703365757}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42, y: 0, z: 21}
+  m_LocalPosition: {x: 42, y: 0, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15575,7 +15579,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 9.5
+  warningDelay: 12
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -16229,7 +16233,7 @@ Transform:
   m_GameObject: {fileID: 749890247}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: 0}
+  m_LocalPosition: {x: 9, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20715,7 +20719,7 @@ Transform:
   m_GameObject: {fileID: 952489352}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18, y: 0, z: 18}
+  m_LocalPosition: {x: 18, y: 0, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23394,7 +23398,7 @@ MonoBehaviour:
   nextCubeControllerActivate:
     m_PersistentCalls:
       m_Calls: []
-  sharingDelayTime: 0.5
+  sharingDelayTime: 0.3
   activationSettings:
   - targetCube: {fileID: 967861538}
     triggerType: 0
@@ -27799,7 +27803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefabs:
-  - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
+  - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -28468,7 +28472,7 @@ MonoBehaviour:
   nextCubeControllerActivate:
     m_PersistentCalls:
       m_Calls: []
-  sharingDelayTime: 0.5
+  sharingDelayTime: 0.3
   activationSettings:
   - targetCube: {fileID: 1879112586}
     triggerType: 0
@@ -30554,7 +30558,7 @@ Transform:
   m_GameObject: {fileID: 1414587768}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30, y: 0, z: 21}
+  m_LocalPosition: {x: 30, y: 0, z: 18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31152,7 +31156,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 10
+  warningDelay: 12.5
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -35459,7 +35463,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 8
+  warningDelay: 10
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -37627,7 +37631,7 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 11
+  warningDelay: 13
   triggerArea: {fileID: 1069017543}
   oneTimeUse: 1
   showDebugLog: 0
@@ -43097,7 +43101,7 @@ Transform:
   m_GameObject: {fileID: 2043765973}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 0, z: 0}
+  m_LocalPosition: {x: 9, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43865,7 +43869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefabs:
-  - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
+  - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
