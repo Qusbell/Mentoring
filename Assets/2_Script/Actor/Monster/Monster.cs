@@ -61,7 +61,7 @@ public class Monster : Actor
 
 
     // 현재 수행 중인 행동
-    protected Action actionStatus;
+    protected System.Action actionStatus;
 
     private void Update()
     { actionStatus(); }
@@ -107,7 +107,6 @@ public class Monster : Actor
     }
 
 
-
     protected void TurnWhenStart()
     {
         Vector3 targetPos = target.position;
@@ -137,10 +136,8 @@ public class Monster : Actor
 
         if (InAttackRange() && chaseAction.IsFacingTarget())
         { SwitchStatus(AttackStatus); }
-        else if (chaseAction.isCanChase)
-        { SwitchStatus(MoveStatus); }
         else
-        { moveAction.Turn(); }
+        { SwitchStatus(MoveStatus); }
     }
 
 
@@ -149,7 +146,6 @@ public class Monster : Actor
     {
         // Debug.Log("Move");
 
-
         if (InAttackRange())
         {
             moveAction.isMove = false;
@@ -157,9 +153,7 @@ public class Monster : Actor
             if (chaseAction.IsFacingTarget())
             { SwitchStatus(AttackStatus); }
             else
-            {
-                moveAction.Turn();
-            }
+            { moveAction.Turn(); }
         }
         else if (chaseAction.isCanChase)
         {
@@ -170,6 +164,7 @@ public class Monster : Actor
         else
         {
             moveAction.isMove = false;
+            moveAction.Turn();
             SwitchStatus(IdleStatus);
         }
 
@@ -207,6 +202,7 @@ public class Monster : Actor
         // Attack -> Reload는 Animator 창에서 지정됨
         SwitchStatusWhenAnimationEnd("Reload", IdleStatus);
     }
+
 
     // 피격 시 애니메이션
 

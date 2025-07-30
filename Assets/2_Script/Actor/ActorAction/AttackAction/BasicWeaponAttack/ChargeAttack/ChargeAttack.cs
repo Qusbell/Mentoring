@@ -14,6 +14,8 @@ public class ChargeAttack : BasicWeaponAttack
     // 경고 발판
     private GameObject warningPlane = null;
 
+    private Vector3 attackVec = Vector3.zero;
+
 
     protected override void Awake()
     {
@@ -32,13 +34,21 @@ public class ChargeAttack : BasicWeaponAttack
         warningPlane = WarningPlaneSetter.SetWarning(this, 1f, attackRange, weaponBeforeDelay, transform.position, transform.forward);
         base.DoAttack();
 
+        // 공격 방향 지정
+        attackVec = transform.forward;
 
         // 돌진 활성화
         Timer.Instance.StartTimer(this, "_DoAttack", weaponBeforeDelay,
             () => {
+                // --- 발판 반환 ---
+                WarningPlaneSetter.DelWarning(this, warningPlane);
+
+                // -- 사망 시 리턴 ---
+                DamageReaction damageReaction = GetComponent<DamageReaction>();
+                if (damageReaction.isDie) { return; }
+
                 this.enabled = true;
                 rigid.isKinematic = true;
-                WarningPlaneSetter.DelWarning(this, warningPlane);
 
                 whenNoLongerChargeAttack = () =>
                 {
@@ -51,7 +61,7 @@ public class ChargeAttack : BasicWeaponAttack
 
                 Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
 
-                // 0.1초마다 감속
+                // 일정 주기로 감속
                 Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
             });
 
@@ -61,11 +71,10 @@ public class ChargeAttack : BasicWeaponAttack
     private LayerMask checkLayer;
     private float checkRadius = 0.1f;
 
-
     private void FixedUpdate()
     {
         // --- 다음 위치 계산
-        Vector3 nextPos = rigid.position + transform.forward * chargeSpeed * Time.fixedDeltaTime;
+        Vector3 nextPos = rigid.position + attackVec * chargeSpeed * Time.fixedDeltaTime;
         
         // --- 다음 위치의 장애물 확인 ---
         Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
@@ -79,7 +88,7 @@ public class ChargeAttack : BasicWeaponAttack
                 if (hit.gameObject != this.gameObject)
                 {
                     whenNoLongerChargeAttack();
-                    return; // 더 이상 실행할 필요 없습니다
+                    return; // 더 이상 실행 X
                 }
             }
         }

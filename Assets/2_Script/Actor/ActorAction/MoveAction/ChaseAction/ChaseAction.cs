@@ -111,7 +111,7 @@ public class ChaseAction : MoveAction
     }
 
     // 추적 가능 여부 <- 수정할 것, 현재 제대로 작동 X
-    public bool IsCanChaseTarget()
+    protected bool IsCanChaseTarget()
     {
         // 1. 타겟이 존재하는가?
         if (target == null)
