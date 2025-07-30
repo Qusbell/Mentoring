@@ -42,6 +42,7 @@ public class PlayerDamageReaction : DamageReaction
         }
     }
 
+
     // 모든 렌더러 활성화/비활성화
     void SetRenderersEnabled(bool enabled)
     {
@@ -51,6 +52,7 @@ public class PlayerDamageReaction : DamageReaction
             { rend.enabled = enabled; }
         }
     }
+
 
     // === 무적 ===
     protected void Invincibility()
@@ -66,6 +68,7 @@ public class PlayerDamageReaction : DamageReaction
                 SetRenderersEnabled(true);
             });
     }
+
 
     // === TakeDamage ===
     public override void TakeDamage(int damage, Actor enemy, float knockBackPower = 0, float knockBackHeight = 0)

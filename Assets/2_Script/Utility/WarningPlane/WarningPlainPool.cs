@@ -10,9 +10,7 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
     private List<GameObject> warningPool = new List<GameObject>();
 
     private void Awake()
-    {
-        CreateWarningPlanes(5);
-    }
+    { CreateWarningPlanes(5); }
 
     // 복수 생성
     private void CreateWarningPlanes(int num)
@@ -28,6 +26,9 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
         GameObject warning = GameObject.CreatePrimitive(PrimitiveType.Quad);
         warning.name = "PooledWarning_" + warningPool.Count;
         warning.layer = LayerMask.NameToLayer("IgnoreAll");
+
+        // 기본 상태로 세팅
+        WarningPlaneCustom.Instance.SetBase(warning);
 
         // 비활성화해서 풀에 보관 (화면에 보이지 않음)
         warning.SetActive(false);
@@ -63,6 +64,5 @@ public class WarningPlainPool : SingletonT<WarningPlainPool>
             warning.SetActive(false);
         }
     }
-
 
 }
