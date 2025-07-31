@@ -46,6 +46,8 @@ abstract public class Actor : MonoBehaviour
     // 애니메이션
     protected ActorAnimation animator;
 
+    // 바닥 콜라이더 (점프 판정) : 현재 Player 이외에 존재하지 않음
+    protected FootCollider foot;
 
 
     // 생성 초기화
@@ -59,6 +61,7 @@ abstract public class Actor : MonoBehaviour
         animator = GetComponent<ActorAnimation>();
         moveAction = GetComponent<MoveAction>();
         damageReaction = GetComponent<DamageReaction>();
+        foot = GetComponentInChildren<FootCollider>();
 
         // 공격 목록 만들기
         AttackAction[] tempAttackActions = GetComponents<AttackAction>();

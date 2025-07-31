@@ -42,8 +42,11 @@ public class StaminaAction : ActorAction
         }
     }
 
-    protected void Awake()
-    { stamina = maxStamina; }
+    protected override void Awake()
+    {
+        base.Awake();
+        stamina = maxStamina;
+    }
 
 
     public bool UseStamina(int cost)

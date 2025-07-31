@@ -82,7 +82,7 @@ public class CubeCollapser : MonoBehaviour
     private float currentShakeIntensity;
     private float fallenDistance = 0f;
     private float shakeTimer = 0f;
-    private bool hasTriggered = false; // 에리어 트리거용
+    // private bool hasTriggered = false; // 에리어 트리거용
 
     // 성능 최적화 변수
     private int frameCounter = 0;
@@ -511,7 +511,7 @@ public class CubeCollapser : MonoBehaviour
         currentState = CubeState.Idle;
         fallenDistance = 0f;
         shakeTimer = 0f;
-        hasTriggered = false;
+        // hasTriggered = false;
         frameCounter = 0;  // 최적화 변수 리셋
 
         // originalPosition이 (0,0,0) 근처면 위치 변경하지 않음 (자식 오브젝트 문제 해결)

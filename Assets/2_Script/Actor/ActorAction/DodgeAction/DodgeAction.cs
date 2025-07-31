@@ -9,8 +9,10 @@ public class DodgeAction : ActorAction
     private FootCollider foot;
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rigid = GetComponent<Rigidbody>();
         foot = GetComponentInChildren<FootCollider>();
 

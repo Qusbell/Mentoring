@@ -16,8 +16,10 @@ public class MoveAction : ActorAction
     protected Rigidbody rigid;
 
     // 초기화
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
         originMoveSpeed = moveSpeed;

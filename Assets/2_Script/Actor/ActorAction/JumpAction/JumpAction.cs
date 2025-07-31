@@ -25,8 +25,10 @@ public class JumpAction : ActorAction
 
 
     // 생성 시 초기화
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // Rigidbody 초기화
         rigid = GetComponent<Rigidbody>();
         // null 초기화 방어

@@ -69,8 +69,9 @@ abstract public class AttackAction : ActorAction
     }
 
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         // 타겟태그 검사
         // 배정되지 않은 경우 : 기초적인 재배정
         if (targetTag == "")

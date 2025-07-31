@@ -9,7 +9,8 @@ public class FootCollider : MonoBehaviour
     {
         Collider collider = GetComponent<Collider>();
 
-        // <- null인 경우?
+        if(collider == null)
+        { Debug.LogError($"{gameObject.name}에 착지 판정용 콜라이더 부재"); }
 
         if (collider != null)
         { collider.isTrigger = true; }
@@ -50,7 +51,7 @@ public class FootCollider : MonoBehaviour
         // 큐브인 경우
         if (other.CompareTag("Cube"))
         {
-            // 일시적인 유예시간 후 삭제
+            // 일시적인 유예시간 후, 착지 중인 콜라이더 목록에서 삭제
             Timer.Instance.StartTimer(this, 0.05f, () => { rands.Remove(other); });
         }
     }

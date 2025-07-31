@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FallingAction : ActorAction
 {
-    private void Update()
+
+    protected virtual void Update()
     {
         if(this.transform.position.y < -40)
         {
@@ -12,4 +13,5 @@ public class FallingAction : ActorAction
             // Debug.Log("삭제됨");
         }
     }
+
 }
