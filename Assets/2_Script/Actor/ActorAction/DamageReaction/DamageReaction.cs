@@ -102,8 +102,8 @@ public class DamageReaction : ActorAction
         foreach (var dieEvent in whenDieEvent)
         { dieEvent?.Invoke(); }
 
-        // ----- 사망 시, 모든 ActorAction 비활성화 -----
-        ActorAction[] actorActions = this.GetComponents<ActorAction>();
+        // ----- 모든 ActorAction 비활성화 -----
+        ActorAction[] actorActions = this.GetComponentsInChildren<ActorAction>();
         if(actorActions != null)
         {
             foreach (var item in actorActions)
@@ -120,11 +120,6 @@ public class DamageReaction : ActorAction
 
         // 2초 후 제거
         Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject)); // <- 이후 오브젝트 풀로 이동하는 걸 고려
-
-        //  // 모든 마테리얼 투명화 (2초)
-        //  SetMaterials setMaterials = GetComponent<SetMaterials>();
-        //  if(setMaterials != null)
-        //  { setMaterials.SetAllMaterialsToFadeOut(); }
     }
 
     public void Heal(int amount)
