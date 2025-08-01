@@ -1,11 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 /// <summary>
-/// 멧돼지 경고 표시 관리 (점진적 표시)
-/// 멧돼지 실제 이동 거리와 경고 표시 거리를 X, Y, Z 개별로 설정 가능
-/// 경고 표시가 점진적으로 확장됨
+/// 멧돼지 경고 표시 관리 (하나의 발판이 점진적으로 늘어나는 방식)
+/// 기존 코드 구조 유지하면서 여러 발판 대신 하나의 발판 사용
 /// </summary>
 public class BoarWarning : MonoBehaviour
 {
@@ -34,14 +32,8 @@ public class BoarWarning : MonoBehaviour
     // 메인 컴포넌트 참조
     private BoarCube main;
 
-    // 경고 평면 관리
-    private List<GameObject> activeWarningPlanes = new List<GameObject>();
-
-    // 공유 리소스 (메모리 효율성을 위한 정적 변수)
-    private static Material sharedWarningMaterial;
-    private static Queue<GameObject> warningPlanePool = new Queue<GameObject>();
-    private static readonly Color warningColor = Color.red;
-    private static readonly int POOL_SIZE = 20;
+    // 하나의 경고 발판
+    private GameObject warningPlane;
 
     #endregion
 
@@ -53,63 +45,9 @@ public class BoarWarning : MonoBehaviour
     public void Initialize(BoarCube mainComponent)
     {
         main = mainComponent;
-        InitializeSharedResources();
-        EnsureWarningPlanePool();
-    }
 
-    /// <summary>
-    /// 공유 머티리얼 초기화 (모든 경고 평면이 공유)
-    /// </summary>
-    private static void InitializeSharedResources()
-    {
-        if (sharedWarningMaterial != null) return;
-
-        // 반투명 머티리얼 생성
-        sharedWarningMaterial = new Material(Shader.Find("Standard"));
-
-        // 투명도 설정
-        sharedWarningMaterial.SetFloat("_Mode", 3); // Transparent 모드
-        sharedWarningMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        sharedWarningMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        sharedWarningMaterial.SetInt("_ZWrite", 0);
-        sharedWarningMaterial.EnableKeyword("_ALPHABLEND_ON");
-        sharedWarningMaterial.renderQueue = 3000;
-
-        // 발광 효과 추가
-        sharedWarningMaterial.EnableKeyword("_EMISSION");
-    }
-
-    /// <summary>
-    /// 경고 평면 오브젝트 풀 준비
-    /// </summary>
-    private static void EnsureWarningPlanePool()
-    {
-        while (warningPlanePool.Count < POOL_SIZE)
-        {
-            GameObject plane = CreateWarningPlane();
-            plane.SetActive(false);
-            warningPlanePool.Enqueue(plane);
-        }
-    }
-
-    /// <summary>
-    /// 새로운 경고 평면 생성
-    /// </summary>
-    private static GameObject CreateWarningPlane()
-    {
-        GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        plane.name = "PooledWarningPlane";
-
-        // 콜라이더 제거 (시각적 효과만 필요)
-        Object.Destroy(plane.GetComponent<Collider>());
-
-        // 레이어 설정 (레이캐스트 무시)
-        plane.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-        // 머티리얼 적용
-        plane.GetComponent<Renderer>().material = sharedWarningMaterial;
-
-        return plane;
+        if (main.showDebugLog)
+            Debug.Log($"[{gameObject.name}] BoarWarning 초기화 완료");
     }
 
     #endregion
@@ -117,7 +55,7 @@ public class BoarWarning : MonoBehaviour
     #region ===== 공개 메서드 =====
 
     /// <summary>
-    /// 경고 표시 시작 (점진적으로 확장)
+    /// 경고 표시 시작 (하나의 발판이 점진적으로 확장)
     /// </summary>
     public void ShowWarning()
     {
@@ -136,12 +74,11 @@ public class BoarWarning : MonoBehaviour
         // 진행 중인 코루틴 중지
         StopAllCoroutines();
 
-        foreach (GameObject plane in activeWarningPlanes)
+        if (warningPlane != null)
         {
-            ReturnWarningPlaneToPool(plane);
+            WarningPlaneSetter.DelWarning(this, warningPlane);
+            warningPlane = null;
         }
-
-        activeWarningPlanes.Clear();
     }
 
     /// <summary>
@@ -157,7 +94,7 @@ public class BoarWarning : MonoBehaviour
     #region ===== 내부 메서드 - 점진적 워닝 =====
 
     /// <summary>
-    /// 점진적으로 워닝을 표시하는 코루틴
+    /// 점진적으로 워닝을 표시하는 코루틴 (하나의 발판이 늘어남)
     /// </summary>
     private IEnumerator GradualWarningCoroutine()
     {
@@ -166,29 +103,48 @@ public class BoarWarning : MonoBehaviour
         float pathLength = GetWarningPathLength();
         float actualWidth = GetActualAttackWidth();
 
-        // 전체 세그먼트 수 계산
-        float segmentSpacing = Mathf.Min(actualWidth * 0.5f, 2f);
-        int totalSegments = Mathf.CeilToInt(pathLength / segmentSpacing);
-        totalSegments = Mathf.Max(1, totalSegments);
-
         Vector3 startPos = GetWarningStartPosition();
         Vector3 endPos = GetWarningEndPosition();
 
         // 워닝 확장 시간 설정
         float expansionTime = warningDuration * expansionRatio;
-        float segmentDelay = expansionTime / totalSegments;
 
-        // 점진적으로 세그먼트 추가
-        for (int i = 0; i < totalSegments; i++)
+        // 초기 발판 생성 (아주 작은 크기로 시작)
+        Vector3 center = (startPos + endPos) * 0.5f;
+        center.y = transform.position.y - 1.5f + warningHeightOffset;
+
+        warningPlane = WarningPlaneSetter.SetWarning(
+            this,           // MonoBehaviour 컴포넌트
+            actualWidth,    // 폭 (고정)
+            0.1f,          // 길이 (아주 작게 시작)
+            warningDuration, // 전체 지속 시간
+            center,         // 중심 위치
+            direction       // 방향
+        );
+
+        // 점진적으로 발판 크기 확장
+        float currentLength = 0.1f;
+        float targetLength = pathLength;
+        float startTime = Time.time;
+
+        while (currentLength < targetLength && Time.time - startTime < expansionTime)
         {
-            float t = (float)i / totalSegments;
-            Vector3 segmentPos = Vector3.Lerp(startPos, endPos, t);
+            float progress = (Time.time - startTime) / expansionTime;
+            currentLength = Mathf.Lerp(0.1f, targetLength, progress);
 
-            // 그라데이션 없이 균일한 알파값 사용
-            CreateWarningPlaneAt(segmentPos, actualWidth, main.warningAlpha);
+            // 발판 크기 업데이트
+            if (warningPlane != null)
+            {
+                WarningPlaneCustom.Instance.UpdateSize(warningPlane, actualWidth, currentLength);
+            }
 
-            // 다음 세그먼트까지 대기
-            yield return new WaitForSeconds(segmentDelay);
+            yield return null;
+        }
+
+        // 최종 크기로 설정
+        if (warningPlane != null)
+        {
+            WarningPlaneCustom.Instance.UpdateSize(warningPlane, actualWidth, targetLength);
         }
 
         // 워닝 완료 후 남은 시간 대기
@@ -196,97 +152,6 @@ public class BoarWarning : MonoBehaviour
         if (remainingTime > 0)
         {
             yield return new WaitForSeconds(remainingTime);
-        }
-    }
-
-    /// <summary>
-    /// 지정된 위치에 경고 평면 생성 (균일한 알파 적용)
-    /// </summary>
-    private void CreateWarningPlaneAt(Vector3 position, float width, float alpha)
-    {
-        GameObject warningPlane = GetWarningPlaneFromPool();
-
-        // 멧돼지 큐브의 밑바닥 높이 계산
-        float boarBottomY = transform.position.y - 1.5f;
-        Vector3 warningPos = new Vector3(position.x, boarBottomY + warningHeightOffset, position.z);
-        warningPlane.transform.position = warningPos;
-
-        // 회전 설정 (지면과 평행)
-        warningPlane.transform.rotation = Quaternion.Euler(90, 0, 0);
-
-        // 크기 설정
-        warningPlane.transform.localScale = new Vector3(width, width, 1f);
-
-        // 균일한 색상 적용
-        Renderer renderer = warningPlane.GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            UpdateWarningPlaneColor(warningPlane, alpha);
-        }
-
-        // 활성 리스트에 추가
-        activeWarningPlanes.Add(warningPlane);
-    }
-
-    /// <summary>
-    /// 경고 평면의 색상 업데이트 (균일한 알파 적용)
-    /// </summary>
-    private void UpdateWarningPlaneColor(GameObject plane, float alpha)
-    {
-        Renderer renderer = plane.GetComponent<Renderer>();
-        if (renderer == null) return;
-
-        // 인스턴스 머티리얼 생성 (개별 색상 적용을 위해)
-        Material instanceMaterial = new Material(sharedWarningMaterial);
-
-        // 균일한 색상 설정
-        Color finalColor = warningColor;
-        finalColor.a = alpha; // 모든 평면이 같은 알파값
-        instanceMaterial.color = finalColor;
-
-        // 발광 색상 설정
-        instanceMaterial.SetColor("_EmissionColor", warningColor * (alpha * 0.5f));
-
-        renderer.material = instanceMaterial;
-    }
-
-    #endregion
-
-    #region ===== 내부 메서드 - 풀링 시스템 =====
-
-    /// <summary>
-    /// 풀에서 경고 평면 가져오기
-    /// </summary>
-    private static GameObject GetWarningPlaneFromPool()
-    {
-        EnsureWarningPlanePool();
-
-        if (warningPlanePool.Count > 0)
-        {
-            GameObject plane = warningPlanePool.Dequeue();
-            plane.SetActive(true);
-            return plane;
-        }
-
-        return CreateWarningPlane();
-    }
-
-    /// <summary>
-    /// 경고 평면을 풀로 반환
-    /// </summary>
-    private static void ReturnWarningPlaneToPool(GameObject plane)
-    {
-        if (plane == null) return;
-
-        plane.SetActive(false);
-
-        if (warningPlanePool.Count < POOL_SIZE * 2)
-        {
-            warningPlanePool.Enqueue(plane);
-        }
-        else
-        {
-            Object.Destroy(plane);
         }
     }
 
@@ -384,7 +249,7 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     public int GetActiveWarningCount()
     {
-        return activeWarningPlanes.Count;
+        return warningPlane != null && warningPlane.activeInHierarchy ? 1 : 0;
     }
 
     /// <summary>
@@ -392,7 +257,7 @@ public class BoarWarning : MonoBehaviour
     /// </summary>
     public bool IsWarningActive
     {
-        get { return activeWarningPlanes.Count > 0; }
+        get { return warningPlane != null && warningPlane.activeInHierarchy; }
     }
 
     #endregion
