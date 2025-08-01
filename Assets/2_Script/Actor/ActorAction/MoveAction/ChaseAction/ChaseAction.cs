@@ -81,8 +81,8 @@ public class ChaseAction : MoveAction
         NavMeshHit hit;
         Vector3 targetPosOnNav = nav.transform.position; ;
 
-        // target 주변 최대 20m 반경 내에서 NavMesh 가장 가까운 점을 찾음
-        if (NavMesh.SamplePosition(target.position, out hit, 20.0f, NavMesh.AllAreas))
+        // target 주변 최대 30m 반경 내에서 NavMesh 가장 가까운 점을 찾음
+        if (NavMesh.SamplePosition(target.position, out hit, 30.0f, NavMesh.AllAreas))
         { targetPosOnNav = hit.position; }
 
         NavMeshPath path = new NavMeshPath();

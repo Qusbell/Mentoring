@@ -56,7 +56,8 @@ abstract public class ActorWeapon : MonoBehaviour
     {
         set
         {
-            weaponCollider.enabled = value;
+            if (weaponCollider != null)
+            { weaponCollider.enabled = value; }
 
             // 활성화 시
             if (value) { hitTargets = new Dictionary<GameObject, int>(); }

@@ -51,7 +51,15 @@ abstract public class Actor : MonoBehaviour
 
     // 점프 중 판정 확인
     public bool isRand
-    { get { return foot.isRand; } }
+    { 
+        get { return foot.isRand; }
+    }
+
+    // 마지막으로 착지해 있었던 위치
+    public Vector3 lastestRandedPos
+    {
+        get { return foot.lastestRandedPos; }
+    }
 
 
     // 생성 초기화

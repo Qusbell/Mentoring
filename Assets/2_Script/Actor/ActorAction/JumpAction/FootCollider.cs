@@ -9,11 +9,14 @@ public class FootCollider : MonoBehaviour
     {
         Collider collider = GetComponent<Collider>();
 
-        if(collider == null)
+        if (collider == null)
         { Debug.LogError($"{gameObject.name}에 착지 판정용 콜라이더 부재"); }
 
         if (collider != null)
         { collider.isTrigger = true; }
+
+        // 마지막으로 착지 중이었던 위치
+        lastestRandedPos = this.transform.position;
     }
 
 
@@ -22,9 +25,7 @@ public class FootCollider : MonoBehaviour
     public bool isRand
     {
         get
-        {
-            return 0 < rands.Count;
-        }
+        { return 0 < rands.Count; }
     }
 
 
@@ -46,13 +47,30 @@ public class FootCollider : MonoBehaviour
     }
 
 
+    // 마지막으로 착지해 있었던 위치
+    public Vector3 lastestRandedPos { get; protected set; }
+
+    // 지형에서 벗어날 경우의 판정
     private void OnTriggerExit(Collider other)
     {
-        // 큐브인 경우
         if (other.CompareTag("Cube"))
         {
-            // 일시적인 유예시간 후, 착지 중인 콜라이더 목록에서 삭제
-            Timer.Instance.StartTimer(this, 0.05f, () => { rands.Remove(other); });
+            // 현재 위치 저장
+            Vector3 tempPos = this.transform.position;
+
+            // 일시적인 유예시간 후
+            Timer.Instance.StartTimer(this, 0.05f,
+                () =>
+                {
+                    // 착지 중인 콜라이더 목록에서 삭제
+                    rands.Remove(other);
+                    
+                    // 공중에 뜸 상태라면
+                    // 마지막 위치를 저장
+                    if (!isRand)
+                    { lastestRandedPos = tempPos; }
+                });
         }
     }
+
 }

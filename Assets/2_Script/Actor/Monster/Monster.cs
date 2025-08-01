@@ -45,8 +45,8 @@ public class Monster : Actor
         damageReaction.whenDieEvent.Add(dieAction);
 
         // --- 낙사 추가 ---
-        if(GetComponent<FallingAction>() == null)
-        { this.AddComponent<FallingAction>(); }
+        if (GetComponent<FallingAction>() == null)
+        { this.AddComponent<DestroyWhenFallingAction>(); }
 
         // moveAction에서 chaseAction 분리
         chaseAction = moveAction as ChaseAction;
