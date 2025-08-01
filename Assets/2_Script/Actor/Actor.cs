@@ -49,6 +49,10 @@ abstract public class Actor : MonoBehaviour
     // 바닥 콜라이더 (점프 판정) : 현재 Player 이외에 존재하지 않음
     protected FootCollider foot;
 
+    // 점프 중 판정 확인
+    public bool isRand
+    { get { return foot.isRand; } }
+
 
     // 생성 초기화
     protected virtual void Awake()

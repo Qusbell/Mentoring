@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+
 [RequireComponent(typeof(ActorAnimation))]
 [RequireComponent(typeof(ChaseAction))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -43,7 +44,6 @@ public class Monster : Actor
         damageReaction.whenHitEvent.Add(hitAction);
         damageReaction.whenDieEvent.Add(dieAction);
 
-
         // --- 낙사 추가 ---
         if(GetComponent<FallingAction>() == null)
         { this.AddComponent<FallingAction>(); }
@@ -70,7 +70,6 @@ public class Monster : Actor
     // 공격 사거리 계산
     protected bool InAttackRange()
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
-
 
 
     // 트리거 애니메이션의 단일 활성화 보장
@@ -204,8 +203,8 @@ public class Monster : Actor
     }
 
 
-    // 피격 시 애니메이션
 
+    // 피격 시 애니메이션
     protected void HitStatus()
     {
         // Debug.Log("Hit");
@@ -218,4 +217,6 @@ public class Monster : Actor
         // Debug.Log("Die");
         PlayAnimationTriggerOnce("IsDie");
     }
+
+
 }

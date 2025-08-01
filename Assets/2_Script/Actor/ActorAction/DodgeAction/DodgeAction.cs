@@ -6,15 +6,12 @@ using UnityEngine;
 public class DodgeAction : ActorAction
 {
     private Rigidbody rigid;
-    private FootCollider foot;
 
 
     protected override void Awake()
     {
         base.Awake();
-
         rigid = GetComponent<Rigidbody>();
-        foot = GetComponentInChildren<FootCollider>();
 
         // 비활성화 상태
         this.enabled = false;
@@ -53,7 +50,7 @@ public class DodgeAction : ActorAction
         // --- dodge true ---
         this.enabled = true;
         isDodge = true;
-        if (!foot.isRand) { rigid.useGravity = false; } // 공중에 떠있는 경우: 중력 미사용
+        if (!thisActor.isRand) { rigid.useGravity = false; } // 공중에 떠있는 경우: 중력 미사용
         ratateObjectWhenDodge.transform.Rotate(dodgeAngle, 0, 0); // 앞으로 기울기
         this.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
         rigid.velocity = Vector3.zero;

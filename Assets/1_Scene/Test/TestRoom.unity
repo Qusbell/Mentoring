@@ -476,7 +476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPrefabs:
   - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
-  spawnRate: 20
+  spawnRate: 12
   startTrigger: 1
   isEndlessSpawn: 1
   spawnType: 0
@@ -1241,7 +1241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.89
+      value: 16.22
       objectReference: {fileID: 0}
     - target: {fileID: 4195979026956042644, guid: 489dff6294583ba43893e073aadec084, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1339,10 +1339,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1323010783}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
 --- !u!1 &1208626343 stripped
 GameObject:
@@ -1399,27 +1396,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextStartTimer: -1
---- !u!1 &1323010782 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
-  m_PrefabInstance: {fileID: 1143078052}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1323010783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323010782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78286a72c33fba1418a6946fd36e5070, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPrefeb: []
-  dropHeight: 0.5
-  scatterRadius: 1
-  bounceForce: {x: 2, y: 5}
 --- !u!1 &1343171880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2299299225365109511, guid: d0439793edeb04c4589d4bc499d4dcbb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.24999952
+      value: 4.8
       objectReference: {fileID: 0}
     - target: {fileID: 2299299225365109511, guid: d0439793edeb04c4589d4bc499d4dcbb, type: 3}
       propertyPath: m_LocalPosition.z
