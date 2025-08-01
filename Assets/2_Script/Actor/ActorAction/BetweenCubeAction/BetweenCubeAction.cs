@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BetweenCubeAction : MonoBehaviour
+// 오브젝트가 Cube 사이에 끼어있는 경우를 판별
+public class BetweenCubeAction : ActorAction
 {
     // 끼었을 경우의 피해량
     [SerializeField] protected int whenSandwichedDamage = 3;
@@ -86,9 +87,10 @@ public class BetweenCubeAction : MonoBehaviour
         {
             Collider otherCollider = contact.otherCollider;
 
-            // 키 추가
+            // --- 어디에서부터 충돌했는지 확인 ---
             ImpactDirection dir = GetDirectionFromWhereToThis(contact.normal);
 
+            // --- 반대 위치의 충돌체가 이미 존재하는지 확인 ---
             if (HasOppositeDirection(dir))
             {
                 Debug.Log("충돌 발생");
@@ -99,6 +101,8 @@ public class BetweenCubeAction : MonoBehaviour
                 { damageReaction.TakeDamage(whenSandwichedDamage, actor); }
 
                 // <- 텔포
+
+                break;
             }
             else
             { collisionDirections[otherCollider] = dir; }
@@ -111,12 +115,9 @@ public class BetweenCubeAction : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Cube")) { return; }
 
-        foreach (ContactPoint contact in collision.contacts)
-        {
-            Collider otherCollider = contact.otherCollider;
-
-            // 키가 있으면 제거
-            collisionDirections.Remove(otherCollider);
-        }
+        // 키가 있으면 제거
+        Collider otherCollider = collision.collider;
+        collisionDirections.Remove(otherCollider);
     }
+
 }

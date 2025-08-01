@@ -1367,7 +1367,6 @@ Transform:
   - {fileID: 5277415518382671710}
   - {fileID: 8808749614149353060}
   - {fileID: 7140708389515014256}
-  - {fileID: 4885049444097910701}
   - {fileID: 8308957629242378545}
   - {fileID: 8179994936830758663}
   - {fileID: 4361022865721515998}
@@ -1583,6 +1582,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2170029275320053682}
+  - {fileID: 4885049444097910701}
   - {fileID: 401687654528197690}
   - {fileID: 3355376649835269217}
   m_Father: {fileID: 0}
@@ -2646,8 +2646,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4885049444097910701}
   - component: {fileID: 2142302343827347696}
+  - component: {fileID: 9191741763163552498}
+  - component: {fileID: 8069028651910564118}
   m_Layer: 0
-  m_Name: targetPos
+  m_Name: CenterPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2662,11 +2664,11 @@ Transform:
   m_GameObject: {fileID: 7783657196734317883}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1000004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2170029275320053682}
+  m_Father: {fileID: 5147755981061245673}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2142302343827347696
 MonoBehaviour:
@@ -2681,6 +2683,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPriority: 1
+--- !u!136 &9191741763163552498
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783657196734317883}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.02
+  m_Height: 0.02
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8069028651910564118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783657196734317883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6169455d4d7ed14099a235db3d7d448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whenSandwichedDamage: 3
 --- !u!1 &8270870104949899257
 GameObject:
   m_ObjectHideFlags: 0
