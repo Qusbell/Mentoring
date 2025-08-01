@@ -6,11 +6,20 @@ using UnityEngine;
 [RequireComponent(typeof(RespawnAction))]
 public class RespawnWhenFallingAciton : FallingAction
 {
+    // 떨어졌을 경우의 데미지
+    [SerializeField] protected int fallingDamage = 3;
+
     protected override void Awake()
     {
         base.Awake();
         RespawnAction respawnAction = GetComponent<RespawnAction>();
-        whenFallingEvent.AddMulti(respawnAction.ReturnToSafePos);
+        DamageReaction damageReaction = GetComponent<DamageReaction>();
+
+        whenFallingEvent.AddMulti(
+            () => {
+                damageReaction.TakeDamage(fallingDamage, thisActor);
+                respawnAction.ReturnToSafePos();
+            });
     }
 
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SandwitchedReaction : MonoBehaviour
 {
     // 끼었을 경우의 피해량
-    [SerializeField] protected int whenSandwichedDamage = 3;
+    [SerializeField] protected int sandwichedDamage = 3;
 
     DamageReaction damageReaction;
     RespawnAction respawnAction;
@@ -30,7 +30,7 @@ public class SandwitchedReaction : MonoBehaviour
         Debug.Log("충돌 발생");
 
         // 데미지
-        damageReaction.TakeDamage(whenSandwichedDamage, actor);
+        damageReaction.TakeDamage(sandwichedDamage, actor);
 
         // 텔포
         respawnAction.ReturnToSafePos();
