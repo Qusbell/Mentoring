@@ -76,7 +76,23 @@ public class BoarWarning : MonoBehaviour
 
         if (warningPlane != null)
         {
-            WarningPlaneSetter.DelWarning(this, warningPlane);
+            // null 체크 추가 - WarningPlaneSetter가 안전하게 작동하는지 확인
+            try
+            {
+                WarningPlaneSetter.DelWarning(this, warningPlane);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning($"[{gameObject.name}] WarningPlaneSetter.DelWarning 에러: {e.Message}");
+
+                // 직접 정리
+                if (warningPlane != null)
+                {
+                    warningPlane.SetActive(false);
+                    Object.Destroy(warningPlane);
+                }
+            }
+
             warningPlane = null;
         }
     }
@@ -109,16 +125,16 @@ public class BoarWarning : MonoBehaviour
         // 워닝 확장 시간 설정
         float expansionTime = warningDuration * expansionRatio;
 
-        // 초기 발판 생성 (아주 작은 크기로 시작)
-        Vector3 center = (startPos + endPos) * 0.5f;
-        center.y = transform.position.y - 1.5f + warningHeightOffset;
+        // 초기 발판 생성 (큐브 위치에서 시작)
+        Vector3 startPoint = startPos;
+        startPoint.y = transform.position.y - 1.5f + warningHeightOffset;
 
         warningPlane = WarningPlaneSetter.SetWarning(
             this,           // MonoBehaviour 컴포넌트
             actualWidth,    // 폭 (고정)
             0.1f,          // 길이 (아주 작게 시작)
             warningDuration, // 전체 지속 시간
-            center,         // 중심 위치
+            startPoint,     // 시작 위치 (큐브 위치)
             direction       // 방향
         );
 
@@ -132,10 +148,14 @@ public class BoarWarning : MonoBehaviour
             float progress = (Time.time - startTime) / expansionTime;
             currentLength = Mathf.Lerp(0.1f, targetLength, progress);
 
-            // 발판 크기 업데이트
+            // 발판 크기 업데이트하면서 위치도 조정 (큐브에서부터 늘어나도록)
             if (warningPlane != null)
             {
                 WarningPlaneCustom.Instance.UpdateSize(warningPlane, actualWidth, currentLength);
+
+                // 발판 위치를 다시 계산 (큐브 위치 + 현재 길이의 절반만큼 이동)
+                Vector3 newCenter = startPoint + direction * (currentLength * 0.5f);
+                warningPlane.transform.position = newCenter;
             }
 
             yield return null;
@@ -145,6 +165,8 @@ public class BoarWarning : MonoBehaviour
         if (warningPlane != null)
         {
             WarningPlaneCustom.Instance.UpdateSize(warningPlane, actualWidth, targetLength);
+            Vector3 finalCenter = startPoint + direction * (targetLength * 0.5f);
+            warningPlane.transform.position = finalCenter;
         }
 
         // 워닝 완료 후 남은 시간 대기
