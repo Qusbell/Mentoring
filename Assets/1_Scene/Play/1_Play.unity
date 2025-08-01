@@ -9770,6 +9770,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3067743344199634212, guid: 247865e8774011d43a80a63ff0cbf4f6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1258574200}
+    - targetCorrespondingSourceObject: {fileID: 3067743344199634212, guid: 247865e8774011d43a80a63ff0cbf4f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 561942805}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 247865e8774011d43a80a63ff0cbf4f6, type: 3}
 --- !u!4 &423577267 stripped
@@ -13426,6 +13429,75 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5786738714366800394, guid: baa895be2cea53a479caa45e2db0d719, type: 3}
   m_PrefabInstance: {fileID: 561939104}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &561942802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 561942805}
+  - component: {fileID: 561942804}
+  - component: {fileID: 561942803}
+  m_Layer: 0
+  m_Name: CubeCollapserTrigger_3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &561942803
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561942802}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &561942804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561942802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13f029a4ebe2dc4081cee30413d62dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  showDebugLog: 0
+  oneTimeUse: 1
+--- !u!4 &561942805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561942802}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.59, y: 1.97, z: 0.79}
+  m_LocalScale: {x: 5, y: 2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 423577267}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562096896
 GameObject:
   m_ObjectHideFlags: 0
@@ -15931,8 +16003,8 @@ MonoBehaviour:
   triggerType: 3
   playerTag: Player
   triggerDistance: 2
-  warningDelay: 6
-  triggerArea: {fileID: 1229039128}
+  warningDelay: 0
+  triggerArea: {fileID: 561942802}
   oneTimeUse: 1
   showDebugLog: 0
 --- !u!1001 &715899332
