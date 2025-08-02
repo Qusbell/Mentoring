@@ -1,4 +1,3 @@
-/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,10 +62,8 @@ public class SoundManager : SingletonT<SoundManager>
 
     #region ===== 초기화 =====
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake(); // SingletonT의 Awake 호출
-
         // 모든 효과음 정지
         StopAllEffectSounds();
     }
@@ -74,7 +71,7 @@ public class SoundManager : SingletonT<SoundManager>
     private void Start()
     {
         // 저장된 볼륨 값 불러오기 및 적용
-        float savedMusicVolume = LoadVolume(MusicVolpumeKey, 1.0f);
+        float savedMusicVolume = LoadVolume(MusicVolumeKey, 1.0f);
         float savedEffectVolume = LoadVolume(EffectVolumeKey, 1.0f);
 
         SetMusicVolume(savedMusicVolume);
@@ -586,5 +583,3 @@ public class SoundManager : SingletonT<SoundManager>
 
     #endregion
 }
-
-*/
