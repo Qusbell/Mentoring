@@ -21,22 +21,39 @@ public class ChargeAttack : BasicWeaponAttack
         base.Awake();
         checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
+        thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
     }
 
 
     private System.Action whenNoLongerChargeAttack = null;
 
+
+    protected override void BeforeAttack()
+    {
+        // --- 경고 발판 생성 ---
+        warningPlane = WarningPlaneSetter.SetWarning(this, 1f, attackRange, weaponBeforeDelay, transform.position, transform.forward);
+    }
+
+
+
+    protected override void CancelAttack()
+    {
+        base.CancelAttack();
+        WarningPlaneSetter.DelWarning(this, ref warningPlane);
+    }
+
+
     protected override void DoAttack()
     {
-        float originalChargeSpeed = chargeSpeed;
-        warningPlane = WarningPlaneSetter.SetWarning(this, 1f, attackRange, weaponBeforeDelay, transform.position, transform.forward);
         base.DoAttack();
+
+        float originalChargeSpeed = chargeSpeed;
 
         // 공격 방향 지정
         attackVec = transform.forward;
 
         // --- 발판 반환 ---
-        WarningPlaneSetter.DelWarning(this, warningPlane);
+        WarningPlaneSetter.DelWarning(this, ref warningPlane);
 
         // -- 사망 시 리턴 ---
         DamageReaction damageReaction = GetComponent<DamageReaction>();

@@ -44,7 +44,6 @@ public class DamageReaction : ActorAction
     public MyEvent whenHit = new MyEvent();
     public MyEvent whenDie = new MyEvent();
 
-
     // 피격
     public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f, float knockBackHeight = 0f)
     {
@@ -58,12 +57,12 @@ public class DamageReaction : ActorAction
         // --- 피해 적용 ---
         healthPoint -= damage;
 
-        // --- 넉백 ---
-        KnockBackImpulse(enemy.gameObject, knockBackPower, knockBackHeight);
-
         // --- 피격/사망 시 처리 ---
         if (isDie) { Die(); }
         else { Hit(); }
+
+        // --- 넉백 ---
+        KnockBackImpulse(enemy.gameObject, knockBackPower, knockBackHeight);
     }
 
 
@@ -109,6 +108,9 @@ public class DamageReaction : ActorAction
             foreach (var item in actorActions)
             { item.enabled = false; }
         }
+
+        // --- 물리 적용 ---
+        thisActor.rigid.isKinematic = false;
 
         // 레이어 변경
         int targetLayer = LayerMask.NameToLayer("DieActorLayer");

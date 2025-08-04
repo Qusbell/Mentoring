@@ -92,13 +92,9 @@ abstract public class AttackAction : ActorAction
         // 공격 선딜레이가 공격 간격에 포함
         attackRate += weaponBeforeDelay;
 
+        // 공격받았을 경우 캔슬 여부
         if (isCancelWhenHit)
-        {
-            System.Action whenHit = null;
-            whenHit = () =>
-            { Timer.Instance.StopTimer(this, "_DoAttack"); };
-            thisActor?.damageReaction?.whenHit.AddMulti(whenHit);
-        }
+        { thisActor?.damageReaction?.whenHit.AddMulti(CancelAttack); }
     }
 
 
@@ -109,6 +105,9 @@ abstract public class AttackAction : ActorAction
         // (참이라면) 실제 공격 발생
         if (CheckCanAttack())
         {
+            // 공격 선딜레이 중 동작
+            BeforeAttack();
+
             // 선딜레이 후 발생
             Timer.Instance.StartTimer(this, "_DoAttack", weaponBeforeDelay, DoAttack);
         }
@@ -133,6 +132,13 @@ abstract public class AttackAction : ActorAction
         else { return false; }
     }
 
+
+    // 공격 캔슬
+    protected virtual void CancelAttack()
+    { Timer.Instance.StopTimer(this, "_DoAttack"); }
+
+    // 공격 전 동작
+    protected virtual void BeforeAttack() { }
 
     // 실제 Attack 구현
     protected abstract void DoAttack();
