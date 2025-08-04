@@ -17,7 +17,8 @@ public class WarningPlaneSetter
         float angleY = Mathf.Atan2(rotationVec.x, rotationVec.z) * Mathf.Rad2Deg;
         // => (0,1)기준 앞, (1,0)기준 오른쪽, (-1,0)기준 왼쪽
 
-        // 평면이 '바닥에 평행'하게 하기 위해 기본은 (90, angleY, 0)
+        // 평면이 '바닥에 평행'하도록 회전
+        // 기본 (90, angleY, 0)
         warningPlane.transform.rotation = Quaternion.Euler(90f, angleY, 0f);
 
         // --- 위치 ---

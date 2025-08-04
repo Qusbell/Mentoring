@@ -116,8 +116,23 @@ public class DamageReaction : ActorAction
         int targetLayer = LayerMask.NameToLayer("DieActorLayer");
         LayerChanger.ChangeLayerWithAll(this.gameObject, targetLayer);
 
+
+        // 가라앉기 (콜라이더를 위로 빼기)
+        CapsuleCollider[] cols = GetComponentsInChildren<CapsuleCollider>();
+
+        // 1초 뒤부터 가라앉기 시작
+        Timer.Instance.StartTimer(this, 1f,
+            () => {
+                int i = 0;
+                foreach (var col in cols)
+                {
+                    i++;
+                    Timer.Instance.StartRepeatTimer(this, "_FallDown" + i, 1f, () => col.center -= Vector3.down * 0.005f);
+                }
+            });
+
         // 2초 후 제거
-        Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject)); // <- 이후 오브젝트 풀로 이동하는 걸 고려
+        Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject));
     }
 
     public void Heal(int amount)

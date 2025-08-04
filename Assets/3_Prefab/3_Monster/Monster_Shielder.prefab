@@ -646,7 +646,7 @@ CapsuleCollider:
   m_Radius: 0.8
   m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: -0, y: 0.78352696, z: 0}
+  m_Center: {x: -0, y: 0.8, z: 0}
 --- !u!1 &2035868065715714631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1037,8 +1037,6 @@ MonoBehaviour:
   myWeapon: {fileID: 9215819455182724303}
   weaponActiveTime: 1
   chargeSpeed: 16
-  decelerateSpeed: 1
-  decelerateRate: 0.1
 --- !u!114 &5097308888875272474
 MonoBehaviour:
   m_ObjectHideFlags: 0

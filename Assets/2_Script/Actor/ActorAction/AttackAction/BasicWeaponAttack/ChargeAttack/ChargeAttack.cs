@@ -6,8 +6,6 @@ using UnityEngine;
 public class ChargeAttack : BasicWeaponAttack
 {
     [SerializeField] protected float chargeSpeed = 20f;
-    [SerializeField] protected float decelerateSpeed = 1f;
-    [SerializeField] protected float decelerateRate = 0.1f;
 
     // 경고 발판
     private GameObject warningPlane = null;
@@ -23,6 +21,7 @@ public class ChargeAttack : BasicWeaponAttack
         this.enabled = false;
         thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
 
+        // 경고 발판 길이
         warningDistance = chargeSpeed;
     }
 
@@ -49,8 +48,6 @@ public class ChargeAttack : BasicWeaponAttack
     {
         base.DoAttack();
 
-        float originalChargeSpeed = chargeSpeed;
-
         // 공격 방향 지정
         attackVec = transform.forward;
 
@@ -58,26 +55,20 @@ public class ChargeAttack : BasicWeaponAttack
         WarningPlaneSetter.DelWarning(this, ref warningPlane);
 
         // -- 사망 시 리턴 ---
-        DamageReaction damageReaction = GetComponent<DamageReaction>();
-        if (damageReaction.isDie) { return; }
+        if (thisActor.damageReaction.isDie) { return; }
 
+        // --- 물리 조정 && 돌진 활성화 ---
         this.enabled = true;
         thisActor.rigid.isKinematic = true;
 
         whenNoLongerChargeAttack = () =>
         {
-            Timer.Instance.StopEndlessTimer(this, "_Decelerate");
-            chargeSpeed = originalChargeSpeed;
-
             thisActor.rigid.isKinematic = false;
             this.enabled = false;
             thisActor.rigid.velocity = Vector3.zero;
         };
 
         Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
-
-        // 일정 주기로 감속
-        // Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
     }
 
 
@@ -95,7 +86,7 @@ public class ChargeAttack : BasicWeaponAttack
         foreach (var hit in hits)
         {
             // "Cube" 태그이거나, 검사 레이어에 속한다면
-            if (hit.CompareTag("Cube") || ((checkLayer.value & (1 << hit.gameObject.layer)) != 0))
+            if (((checkLayer.value & (1 << hit.gameObject.layer)) != 0) || hit.CompareTag("Cube"))
             {
                 // 자기 자신이 아닐 때(중복체크 방지)
                 if (hit.gameObject != this.gameObject)
