@@ -59,25 +59,45 @@ abstract public class AttackAction : ActorAction
     [SerializeField] protected GameObject hitEffect = null;
     [SerializeField] protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
 
+    // 공격 선딜레이
+    [SerializeField] protected float weaponBeforeDelay = 0.2f;
+
+    // 피격당했을 경우, 이 공격을 취소할 것인가?
+    [SerializeField] protected bool isCancelWhenHit = false;
+
 
     // 공격 가능 여부
     protected bool _isCanAttack = true;
     public virtual bool isCanAttack
     {
-        get { return _isCanAttack; }
-        protected set { _isCanAttack = value; }
+        get
+        { return _isCanAttack; }
+        protected set
+        { _isCanAttack = value; }
     }
 
 
     protected override void Awake()
     {
         base.Awake();
+
         // 타겟태그 검사
         // 배정되지 않은 경우 : 기초적인 재배정
         if (targetTag == "")
         {
             if (gameObject.tag == "Monster") { targetTag = "Player"; }
             else if (gameObject.tag == "Player") { targetTag = "Monster"; }
+        }
+
+        // 공격 선딜레이가 공격 간격에 포함
+        attackRate += weaponBeforeDelay;
+
+        if (isCancelWhenHit)
+        {
+            System.Action whenHit = null;
+            whenHit = () =>
+            { Timer.Instance.StopTimer(this, "_DoAttack"); };
+            thisActor?.damageReaction?.whenHit.AddMulti(whenHit);
         }
     }
 
@@ -88,7 +108,10 @@ abstract public class AttackAction : ActorAction
         // 공격 가능 시간 확인 후
         // (참이라면) 실제 공격 발생
         if (CheckCanAttack())
-        { DoAttack(); }
+        {
+            // 선딜레이 후 발생
+            Timer.Instance.StartTimer(this, "_DoAttack", weaponBeforeDelay, DoAttack);
+        }
     }
 
 
@@ -101,7 +124,7 @@ abstract public class AttackAction : ActorAction
         {
             isCanAttack = false;
             Timer.Instance.StartTimer(
-                this, "_Attack",
+                this, "_CanAttack",
                 attackRate,
                 () => { isCanAttack = true; });
 

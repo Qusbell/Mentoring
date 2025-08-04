@@ -3,27 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class MyEvent
 {
-    private List<System.Action> callbackMulti = new List<System.Action>();
-    private List<System.Action> callbackOnce = new List<System.Action>();
+    private List<System.Action> multiCallbacks = new List<System.Action>();
+    private List<System.Action> onceCallbacks = new List<System.Action>();
 
     /// <summary>
     /// 모든 콜백 실행
     /// </summary>
-    public void CallBack()
+    public void Invoke()
     {
-        callbackMulti.RemoveAll(a => a == null);
-        callbackOnce.RemoveAll(a => a == null);
-
         // --- 다회용 이벤트 실행 ---
-        foreach (var action in callbackMulti.ToArray())
+        foreach (var action in multiCallbacks.ToArray())
         { action?.Invoke(); }
 
         // --- 일회용 이벤트 실행 & 제거 ---
-        foreach (var action in callbackOnce)
+        foreach (var action in onceCallbacks)
         { action?.Invoke(); }
-        callbackOnce.Clear();
+        ClearOnceCallbacks();
+    }
+
+    // null action 제거
+    public void Refresh()
+    {
+        multiCallbacks.RemoveAll((action) => { return action == null; });
+        onceCallbacks.RemoveAll((action) => { return action == null; });
     }
 
     /// <summary>
@@ -31,10 +37,8 @@ public class MyEvent
     /// </summary>
     public void AddMulti(System.Action action, bool isUnique = false)
     {
-        if (action == null || (isUnique &&callbackMulti.Contains(action)))
-        { return; }
-
-        callbackMulti.Add(action);
+        if (action == null || (isUnique &&multiCallbacks.Contains(action))) { return; }
+        multiCallbacks.Add(action);
     }
 
     /// <summary>
@@ -42,19 +46,24 @@ public class MyEvent
     /// </summary>
     public void AddOnce(System.Action action, bool isUnique = false)
     {
-        if (action == null || (isUnique && callbackOnce.Contains(action)))
-        { return; }
-
-        callbackOnce.Add(action);
+        if (action == null || (isUnique && onceCallbacks.Contains(action))) { return; }
+        onceCallbacks.Add(action);
     }
+
 
     /// <summary>
     /// 전부 초기화
     /// </summary>
     public void ClearAll()
     {
-        callbackMulti.Clear();
-        callbackOnce.Clear();
+        ClearMultiCallbacks();
+        ClearOnceCallbacks();
     }
 
+
+    public void ClearOnceCallbacks()
+    { onceCallbacks.Clear(); }
+
+    public void ClearMultiCallbacks()
+    { multiCallbacks.Clear(); }
 }

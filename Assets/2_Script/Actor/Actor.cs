@@ -41,7 +41,23 @@ abstract public class Actor : MonoBehaviour
 
 
     // 피격
-    protected DamageReaction damageReaction;
+    DamageReaction _damageReaction;
+    public DamageReaction damageReaction
+    {
+        get
+        {
+            if (_damageReaction == null)
+            {
+                _damageReaction = GetComponent<DamageReaction>();
+
+                // 여전히 null인 경우
+                if (_damageReaction == null)
+                { Debug.LogWarning($"{gameObject.name} 오브젝트에 DamageReaction 컴포넌트가 없습니다."); }  
+            }
+            return _damageReaction;
+        }
+    }
+
 
     // 애니메이션
     protected ActorAnimation animator;
@@ -72,7 +88,6 @@ abstract public class Actor : MonoBehaviour
 
         animator = GetComponent<ActorAnimation>();
         moveAction = GetComponent<MoveAction>();
-        damageReaction = GetComponent<DamageReaction>();
         foot = GetComponentInChildren<FootCollider>();
 
         // 공격 목록 만들기

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ChargeAttack : BasicWeaponAttack
 {
-    protected Rigidbody rigid;
     [SerializeField] protected float chargeSpeed = 20f;
 
     [SerializeField] protected float decelerateSpeed = 1f;
@@ -20,7 +19,6 @@ public class ChargeAttack : BasicWeaponAttack
     protected override void Awake()
     {
         base.Awake();
-        rigid = GetComponent<Rigidbody>();
         checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
     }
@@ -37,34 +35,29 @@ public class ChargeAttack : BasicWeaponAttack
         // 공격 방향 지정
         attackVec = transform.forward;
 
-        // 돌진 활성화
-        Timer.Instance.StartTimer(this, "_DoAttack", weaponBeforeDelay,
-            () => {
-                // --- 발판 반환 ---
-                WarningPlaneSetter.DelWarning(this, warningPlane);
+        // --- 발판 반환 ---
+        WarningPlaneSetter.DelWarning(this, warningPlane);
 
-                // -- 사망 시 리턴 ---
-                DamageReaction damageReaction = GetComponent<DamageReaction>();
-                if (damageReaction.isDie) { return; }
+        // -- 사망 시 리턴 ---
+        DamageReaction damageReaction = GetComponent<DamageReaction>();
+        if (damageReaction.isDie) { return; }
 
-                this.enabled = true;
-                rigid.isKinematic = true;
+        this.enabled = true;
+        thisActor.rigid.isKinematic = true;
 
-                whenNoLongerChargeAttack = () =>
-                {
-                    Timer.Instance.StopEndlessTimer(this, "_Decelerate");
-                    rigid.isKinematic = false;
-                    this.enabled = false;
-                    chargeSpeed = originalChargeSpeed;
-                    rigid.velocity = Vector3.zero;
-                };
+        whenNoLongerChargeAttack = () =>
+        {
+            Timer.Instance.StopEndlessTimer(this, "_Decelerate");
+            thisActor.rigid.isKinematic = false;
+            this.enabled = false;
+            chargeSpeed = originalChargeSpeed;
+            thisActor.rigid.velocity = Vector3.zero;
+        };
 
-                Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
+        Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
 
-                // 일정 주기로 감속
-                Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
-            });
-
+        // 일정 주기로 감속
+        Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
     }
 
 
@@ -74,7 +67,7 @@ public class ChargeAttack : BasicWeaponAttack
     private void FixedUpdate()
     {
         // --- 다음 위치 계산
-        Vector3 nextPos = rigid.position + attackVec * chargeSpeed * Time.fixedDeltaTime;
+        Vector3 nextPos = thisActor.rigid.position + attackVec * chargeSpeed * Time.fixedDeltaTime;
         
         // --- 다음 위치의 장애물 확인 ---
         Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
@@ -94,7 +87,7 @@ public class ChargeAttack : BasicWeaponAttack
         }
 
         // --- 이동 ---
-        rigid.MovePosition(nextPos);
+        thisActor.rigid.MovePosition(nextPos);
     }
 
 

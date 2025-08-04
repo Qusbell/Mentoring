@@ -39,9 +39,10 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
+
     // hit/die 이벤트
-    public List<System.Action> whenHitEvent = new List<Action>();
-    public List<System.Action> whenDieEvent = new List<Action>();
+    public MyEvent whenHit = new MyEvent();
+    public MyEvent whenDie = new MyEvent();
 
 
     // 피격
@@ -77,7 +78,7 @@ public class DamageReaction : ActorAction
 
         tempVector *= knockBackPower;
         tempVector.y = knockBackHeight + rigid.velocity.y; // 상/하 넉백
-        if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절
+        if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절 (현재 27f)
         rigid.velocity = tempVector; // 넉백 적용
 
         // 사망 시 추가넉백
@@ -88,31 +89,26 @@ public class DamageReaction : ActorAction
 
 
     protected void Hit()
-    {
-        // --- hit 이벤트 호출 ---
-        foreach (var hitEvent in whenHitEvent)
-        { hitEvent?.Invoke(); }
-    }
+    { whenHit.Invoke(); }
 
 
     // 사망 처리
     protected virtual void Die()
     {
         // --- die 이벤트 호출 ---
-        foreach (var dieEvent in whenDieEvent)
-        { dieEvent?.Invoke(); }
+        whenDie.Invoke();
 
-        // ----- 모든 ActorAction 비활성화 -----
+        // 이벤트 전부 클리어
+        whenHit.ClearAll();
+        whenDie.ClearAll();
+
+        // --- 모든 ActorAction 비활성화 ---
         ActorAction[] actorActions = this.GetComponentsInChildren<ActorAction>();
         if(actorActions != null)
         {
             foreach (var item in actorActions)
             { item.enabled = false; }
         }
-
-        // 이벤트 전부 클리어
-        whenHitEvent.Clear();
-        whenDieEvent.Clear();
 
         // 레이어 변경
         int targetLayer = LayerMask.NameToLayer("DieActorLayer");

@@ -7,9 +7,6 @@ using UnityEngine;
 // <- 몬스터라는 가정으로 제작됨
 public class FireAction : AttackAction
 {
-    // attackBeforeDelay
-    [SerializeField] protected float weaponBeforeDelay = 0.35f;
-
     // 발사체
     [SerializeField] protected GameObject projectile;
 
@@ -32,18 +29,9 @@ public class FireAction : AttackAction
         }
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        attackRate += weaponBeforeDelay;
-    }
-
-
 
     protected override void DoAttack()
-    {
-        Timer.Instance.StartTimer(this, "_Fire", weaponBeforeDelay, Fire);
-    }
+    { Fire(); }
 
 
     protected virtual void Fire()
