@@ -6,12 +6,12 @@ using UnityEngine;
 public class ChargeAttack : BasicWeaponAttack
 {
     [SerializeField] protected float chargeSpeed = 20f;
-
     [SerializeField] protected float decelerateSpeed = 1f;
     [SerializeField] protected float decelerateRate = 0.1f;
 
     // 경고 발판
     private GameObject warningPlane = null;
+    private float warningDistance = 16f;
 
     private Vector3 attackVec = Vector3.zero;
 
@@ -22,6 +22,8 @@ public class ChargeAttack : BasicWeaponAttack
         checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
         thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
+
+        warningDistance = chargeSpeed;
     }
 
 
@@ -31,7 +33,7 @@ public class ChargeAttack : BasicWeaponAttack
     protected override void BeforeAttack()
     {
         // --- 경고 발판 생성 ---
-        warningPlane = WarningPlaneSetter.SetWarning(this, 1f, attackRange, weaponBeforeDelay, transform.position, transform.forward);
+        warningPlane = WarningPlaneSetter.SetWarning(this, 1.5f, warningDistance, weaponBeforeDelay, transform.position, transform.forward);
     }
 
 
@@ -65,16 +67,17 @@ public class ChargeAttack : BasicWeaponAttack
         whenNoLongerChargeAttack = () =>
         {
             Timer.Instance.StopEndlessTimer(this, "_Decelerate");
+            chargeSpeed = originalChargeSpeed;
+
             thisActor.rigid.isKinematic = false;
             this.enabled = false;
-            chargeSpeed = originalChargeSpeed;
             thisActor.rigid.velocity = Vector3.zero;
         };
 
         Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
 
         // 일정 주기로 감속
-        Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
+        // Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
     }
 
 
