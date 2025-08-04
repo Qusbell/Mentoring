@@ -8600,7 +8600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefabs:
-  - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
+  - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -16178,7 +16178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPrefabs:
-  - {fileID: 2384884184112096675, guid: 489dff6294583ba43893e073aadec084, type: 3}
+  - {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
   spawnRate: 2
   startTrigger: 0
   isEndlessSpawn: 0
@@ -21595,7 +21595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &912373225
 Transform:
   m_ObjectHideFlags: 0
@@ -21605,11 +21605,11 @@ Transform:
   m_GameObject: {fileID: 912373224}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 66.84, y: 16.39, z: 42.75}
-  m_LocalScale: {x: 5.82, y: 6, z: 15}
+  m_LocalPosition: {x: 0.30666608, y: 1.2333336, z: 0.4}
+  m_LocalScale: {x: 1.94, y: 2, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2015041645}
+  m_Father: {fileID: 1262838854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &912373226
 MonoBehaviour:
@@ -29334,6 +29334,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3067743344199634212, guid: 247865e8774011d43a80a63ff0cbf4f6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1258574200}
+    - targetCorrespondingSourceObject: {fileID: 3067743344199634212, guid: 247865e8774011d43a80a63ff0cbf4f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 912373225}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 247865e8774011d43a80a63ff0cbf4f6, type: 3}
 --- !u!4 &1262838854 stripped
@@ -46409,7 +46412,6 @@ Transform:
   m_Children:
   - {fileID: 1244307931}
   - {fileID: 93884338}
-  - {fileID: 912373225}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2018684273
@@ -47563,28 +47565,28 @@ MonoBehaviour:
   sharingDelayTime: 0.1
   activationSettings:
   - targetCube: {fileID: 1002328981}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 912373224}
-    delayTime: 1
+    delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 623070496}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 912373224}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 600128324}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 912373224}
     delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1754240099}
-    triggerType: 0
+    triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 912373224}
     delayTime: 0
@@ -49437,7 +49439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPositionOffset: {x: 0, y: 0, z: 15}
-  moveSpeed: 3
+  moveSpeed: 5
   showPath: 0
   showLaserPath: 0
   showEditorPreview: 1
