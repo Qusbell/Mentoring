@@ -58,16 +58,24 @@ public class RespawnAction : ActorAction
     public void ReturnToSafePos()
     {
         float radius = 10f;
+        float maxDistance = 1000f;
 
-        while (radius <= 1000f)
+        while (radius <= maxDistance)
         {
+            // 탐색 성공
             if (TryReturnToSafePos(radius))
-            {
-                break;
-            }
+            { break; }
 
+            // 탐색 실패
+            else if (maxDistance <= radius)
+            { break; }
+
+            // 재탐색
             else
-            { radius *= 2; }
+            {
+                radius *= 2;
+                if (maxDistance < radius) { radius = maxDistance; }
+            }
         }
     }
 
