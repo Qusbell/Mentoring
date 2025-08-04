@@ -117,22 +117,30 @@ public class DamageReaction : ActorAction
         LayerChanger.ChangeLayerWithAll(this.gameObject, targetLayer);
 
 
+        // --- 가라앉기 / 제거 ---
+
+        // 사망 시간
+        float deathTime = 2f;
+        // 가라앉는 시간
+        float fallTime = 1f;
+
         // 가라앉기 (콜라이더를 위로 빼기)
         CapsuleCollider[] cols = GetComponentsInChildren<CapsuleCollider>();
 
         // 1초 뒤부터 가라앉기 시작
-        Timer.Instance.StartTimer(this, 1f,
+        Timer.Instance.StartTimer(this, deathTime - fallTime,
             () => {
+                // 모든 콜라이더 수집 후 일괄 작동
                 int i = 0;
                 foreach (var col in cols)
                 {
                     i++;
-                    Timer.Instance.StartRepeatTimer(this, "_FallDown" + i, 1f, () => col.center -= Vector3.down * 0.005f);
+                    Timer.Instance.StartRepeatTimer(this, "_FallDown" + i, fallTime, () => col.center -= Vector3.down * 0.005f);
                 }
             });
 
         // 2초 후 제거
-        Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject));
+        Timer.Instance.StartTimer(this, "_WhenDie", deathTime, () => Destroy(this.gameObject));
     }
 
     public void Heal(int amount)
