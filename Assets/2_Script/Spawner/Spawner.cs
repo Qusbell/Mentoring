@@ -86,7 +86,7 @@ abstract public class Spawner : MonoBehaviour
     // 오브젝트 생성
     protected virtual void SpawnObject()
     {
-        if (targetPrefabs.Count < 0) { Debug.Log("스포너 프리펩 인덱스 비어있음"); return; }
+        if (targetPrefabs.Count <= 0) { Debug.Log("스포너 프리펩 인덱스 비어있음"); return; }
         // 현재 인덱스의 프리팹, 지정된 위치, 기본 회전값으로 생성
         Instantiate(targetPrefabs[PrefabIndex], spawnLocation, Quaternion.identity);
     }

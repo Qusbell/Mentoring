@@ -79,7 +79,7 @@ public class BoarWarning : MonoBehaviour
             // null 체크 추가 - WarningPlaneSetter가 안전하게 작동하는지 확인
             try
             {
-                WarningPlaneSetter.DelWarning(this, warningPlane);
+                WarningPlaneSetter.DelWarning(this, ref warningPlane);
             }
             catch (System.Exception e)
             {

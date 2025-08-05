@@ -10,6 +10,6 @@ public class FallingAction : ActorAction
     protected virtual void Update()
     {
         if (this.transform.position.y < -30)
-        { whenFallingEvent.CallBack(); }
+        { whenFallingEvent.Invoke(); }
     }
 }

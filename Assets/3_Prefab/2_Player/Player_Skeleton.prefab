@@ -1763,8 +1763,9 @@ MonoBehaviour:
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
-  myWeapon: {fileID: 1507084875693659171}
   weaponBeforeDelay: 0.1
+  isCancelWhenHit: 0
+  myWeapon: {fileID: 1507084875693659171}
   weaponActiveTime: 0.3
 --- !u!114 &1833944609532144370
 MonoBehaviour:
@@ -1789,8 +1790,9 @@ MonoBehaviour:
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
-  myWeapon: {fileID: 2640455322755094372}
   weaponBeforeDelay: 0.01
+  isCancelWhenHit: 0
+  myWeapon: {fileID: 2640455322755094372}
   weaponActiveTime: 0.35
 --- !u!114 &4006904744375403826
 MonoBehaviour:
@@ -1805,21 +1807,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <attackName>k__BackingField: 1
-  attackDamage: 2
+  attackDamage: 1
   <attackRange>k__BackingField: 4
   targetTag: 
   maxHitCount: 1
   attackRate: 0.4
   knockBackPower: 2
   knockBackHeight: 0.3
-  <attackCost>k__BackingField: 2
+  <attackCost>k__BackingField: 1
   hitEffect: {fileID: 7274776019300387116, guid: 894f5a15982a8fc4c97677510b5c60fb, type: 3}
   effectDestoryTime: 1
+  weaponBeforeDelay: 0.2
+  isCancelWhenHit: 0
   myWeapon: {fileID: 1507084875693659171}
-  splashDamage: 3
+  splashDamage: 1
   dropSpeed: 20
   maxDropDistance: 20
-  dropBeforeTime: 0.25
 --- !u!114 &5069313832189576641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1834,7 +1837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 3
   nowStamina: 3
-  staminaRecupRate: 1.5
+  staminaRecupRate: 2
   recupStamina: 1
 --- !u!114 &6550980931285902158
 MonoBehaviour:
@@ -2649,7 +2652,7 @@ GameObject:
   - component: {fileID: 2142302343827347696}
   - component: {fileID: 9191741763163552498}
   - component: {fileID: 8069028651910564118}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CenterPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

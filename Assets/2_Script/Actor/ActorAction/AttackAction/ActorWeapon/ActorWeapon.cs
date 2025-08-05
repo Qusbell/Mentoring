@@ -123,7 +123,7 @@ abstract public class ActorWeapon : MonoBehaviour
 
     public virtual void NotUseWeapon()
     {
-        if (--activateStack == 0)
+        if (--activateStack <= 0)
         { isActivate = false; }
     }
 

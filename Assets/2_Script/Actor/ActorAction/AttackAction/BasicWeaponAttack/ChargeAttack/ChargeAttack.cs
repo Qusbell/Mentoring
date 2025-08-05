@@ -5,66 +5,70 @@ using UnityEngine;
 
 public class ChargeAttack : BasicWeaponAttack
 {
-    protected Rigidbody rigid;
     [SerializeField] protected float chargeSpeed = 20f;
-
-    [SerializeField] protected float decelerateSpeed = 1f;
-    [SerializeField] protected float decelerateRate = 0.1f;
 
     // 경고 발판
     private GameObject warningPlane = null;
+    private float warningDistance = 16f;
 
-    private Vector3 attackVec = Vector3.zero;
+    private Vector3 chargeVec = Vector3.zero;
 
 
     protected override void Awake()
     {
         base.Awake();
-        rigid = GetComponent<Rigidbody>();
         checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
+        thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
+
+        // 경고 발판 길이
+        warningDistance = chargeSpeed;
     }
 
 
     private System.Action whenNoLongerChargeAttack = null;
 
+
+    protected override void BeforeAttack()
+    {
+        // --- 경고 발판 생성 ---
+        warningPlane = WarningPlaneSetter.SetWarning(this, 1.5f, warningDistance, weaponBeforeDelay, transform.position, transform.forward);
+    }
+
+
+
+    protected override void CancelAttack()
+    {
+        base.CancelAttack();
+        WarningPlaneSetter.DelWarning(this, ref warningPlane);
+    }
+
+
     protected override void DoAttack()
     {
-        float originalChargeSpeed = chargeSpeed;
-        warningPlane = WarningPlaneSetter.SetWarning(this, 1f, attackRange, weaponBeforeDelay, transform.position, transform.forward);
         base.DoAttack();
 
-        // 공격 방향 지정
-        attackVec = transform.forward;
+        // --- 돌진 방향 지정 ---
+        chargeVec = transform.forward;
 
-        // 돌진 활성화
-        Timer.Instance.StartTimer(this, "_DoAttack", weaponBeforeDelay,
-            () => {
-                // --- 발판 반환 ---
-                WarningPlaneSetter.DelWarning(this, warningPlane);
+        // --- 발판 반환 ---
+        WarningPlaneSetter.DelWarning(this, ref warningPlane);
 
-                // -- 사망 시 리턴 ---
-                DamageReaction damageReaction = GetComponent<DamageReaction>();
-                if (damageReaction.isDie) { return; }
+        // -- 사망 시 리턴 ---
+        if (thisActor.damageReaction.isDie) { return; }
 
-                this.enabled = true;
-                rigid.isKinematic = true;
+        // --- 물리 조정 && 돌진 활성화 ---
+        this.enabled = true;
+        thisActor.rigid.isKinematic = true;
 
-                whenNoLongerChargeAttack = () =>
-                {
-                    Timer.Instance.StopEndlessTimer(this, "_Decelerate");
-                    rigid.isKinematic = false;
-                    this.enabled = false;
-                    chargeSpeed = originalChargeSpeed;
-                    rigid.velocity = Vector3.zero;
-                };
+        whenNoLongerChargeAttack = () =>
+        {
+            thisActor.rigid.isKinematic = false;
+            this.enabled = false;
+            thisActor.rigid.velocity = Vector3.zero;
+        };
 
-                Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
-
-                // 일정 주기로 감속
-                Timer.Instance.StartEndlessTimer(this, "_Decelerate", decelerateRate, () => { chargeSpeed -= decelerateSpeed; });
-            });
-
+        Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
     }
 
 
@@ -74,7 +78,7 @@ public class ChargeAttack : BasicWeaponAttack
     private void FixedUpdate()
     {
         // --- 다음 위치 계산
-        Vector3 nextPos = rigid.position + attackVec * chargeSpeed * Time.fixedDeltaTime;
+        Vector3 nextPos = thisActor.rigid.position + chargeVec * chargeSpeed * Time.fixedDeltaTime;
         
         // --- 다음 위치의 장애물 확인 ---
         Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
@@ -82,7 +86,7 @@ public class ChargeAttack : BasicWeaponAttack
         foreach (var hit in hits)
         {
             // "Cube" 태그이거나, 검사 레이어에 속한다면
-            if (hit.CompareTag("Cube") || ((checkLayer.value & (1 << hit.gameObject.layer)) != 0))
+            if (((checkLayer.value & (1 << hit.gameObject.layer)) != 0) || hit.CompareTag("Cube"))
             {
                 // 자기 자신이 아닐 때(중복체크 방지)
                 if (hit.gameObject != this.gameObject)
@@ -94,7 +98,7 @@ public class ChargeAttack : BasicWeaponAttack
         }
 
         // --- 이동 ---
-        rigid.MovePosition(nextPos);
+        thisActor.rigid.MovePosition(nextPos);
     }
 
 
@@ -117,14 +121,14 @@ public class ChargeAttack : BasicWeaponAttack
                 float dot = Vector3.Dot(fromSelfToCollision, rightDir);
 
                 // 임펄스 크기 설정
-                float impulseStrength = 4f;
+                float pushPower = 4f;
 
                 // 충돌 대상이 오른쪽에 있으므로 오른쪽 임펄스
                 if (dot > 0f)
-                { otherRigid.AddForce(rightDir * impulseStrength, ForceMode.Impulse); }
+                { otherRigid.AddForce(rightDir * pushPower, ForceMode.Impulse); }
                 // 왼쪽에 있으므로 왼쪽 임펄스
                 else
-                { otherRigid.AddForce(leftDir * impulseStrength, ForceMode.Impulse); }
+                { otherRigid.AddForce(leftDir * pushPower, ForceMode.Impulse); }
             }
         }
     }

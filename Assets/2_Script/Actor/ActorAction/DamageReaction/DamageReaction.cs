@@ -39,10 +39,10 @@ public class DamageReaction : ActorAction
     // 죽었을 때 바운스 거리
     [SerializeField] protected int bouncePowerWhenDie = 10;
 
-    // hit/die 이벤트
-    public List<System.Action> whenHitEvent = new List<Action>();
-    public List<System.Action> whenDieEvent = new List<Action>();
 
+    // hit/die 이벤트
+    public MyEvent whenHit = new MyEvent();
+    public MyEvent whenDie = new MyEvent();
 
     // 피격
     public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f, float knockBackHeight = 0f)
@@ -57,12 +57,12 @@ public class DamageReaction : ActorAction
         // --- 피해 적용 ---
         healthPoint -= damage;
 
-        // --- 넉백 ---
-        KnockBackImpulse(enemy.gameObject, knockBackPower, knockBackHeight);
-
         // --- 피격/사망 시 처리 ---
         if (isDie) { Die(); }
         else { Hit(); }
+
+        // --- 넉백 ---
+        KnockBackImpulse(enemy.gameObject, knockBackPower, knockBackHeight);
     }
 
 
@@ -77,7 +77,7 @@ public class DamageReaction : ActorAction
 
         tempVector *= knockBackPower;
         tempVector.y = knockBackHeight + rigid.velocity.y; // 상/하 넉백
-        if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절
+        if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절 (현재 27f)
         rigid.velocity = tempVector; // 넉백 적용
 
         // 사망 시 추가넉백
@@ -88,21 +88,20 @@ public class DamageReaction : ActorAction
 
 
     protected void Hit()
-    {
-        // --- hit 이벤트 호출 ---
-        foreach (var hitEvent in whenHitEvent)
-        { hitEvent?.Invoke(); }
-    }
+    { whenHit.Invoke(); }
 
 
     // 사망 처리
     protected virtual void Die()
     {
         // --- die 이벤트 호출 ---
-        foreach (var dieEvent in whenDieEvent)
-        { dieEvent?.Invoke(); }
+        whenDie.Invoke();
 
-        // ----- 모든 ActorAction 비활성화 -----
+        // 이벤트 전부 클리어
+        whenHit.ClearAll();
+        whenDie.ClearAll();
+
+        // --- 모든 ActorAction 비활성화 ---
         ActorAction[] actorActions = this.GetComponentsInChildren<ActorAction>();
         if(actorActions != null)
         {
@@ -110,16 +109,38 @@ public class DamageReaction : ActorAction
             { item.enabled = false; }
         }
 
-        // 이벤트 전부 클리어
-        whenHitEvent.Clear();
-        whenDieEvent.Clear();
+        // --- 물리 적용 ---
+        thisActor.rigid.isKinematic = false;
 
         // 레이어 변경
         int targetLayer = LayerMask.NameToLayer("DieActorLayer");
         LayerChanger.ChangeLayerWithAll(this.gameObject, targetLayer);
 
+
+        // --- 가라앉기 / 제거 ---
+
+        // 사망 시간
+        float deathTime = 2f;
+        // 가라앉는 시간
+        float fallTime = 1f;
+
+        // 가라앉기 (콜라이더를 위로 빼기)
+        CapsuleCollider[] cols = GetComponentsInChildren<CapsuleCollider>();
+
+        // 1초 뒤부터 가라앉기 시작
+        Timer.Instance.StartTimer(this, deathTime - fallTime,
+            () => {
+                // 모든 콜라이더 수집 후 일괄 작동
+                int i = 0;
+                foreach (var col in cols)
+                {
+                    i++;
+                    Timer.Instance.StartRepeatTimer(this, "_FallDown" + i, fallTime, () => col.center -= Vector3.down * 0.005f);
+                }
+            });
+
         // 2초 후 제거
-        Timer.Instance.StartTimer(this, "_WhenDie", 2f, () => Destroy(this.gameObject)); // <- 이후 오브젝트 풀로 이동하는 걸 고려
+        Timer.Instance.StartTimer(this, "_WhenDie", deathTime, () => Destroy(this.gameObject));
     }
 
     public void Heal(int amount)

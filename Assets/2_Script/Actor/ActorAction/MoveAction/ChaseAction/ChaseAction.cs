@@ -18,6 +18,8 @@ public class ChaseAction : MoveAction
     // 추적할 대상
     public Transform target;
 
+    // 길
+    private NavMeshPath navPath;
 
     // 생성
     protected override void Awake()
@@ -31,6 +33,8 @@ public class ChaseAction : MoveAction
         // 위치, 회전 자동 업데이트 비활성
         nav.updatePosition = false;
         nav.updateRotation = false;
+
+        navPath = new NavMeshPath();
     }
 
     protected void Start()
@@ -53,90 +57,43 @@ public class ChaseAction : MoveAction
     { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
 
 
-    // 목적지 갱신 (이전 버전)
-    //  void UpdateDestination()
-    //  {
-    //      if (target != null && nav.isOnNavMesh)
-    //      { nav.SetDestination(target.position); }
-    //  }
+    // 목적지 갱신 (기본 버전)
+    // void UpdateDestination()
+    // {
+    //     if (target == null || nav == null || !nav.isOnNavMesh) { return; }
+    //     nav.SetDestination(target.position);
+    // }
 
     // 목적지 갱신
     //  private void UpdateDestination()
     //  {
     //      if (target == null || nav == null || !nav.isOnNavMesh) { return; }
     //  
-    //      NavMeshPath path = new NavMeshPath();
+    //      NavMeshPath navPath = new NavMeshPath();
     //  
-    //      if (NavMesh.CalculatePath(nav.transform.position, target.position, NavMesh.AllAreas, path)
-    //          && path.status == NavMeshPathStatus.PathComplete)
-    //      { nav.SetPath(path); }
+    //      if (NavMesh.CalculatePath(nav.transform.position, target.position, NavMesh.AllAreas, navPath)
+    //          && navPath.status == NavMeshPathStatus.PathComplete)
+    //      { nav.SetPath(navPath); }
     //      
     //  }
 
-
+    // 즉각 반응 AI
     private void UpdateDestination()
     {
         if (target == null || nav == null || !nav.isOnNavMesh) { return; }
-
+    
         NavMeshHit hit;
-        Vector3 targetPosOnNav = nav.transform.position; ;
-
-        // target 주변 최대 30m 반경 내에서 NavMesh 가장 가까운 점을 찾음
+        Vector3 targetPosOnNav = nav.transform.position;
+    
+        // target 주변 최대 30유닛 반경 내에서
+        // NavMesh 위의 가장 가까운 점을 찾음
         if (NavMesh.SamplePosition(target.position, out hit, 30.0f, NavMesh.AllAreas))
         { targetPosOnNav = hit.position; }
-
-        NavMeshPath path = new NavMeshPath();
-
+    
         // 목적지로 보정된 targetPosOnNav를 넣어 경로 계산
-        if (NavMesh.CalculatePath(nav.transform.position, targetPosOnNav, NavMesh.AllAreas, path)
-            && path.status == NavMeshPathStatus.PathComplete)
-        {
-            nav.SetPath(path);
-        }
-    }
-
-
-
-
-    // 추격 가능 여부
-    protected bool _isCanChase;
-
-    public bool isCanChase
-    {
-        get
-        {
-            _isCanChase = IsCanChaseTarget();
-            return _isCanChase;
-        }
-    }
-
-    // 추적 가능 여부 <- 수정할 것, 현재 제대로 작동 X
-    protected bool IsCanChaseTarget()
-    {
-        // 1. 타겟이 존재하는가?
-        if (target == null)
-        {
-            // Debug.Log("target 미존재");
-            return false;
-        }
-
-        // 2. 네비메쉬 위에 있는가?
-        if (!nav.isOnNavMesh)
-        {
-            // Debug.Log("navMesh 위에 없음");
-            return false;
-        }
-
-        // 3. 경로가 유효한가?
-        if (!nav.hasPath)
-        {
-            // Debug.Log(this.gameObject.GetInstanceID() + " : 경로 미유효");
-            return false;
-        }
-
-        // 추적 가능
-        // Debug.Log("추적 가능");
-        return true;
+        if (NavMesh.CalculatePath(nav.transform.position, targetPosOnNav, NavMesh.AllAreas, navPath)
+            && navPath.status == NavMeshPathStatus.PathComplete)
+        { nav.SetPath(navPath); }
     }
 
 
@@ -145,12 +102,7 @@ public class ChaseAction : MoveAction
         // 타겟이 존재하고,
         // 길이 존재하는 경우에만 move
         if (target != null && nav.hasPath && nav.pathStatus == NavMeshPathStatus.PathComplete)
-        {
-            isMove = true;
-            base.Move();
-        }
-        else
-        { isMove = false; }
+        { base.Move(); }
     }
 
 
@@ -165,6 +117,8 @@ public class ChaseAction : MoveAction
         // nav상 위치와 transform 위치의 괴리
         float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
 
+        // 자신이 navMesh 위에 없는 경우
+        // <- 수정 예정
         if (!nav.isOnNavMesh || 0.1f < gapDistance)
         {
             NavMeshHit hit;
@@ -174,6 +128,8 @@ public class ChaseAction : MoveAction
 
         if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
     }
+
+
 
     // 회전 속도
     [SerializeField] protected float rotationSpeed = 3f;
@@ -195,8 +151,7 @@ public class ChaseAction : MoveAction
     }
 
 
-
-    public bool IsFacingTarget(float tolerance = 0.99f)
+    public bool IsFacingTarget(float maxDistance = 100f, float tolerance = 0.99f)
     {
         Vector3 toTarget = (target.position - transform.position);
         toTarget.y = 0f; // y값 무시
@@ -207,7 +162,35 @@ public class ChaseAction : MoveAction
         forward.Normalize();
 
         float dot = Vector3.Dot(forward, toTarget);
-        return dot >= tolerance;
+
+        return dot >= tolerance && isClearToTarget(maxDistance);
+    }
+
+    // target까지 장애물 여부 판별
+    private bool isClearToTarget(float rayDistance = 100f)
+    {
+        if (target == null) { return false; }
+
+        Vector3 directionToTarget = (target.position + Vector3.down * 2f - transform.position).normalized;
+        Ray ray = new Ray(transform.position + Vector3.up * 2f, directionToTarget);
+
+        // "Cube"와 "Target" 레이어만 포함하는 레이어마스크 생성
+        int cubeLayer = 1 << LayerMask.NameToLayer("Cube");
+        int playerLayer = 1 << LayerMask.NameToLayer("Player");
+        int layerMask = cubeLayer | playerLayer;
+
+        // 디버그용 레이 시각화
+        Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
+
+        // 지정한 레이어만 Raycast 대상으로 판별
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, rayDistance, layerMask))
+        {
+            if ((playerLayer & (1 << hit.transform.gameObject.layer)) != 0)
+            { return true; }
+        }
+
+        return false;
     }
 
 

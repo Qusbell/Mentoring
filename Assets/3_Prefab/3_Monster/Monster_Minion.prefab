@@ -1679,14 +1679,15 @@ MonoBehaviour:
   <attackRange>k__BackingField: 3
   targetTag: 
   maxHitCount: 1
-  attackRate: 3
+  attackRate: 1
   knockBackPower: 0
   knockBackHeight: 0
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 4791832901258035022, guid: 293a63e5413b8a444b9bba485398c5ae, type: 3}
   effectDestoryTime: 1
-  myWeapon: {fileID: 8939563338791786793}
   weaponBeforeDelay: 0.4
+  isCancelWhenHit: 1
+  myWeapon: {fileID: 8939563338791786793}
   weaponActiveTime: 0.9
 --- !u!114 &8075370776093852105
 MonoBehaviour:
@@ -1700,6 +1701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5701916d8fa0964fbbfbb429148a7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStateName: 
 --- !u!114 &2307444567851262608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2022,7 +2024,7 @@ CapsuleCollider:
   m_Radius: 0.9
   m_Height: 1.6
   m_Direction: 1
-  m_Center: {x: -0, y: 0.78352696, z: 0}
+  m_Center: {x: -0, y: 0.8, z: 0}
 --- !u!1 &7510207258171597751
 GameObject:
   m_ObjectHideFlags: 0

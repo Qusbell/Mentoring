@@ -30,6 +30,8 @@ public class FootCollider : MonoBehaviour
 
 
     // 착지 판정 시 이벤트
+    // public MyEvent whenGround = new MyEvent(); // <- remove 추가 후 다시 써보자
+
     public List<System.Action> whenGroundEvent { get; set; } = new List<System.Action>();
 
     private void OnTriggerEnter(Collider other)
@@ -43,6 +45,8 @@ public class FootCollider : MonoBehaviour
             // 이벤트 일괄 발생
             foreach (System.Action groundEvent in whenGroundEvent.ToArray())
             { groundEvent?.Invoke(); }
+
+            // whenGround.Invoke(); // <- 이후 추가
         }
     }
 

@@ -5,12 +5,21 @@ using UnityEngine;
 
 public class ActorAction : MonoBehaviour
 {
-    protected Actor thisActor;
+    private Actor actor;
+
+    protected Actor thisActor
+    {
+        get
+        {
+            if (actor == null)
+            { actor = GetComponent<Actor>(); }
+            return actor;
+        }
+    }
 
     protected virtual void Awake()
     {
-        thisActor = GetComponent<Actor>();
+        actor = GetComponent<Actor>();
     }
-
 
 }

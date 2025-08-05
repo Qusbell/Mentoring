@@ -16,7 +16,7 @@ public class PlayerDamageReaction : DamageReaction
 
     protected void Start()
     {
-        whenHitEvent.Add(Invincibility);
+        whenHit.AddMulti(Invincibility);
         CollectAllRelevantRenderers();
     }
 
