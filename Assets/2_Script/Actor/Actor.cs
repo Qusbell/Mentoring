@@ -41,8 +41,8 @@ abstract public class Actor : MonoBehaviour
 
 
     // 피격
-    DamageReaction _damageReaction;
-    public DamageReaction damageReaction
+    private DamageReaction _damageReaction;
+    public virtual DamageReaction damageReaction
     {
         get
         {
@@ -62,8 +62,23 @@ abstract public class Actor : MonoBehaviour
     // 애니메이션
     protected ActorAnimation animator;
 
+
     // 바닥 콜라이더 (점프 판정) : 현재 Player 이외에 존재하지 않음
-    protected FootCollider foot;
+    private FootCollider _foot;
+    public virtual FootCollider foot
+    {
+        get
+        {
+            if (_foot == null)
+            {
+                _foot = GetComponentInChildren<FootCollider>();
+                if(_foot == null)
+                { Debug.LogWarning($"{gameObject.name} 오브젝트에 FootCollider가 없습니다."); }
+            }
+
+            return _foot;
+        }
+    }
 
     // 점프 중 판정 확인
     public bool isRand
@@ -88,7 +103,6 @@ abstract public class Actor : MonoBehaviour
 
         animator = GetComponent<ActorAnimation>();
         moveAction = GetComponent<MoveAction>();
-        foot = GetComponentInChildren<FootCollider>();
 
         // 공격 목록 만들기
         AttackAction[] tempAttackActions = GetComponents<AttackAction>();

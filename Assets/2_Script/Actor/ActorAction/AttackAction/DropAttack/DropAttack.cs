@@ -23,9 +23,6 @@ public class DropAttack : AttackAction
     // 낙하 가능한 최대 거리
     [SerializeField] private float maxDropDistance = 20f;
 
-    // 낙하 직전 시간
-    [SerializeField] private float dropBeforeTime = 0.2f;
-
 
     private DropActorWeapon _weapon = null;
     protected DropActorWeapon weapon
@@ -43,7 +40,6 @@ public class DropAttack : AttackAction
     }
 
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -54,23 +50,20 @@ public class DropAttack : AttackAction
 
     protected override void DoAttack()
     {
-        // 레이캐스트 정보
-        RaycastHit tempHit;
-        Vector3 rayOrigin = this.transform.position;
-        Vector3 rayDirection = Vector3.down;
-        // 낙하 시도 여부
-        bool isCanUseDropAttack = Physics.Raycast(rayOrigin, rayDirection, out tempHit, maxDropDistance);
-
         // 무기 사용 시작
         weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
 
-        // --- 낙하 여부 ---
-        if (!isCanUseDropAttack) { return; }
+        if (!thisActor.isRand)
+        {
+            // 레이캐스트 정보
+            RaycastHit tempHit;
+            // 낙하 시도 여부
+            bool isCanUseDropAttack = Physics.Raycast(this.transform.position, Vector3.down, out tempHit, maxDropDistance);
 
-        System.Action dropAttackAction = () =>
-        { rigid.AddForce(Vector3.down * dropSpeed, ForceMode.Impulse); };
-
-        Timer.Instance.StartTimer(this, "_DropAttackAction", dropBeforeTime, dropAttackAction);
+            // --- 낙하 여부 ---
+            if (isCanUseDropAttack)
+            { thisActor.rigid.velocity = Vector3.down * dropSpeed; }
+        }
     }
 }
 

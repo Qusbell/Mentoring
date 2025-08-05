@@ -68,7 +68,7 @@ public class RespawnAction : ActorAction
 
             // 탐색 실패
             else if (maxDistance <= radius)
-            { break; }
+            { break; } // <- 이후 탐색 실패 시 처리 추가 (씬 전체 Find?)
 
             // 재탐색
             else

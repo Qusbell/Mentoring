@@ -11,8 +11,6 @@ public class DropActorWeapon : ActorWeapon
     protected float attackRange = 5f; // 범위
     protected int originalLayer = -1; // 원래 레이어
 
-    protected FootCollider foot;  // 착지판정
-
 
     private void Start()
     {
@@ -20,9 +18,6 @@ public class DropActorWeapon : ActorWeapon
         DropActorWeapon[] weapons = GetComponents<DropActorWeapon>();
         foreach (DropActorWeapon weapon in weapons)
         { if (weapon != this) { Destroy(this); } }
-
-        // 착지판정 콜라이더
-        foot = owner.GetComponentInChildren<FootCollider>();
     }
 
 
@@ -35,10 +30,18 @@ public class DropActorWeapon : ActorWeapon
         base.UseWeapon(p_attackDamage, p_maxHitCount, p_knockBackPower, p_knockBackHeight, p_hitEffect, p_effectDestoryTime);
         owner.gameObject.layer = LayerMask.NameToLayer("IgnoreOtherActor");
 
-        if (foot != null)
+        // 공중인 경우: 착지 시 사용
+        if (owner.foot != null && !owner.isRand)
         {
-            foot.whenGroundEvent.Add(DropAttack);   // 먼저 드랍어택
-            foot.whenGroundEvent.Add(NotUseWeapon); // 그 후 무기 사용 종료
+            // <- 이후 once로 교체
+            owner.foot.whenGroundEvent.Add(DropAttack);   // 먼저 드랍어택
+            owner.foot.whenGroundEvent.Add(NotUseWeapon); // 그 후 무기 사용 종료
+        }
+        // 지상인 경우: 즉시 사용
+        else
+        {
+            DropAttack();
+            NotUseWeapon();
         }
     }
     
@@ -48,8 +51,8 @@ public class DropActorWeapon : ActorWeapon
         base.NotUseWeapon();
         this.owner.rigid.velocity = Vector3.zero;
 
-        foot.whenGroundEvent.Remove(DropAttack);
-        foot.whenGroundEvent.Remove(NotUseWeapon);
+        owner.foot.whenGroundEvent.Remove(DropAttack);
+        owner.foot.whenGroundEvent.Remove(NotUseWeapon);
     }
 
 
@@ -60,7 +63,7 @@ public class DropActorWeapon : ActorWeapon
         originalLayer = p_originalLayer;
         splashDamage = p_splashDamage;
 
-        // 오류 정정
+        // 에러 체크
         if (attackRange <= 0) { Debug.Log($"{this.owner.name} : DropActorWeapon의 attackRange가 0 이하"); attackRange = 1; }
         if (originalLayer <= -1) { Debug.Log($"{this.owner.name} : DropActorWeapon의 originalLayer 이상"); originalLayer = -1; }
         if (splashDamage <= 0) { Debug.Log($"{this.owner.name} : DropActorWeapon의 splashDamage가 0 이하"); splashDamage = 0; }

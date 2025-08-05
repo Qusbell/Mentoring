@@ -20,7 +20,7 @@ public class MyEvent
         { action?.Invoke(); }
 
         // --- 일회용 이벤트 실행 & 제거 ---
-        foreach (var action in onceCallbacks)
+        foreach (var action in onceCallbacks.ToArray())
         { action?.Invoke(); }
         ClearOnceCallbacks();
     }
@@ -49,7 +49,6 @@ public class MyEvent
         if (action == null || (isUnique && onceCallbacks.Contains(action))) { return; }
         onceCallbacks.Add(action);
     }
-
 
     /// <summary>
     /// 전부 초기화
