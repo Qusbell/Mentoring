@@ -1679,7 +1679,7 @@ MonoBehaviour:
   <attackRange>k__BackingField: 3
   targetTag: 
   maxHitCount: 1
-  attackRate: 3
+  attackRate: 1
   knockBackPower: 0
   knockBackHeight: 0
   <attackCost>k__BackingField: 0
@@ -1701,6 +1701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5701916d8fa0964fbbfbb429148a7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStateName: 
 --- !u!114 &2307444567851262608
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,20 @@ using UnityEngine;
 abstract public class Actor : MonoBehaviour
 {
     // 오브젝트에 대한 물리효과
-    public Rigidbody rigid { get; set; }
+    private Rigidbody _rigid;
+    public Rigidbody rigid
+    {
+        get
+        {
+            if (_rigid == null)
+            {
+                _rigid = GetComponent<Rigidbody>();
+                if (_rigid == null) { Debug.LogWarning($"{gameObject.name} 오브젝트에 Rigidbody 컴포넌트가 없습니다."); }
+            }
+
+            return _rigid;
+        }
+    }
 
     // 이동
     protected MoveAction moveAction;
@@ -49,10 +62,7 @@ abstract public class Actor : MonoBehaviour
             if (_damageReaction == null)
             {
                 _damageReaction = GetComponent<DamageReaction>();
-
-                // 여전히 null인 경우
-                if (_damageReaction == null)
-                { Debug.LogWarning($"{gameObject.name} 오브젝트에 DamageReaction 컴포넌트가 없습니다."); }  
+                if (_damageReaction == null) { Debug.LogWarning($"{gameObject.name} 오브젝트에 DamageReaction 컴포넌트가 없습니다."); }  
             }
             return _damageReaction;
         }
@@ -72,8 +82,7 @@ abstract public class Actor : MonoBehaviour
             if (_foot == null)
             {
                 _foot = GetComponentInChildren<FootCollider>();
-                if(_foot == null)
-                { Debug.LogWarning($"{gameObject.name} 오브젝트에 FootCollider가 없습니다."); }
+                if (_foot == null) { Debug.LogWarning($"{gameObject.name} 오브젝트에 FootCollider가 없습니다."); }
             }
 
             return _foot;
@@ -96,9 +105,6 @@ abstract public class Actor : MonoBehaviour
     // 생성 초기화
     protected virtual void Awake()
     {
-        // 물리연산 포함
-        rigid = GetComponent<Rigidbody>();
-        // 물리회전 제거
         rigid.freezeRotation = true;
 
         animator = GetComponent<ActorAnimation>();

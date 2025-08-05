@@ -32,6 +32,7 @@ public class Monster : Actor
     protected ChaseAction chaseAction;
 
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -65,13 +66,15 @@ public class Monster : Actor
     // 현재 수행 중인 행동
     protected System.Action actionStatus;
 
+    // (디버그용) 현재 상태 확인
+    [SerializeField] private string currentStateName;
+    private void UpdateStateName(Action state)
+    { currentStateName = state.Method.Name; }
+
+
     private void Update()
     { actionStatus(); }
 
-
-    // 공격 사거리 계산
-    protected bool InAttackRange()
-    { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
 
     // 트리거 애니메이션의 단일 활성화 보장
@@ -96,6 +99,9 @@ public class Monster : Actor
         animationTrigger = true;
         animationPlayCheck = false;
         actionStatus = nextStatus;
+
+        // 디버그
+        UpdateStateName(nextStatus);
     }
 
     // 애니메이션 종료 시, 다음 상태로 전환
@@ -109,14 +115,24 @@ public class Monster : Actor
 
 
 
+    // 공격 사거리 계산
+    protected bool CheckInAttackRange()
+    { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
+
+    // 공격 준비 완료
+    protected bool isReadyToAttack
+    {
+        get
+        { return attackAction.isCanAttack && CheckInAttackRange() && chaseAction.IsFacingTarget(attackAction.attackRange); }
+    }
+
+
 
     // ===== 상태 =====
 
     // 생성 상태
     private void SpawnState()
     {
-        // Debug.Log("Spawn");
-
         if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
         { SwitchStatus(IdleStatus); }
     }
@@ -125,10 +141,10 @@ public class Monster : Actor
     // 대기 상태
     protected void IdleStatus()
     {
-        // Debug.Log("Idle");
-
-        if (InAttackRange() && chaseAction.IsFacingTarget())
+        if (isReadyToAttack)
         { SwitchStatus(AttackStatus); }
+        else if (!attackAction.isCanAttack)
+        { moveAction.Turn(); }
         else
         { SwitchStatus(MoveStatus); }
     }
@@ -137,28 +153,16 @@ public class Monster : Actor
     // 이동 상태
     protected void MoveStatus()
     {
-        // Debug.Log("Move");
-
-        if (InAttackRange())
+        if (isReadyToAttack)
         {
             moveAction.isMove = false;
-
-            if (chaseAction.IsFacingTarget())
-            { SwitchStatus(AttackStatus); }
-            else
-            { moveAction.Turn(); }
+            SwitchStatus(AttackStatus);
         }
-        else if (chaseAction.isCanChase)
+        else
         {
             moveAction.isMove = true;
             moveAction.Move();
             moveAction.Turn();
-        }
-        else
-        {
-            moveAction.isMove = false;
-            moveAction.Turn();
-            SwitchStatus(IdleStatus);
         }
 
         animator.PlayAnimation("IsMove", moveAction.isMove);
@@ -171,31 +175,26 @@ public class Monster : Actor
     // 공격 상태
     protected virtual void AttackStatus()
     {
-        // Debug.Log("Attack");
-
         // 공격 가능하다면
-        if (attackAction.isCanAttack)
+        if (isReadyToAttack)
         {
-            if (InAttackRange() && chaseAction.IsFacingTarget())
-            {
-                attackAction.Attack();
-                PlayAnimationTriggerOnce("DoAttack");
-            }
-            else { SwitchStatus(IdleStatus); }
+            attackAction.Attack();
+            PlayAnimationTriggerOnce("DoAttack");
+            SwitchStatus(AttackAnimationStatus);
         }
-
-        SwitchStatusWhenAnimationEnd("Attack", ReloadStatus);
+        // 아니면 Idle로
+        else { SwitchStatus(IdleStatus); }
     }
+
+    // 공격 애니메이션 상태
+    protected void AttackAnimationStatus()
+    { SwitchStatusWhenAnimationEnd("Attack", ReloadStatus); }
 
 
     // 공격 후딜레이 애니메이션 재생
+    // Attack -> Reload는 Animator 창에서 지정됨
     protected void ReloadStatus()
-    {
-        // Debug.Log("Reload");
-        // Attack -> Reload는 Animator 창에서 지정됨
-        SwitchStatusWhenAnimationEnd("Reload", IdleStatus);
-    }
-
+    { SwitchStatusWhenAnimationEnd("Reload", IdleStatus); }
 
 
     // 피격 시 애니메이션

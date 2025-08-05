@@ -18,7 +18,7 @@ public class SingletonT<T> : MonoBehaviour where T : MonoBehaviour
             // 애플리케이션이 종료 중이면 인스턴스를 반환하지 않고 경고 출력
             if (applicationIsQuitting)
             {
-                Debug.LogWarning("[SingletonT] 이미 종료 중이므로 인스턴스를 반환하지 않습니다.");
+                Debug.Log("[SingletonT] 이미 종료 중이므로 인스턴스를 반환하지 않습니다.");
                 return null;
             }
 

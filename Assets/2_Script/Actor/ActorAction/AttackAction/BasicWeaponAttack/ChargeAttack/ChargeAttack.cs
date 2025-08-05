@@ -11,7 +11,7 @@ public class ChargeAttack : BasicWeaponAttack
     private GameObject warningPlane = null;
     private float warningDistance = 16f;
 
-    private Vector3 attackVec = Vector3.zero;
+    private Vector3 chargeVec = Vector3.zero;
 
 
     protected override void Awake()
@@ -48,8 +48,8 @@ public class ChargeAttack : BasicWeaponAttack
     {
         base.DoAttack();
 
-        // 공격 방향 지정
-        attackVec = transform.forward;
+        // --- 돌진 방향 지정 ---
+        chargeVec = transform.forward;
 
         // --- 발판 반환 ---
         WarningPlaneSetter.DelWarning(this, ref warningPlane);
@@ -78,7 +78,7 @@ public class ChargeAttack : BasicWeaponAttack
     private void FixedUpdate()
     {
         // --- 다음 위치 계산
-        Vector3 nextPos = thisActor.rigid.position + attackVec * chargeSpeed * Time.fixedDeltaTime;
+        Vector3 nextPos = thisActor.rigid.position + chargeVec * chargeSpeed * Time.fixedDeltaTime;
         
         // --- 다음 위치의 장애물 확인 ---
         Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
@@ -121,14 +121,14 @@ public class ChargeAttack : BasicWeaponAttack
                 float dot = Vector3.Dot(fromSelfToCollision, rightDir);
 
                 // 임펄스 크기 설정
-                float impulseStrength = 4f;
+                float pushPower = 4f;
 
                 // 충돌 대상이 오른쪽에 있으므로 오른쪽 임펄스
                 if (dot > 0f)
-                { otherRigid.AddForce(rightDir * impulseStrength, ForceMode.Impulse); }
+                { otherRigid.AddForce(rightDir * pushPower, ForceMode.Impulse); }
                 // 왼쪽에 있으므로 왼쪽 임펄스
                 else
-                { otherRigid.AddForce(leftDir * impulseStrength, ForceMode.Impulse); }
+                { otherRigid.AddForce(leftDir * pushPower, ForceMode.Impulse); }
             }
         }
     }

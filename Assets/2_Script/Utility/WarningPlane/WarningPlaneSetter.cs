@@ -33,11 +33,17 @@ public class WarningPlaneSetter
         warningPlane.SetActive(true);
 
         // --- 경고 진해지기 ---
-        float rate = 1f;
+        float warningAlpha = 1f;
+        float opacityRate = 1f / (warningTime * 0.8f);
         System.Action tempAction = () =>
         {
-            WarningPlaneCustom.Instance.UpdateColor(warningPlane, rate);
-            rate -= 0.01f;
+            WarningPlaneCustom.Instance.UpdateColor(warningPlane, warningAlpha);
+            warningAlpha -= opacityRate * Time.deltaTime;
+            if (warningAlpha <= 0f)
+            {
+                warningAlpha = 0f;
+                Timer.Instance.StopTimer(component, "_Warning");
+            }
         };
 
         Timer.Instance.StartRepeatTimer(component, "_Warning", warningTime, tempAction);
