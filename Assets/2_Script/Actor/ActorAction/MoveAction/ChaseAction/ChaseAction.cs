@@ -159,7 +159,7 @@ public class ChaseAction : MoveAction
     }
 
     // target까지 장애물 여부 판별
-    private bool isClearToTarget(float rayDistance = 100f)
+    public bool isClearToTarget(float rayDistance = 100f)
     {
         if (target == null) { return false; }
 

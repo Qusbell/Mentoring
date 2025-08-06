@@ -146,6 +146,12 @@ abstract public class AttackAction : ActorAction
         if (beforeDelayEffect != null && beforeDelayEffectPos != null)
         {
             GameObject effect = Instantiate(beforeDelayEffect, beforeDelayEffectPos.position, beforeDelayEffectPos.rotation);
+            Timer.Instance.StartRepeatTimer(this, "_BeforeDelayEffect", weaponBeforeDelay,
+                () =>
+                {
+                    if (effect != null)
+                    { effect.transform.position = beforeDelayEffectPos.position; }
+                });
             Destroy(effect, weaponBeforeDelay);
         }
     }
