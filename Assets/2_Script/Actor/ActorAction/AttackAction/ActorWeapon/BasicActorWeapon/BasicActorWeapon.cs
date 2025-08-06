@@ -19,7 +19,7 @@ public class BasicActorWeapon : ActorWeapon
     {
         // Debug.Log("실행");
         base.WeaponCollisionEnterAction(damageReaction);
-        InstantHitEffect(damageReaction.transform.position);
+        InstantHitEffectAtClosest(damageReaction.transform.position);
     }
 
 

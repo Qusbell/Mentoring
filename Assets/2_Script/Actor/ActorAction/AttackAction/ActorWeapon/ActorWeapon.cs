@@ -27,7 +27,9 @@ abstract public class ActorWeapon : MonoBehaviour
         }
     }
 
-    protected void InstantHitEffectAtOwner(Vector3 pos)
+    // 지정한 위치에서 발생
+    // <- rotation도 owner으로? 나중에 생각해
+    protected void InstantHitEffectAtPos(Vector3 pos)
     {
         if (hitEffect != null)
         {
@@ -35,10 +37,10 @@ abstract public class ActorWeapon : MonoBehaviour
                 Instantiate(hitEffect, pos, owner.transform.rotation);
             Destroy(effect, effectDestoryTime);
         }
-    }    
+    }
 
     // 이펙트 발생 (상대와 가장 가까운 위치)
-    protected void InstantHitEffect(Vector3 otherPosition)
+    protected void InstantHitEffectAtClosest(Vector3 otherPosition)
     {
         Vector3 effectPos = weaponCollider.ClosestPoint(otherPosition);
 

@@ -103,7 +103,7 @@ public class DropActorWeapon : ActorWeapon
         showGizmo = true;
 
         // ----- 이펙트 -----
-        InstantHitEffectAtOwner(attackPos);
+        InstantHitEffectAtPos(attackPos);
     }
 
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -43,6 +44,7 @@ public class Monster : Actor
         System.Action dieAction = () => { SwitchStatus(DieStatus); };
         damageReaction.whenHit.AddMulti(hitAction);
         damageReaction.whenDie.AddOnce(dieAction);
+
 
         // --- 낙사 추가 ---
         if (GetComponent<FallingAction>() == null)
