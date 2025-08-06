@@ -61,6 +61,7 @@ abstract public class AttackAction : ActorAction
 
     // 공격 선딜레이
     [SerializeField] protected float weaponBeforeDelay = 0.2f;
+    [SerializeField] protected GameObject beforeDelayEffect = null;
 
     // 피격당했을 경우, 이 공격을 취소할 것인가?
     [SerializeField] protected bool isCancelWhenHit = false;
@@ -105,7 +106,7 @@ abstract public class AttackAction : ActorAction
         // (참이라면) 실제 공격 발생
         if (CheckCanAttack())
         {
-            // 공격 선딜레이 중 동작
+            // 공격 선딜레이 중 동작 (이펙트)
             BeforeAttack();
 
             // 선딜레이 후 발생
@@ -137,8 +138,16 @@ abstract public class AttackAction : ActorAction
     protected virtual void CancelAttack()
     { Timer.Instance.StopTimer(this, "_DoAttack"); }
 
-    // 공격 전 동작
-    protected virtual void BeforeAttack() { }
+
+    // 공격 전 동작 (공격 전 이펙트)
+    protected virtual void BeforeAttack()
+    {
+        if (beforeDelayEffect != null)
+        {
+            GameObject effect = Instantiate(beforeDelayEffect, transform.position, transform.rotation);
+            Destroy(effect, weaponBeforeDelay);
+        }
+    }
 
     // 실제 Attack 구현
     protected abstract void DoAttack();
