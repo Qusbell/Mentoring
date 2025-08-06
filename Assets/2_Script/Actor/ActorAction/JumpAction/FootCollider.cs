@@ -8,15 +8,16 @@ public class FootCollider : MonoBehaviour
     private void Awake()
     {
         Collider collider = GetComponent<Collider>();
-
         if (collider == null)
         { Debug.LogError($"{gameObject.name}에 착지 판정용 콜라이더 부재"); }
-
-        if (collider != null)
+        else
         { collider.isTrigger = true; }
 
         // 마지막으로 착지 중이었던 위치
         lastestRandedPos = this.transform.position;
+
+        // 보조 판정용 레이어
+        groundLayer = 1 << LayerMask.NameToLayer("Cube");
     }
 
 
@@ -25,7 +26,7 @@ public class FootCollider : MonoBehaviour
     public bool isRand
     {
         get
-        { return 0 < rands.Count; }
+        { return 0 < rands.Count || isRandByOverlap; }
     }
 
 
@@ -39,14 +40,12 @@ public class FootCollider : MonoBehaviour
         // 큐브인 경우
         if (other.CompareTag("Cube"))
         {
-            // Debug.Log("착지!");
+            //Debug.Log("착지");
             rands.Add(other);
 
             // 이벤트 일괄 발생
             foreach (System.Action groundEvent in whenGroundEvent.ToArray())
             { groundEvent?.Invoke(); }
-
-            // whenGround.Invoke(); // <- 이후 추가
         }
     }
 
@@ -62,19 +61,48 @@ public class FootCollider : MonoBehaviour
             // 현재 위치 저장
             Vector3 tempPos = this.transform.position;
 
-            // 일시적인 유예시간 후
-            Timer.Instance.StartTimer(this, 0.05f,
-                () =>
-                {
-                    // 착지 중인 콜라이더 목록에서 삭제
-                    rands.Remove(other);
-                    
-                    // 공중에 뜸 상태라면
-                    // 마지막 위치를 저장
-                    if (!isRand)
-                    { lastestRandedPos = tempPos; }
-                });
+            // 착지 중인 콜라이더 목록에서 삭제
+            rands.Remove(other);
+
+            // 공중에 뜸 상태라면
+            // 마지막 위치를 저장
+            if (!isRand)
+            { lastestRandedPos = tempPos; }
         }
     }
 
+
+
+    // --- 판정 보조 ---
+
+    [SerializeField] private float groundCheckRadius = 0.1f;
+    [SerializeField] private float groundCheckOffset = 0.1f;
+    private Collider[] overlaps = new Collider[1];
+    private LayerMask groundLayer;
+
+    private bool isRandByOverlap
+    {
+        get
+        {
+            Vector3 checkPos = transform.position + Vector3.down * groundCheckOffset;
+            int hitCount = Physics.OverlapSphereNonAlloc(checkPos, groundCheckRadius, overlaps, groundLayer);
+            return hitCount > 0;
+        }
+    }
+
+
+    // 기즈모로 판정 위치 표시
+    //  private void OnDrawGizmos()
+    //  {
+    //      // 판정 체킹 위치와 반경 계산
+    //      Vector3 checkPos = transform.position + Vector3.down * groundCheckOffset;
+    //  
+    //      // 색상 설정 (반투명 노랑 등)
+    //      Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
+    //      Gizmos.DrawSphere(checkPos, groundCheckRadius);
+    //  
+    //      // 선명한 테두리 원 추가로 시각화
+    //      Gizmos.color = Color.yellow;
+    //      Gizmos.DrawWireSphere(checkPos, groundCheckRadius);
+    //  }
 }

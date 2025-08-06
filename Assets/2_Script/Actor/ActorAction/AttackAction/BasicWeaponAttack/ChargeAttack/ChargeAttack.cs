@@ -26,23 +26,21 @@ public class ChargeAttack : BasicWeaponAttack
     }
 
 
-    private System.Action whenNoLongerChargeAttack = null;
-
-
     protected override void BeforeAttack()
     {
         // --- 경고 발판 생성 ---
-        warningPlane = WarningPlaneSetter.SetWarning(this, 1.5f, warningDistance, weaponBeforeDelay, transform.position, transform.forward);
+        warningPlane = WarningPlaneSetter.SetWarning(this, 1.5f,
+            warningDistance,
+            weaponBeforeDelay,
+            transform.position,
+            transform.forward);
     }
-
-
 
     protected override void CancelAttack()
     {
         base.CancelAttack();
         WarningPlaneSetter.DelWarning(this, ref warningPlane);
     }
-
 
     protected override void DoAttack()
     {
@@ -58,17 +56,22 @@ public class ChargeAttack : BasicWeaponAttack
         if (thisActor.damageReaction.isDie) { return; }
 
         // --- 물리 조정 && 돌진 활성화 ---
+        StartCharge();
+        Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, EndCharge);
+    }
+
+
+    private void StartCharge()
+    {
         this.enabled = true;
         thisActor.rigid.isKinematic = true;
+    }
 
-        whenNoLongerChargeAttack = () =>
-        {
-            thisActor.rigid.isKinematic = false;
-            this.enabled = false;
-            thisActor.rigid.velocity = Vector3.zero;
-        };
-
-        Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, whenNoLongerChargeAttack);
+    private void EndCharge()
+    {
+        this.enabled = false;
+        thisActor.rigid.isKinematic = false;
+        thisActor.rigid.velocity = Vector3.zero;
     }
 
 
@@ -91,11 +94,19 @@ public class ChargeAttack : BasicWeaponAttack
                 // 자기 자신이 아닐 때(중복체크 방지)
                 if (hit.gameObject != this.gameObject)
                 {
-                    whenNoLongerChargeAttack();
+                    EndCharge();
                     return; // 더 이상 실행 X
                 }
             }
         }
+
+        if (!thisActor.isRand)
+        {
+            // Debug.Log("공중");
+            thisActor.rigid.isKinematic = false;
+            return; // 더 이상 실행 X
+        }
+
 
         // --- 이동 ---
         thisActor.rigid.MovePosition(nextPos);

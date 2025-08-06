@@ -11,15 +11,9 @@ using static UnityEngine.GraphicsBuffer;
 public class ChaseAction : MoveAction
 {
     // ----- ai 부분 -----
-
-    // 네비게이션 AI
-    protected NavMeshAgent nav;
-
-    // 추적할 대상
-    public Transform target;
-
-    // 길
-    private NavMeshPath navPath;
+    protected NavMeshAgent nav;  // 네비게이션 AI
+    public Transform target;     // 추적 대상
+    private NavMeshPath navPath; // 길
 
     // 생성
     protected override void Awake()
@@ -27,8 +21,6 @@ public class ChaseAction : MoveAction
         base.Awake();
         // 네비게이션 초기화
         nav = GetComponent<NavMeshAgent>();
-        // 이동속도 설정
-        nav.speed = moveSpeed;
 
         // 위치, 회전 자동 업데이트 비활성
         nav.updatePosition = false;
@@ -40,7 +32,7 @@ public class ChaseAction : MoveAction
     protected void Start()
     {
         SetTarget(TargetManager.Instance.target);
-        Timer.Instance.StartEndlessTimer(this, "시작", 0.2f, UpdateDestination); // 목적지 업데이트
+        // Timer.Instance.StartEndlessTimer(this, "시작", 0.2f, UpdateDestination); // 목적지 업데이트
     }
 
 
@@ -57,25 +49,34 @@ public class ChaseAction : MoveAction
     { return (this.transform.position - target.position).sqrMagnitude <= distance * distance; }
 
 
-    // 목적지 갱신 (기본 버전)
-    // void UpdateDestination()
-    // {
-    //     if (target == null || nav == null || !nav.isOnNavMesh) { return; }
-    //     nav.SetDestination(target.position);
-    // }
+    public override bool isMove
+    {
+        get => base.isMove;
+        set
+        {
+            if (value)
+            { Timer.Instance.StartEndlessTimer(this, "시작", 0.2f, UpdateDestination); }
+            else
+            { Timer.Instance.StopEndlessTimer(this, "시작"); }
 
-    // 목적지 갱신
-    //  private void UpdateDestination()
-    //  {
-    //      if (target == null || nav == null || !nav.isOnNavMesh) { return; }
-    //  
-    //      NavMeshPath navPath = new NavMeshPath();
-    //  
-    //      if (NavMesh.CalculatePath(nav.transform.position, target.position, NavMesh.AllAreas, navPath)
-    //          && navPath.status == NavMeshPathStatus.PathComplete)
-    //      { nav.SetPath(navPath); }
-    //      
-    //  }
+            base.isMove = value;
+        }
+    }
+
+
+    public override void Move()
+    {
+        // UpdateDestination();       // 경로 갱신
+        UpdateNextMoveDirection(); // 다음 방향 설정
+        UpdateMyPositionOnNav();   // 자신 위치 갱신
+
+        // 타겟이 존재하고,
+        // 길이 존재하는 경우에만 move
+        if (target != null && nav.hasPath && nav.pathStatus == NavMeshPathStatus.PathComplete)
+        { base.Move(); }
+    }
+
+
 
     // 즉각 반응 AI
     private void UpdateDestination()
@@ -97,15 +98,6 @@ public class ChaseAction : MoveAction
     }
 
 
-    public override void Move()
-    {
-        // 타겟이 존재하고,
-        // 길이 존재하는 경우에만 move
-        if (target != null && nav.hasPath && nav.pathStatus == NavMeshPathStatus.PathComplete)
-        { base.Move(); }
-    }
-
-
     // 다음 이동 방향
     void UpdateNextMoveDirection()
     { moveVec = nav.desiredVelocity.normalized; }
@@ -118,12 +110,12 @@ public class ChaseAction : MoveAction
         float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
 
         // 자신이 navMesh 위에 없는 경우
-        // <- 수정 예정
-        if (!nav.isOnNavMesh || 0.1f < gapDistance)
+        // 또는 nav 위에 있더라도, nav상의 자신 Pos과 괴리 발생 시
+        if (!nav.isOnNavMesh || 0.2f < gapDistance)
         {
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(this.transform.position, out hit, 1f, NavMesh.AllAreas))
-            { nav.Warp(hit.position); } // 강제로 navMesh 위로 되돌아오기
+            if (NavMesh.SamplePosition(this.transform.position, out hit, 2f, NavMesh.AllAreas))
+            { nav.Warp(hit.position); }
         }
 
         if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
@@ -191,13 +183,5 @@ public class ChaseAction : MoveAction
         }
 
         return false;
-    }
-
-
-
-    protected void Update()
-    {
-        UpdateNextMoveDirection(); // 다음 방향 설정
-        UpdateMyPositionOnNav();   // 자신 위치 갱신
     }
 }

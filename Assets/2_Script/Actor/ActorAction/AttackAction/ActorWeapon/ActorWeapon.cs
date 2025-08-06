@@ -71,7 +71,6 @@ abstract public class ActorWeapon : MonoBehaviour
     // 공격 대상(key) / 히트 횟수(value)
     protected Dictionary<GameObject, int> hitTargets = null;
 
-
     // attackAction으로부터 가져올 정보
     protected string targetTag = "";
     protected int attackDamage = 0;

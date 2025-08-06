@@ -56,10 +56,12 @@ public class Monster : Actor
 
     protected void Start()
     {
+        // ---
         // 시작 시 1회, 타겟 방향 바라봄 (TurnToTargetWhenStart)
         Vector3 targetPos = target.position;
         targetPos.y = this.transform.position.y; // y값을 동일하게 고정
-        this.transform.LookAt(targetPos); // 평면상에서만 타겟을 바라봄
+        this.transform.LookAt(targetPos);        // 평면상에서만 타겟을 바라봄
+        // ---
     }
 
 
@@ -70,7 +72,6 @@ public class Monster : Actor
     [SerializeField] private string currentStateName;
     private void UpdateStateName(Action state)
     { currentStateName = state.Method.Name; }
-
 
     private void Update()
     { actionStatus(); }
@@ -160,16 +161,16 @@ public class Monster : Actor
         }
         else
         {
-            moveAction.isMove = true;
+            // 1회만 true로 변경 (임시)
+            // 이유: chaseAction.isMove 변경 시에 타이머 발생
+            if (!moveAction.isMove)
+            { moveAction.isMove = true; }
             moveAction.Move();
             moveAction.Turn();
         }
 
         animator.PlayAnimation("IsMove", moveAction.isMove);
     }
-
-
-    // <- 공격 선딜레이 상태?
 
 
     // 공격 상태
