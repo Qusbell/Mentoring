@@ -414,6 +414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daa244743dadf542bb9e1bec2abaad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckRadius: 0.1
+  groundCheckOffset: 0.1
 --- !u!1 &768519511188883700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1764,6 +1766,8 @@ MonoBehaviour:
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
   weaponBeforeDelay: 0.1
+  beforeDelayEffect: {fileID: 0}
+  beforeDelayEffectPos: {fileID: 0}
   isCancelWhenHit: 0
   myWeapon: {fileID: 1507084875693659171}
   weaponActiveTime: 0.3
@@ -1791,6 +1795,8 @@ MonoBehaviour:
   hitEffect: {fileID: 6663749899621404468, guid: 205d69ff9fedac74ca87f0f6a2cb42c3, type: 3}
   effectDestoryTime: 1
   weaponBeforeDelay: 0.01
+  beforeDelayEffect: {fileID: 0}
+  beforeDelayEffectPos: {fileID: 0}
   isCancelWhenHit: 0
   myWeapon: {fileID: 2640455322755094372}
   weaponActiveTime: 0.35
@@ -1818,6 +1824,8 @@ MonoBehaviour:
   hitEffect: {fileID: 7274776019300387116, guid: 894f5a15982a8fc4c97677510b5c60fb, type: 3}
   effectDestoryTime: 1
   weaponBeforeDelay: 0.2
+  beforeDelayEffect: {fileID: 0}
+  beforeDelayEffectPos: {fileID: 0}
   isCancelWhenHit: 0
   myWeapon: {fileID: 1507084875693659171}
   splashDamage: 1
