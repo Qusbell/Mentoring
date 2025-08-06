@@ -543,6 +543,8 @@ MonoBehaviour:
   hitEffect: {fileID: 7274776019300387116, guid: 88639d536973a7546b9fa19a865138bc, type: 3}
   effectDestoryTime: 1
   weaponBeforeDelay: 0.35
+  beforeDelayEffect: {fileID: 8205706795460263314, guid: 326e86d5729c54e479798cacab220bb2, type: 3}
+  beforeDelayEffectPos: {fileID: 2281714855753279812}
   isCancelWhenHit: 1
   projectile: {fileID: 2382953001386444822, guid: 299fee62663030141a0c316eb8b4dfa9, type: 3}
   firePos: {fileID: 2281714855753279812}
@@ -558,6 +560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ab53fe94ce454e81e60981b543d28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentStateName: 
 --- !u!114 &1343354582304582897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,6 +737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daa244743dadf542bb9e1bec2abaad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckRadius: 0.1
+  groundCheckOffset: 0.1
 --- !u!1 &3830095140606240282
 GameObject:
   m_ObjectHideFlags: 0

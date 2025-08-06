@@ -62,6 +62,7 @@ abstract public class AttackAction : ActorAction
     // 공격 선딜레이
     [SerializeField] protected float weaponBeforeDelay = 0.2f;
     [SerializeField] protected GameObject beforeDelayEffect = null;
+    [SerializeField] protected Transform beforeDelayEffectPos = null;
 
     // 피격당했을 경우, 이 공격을 취소할 것인가?
     [SerializeField] protected bool isCancelWhenHit = false;
@@ -142,9 +143,9 @@ abstract public class AttackAction : ActorAction
     // 공격 전 동작 (공격 전 이펙트)
     protected virtual void BeforeAttack()
     {
-        if (beforeDelayEffect != null)
+        if (beforeDelayEffect != null && beforeDelayEffectPos != null)
         {
-            GameObject effect = Instantiate(beforeDelayEffect, transform.position, transform.rotation);
+            GameObject effect = Instantiate(beforeDelayEffect, beforeDelayEffectPos.position, beforeDelayEffectPos.rotation);
             Destroy(effect, weaponBeforeDelay);
         }
     }
