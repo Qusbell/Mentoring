@@ -120,15 +120,11 @@ public class BoarKnockback : MonoBehaviour
 
     #region ===== 내부 메서드 - 넉백 실행 =====
 
-    /// <summary>
-    /// 개별 대상에게 넉백 효과 적용
-    /// </summary>
     private void ExecuteKnockback(GameObject target, Vector3 direction)
     {
-        // 넉백 방향 계산 (약간의 상승 효과 포함)
+        // 넉백 먼저 적용
         Vector3 knockbackDirection = CalculateKnockbackDirection(direction);
 
-        // Rigidbody가 있으면 물리 기반 넉백
         Rigidbody targetRigidbody = target.GetComponent<Rigidbody>();
         if (targetRigidbody != null)
         {
@@ -136,11 +132,18 @@ public class BoarKnockback : MonoBehaviour
         }
         else
         {
-            // Rigidbody가 없으면 Transform 기반 넉백
             StartCoroutine(ApplyTransformKnockback(target, knockbackDirection));
         }
 
-        // 게임 시스템에 넉백 이벤트 알림
+        // 넉백 후 약간 지연해서 데미지 적용
+        DamageReaction damageReaction = target.GetComponent<DamageReaction>();
+        if (damageReaction != null)
+        {
+            Timer.Instance.StartTimer(this, 0.01f, () => {
+                damageReaction.TakeDamage(1, null, 0f, 0f); // 넉백 0으로
+            });
+        }
+
         NotifyGameSystems(target);
     }
 
