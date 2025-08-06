@@ -46,7 +46,6 @@ public class ProjectileWeapon : ActorWeapon
         EffectAndDestory();
     }
 
-
     protected void EffectAndDestory()
     {
         InstantHitEffect();

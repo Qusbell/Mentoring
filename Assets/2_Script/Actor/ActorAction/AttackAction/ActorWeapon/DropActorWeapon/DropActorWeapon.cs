@@ -33,7 +33,7 @@ public class DropActorWeapon : ActorWeapon
         // 공중인 경우: 착지 시 사용
         if (owner.foot != null && !owner.isRand)
         {
-            // <- 이후 once로 교체
+            // <- 이후 MyEvent.AddOnce로 교체
             owner.foot.whenGroundEvent.Add(DropAttack);   // 먼저 드랍어택
             owner.foot.whenGroundEvent.Add(NotUseWeapon); // 그 후 무기 사용 종료
         }
@@ -56,7 +56,11 @@ public class DropActorWeapon : ActorWeapon
     }
 
 
-    public void SetWeapon(string p_targetTag, float p_attackRange, int p_originalLayer, Actor p_owner, int p_splashDamage = 1) // <- splashDamage: 야매
+    public void SetWeapon(string p_targetTag,
+        float p_attackRange,
+        int p_originalLayer,
+        Actor p_owner,
+        int p_splashDamage = 1) // <- splashDamage: 야매
     {
         SetWeapon(p_targetTag, p_owner);
         attackRange = p_attackRange;
@@ -94,7 +98,7 @@ public class DropActorWeapon : ActorWeapon
         showGizmo = true;
 
         // ----- 이펙트 -----
-        InstantHitEffect();
+        InstantHitEffectAtOwner();
     }
 
 

@@ -19,10 +19,25 @@ abstract public class ActorWeapon : MonoBehaviour
         // Quaternion.identity : 회전값 (0, 0, 0)
         if (hitEffect != null)
         {
-            GameObject effect = Instantiate(hitEffect, transform.position, transform.rotation);
+            GameObject effect =
+                Instantiate(hitEffect,
+                transform.position,
+                transform.rotation);
             Destroy(effect, effectDestoryTime);
         }
     }
+
+    protected void InstantHitEffectAtOwner()
+    {
+        if (hitEffect != null)
+        {
+            GameObject effect = 
+                Instantiate(hitEffect,
+                owner.transform.position,
+                owner.transform.rotation);
+            Destroy(effect, effectDestoryTime);
+        }
+    }    
 
     // 이펙트 발생 (상대와 가장 가까운 위치)
     protected void InstantHitEffect(Vector3 otherPosition)
