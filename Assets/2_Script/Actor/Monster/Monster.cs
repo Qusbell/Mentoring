@@ -120,11 +120,24 @@ public class Monster : Actor
     protected bool CheckInAttackRange()
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
+    bool isInAttackRange = false;
+    bool isFacingTarget = false;
+    bool isClear = false;
+
     // 공격 준비 완료
     protected bool isReadyToAttack
     {
         get
-        { return attackAction.isCanAttack && CheckInAttackRange() && chaseAction.IsFacingTarget(attackAction.attackRange); }
+        {
+            isInAttackRange = CheckInAttackRange();
+            isFacingTarget = chaseAction.IsFacingTarget(attackAction.attackRange);
+            isClear = chaseAction.isClearToTarget(attackAction.attackRange);
+
+            return attackAction.isCanAttack &&
+                isInAttackRange &&
+                isFacingTarget &&
+                isClear;
+        }
     }
 
 
@@ -165,6 +178,7 @@ public class Monster : Actor
             // 이유: chaseAction.isMove 변경 시에 타이머 발생
             if (!moveAction.isMove)
             { moveAction.isMove = true; }
+
             moveAction.Move();
             moveAction.Turn();
         }
