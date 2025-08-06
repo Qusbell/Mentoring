@@ -145,6 +145,11 @@ public class DamageReaction : ActorAction
 
     public void Heal(int amount)
     {
-        healthPoint += amount; // 내부에서는 private set 사용 가능
+        healthPoint += amount; 
+    }
+
+    public int maxHealthPoint
+    {
+        get { return maxHp; }
     }
 }

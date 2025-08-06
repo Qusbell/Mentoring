@@ -65,4 +65,26 @@ public class MyEvent
 
     public void ClearMultiCallbacks()
     { multiCallbacks.Clear(); }
+
+
+
+    /// <summary>
+    /// UI 호환을 위한 AddListener (AddMulti와 동일)
+    /// </summary>
+    public void AddListener(System.Action action)
+    {
+        AddMulti(action, true); // 중복 방지
+    }
+
+    /// <summary>
+    /// UI 호환을 위한 RemoveListener
+    /// </summary>
+    public void RemoveListener(System.Action action)
+    {
+        if (action == null) return;
+
+        multiCallbacks.Remove(action);
+        onceCallbacks.Remove(action);
+    }
+
 }

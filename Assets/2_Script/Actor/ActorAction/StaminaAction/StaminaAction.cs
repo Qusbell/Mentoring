@@ -6,9 +6,12 @@ public class StaminaAction : ActorAction
 {
     [SerializeField] private int maxStamina = 3;
     [SerializeField] private int nowStamina = 0;
-
     [SerializeField] private float staminaRecupRate = 1f;
     [SerializeField] private int recupStamina = 1;
+
+    //이벤트용 UI
+    public MyEvent whenStaminaChanged = new MyEvent();
+
 
     public int stamina
     {
@@ -39,6 +42,8 @@ public class StaminaAction : ActorAction
 
             // --- 스태미나 적용 ---
             nowStamina = value;
+
+            whenStaminaChanged.Invoke();
         }
     }
 
@@ -69,5 +74,7 @@ public class StaminaAction : ActorAction
     {
         stamina += amount; // 내부에서는 protected set 사용 가능
     }
+
+    public int maxStaminaValue { get { return maxStamina; } }
 
 }
