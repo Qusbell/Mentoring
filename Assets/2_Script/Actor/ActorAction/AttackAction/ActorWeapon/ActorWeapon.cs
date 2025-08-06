@@ -32,9 +32,7 @@ abstract public class ActorWeapon : MonoBehaviour
         if (hitEffect != null)
         {
             GameObject effect = 
-                Instantiate(hitEffect,
-                owner.transform.position + pos,
-                owner.transform.rotation);
+                Instantiate(hitEffect, pos, owner.transform.rotation);
             Destroy(effect, effectDestoryTime);
         }
     }    

@@ -80,9 +80,14 @@ public class DropActorWeapon : ActorWeapon
         // ----- 레이어 원복 (Drop 충돌 직후 처리) -----
         owner.gameObject.layer = originalLayer;
 
+        // 공격 위치 구하기
+        // 공격자의 약간 앞
+        Vector3 attackPos = owner.transform.position + owner.transform.forward * (attackRange / 2);
+
+
         // ----- 콜라이더 탐색 -----
         // <- 부모 쪽 메서드로 뺄 생각?
-        Collider[] colliders = Physics.OverlapSphere(this.transform.position, attackRange);
+        Collider[] colliders = Physics.OverlapSphere(attackPos, attackRange);
 
         foreach (Collider collider in colliders)
         {
@@ -98,7 +103,7 @@ public class DropActorWeapon : ActorWeapon
         showGizmo = true;
 
         // ----- 이펙트 -----
-        InstantHitEffectAtOwner(owner.transform.forward * 2f);
+        InstantHitEffectAtOwner(attackPos);
     }
 
 
@@ -109,7 +114,7 @@ public class DropActorWeapon : ActorWeapon
         if (showGizmo)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
+            Gizmos.DrawWireSphere(owner.transform.position + owner.transform.forward * (attackRange / 2), attackRange);
             Timer.Instance.StartTimer(this, "_기즈모", 0.2f, () => showGizmo = false);
         }
     }
