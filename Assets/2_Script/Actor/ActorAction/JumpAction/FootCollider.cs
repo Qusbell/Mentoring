@@ -89,20 +89,4 @@ public class FootCollider : MonoBehaviour
             return hitCount > 0;
         }
     }
-
-
-    // 기즈모로 판정 위치 표시
-    //  private void OnDrawGizmos()
-    //  {
-    //      // 판정 체킹 위치와 반경 계산
-    //      Vector3 checkPos = transform.position + Vector3.down * groundCheckOffset;
-    //  
-    //      // 색상 설정 (반투명 노랑 등)
-    //      Gizmos.color = new Color(1f, 1f, 0f, 0.5f);
-    //      Gizmos.DrawSphere(checkPos, groundCheckRadius);
-    //  
-    //      // 선명한 테두리 원 추가로 시각화
-    //      Gizmos.color = Color.yellow;
-    //      Gizmos.DrawWireSphere(checkPos, groundCheckRadius);
-    //  }
 }

@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class ChargeAttack : BasicWeaponAttack
 {
-    [SerializeField] protected float chargeSpeed = 20f;
+    [SerializeField] protected float chargeSpeed = 20f;    // 속도
+    [SerializeField] protected float chargeDistance = 20f; // 총 거리
 
     // 경고 발판
     private GameObject warningPlane = null;
-    private float warningDistance = 16f;
 
-    private Vector3 chargeVec = Vector3.zero;
+    private Vector3 chargeVec = Vector3.zero;  // 공격 방향
+    private Vector3 originPos = Vector3.zero;  // 최초 위치
 
 
     protected override void Awake()
@@ -20,9 +21,6 @@ public class ChargeAttack : BasicWeaponAttack
         checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
         thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
-
-        // 경고 발판 길이
-        warningDistance = chargeSpeed;
     }
 
 
@@ -30,7 +28,7 @@ public class ChargeAttack : BasicWeaponAttack
     {
         // --- 경고 발판 생성 ---
         warningPlane = WarningPlaneSetter.SetWarning(this, 1.5f,
-            warningDistance,
+            chargeDistance,
             weaponBeforeDelay,
             transform.position,
             transform.forward);
@@ -49,6 +47,9 @@ public class ChargeAttack : BasicWeaponAttack
         // --- 돌진 방향 지정 ---
         chargeVec = transform.forward;
 
+        // --- 원래 위치 확인 ---
+        originPos = transform.position;
+
         // --- 발판 반환 ---
         WarningPlaneSetter.DelWarning(this, ref warningPlane);
 
@@ -62,13 +63,11 @@ public class ChargeAttack : BasicWeaponAttack
 
 
     private void StartCharge()
-    {
-        this.enabled = true;
-        thisActor.rigid.isKinematic = true;
-    }
+    { this.enabled = true; }
 
     private void EndCharge()
     {
+        Timer.Instance.StopTimer(this, "_EndAttack");
         this.enabled = false;
         thisActor.rigid.isKinematic = false;
         thisActor.rigid.velocity = Vector3.zero;
@@ -80,37 +79,59 @@ public class ChargeAttack : BasicWeaponAttack
 
     private void FixedUpdate()
     {
-        // --- 다음 위치 계산
-        Vector3 nextPos = thisActor.rigid.position + chargeVec * chargeSpeed * Time.fixedDeltaTime;
-        
+        // --- 착지 중: 물리 무시 ---
+        if (thisActor.isRand) { thisActor.rigid.isKinematic = true; }
+        else { thisActor.rigid.isKinematic = false; }
+
+        // --- 현재 위치와 최초 위치간 거리 계산 ---
+        float traveledDistance = Vector3.Distance(thisActor.rigid.position, originPos);
+        if (traveledDistance >= chargeDistance)
+        {
+            EndCharge();
+            return;
+        }
+
+
+        // ---┐
+        // <- AI 제작 구간 (속도 조절)
+        // --- 기본 속도: 마지막 20% 전까지는 고정, 이후 감속 ---
+        float progress = traveledDistance / chargeDistance;
+        float curSpeed = chargeSpeed;
+
+        if (progress >= 0.8f) // 마지막 20% 구간
+        {
+            // 0.8~1.0 구간에서 점진적 감소 (곡선은 적절히 조절)
+            float slowProgress = (progress - 0.8f) / 0.2f; // 0~1로 정규화
+                                                           // 부드럽게 0.3배까지 감속 (0.3은 남길 최소 속도)
+            float minSpeedRate = 0.3f;
+            float speedRate = Mathf.Lerp(1f, minSpeedRate, slowProgress);
+            curSpeed = chargeSpeed * speedRate;
+        }
+        // ---┘
+
+
+        // --- 다음 위치 계산 ---
+        Vector3 nextPos = thisActor.rigid.position + chargeVec * curSpeed * Time.fixedDeltaTime;
+
         // --- 다음 위치의 장애물 확인 ---
         Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
 
         foreach (var hit in hits)
         {
-            // "Cube" 태그이거나, 검사 레이어에 속한다면
             if (((checkLayer.value & (1 << hit.gameObject.layer)) != 0) || hit.CompareTag("Cube"))
             {
-                // 자기 자신이 아닐 때(중복체크 방지)
                 if (hit.gameObject != this.gameObject)
                 {
                     EndCharge();
-                    return; // 더 이상 실행 X
+                    return;
                 }
             }
         }
 
-        if (!thisActor.isRand)
-        {
-            // Debug.Log("공중");
-            thisActor.rigid.isKinematic = false;
-            return; // 더 이상 실행 X
-        }
-
-
         // --- 이동 ---
         thisActor.rigid.MovePosition(nextPos);
     }
+
 
 
     // 돌진 중 튕겨내기
