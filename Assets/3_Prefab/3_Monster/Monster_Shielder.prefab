@@ -1026,17 +1026,19 @@ MonoBehaviour:
   <attackRange>k__BackingField: 10
   targetTag: 
   maxHitCount: 1
-  attackRate: 1
+  attackRate: 0.1
   knockBackPower: 20
   knockBackHeight: 22
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 757547568125524834, guid: 7dddcdbfd5836da43a4512fbec18ea46, type: 3}
   effectDestoryTime: 1
-  weaponBeforeDelay: 1
+  weaponBeforeDelay: 0.7
+  beforeDelayEffect: {fileID: 0}
+  beforeDelayEffectPos: {fileID: 0}
   isCancelWhenHit: 1
   myWeapon: {fileID: 9215819455182724303}
   weaponActiveTime: 1
-  chargeSpeed: 18
+  chargeSpeed: 27
   chargeDistance: 12
 --- !u!114 &5097308888875272474
 MonoBehaviour:
@@ -1066,6 +1068,9 @@ MonoBehaviour:
   maxHp: 2
   nowHp: 2
   bouncePowerWhenDie: 10
+  redTimeWhenHit: 0.2
+  redTimeWhenDie: 0.3
+  redColor: 0.6
 --- !u!1 &2910221618307621725
 GameObject:
   m_ObjectHideFlags: 0
