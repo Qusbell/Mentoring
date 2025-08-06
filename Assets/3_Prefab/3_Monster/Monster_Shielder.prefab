@@ -1037,6 +1037,7 @@ MonoBehaviour:
   myWeapon: {fileID: 9215819455182724303}
   weaponActiveTime: 1
   chargeSpeed: 18
+  chargeDistance: 12
 --- !u!114 &5097308888875272474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,6 +1732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daa244743dadf542bb9e1bec2abaad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckRadius: 0.1
+  groundCheckOffset: 0.1
 --- !u!1 &5835495675114467531
 GameObject:
   m_ObjectHideFlags: 0
