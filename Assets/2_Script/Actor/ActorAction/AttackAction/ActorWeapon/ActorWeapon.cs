@@ -27,13 +27,13 @@ abstract public class ActorWeapon : MonoBehaviour
         }
     }
 
-    protected void InstantHitEffectAtOwner()
+    protected void InstantHitEffectAtOwner(Vector3 pos)
     {
         if (hitEffect != null)
         {
             GameObject effect = 
                 Instantiate(hitEffect,
-                owner.transform.position,
+                owner.transform.position + pos,
                 owner.transform.rotation);
             Destroy(effect, effectDestoryTime);
         }

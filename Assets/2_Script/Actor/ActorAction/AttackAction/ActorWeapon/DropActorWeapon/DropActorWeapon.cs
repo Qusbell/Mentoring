@@ -98,7 +98,7 @@ public class DropActorWeapon : ActorWeapon
         showGizmo = true;
 
         // ----- 이펙트 -----
-        InstantHitEffectAtOwner();
+        InstantHitEffectAtOwner(owner.transform.forward * 2f);
     }
 
 
