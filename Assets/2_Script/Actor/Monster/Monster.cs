@@ -70,14 +70,8 @@ public class Monster : Actor
     // 현재 수행 중인 행동
     protected System.Action actionStatus;
 
-    // (디버그용) 현재 상태 확인
-    [SerializeField] private string currentStateName;
-    private void UpdateStateName(Action state)
-    { currentStateName = state.Method.Name; }
-
     private void Update()
     { actionStatus(); }
-
 
 
     // 트리거 애니메이션의 단일 활성화 보장
@@ -92,9 +86,13 @@ public class Monster : Actor
     }
 
 
-
     // 재생 중 애니메이션 확인
     protected bool animationPlayCheck = false;
+
+    // (디버그용) 현재 상태 확인
+    [SerializeField] private string currentStateName;
+    private void UpdateStateName(Action state)
+    { currentStateName = state.Method.Name; }
 
     // 상태 변경 / 애니메이션 체크 초기화
     protected void SwitchStatus(Action nextStatus)
@@ -123,8 +121,23 @@ public class Monster : Actor
     { return (target.position - this.transform.position).sqrMagnitude <= attackAction.attackRange * attackAction.attackRange; }
 
     bool isInAttackRange = false;
-    bool isFacingTarget = false;
+    bool isFacing = false;
     bool isClear = false;
+
+
+    // 
+    private float clearCheckTimer = 0f;
+    private float clearCheckInterval = 0.2f;
+
+    protected void SetClearToTarget()
+    {
+        clearCheckTimer -= Time.deltaTime;
+        if (clearCheckTimer <= 0f)
+        {
+            isClear = chaseAction.isClearToTarget(attackAction.attackRange);
+            clearCheckTimer = clearCheckInterval;
+        }
+    }
 
     // 공격 준비 완료
     protected bool isReadyToAttack
@@ -132,16 +145,19 @@ public class Monster : Actor
         get
         {
             isInAttackRange = CheckInAttackRange();
-            isFacingTarget = chaseAction.IsFacingTarget(attackAction.attackRange);
-            isClear = chaseAction.isClearToTarget(attackAction.attackRange);
+            isFacing = chaseAction.IsFacingTarget(attackAction.attackRange);
+
+            if (isInAttackRange)
+            { SetClearToTarget(); }
+            else
+            { isClear = false; }
 
             return attackAction.isCanAttack &&
                 isInAttackRange &&
-                isFacingTarget &&
+                isFacing &&
                 isClear;
         }
     }
-
 
 
     // ===== 상태 =====
@@ -159,30 +175,47 @@ public class Monster : Actor
     {
         if (isReadyToAttack)
         { SwitchStatus(AttackStatus); }
-        else if (!attackAction.isCanAttack)
-        { moveAction.Turn(); }
+        //  else if (!attackAction.isCanAttack)
+        //  { moveAction.Turn(); }
         else
         { SwitchStatus(MoveStatus); }
     }
 
+
+    protected void IsMoveOn()
+    {
+        // 1회만 true로 변경 (임시)
+        // 이유: chaseAction.isMove = true 시에 타이머 발생
+        if (!moveAction.isMove)
+        { moveAction.isMove = true; }
+    }
+
+    protected void IsMoveOff()
+    {
+        if (moveAction.isMove)
+        { moveAction.isMove = false; }
+    }
 
     // 이동 상태
     protected void MoveStatus()
     {
         if (isReadyToAttack)
         {
-            moveAction.isMove = false;
+            IsMoveOff();
             SwitchStatus(AttackStatus);
         }
         else
         {
-            // 1회만 true로 변경 (임시)
-            // 이유: chaseAction.isMove 변경 시에 타이머 발생
-            if (!moveAction.isMove)
-            { moveAction.isMove = true; }
+            if (!isInAttackRange || !isClear)
+            { IsMoveOn(); }
+            else
+            { IsMoveOff(); }
 
-            moveAction.Move();
-            moveAction.Turn();
+            if (moveAction.isMove)
+            { moveAction.Move(); }
+            
+            if (!isFacing)
+            { moveAction.Turn(); }
         }
 
         animator.PlayAnimation("IsMove", moveAction.isMove);

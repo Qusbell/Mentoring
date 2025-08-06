@@ -132,7 +132,7 @@ public class ChaseAction : MoveAction
         Vector3 direction = moveVec;
 
         // moveVec이 0인 경우의 회전
-        if (moveVec == Vector3.zero)
+        if (moveVec == Vector3.zero || !isMove)
         {
             direction = target.position - transform.position;
             direction.y = 0;
@@ -155,7 +155,7 @@ public class ChaseAction : MoveAction
 
         float dot = Vector3.Dot(forward, toTarget);
 
-        return dot >= tolerance && isClearToTarget(maxDistance);
+        return dot >= tolerance;
     }
 
     // target까지 장애물 여부 판별
