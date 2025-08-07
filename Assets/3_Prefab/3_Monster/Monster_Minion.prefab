@@ -192,6 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3daa244743dadf542bb9e1bec2abaad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckRadius: 0.1
+  groundCheckOffset: 0.1
 --- !u!1 &985526390807945302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,6 +1018,74 @@ Transform:
   - {fileID: 7286237307237006146}
   m_Father: {fileID: 6646637157107168997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3095625597788047889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657161824209630367}
+  - component: {fileID: 576204063247914918}
+  - component: {fileID: 1174551308341740587}
+  m_Layer: 8
+  m_Name: CenterPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657161824209630367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095625597788047889}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6040585352637831353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &576204063247914918
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095625597788047889}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.02
+  m_Height: 0.02
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1174551308341740587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095625597788047889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6169455d4d7ed14099a235db3d7d448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4125178104676878997
 GameObject:
   m_ObjectHideFlags: 0
@@ -1540,6 +1610,7 @@ Transform:
   - {fileID: 1131854823766922152}
   - {fileID: 2500012086473548837}
   - {fileID: 6711867568731457140}
+  - {fileID: 657161824209630367}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8231533210879514318
@@ -1686,6 +1757,8 @@ MonoBehaviour:
   hitEffect: {fileID: 4791832901258035022, guid: 293a63e5413b8a444b9bba485398c5ae, type: 3}
   effectDestoryTime: 1
   weaponBeforeDelay: 0.4
+  beforeDelayEffect: {fileID: 0}
+  beforeDelayEffectPos: {fileID: 0}
   isCancelWhenHit: 1
   myWeapon: {fileID: 8939563338791786793}
   weaponActiveTime: 0.9
@@ -1717,6 +1790,9 @@ MonoBehaviour:
   maxHp: 1
   nowHp: 1
   bouncePowerWhenDie: 10
+  redTimeWhenHit: 0.2
+  redTimeWhenDie: 0.3
+  redColor: 0.6
 --- !u!1 &6628943230737950743
 GameObject:
   m_ObjectHideFlags: 0

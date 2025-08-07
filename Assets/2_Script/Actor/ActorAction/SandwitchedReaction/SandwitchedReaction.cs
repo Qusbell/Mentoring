@@ -2,39 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// <- 얘는 ActorAction이 아님....
+// 왜냐하면 Actor과 별개의 오브젝트에 붙여야 하기 때문임....
 public class SandwitchedReaction : MonoBehaviour
 {
-    // 끼었을 경우의 피해량
-    [SerializeField] protected int sandwichedDamage = 3;
+    protected Actor actor;
 
-    DamageReaction damageReaction;
-    RespawnAction respawnAction;
-    Actor actor;
-
-
-    private void Awake()
+    protected virtual void Awake()
     {
-        damageReaction = GetComponentInParent<DamageReaction>();
-        respawnAction = GetComponentInParent<RespawnAction>();
         actor = GetComponentInParent<Actor>();
 
-        if (damageReaction == null || actor == null || respawnAction == null)
-        { Debug.Log("몬가몬가 잘못됨"); return; }
+        if (actor == null)
+        { Debug.Log("actor이 없는 놈한테 SandwitchedReaction을 붙였음"); return; }
     }
 
-
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Cube")) { return; }
 
-        Debug.Log("충돌 발생");
-
-        // 데미지
-        damageReaction.TakeDamage(sandwichedDamage, actor);
-
-        // 텔포
-        respawnAction.ReturnToSafePos();
+        Destroy(actor.gameObject); // 즉시 삭제
     }
-
-
 }

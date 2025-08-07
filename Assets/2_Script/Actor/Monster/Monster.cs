@@ -124,31 +124,16 @@ public class Monster : Actor
     bool isFacing = false;
     bool isClear = false;
 
-
-    // 
-    private float clearCheckTimer = 0f;
-    private float clearCheckInterval = 0.2f;
-
-    protected void SetClearToTarget()
-    {
-        clearCheckTimer -= Time.deltaTime;
-        if (clearCheckTimer <= 0f)
-        {
-            isClear = chaseAction.isClearToTarget(attackAction.attackRange);
-            clearCheckTimer = clearCheckInterval;
-        }
-    }
-
     // 공격 준비 완료
     protected bool isReadyToAttack
     {
         get
         {
             isInAttackRange = CheckInAttackRange();
-            isFacing = chaseAction.IsFacingTarget(attackAction.attackRange);
+            isFacing = chaseAction.IsFacingTarget();
 
             if (isInAttackRange)
-            { SetClearToTarget(); }
+            { isClear = chaseAction.isClearToTargetAsCash(); }
             else
             { isClear = false; }
 

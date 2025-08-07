@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 // 오브젝트가 Cube 사이에 끼어있는 경우를 판별
+// <- 현재 미사용 (SandwitchedReaction이 대체 중)
 public class BetweenCubeAction : ActorAction
 {
     // 끼었을 경우의 피해량

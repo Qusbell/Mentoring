@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -143,7 +144,10 @@ public class ChaseAction : MoveAction
     }
 
 
-    public bool IsFacingTarget(float maxDistance = 100f, float tolerance = 0.99f)
+    // 타겟을 향해 바라보고 있는지 판별
+    // 매개변수 tolerance : 어느 정도 각도까지 '정면'으로 바라보고 있는지를 판별
+    // 0에 가까울수록 널널함
+    public bool IsFacingTarget(float tolerance = 0.99f)
     {
         Vector3 toTarget = (target.position - transform.position);
         toTarget.y = 0f; // y값 무시
@@ -158,20 +162,25 @@ public class ChaseAction : MoveAction
         return dot >= tolerance;
     }
 
+
     // target까지 장애물 여부 판별
-    public bool isClearToTarget(float rayDistance = 100f)
+    protected bool isClearToTarget(float rayDistance = 100f)
     {
         if (target == null) { return false; }
 
+        // <- Vector3.down * 2f과, Vector3.up * 2f 비교하는 부분이 유연하지 못함
+        // 이후 어떤 상황에서도 사용 가능한 방식으로 바꿀 것을 고려할 것
         Vector3 directionToTarget = (target.position + Vector3.down * 2f - transform.position).normalized;
         Ray ray = new Ray(transform.position + Vector3.up * 2f, directionToTarget);
 
-        // "Cube"와 "Target" 레이어만 포함하는 레이어마스크 생성
+        // "Cube"와 "Player" 레이어만 포함하는 레이어마스크 생성
+        // <- 다소 유연하진 못함
+        // target의 레이어를 가져오기? 이것도 고려해보자
         int cubeLayer = 1 << LayerMask.NameToLayer("Cube");
         int playerLayer = 1 << LayerMask.NameToLayer("Player");
         int layerMask = cubeLayer | playerLayer;
 
-        // 디버그용 레이 시각화
+        // <- 디버그용 레이 시각화
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
 
         // 지정한 레이어만 Raycast 대상으로 판별
@@ -184,4 +193,23 @@ public class ChaseAction : MoveAction
 
         return false;
     }
+
+
+    // 레이캐스트 0.2초마다
+    private bool isClearCash = false;
+    private float lastClearCheckTime = -Mathf.Infinity;
+    private float clearCheckInterval = 0.2f;
+
+    // 캐시값 반환
+    public bool isClearToTargetAsCash(float rayDistance = 100f)
+    {
+        if (Time.time - lastClearCheckTime > clearCheckInterval)
+        {
+            isClearCash = isClearToTarget(rayDistance);
+            lastClearCheckTime = Time.time;
+        }
+        return isClearCash;
+    }
+
+
 }
