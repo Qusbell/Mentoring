@@ -3,15 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 체력 게이지 전용 UI (애니메이션 포함)
+/// 체력 게이지 전용 UI (Slider 버전 - Unity 2022 호환)
 /// </summary>
 public class HealthUI : MonoBehaviour
 {
     private DamageReaction damageReaction;
 
-    [Header("HP 게이지")]
-    [SerializeField] private Image healthFillImage;
-    [SerializeField] private Image healthBackgroundImage;
+    [Header("HP 게이지 (Slider 사용)")]
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Image healthFillImage; // Slider의 Fill 이미지
 
     [Header("애니메이션 설정")]
     [SerializeField] private float animationDuration = 0.3f;
@@ -40,6 +40,12 @@ public class HealthUI : MonoBehaviour
         if (player != null)
         {
             damageReaction = player.GetComponent<DamageReaction>();
+        }
+
+        // Slider의 Fill 이미지 자동 찾기
+        if (healthSlider != null && healthFillImage == null)
+        {
+            healthFillImage = healthSlider.fillRect?.GetComponent<Image>();
         }
 
         // 초기 UI 업데이트
@@ -71,7 +77,7 @@ public class HealthUI : MonoBehaviour
     /// </summary>
     private void UpdateHealthUI()
     {
-        if (healthFillImage == null || damageReaction == null) return;
+        if (healthSlider == null || damageReaction == null) return;
 
         float targetRatio = (float)damageReaction.healthPoint / damageReaction.maxHealthPoint;
 
@@ -86,7 +92,7 @@ public class HealthUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 체력 바 애니메이션
+    /// 체력 바 애니메이션 (Slider 버전)
     /// </summary>
     private IEnumerator AnimateHealthBar(float targetRatio)
     {
@@ -101,15 +107,25 @@ public class HealthUI : MonoBehaviour
             float curveValue = animationCurve.Evaluate(progress);
             currentHealthRatio = Mathf.Lerp(startRatio, targetRatio, curveValue);
 
-            healthFillImage.fillAmount = currentHealthRatio;
-            healthFillImage.color = GetHealthColor(currentHealthRatio);
+            // Slider 값 업데이트
+            healthSlider.value = currentHealthRatio;
+
+            // 색상 업데이트
+            if (healthFillImage != null)
+            {
+                healthFillImage.color = GetHealthColor(currentHealthRatio);
+            }
 
             yield return null;
         }
 
         currentHealthRatio = targetRatio;
-        healthFillImage.fillAmount = currentHealthRatio;
-        healthFillImage.color = GetHealthColor(currentHealthRatio);
+        healthSlider.value = currentHealthRatio;
+
+        if (healthFillImage != null)
+        {
+            healthFillImage.color = GetHealthColor(currentHealthRatio);
+        }
     }
 
     /// <summary>
@@ -132,14 +148,14 @@ public class HealthUI : MonoBehaviour
                 healthPulseCoroutine = null;
 
                 // 스케일 초기화
-                if (healthFillImage != null)
-                    healthFillImage.transform.localScale = Vector3.one;
+                if (healthSlider != null)
+                    healthSlider.transform.localScale = Vector3.one;
             }
         }
     }
 
     /// <summary>
-    /// 체력 바 펄스 효과
+    /// 체력 바 펄스 효과 (Slider 버전)
     /// </summary>
     private IEnumerator PulseHealthBar()
     {
@@ -148,9 +164,9 @@ public class HealthUI : MonoBehaviour
             float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
             float scale = Mathf.Lerp(1f, 1.1f, pulseValue);
 
-            if (healthFillImage != null)
+            if (healthSlider != null)
             {
-                healthFillImage.transform.localScale = Vector3.one * scale;
+                healthSlider.transform.localScale = Vector3.one * scale;
             }
 
             yield return null;
