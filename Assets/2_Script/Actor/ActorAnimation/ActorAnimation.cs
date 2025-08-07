@@ -5,19 +5,16 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Animator))]
-public class ActorAnimation : MonoBehaviour
+public class ActorAnimation : ActorAction
 {
     // 애니메이터
     protected Animator animator;
 
-    // <- 점프 관련 애니메이션 체크용
-    private FootCollider foot;
-
     // 초기화
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         animator = GetComponent<Animator>();
-        foot = GetComponentInChildren<FootCollider>();
     }
     
 
@@ -56,8 +53,6 @@ public class ActorAnimation : MonoBehaviour
 
 
 
-
-
     // === 점프 콤보 어택 애니메이션 이벤트 ===
 
     private bool isJumpAttackPlag = false;
@@ -65,19 +60,19 @@ public class ActorAnimation : MonoBehaviour
     // 내려치는 시점 이전에 착지했는지 플래그
     public void CheckWhenJump()
     {
-        if (foot != null && !foot.isRand)
+        if (!thisActor.isRand)
         {
             isJumpAttackPlag = true;
             System.Action action = null;
-            action = () => { isJumpAttackPlag = false; foot.whenGroundEvent.Remove(action); };
-            foot.whenGroundEvent.Add(action);
+            action = () => { isJumpAttackPlag = false; thisActor.foot.whenGroundEvent.Remove(action); };
+            thisActor.foot.whenGroundEvent.Add(action);
         }
     }
 
     // 공중에서는 내려치는 시점에서 정지
     public void PauseWhenJump()
     {
-        if (foot != null && isJumpAttackPlag)
+        if (isJumpAttackPlag)
         {
             // 애니메이션 멈춤
             animator.speed = 0f;
@@ -87,11 +82,11 @@ public class ActorAnimation : MonoBehaviour
             System.Action resumeAction = null;
             resumeAction = () => {
                 animator.speed = 1f;
-                foot.whenGroundEvent.Remove(resumeAction);
+                thisActor.foot.whenGroundEvent.Remove(resumeAction);
             };
 
             // 이벤트 추가
-            foot.whenGroundEvent.Add(resumeAction);
+            thisActor.foot.whenGroundEvent.Add(resumeAction);
         }
     }
 

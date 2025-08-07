@@ -35,9 +35,7 @@ public class ProjectileWeapon : ActorWeapon
     {
         base.OnTriggerEnter(other);
         if (other.CompareTag("Cube"))
-        {
-            EffectAndDestory();
-        }
+        { EffectAndDestory(); }
     }
 
     protected override void WeaponCollisionEnterAction(DamageReaction damageReaction)

@@ -432,7 +432,6 @@ GameObject:
   - component: {fileID: 411016965163252633}
   - component: {fileID: 2235218766167420711}
   - component: {fileID: 3237082938306507263}
-  - component: {fileID: 8039404801137072288}
   - component: {fileID: 4922285313347925585}
   - component: {fileID: 1343354582304582897}
   m_Layer: 8
@@ -575,7 +574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   target: {fileID: 0}
-  rotationSpeed: 12
+  rotationSpeed: 24
 --- !u!114 &3237082938306507263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,35 +587,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9023ad83742951843a3ca93022fc5f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8039404801137072288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2801390549913854848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc59da16eb1c1b41a0b967eea06cdaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <attackName>k__BackingField: 7
-  attackDamage: 1
-  <attackRange>k__BackingField: 100
-  targetTag: 
-  maxHitCount: 1
-  attackRate: 5.5
-  knockBackPower: 0
-  knockBackHeight: 0
-  <attackCost>k__BackingField: 0
-  hitEffect: {fileID: 7274776019300387116, guid: 88639d536973a7546b9fa19a865138bc, type: 3}
-  effectDestoryTime: 1
-  weaponBeforeDelay: 0.35
-  beforeDelayEffect: {fileID: 1869876209476836186, guid: b36a582787b3a2f4b8839edc2d0affb5, type: 3}
-  beforeDelayEffectPos: {fileID: 2281714855753279812}
-  isCancelWhenHit: 1
-  projectile: {fileID: 2382953001386444822, guid: 299fee62663030141a0c316eb8b4dfa9, type: 3}
-  firePos: {fileID: 2281714855753279812}
 --- !u!114 &4922285313347925585
 MonoBehaviour:
   m_ObjectHideFlags: 0

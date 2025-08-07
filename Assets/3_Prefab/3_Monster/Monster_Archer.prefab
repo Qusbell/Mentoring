@@ -1146,7 +1146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   target: {fileID: 0}
-  rotationSpeed: 12
+  rotationSpeed: 24
 --- !u!114 &4744986361193923189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,6 +1188,7 @@ MonoBehaviour:
   isCancelWhenHit: 1
   projectile: {fileID: 2336828060849677753, guid: 4ab66f9db6bf98f42a28d46a2f4a6611, type: 3}
   firePos: {fileID: 4441979137934070190}
+  fireType: 0
 --- !u!114 &1260656170718980920
 MonoBehaviour:
   m_ObjectHideFlags: 0

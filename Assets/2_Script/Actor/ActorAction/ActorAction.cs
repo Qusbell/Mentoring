@@ -6,7 +6,6 @@ using UnityEngine;
 public class ActorAction : MonoBehaviour
 {
     private Actor actor;
-
     protected Actor thisActor
     {
         get
@@ -17,9 +16,10 @@ public class ActorAction : MonoBehaviour
         }
     }
 
+
     protected virtual void Awake()
     {
-        actor = GetComponent<Actor>();
+        // <- 나중에 뭐 생기면 
     }
 
 }

@@ -24,6 +24,10 @@ public class ProjectileMove : MoveAction
         base.Turn(); // <- 딱 1회, 해당 방향 바라봄
     }
 
-    // <- 임시
-    public virtual void SetTargetTransform(Transform p_target) { }
+
+    // target 자체를 입력받음
+    public virtual void SetTarget(Transform target)
+    {
+        isMove = true;
+    }
 }

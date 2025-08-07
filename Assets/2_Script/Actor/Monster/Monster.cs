@@ -74,43 +74,49 @@ public class Monster : Actor
     { actionStatus(); }
 
 
-    // 트리거 애니메이션의 단일 활성화 보장
-    protected bool animationTrigger = true;
-    protected void PlayAnimationTriggerOnce(string animationName)
-    {
-        if (animationTrigger)
-        {
-            animationTrigger = false;
-            animator.PlayAnimation(animationName);
-        }
-    }
-
-
-    // 재생 중 애니메이션 확인
-    protected bool animationPlayCheck = false;
 
     // (디버그용) 현재 상태 확인
     [SerializeField] private string currentStateName;
     private void UpdateStateName(Action state)
     { currentStateName = state.Method.Name; }
 
+
+    // 재생 중 애니메이션 확인
+    protected bool isAnimationPlaying = false;
+
     // 상태 변경 / 애니메이션 체크 초기화
     protected void SwitchStatus(Action nextStatus)
     {
-        animationTrigger = true;
-        animationPlayCheck = false;
-        actionStatus = nextStatus;
+        isTriggerAnimationAvailable = true;
+        isAnimationPlaying = false;
 
-        // 디버그
-        UpdateStateName(nextStatus);
+        // 다음 상태로 교체
+        actionStatus = nextStatus;
+        UpdateStateName(actionStatus); // <- 디버그
+    }
+
+
+
+    // 트리거 애니메이션의 단일 활성화 보장
+    protected bool isTriggerAnimationAvailable = true;
+    protected void PlayTriggerAnimationOnce(string animationName)
+    {
+        if (isTriggerAnimationAvailable)
+        {
+            isTriggerAnimationAvailable = false;
+            animator.PlayAnimation(animationName);
+        }
     }
 
     // 애니메이션 종료 시, 다음 상태로 전환
     protected void SwitchStatusWhenAnimationEnd(string animationName, Action nextStatus)
     {
+        // 애니메이션 플래그 = true 설정
         if (animator.CheckAnimationName(animationName))
-        { animationPlayCheck = true; }
-        else if (animationPlayCheck)
+        { isAnimationPlaying = true; }
+
+        // 이후 애니메이션지 종료되면
+        else if (isAnimationPlaying)
         { SwitchStatus(nextStatus); }
     }
 
@@ -150,8 +156,10 @@ public class Monster : Actor
     // 생성 상태
     private void SpawnState()
     {
-        if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
-        { SwitchStatus(IdleStatus); }
+        SwitchStatusWhenAnimationEnd("Spawn", IdleStatus);
+
+        // if (!animator.CheckAnimationName("Spawn")) // 스폰 애니메이션 종료 시
+        // { SwitchStatus(IdleStatus); }
     }
 
 
@@ -214,7 +222,7 @@ public class Monster : Actor
         if (isReadyToAttack)
         {
             attackAction.Attack();
-            PlayAnimationTriggerOnce("DoAttack");
+            PlayTriggerAnimationOnce("DoAttack");
             SwitchStatus(AttackAnimationStatus);
         }
         // 아니면 Idle로
@@ -235,15 +243,13 @@ public class Monster : Actor
     // 피격 시 애니메이션
     protected void HitStatus()
     {
-        // Debug.Log("Hit");
-        PlayAnimationTriggerOnce("IsHit");
+        PlayTriggerAnimationOnce("IsHit");
         SwitchStatusWhenAnimationEnd("Hit", IdleStatus);
     }
 
     protected void DieStatus()
     {
-        // Debug.Log("Die");
-        PlayAnimationTriggerOnce("IsDie");
+        PlayTriggerAnimationOnce("IsDie");
     }
 
 

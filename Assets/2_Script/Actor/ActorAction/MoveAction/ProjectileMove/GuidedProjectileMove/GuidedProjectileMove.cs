@@ -17,15 +17,13 @@ public class GuidedProjectileMove : ProjectileMove
 
     protected Transform target;
 
+    // 가속
     private void Start()
-    {
-        // StartCoroutine(Timer.EndlessTimer(accelRate, () => { moveSpeed += accelSpeed; }));
-        Timer.Instance.StartEndlessTimer(this, "_ProjectileMove", accelRate, () => moveSpeed += accelSpeed);
-    }
+    { Timer.Instance.StartEndlessTimer(this, "_ProjectileMove", accelRate, () => moveSpeed += accelSpeed); }
 
     // 목표 대상을 입력받는 메서드
     // 끝까지 추격
-    public override void SetTargetTransform(Transform p_target)
+    public override void SetTarget(Transform p_target)
     {
         isMove = true;
         target = p_target;
@@ -36,6 +34,7 @@ public class GuidedProjectileMove : ProjectileMove
         Vector3 dir = (target.position - transform.position).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, turnSpeed * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDir);
+
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
     }
 }
