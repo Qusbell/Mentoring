@@ -26,17 +26,14 @@ public class FireAction : AttackAction
     // 대상 위치
     protected Vector3 targetPos;
 
-    // 임시 타겟
-    private Transform _target; // <- 반드시 player만을 지정하게 됨
+    // 타겟
+    private Transform _target;
     public Transform target
     {
         get
         {
-            if(_target == null)
-            {
-                Monster monster = GetComponent<Monster>();
-                _target = monster.target;
-            }
+            if (_target == null && thisActor is Monster monster)
+            { _target = monster.target; }
             return _target;
         }
     }
@@ -75,7 +72,7 @@ public class FireAction : AttackAction
                         break;
                 }
             }
-            else { Debug.Log("FireAction : 잘못된 Projectile 등록됨 : " + gameObject.name); }
+            else { Debug.Log("FireAction : 잘못된 Projectile object 등록됨 : " + gameObject.name); }
 
             // 투사체 활성화
             ProjectileWeapon tempProjectile = instantProjectile.GetComponent<ProjectileWeapon>();
