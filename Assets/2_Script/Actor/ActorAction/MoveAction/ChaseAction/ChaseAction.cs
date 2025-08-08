@@ -105,15 +105,16 @@ public class ChaseAction : MoveAction
 
 
     // 네비게이션 위치와 자신 위치 동기화
-    void UpdateMyPositionOnNav()
+    public void UpdateMyPositionOnNav()
     {
         // nav상 위치와 transform 위치의 괴리
         float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
 
         // 자신이 navMesh 위에 없는 경우
         // 또는 nav 위에 있더라도, nav상의 자신 Pos과 괴리 발생 시
-        if (!nav.isOnNavMesh || 0.2f < gapDistance)
+        if (!nav.isOnNavMesh || 0.02f < gapDistance)
         {
+            // Debug.Log("복귀");
             NavMeshHit hit;
             if (NavMesh.SamplePosition(this.transform.position, out hit, 2f, NavMesh.AllAreas))
             { nav.Warp(hit.position); }

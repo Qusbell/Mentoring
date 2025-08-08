@@ -65,4 +65,10 @@ public class WarningPlaneSetter
         warningPlane = null;
     }
 
+
+    public static void RotationWarning(MonoBehaviour component, ref GameObject warningPlane)
+    {
+        if (warningPlane == null) { return; }
+    }
+
 }

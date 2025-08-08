@@ -7,6 +7,7 @@ public class ChargeAttack : BasicWeaponAttack
 {
     [SerializeField] protected float chargeSpeed = 20f;    // 속도
     [SerializeField] protected float chargeDistance = 20f; // 총 거리
+    [SerializeField] protected float warningWidth = 1.5f;  // 경고 발판 
 
     // 경고 발판
     private GameObject warningPlane = null;
@@ -74,8 +75,9 @@ public class ChargeAttack : BasicWeaponAttack
     }
 
 
-    private LayerMask checkLayer;
-    private float checkRadius = 0.1f;
+    private LayerMask checkLayer;     // 체크할 레이어
+    private float checkRadius = 0.1f; // 체크 범위
+    private Collider[] cubes = new Collider[3]; // 큐브 콜라이더 캐시
 
     private void FixedUpdate()
     {
@@ -109,22 +111,24 @@ public class ChargeAttack : BasicWeaponAttack
         }
         // ---┘
 
-
         // --- 다음 위치 계산 ---
         Vector3 nextPos = thisActor.rigid.position + chargeVec * curSpeed * Time.fixedDeltaTime;
 
-        // --- 다음 위치의 장애물 확인 ---
-        Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
-        if (hits.Length > 0)
+        // --- 다음 위치 장애물 확인 (위쪽) ---
+        int count = Physics.OverlapSphereNonAlloc(nextPos + new Vector3(0, checkRadius, 0), checkRadius, cubes, checkLayer);
+        if (count > 0)
         {
             EndCharge();
             return;
         }
 
-        // --- 다음 위치 낭떠러지 여부 확인 ---
-        hits = Physics.OverlapSphere(nextPos - new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
-        if (hits.Length == 0)
-        { EndCharge(); return; }
+        // --- 다음 위치 낭떠러지 여부 확인 (아래쪽) ---
+        count = Physics.OverlapSphereNonAlloc(nextPos - new Vector3(0, checkRadius, 0), checkRadius, cubes, checkLayer);
+        if (count == 0)
+        {
+            EndCharge();
+            return;
+        }
 
         // --- 이동 ---
         thisActor.rigid.MovePosition(nextPos);
