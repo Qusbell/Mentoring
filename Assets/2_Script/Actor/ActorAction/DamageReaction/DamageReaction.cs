@@ -26,6 +26,7 @@ public class DamageReaction : ActorAction
             if (value < 0) { value = 0; }
             else if (value > maxHp) { value = maxHp; }
 
+            whenHealthChage.Invoke();
             nowHp = value;
         }
     }
@@ -43,6 +44,9 @@ public class DamageReaction : ActorAction
     // hit/die 이벤트
     public MyEvent whenHit = new MyEvent();
     public MyEvent whenDie = new MyEvent();
+
+    // 체력 변경 시마다
+    public MyEvent whenHealthChage = new MyEvent();
 
     // 피격
     public virtual void TakeDamage(int damage, Actor enemy, float knockBackPower = 0f, float knockBackHeight = 0f)
