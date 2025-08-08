@@ -13330,7 +13330,7 @@ MonoBehaviour:
     triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 93884337}
-    delayTime: 1
+    delayTime: 0.5
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 554933476}
@@ -13379,7 +13379,7 @@ MonoBehaviour:
     triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 93884337}
-    delayTime: 1
+    delayTime: 0.5
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1992940707}
@@ -13442,7 +13442,7 @@ MonoBehaviour:
     triggerType: 1
     targetTag: Player
     triggerArea: {fileID: 93884337}
-    delayTime: 1
+    delayTime: 0.5
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 488176717}
@@ -14102,6 +14102,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1130940622810720268, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
+      propertyPath: maxHp
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130940622810720268, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
+      propertyPath: nowHp
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5147755981061245673, guid: bdfde6207a18bf144b27818e0a38e967, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64.43
@@ -17359,7 +17367,7 @@ MonoBehaviour:
     triggerType: 0
     targetTag: Player
     triggerArea: {fileID: 93884337}
-    delayTime: 1.5
+    delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 2022761421}
@@ -38024,7 +38032,7 @@ MonoBehaviour:
     triggerType: 0
     targetTag: Player
     triggerArea: {fileID: 93884337}
-    delayTime: 1
+    delayTime: 0
     timer: 0
     hasActivated: 0
   - targetCube: {fileID: 1040466680}
