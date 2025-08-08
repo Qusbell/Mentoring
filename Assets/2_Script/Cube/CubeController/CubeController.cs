@@ -129,6 +129,9 @@ public class CubeController : MonoBehaviour
 
             // 다음 컨트롤러 활성화 이벤트 발생
             nextCubeControllerActivate?.Invoke();
+
+
+            GetComponentInParent<CubeControllerConnector>()?.NotifyControllerCompleted(this);
         }
     }
 
