@@ -32,19 +32,10 @@ public class Monster : Actor
     // 추격 행동
     protected ChaseAction chaseAction;
 
-
-
     protected override void Awake()
     {
         base.Awake();
         actionStatus = SpawnState; // 생성부터 시작
-
-        // --- hit/die 등록 ---
-        System.Action hitAction = () => { SwitchStatus(HitStatus); };
-        System.Action dieAction = () => { SwitchStatus(DieStatus); };
-        damageReaction.whenHit.AddMulti(hitAction);
-        damageReaction.whenDie.AddOnce(dieAction);
-
 
         // --- 낙사 추가 ---
         if (GetComponent<FallingAction>() == null)
@@ -56,6 +47,23 @@ public class Monster : Actor
     }
 
 
+    // 보스
+    protected bool isBoss = false;
+
+    protected void AddHitEvent()
+    {
+        // --- hit 등록 ---
+        System.Action hitAction = () => { SwitchStatus(HitStatus); };
+        damageReaction.whenHit.AddMulti(hitAction);
+    }
+
+    protected void AddDieEvent()
+    {
+        System.Action dieAction = () => { SwitchStatus(DieStatus); };
+        damageReaction.whenDie.AddOnce(dieAction);
+    }
+
+
     protected void Start()
     {
         // ---
@@ -64,14 +72,22 @@ public class Monster : Actor
         targetPos.y = this.transform.position.y; // y값을 동일하게 고정
         this.transform.LookAt(targetPos);        // 평면상에서만 타겟을 바라봄
         // ---
+
+        // --- Hit/Die 추가 ---
+        if (!isBoss)
+        { AddHitEvent(); }
+        AddDieEvent();
     }
 
 
     // 현재 수행 중인 행동
     protected System.Action actionStatus;
 
-    private void Update()
+    protected virtual void Update()
     { actionStatus(); }
+
+    protected virtual void LateUpdate()
+    { animator.PlayAnimation("IsMove", moveAction.isMove); }
 
 
 
@@ -210,8 +226,6 @@ public class Monster : Actor
             if (!isFacing)
             { moveAction.Turn(); }
         }
-
-        animator.PlayAnimation("IsMove", moveAction.isMove);
     }
 
 
@@ -222,7 +236,6 @@ public class Monster : Actor
         if (isReadyToAttack)
         {
             attackAction.Attack();
-            PlayTriggerAnimationOnce("DoAttack");
             SwitchStatus(AttackAnimationStatus);
         }
         // 아니면 Idle로
@@ -230,8 +243,11 @@ public class Monster : Actor
     }
 
     // 공격 애니메이션 상태
-    protected void AttackAnimationStatus()
-    { SwitchStatusWhenAnimationEnd("Attack", ReloadStatus); }
+    protected virtual void AttackAnimationStatus()
+    {
+        PlayTriggerAnimationOnce("DoAttack");
+        SwitchStatusWhenAnimationEnd("Attack", ReloadStatus);
+    }
 
 
     // 공격 후딜레이 애니메이션 재생

@@ -115,18 +115,16 @@ public class ChargeAttack : BasicWeaponAttack
 
         // --- 다음 위치의 장애물 확인 ---
         Collider[] hits = Physics.OverlapSphere(nextPos + new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
-
-        foreach (var hit in hits)
+        if (hits.Length > 0)
         {
-            if (((checkLayer.value & (1 << hit.gameObject.layer)) != 0) || hit.CompareTag("Cube"))
-            {
-                if (hit.gameObject != this.gameObject)
-                {
-                    EndCharge();
-                    return;
-                }
-            }
+            EndCharge();
+            return;
         }
+
+        // --- 다음 위치 낭떠러지 여부 확인 ---
+        hits = Physics.OverlapSphere(nextPos - new Vector3(0, checkRadius, 0), checkRadius, checkLayer);
+        if (hits.Length == 0)
+        { EndCharge(); return; }
 
         // --- 이동 ---
         thisActor.rigid.MovePosition(nextPos);
