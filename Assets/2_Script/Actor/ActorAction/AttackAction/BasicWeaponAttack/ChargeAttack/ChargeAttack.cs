@@ -10,9 +10,9 @@ public class ChargeAttack : BasicWeaponAttack
     [SerializeField] protected float warningWidth = 1.5f;  // 경고 발판 
 
     // 경고 발판
-    private GameObject warningPlane = null;
+    protected GameObject warningPlane = null;
 
-    private Vector3 chargeVec = Vector3.zero;  // 공격 방향
+    // private Vector3 chargeVec = Vector3.zero;  // 공격 방향
     private Vector3 originPos = Vector3.zero;  // 최초 위치
 
 
@@ -46,7 +46,7 @@ public class ChargeAttack : BasicWeaponAttack
         base.DoAttack();
 
         // --- 돌진 방향 지정 ---
-        chargeVec = transform.forward;
+        // chargeVec = transform.forward;
 
         // --- 원래 위치 확인 ---
         originPos = transform.position;
@@ -93,7 +93,6 @@ public class ChargeAttack : BasicWeaponAttack
             return;
         }
 
-
         // ---┐
         // <- AI 제작 구간 (속도 조절)
         // --- 기본 속도: 마지막 20% 전까지는 고정, 이후 감속 ---
@@ -112,7 +111,7 @@ public class ChargeAttack : BasicWeaponAttack
         // ---┘
 
         // --- 다음 위치 계산 ---
-        Vector3 nextPos = thisActor.rigid.position + chargeVec * curSpeed * Time.fixedDeltaTime;
+        Vector3 nextPos = thisActor.rigid.position + transform.forward * curSpeed * Time.fixedDeltaTime;
 
         // --- 다음 위치 장애물 확인 (위쪽) ---
         int count = Physics.OverlapSphereNonAlloc(nextPos + new Vector3(0, checkRadius, 0), checkRadius, cubes, checkLayer);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class Boss : Monster
 {
     // 어떤 공격 사용할지 설정(디버그용)
     [SerializeField] protected AttackName tempAttackName;
+    protected bool chargePlag = true;
 
 
     protected override void Awake()
@@ -16,6 +18,14 @@ public class Boss : Monster
         isBoss = true;
     }
 
+
+    protected override void SwitchStatus(Action nextStatus)
+    {
+        base.SwitchStatus(nextStatus);
+        chargePlag = true;
+    }
+   
+
     protected override void LateUpdate()
     {
         base.LateUpdate();
@@ -24,6 +34,7 @@ public class Boss : Monster
 
     protected override void AttackAnimationStatus()
     {
+
         switch (nowAttackKey)
         {
             case AttackName.Monster_BossNormalAttack:
@@ -35,6 +46,13 @@ public class Boss : Monster
                 PlayTriggerAnimationOnce("DoChargeAttack");
                 SwitchStatusWhenAnimationEnd("Charge_Attack", IdleStatus);
                 animator.PlayAnimation("IsChargeAttack", true);
+                if (chargePlag)
+                {
+                    chargePlag = false;
+                    Timer.Instance.StartRepeatTimer(this, "_BeforeCharge",
+                        attackAction.weaponBeforeDelay * 0.8f,
+                        moveAction.Turn);
+                }
                 break;
 
                 // <- dropAttack

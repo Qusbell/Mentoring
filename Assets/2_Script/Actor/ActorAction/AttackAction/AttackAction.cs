@@ -63,7 +63,7 @@ abstract public class AttackAction : ActorAction
     [SerializeField] protected float effectDestoryTime = 1f; // <- LeftTime 설정 고려
 
     // 공격 선딜레이
-    [SerializeField] protected float weaponBeforeDelay = 0.2f;
+    [SerializeField] public float weaponBeforeDelay = 0.2f;
     [SerializeField] protected GameObject beforeDelayEffect = null;
     [SerializeField] protected Transform beforeDelayEffectPos = null;
 

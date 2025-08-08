@@ -101,7 +101,7 @@ public class Monster : Actor
     protected bool isAnimationPlaying = false;
 
     // 상태 변경 / 애니메이션 체크 초기화
-    protected void SwitchStatus(Action nextStatus)
+    protected virtual void SwitchStatus(Action nextStatus)
     {
         isTriggerAnimationAvailable = true;
         isAnimationPlaying = false;

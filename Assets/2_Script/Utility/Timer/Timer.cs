@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Rendering.Universal;
 
 
 public class Timer : SingletonT<Timer>
@@ -227,6 +228,7 @@ public class Timer : SingletonT<Timer>
             elapsed += Time.deltaTime;
             yield return null;
         }
+
         continuousTimers.Remove(key);
     }
 

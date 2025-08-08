@@ -1667,38 +1667,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 268780190671213734, guid: 0c802c67291db70489f2febac684735c, type: 3}
   m_PrefabInstance: {fileID: 1090257642}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &832226589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832226588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed65f788e1545c147bed680f2041edcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <attackName>k__BackingField: 9
-  attackDamage: 1
-  <attackRange>k__BackingField: 20
-  targetTag: 
-  maxHitCount: 1
-  attackRate: 0.5
-  knockBackPower: 0
-  knockBackHeight: 0
-  <attackCost>k__BackingField: 0
-  hitEffect: {fileID: 0}
-  effectDestoryTime: 1
-  weaponBeforeDelay: 3
-  beforeDelayEffect: {fileID: 0}
-  beforeDelayEffectPos: {fileID: 0}
-  isCancelWhenHit: 0
-  myWeapon: {fileID: 329625343}
-  weaponActiveTime: 1
-  chargeSpeed: 30
-  chargeDistance: 20
-  warningWidth: 1.5
 --- !u!114 &832226590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,6 +1809,38 @@ MonoBehaviour:
   redTimeWhenHit: 0.2
   redTimeWhenDie: 0.3
   redColor: 0.6
+--- !u!114 &832226603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832226588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8225dfa151e884f8eb44ce606aa3b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <attackName>k__BackingField: 9
+  attackDamage: 1
+  <attackRange>k__BackingField: 20
+  targetTag: 
+  maxHitCount: 1
+  attackRate: 0.5
+  knockBackPower: 0
+  knockBackHeight: 0
+  <attackCost>k__BackingField: 0
+  hitEffect: {fileID: 0}
+  effectDestoryTime: 1
+  weaponBeforeDelay: 3
+  beforeDelayEffect: {fileID: 0}
+  beforeDelayEffectPos: {fileID: 0}
+  isCancelWhenHit: 0
+  myWeapon: {fileID: 329625343}
+  weaponActiveTime: 1
+  chargeSpeed: 30
+  chargeDistance: 20
+  warningWidth: 2
 --- !u!1 &844814699
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,10 +2520,10 @@ PrefabInstance:
       addedObject: {fileID: 832226590}
     - targetCorrespondingSourceObject: {fileID: 268780190671213734, guid: 0c802c67291db70489f2febac684735c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 832226589}
+      addedObject: {fileID: 832226600}
     - targetCorrespondingSourceObject: {fileID: 268780190671213734, guid: 0c802c67291db70489f2febac684735c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 832226600}
+      addedObject: {fileID: 832226603}
   m_SourcePrefab: {fileID: 100100000, guid: 0c802c67291db70489f2febac684735c, type: 3}
 --- !u!1001 &1105015462
 PrefabInstance:
