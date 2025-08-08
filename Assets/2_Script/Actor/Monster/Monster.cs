@@ -210,7 +210,6 @@ public class Monster : Actor
     {
         if (isReadyToAttack)
         {
-            chaseAction.UpdateMyPositionOnNav(); // <- 끄트머리에 끼인 경우 navMesh 되돌아오기 (임시)
             IsMoveOff();
             SwitchStatus(AttackStatus);
         }
@@ -236,6 +235,7 @@ public class Monster : Actor
         // 공격 가능하다면
         if (isReadyToAttack)
         {
+            chaseAction.UpdateMyPositionOnNav(); // <- 끄트머리에 끼인 경우 navMesh 되돌아오기 (임시)
             attackAction.Attack();
             SwitchStatus(AttackAnimationStatus);
         }
