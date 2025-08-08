@@ -89,4 +89,15 @@ public class FootCollider : MonoBehaviour
             return hitCount > 0;
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (!enabled) return;
+
+        // 판정 보조 영역을 초록색 구체 형태의 와이어로 표시
+        Gizmos.color = Color.green;
+        Vector3 checkPos = transform.position + Vector3.down * groundCheckOffset;
+        Gizmos.DrawWireSphere(checkPos, groundCheckRadius);
+    }
+
 }

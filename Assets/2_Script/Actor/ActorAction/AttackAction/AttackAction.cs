@@ -18,7 +18,10 @@ public enum AttackName
     Monster_MinionNormalAttack,
     Monster_ShieldChargeAttack,
     Monster_ArcherFireAttack,
-    Monster_MageSpellAttack
+    Monster_MageSpellAttack,
+
+    Monster_BossNormalAttack,
+    Monster_BossChargeAttack
 }
 
 
