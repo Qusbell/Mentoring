@@ -76,6 +76,7 @@ public class MyEvent
         AddMulti(action, true); // 중복 방지
     }
 
+
     /// <summary>
     /// UI 호환을 위한 RemoveListener
     /// </summary>
