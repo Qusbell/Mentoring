@@ -19003,35 +19003,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90812b13d5ff7e340a9f192ce6feb304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundMusicSources:
-  - {fileID: 0}
-  playerMoveSound: {fileID: 0}
-  playerJumpSound: {fileID: 0}
-  playerLandSound: {fileID: 0}
-  playerHitSound: {fileID: 0}
-  playerDeathSound: {fileID: 0}
-  playerBasicAttackSound: {fileID: 0}
-  playerDropAttackSound: {fileID: 0}
-  playerDropImpactSound: {fileID: 0}
-  playerDodgeAttackSound: {fileID: 0}
-  monsterSpawnSound: {fileID: 0}
-  monsterHitSound: {fileID: 0}
-  minionAttackSound: {fileID: 0}
-  archerFireSound: {fileID: 0}
-  mageSpellSound: {fileID: 0}
-  shielderChargeSound: {fileID: 0}
-  cubeMoveStartSound: {fileID: 0}
-  cubeMoveLoopSound: {fileID: 0}
-  cubeMoveEndSound: {fileID: 0}
-  cubeCollapseWarningSound: {fileID: 0}
-  cubeCollapseShakeSound: {fileID: 0}
-  cubeCollapseFallSound: {fileID: 0}
-  boarWarningSound: {fileID: 0}
-  boarChargeSound: {fileID: 0}
-  boarCrashSound: {fileID: 0}
-  uiClickSound: {fileID: 0}
-  uiDialogSound: {fileID: 0}
-  volumeSliderSound: {fileID: 0}
+  backgroundMusics:
+  - clip: {fileID: 8300000, guid: 9f9bb7366bd710848a18f4f67bae77ad, type: 3}
+    volume: 0.3
+  playerMove:
+    clip: {fileID: 0}
+    volume: 1
+  playerJump:
+    clip: {fileID: 0}
+    volume: 1
+  playerLand:
+    clip: {fileID: 0}
+    volume: 1
+  playerHit:
+    clip: {fileID: 8300000, guid: c18f32c567bd2a54f9ae734747726f92, type: 3}
+    volume: 1
+  playerDeath:
+    clip: {fileID: 0}
+    volume: 1
+  playerBasicAttack:
+    clip: {fileID: 8300000, guid: c18d17061c781944b9cb8e19ea7d8433, type: 3}
+    volume: 0.5
+  playerDropAttack:
+    clip: {fileID: 0}
+    volume: 1
+  playerDropImpact:
+    clip: {fileID: 0}
+    volume: 1
+  playerDodgeAttack:
+    clip: {fileID: 8300000, guid: 717ad85094b7b1d429894fe345918e32, type: 3}
+    volume: 0.3
+  monsterSpawn:
+    clip: {fileID: 0}
+    volume: 1
+  monsterHit:
+    clip: {fileID: 8300000, guid: 4355329be8baa0d4982df8fbfaa657a5, type: 3}
+    volume: 1
+  minionAttack:
+    clip: {fileID: 0}
+    volume: 1
+  archerFire:
+    clip: {fileID: 8300000, guid: 66a5e6e062c13794a8435fbedd0a0921, type: 3}
+    volume: 1
+  mageSpell:
+    clip: {fileID: 8300000, guid: c3e7f0ec481d6054dbb3a665d3eeefae, type: 3}
+    volume: 1
+  shielderCharge:
+    clip: {fileID: 0}
+    volume: 1
+  cubeMoveStart:
+    clip: {fileID: 0}
+    volume: 1
+  cubeMoveLoop:
+    clip: {fileID: 0}
+    volume: 1
+  cubeMoveEnd:
+    clip: {fileID: 0}
+    volume: 1
+  cubeCollapseWarning:
+    clip: {fileID: 0}
+    volume: 1
+  cubeCollapseShake:
+    clip: {fileID: 0}
+    volume: 1
+  cubeCollapseFall:
+    clip: {fileID: 0}
+    volume: 1
+  boarWarning:
+    clip: {fileID: 0}
+    volume: 1
+  boarCharge:
+    clip: {fileID: 0}
+    volume: 1
+  boarCrash:
+    clip: {fileID: 0}
+    volume: 1
+  uiClick:
+    clip: {fileID: 0}
+    volume: 1
+  uiDialog:
+    clip: {fileID: 0}
+    volume: 1
+  volumeSlider:
+    clip: {fileID: 0}
+    volume: 1
 --- !u!4 &617589605
 Transform:
   m_ObjectHideFlags: 0
