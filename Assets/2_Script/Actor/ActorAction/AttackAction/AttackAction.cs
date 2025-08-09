@@ -146,6 +146,10 @@ abstract public class AttackAction : ActorAction
     // 공격 전 동작 (공격 전 이펙트)
     protected virtual void BeforeAttack()
     {
+        //사운드 매니저용 실험용 
+        SoundManager.Instance.PlayPlayerAttackByType(attackName);
+
+
         if (beforeDelayEffect != null && beforeDelayEffectPos != null)
         {
             GameObject effect = Instantiate(beforeDelayEffect, beforeDelayEffectPos.position, beforeDelayEffectPos.rotation);
