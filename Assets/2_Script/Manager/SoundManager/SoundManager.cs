@@ -3,54 +3,165 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 큐브 액션 게임의 모든 사운드를 관리하는 싱글톤 매니저
-/// Player, Monster, Cube, Boar 등 모든 시스템의 사운드 통합 관리
+/// 구조체 기반 개선된 SoundManager
+/// 각 사운드마다 개별 볼륨 조절 가능
+/// 드래그 앤 드롭으로 쉬운 설정
 /// </summary>
 public class SoundManager : SingletonT<SoundManager>
 {
+    #region ===== 사운드 클립 구조체 =====
+
+    [System.Serializable]
+    public class SoundClip
+    {
+        [Tooltip("사운드 파일")]
+        public AudioClip clip;
+
+        [Tooltip("개별 볼륨 (0~1)")]
+        [Range(0f, 1f)]
+        public float volume = 1f;
+
+        // 생성자
+        public SoundClip()
+        {
+            clip = null;
+            volume = 1f;
+        }
+
+        public SoundClip(AudioClip audioClip, float vol = 1f)
+        {
+            clip = audioClip;
+            volume = vol;
+        }
+    }
+
+    #endregion
+
+    #region ===== 배경음악 =====
+
     [Header("=== 배경음악 ===")]
-    public AudioSource[] backgroundMusicSources; // 배경 음악들 (스테이지별)
+    [Tooltip("배경음악 파일들")]
+    public SoundClip[] backgroundMusics;
+
+    #endregion
+
+    #region ===== 플레이어 기본 액션 사운드 =====
 
     [Header("=== 플레이어 기본 액션 사운드 ===")]
-    public AudioSource playerMoveSound;           // 플레이어 이동 소리
-    public AudioSource playerJumpSound;           // 플레이어 점프 소리
-    public AudioSource playerLandSound;           // 플레이어 착지 소리
-    public AudioSource playerHitSound;            // 플레이어 피격 소리
-    public AudioSource playerDeathSound;          // 플레이어 사망 소리
+    [Tooltip("플레이어 이동 소리")]
+    public SoundClip playerMove;
+
+    [Tooltip("플레이어 점프 소리")]
+    public SoundClip playerJump;
+
+    [Tooltip("플레이어 착지 소리")]
+    public SoundClip playerLand;
+
+    [Tooltip("플레이어 피격 소리")]
+    public SoundClip playerHit;
+
+    [Tooltip("플레이어 사망 소리")]
+    public SoundClip playerDeath;
+
+    #endregion
+
+    #region ===== 플레이어 공격 사운드 =====
 
     [Header("=== 플레이어 공격 사운드 ===")]
-    public AudioSource playerBasicAttackSound;    // 기본 공격
-    public AudioSource playerDropAttackSound;     // 낙하 공격 시전 소리
-    public AudioSource playerDropImpactSound;     // 낙하 공격 착지 임팩트 소리
-    public AudioSource playerDodgeAttackSound;    // 닷지 공격
+    [Tooltip("기본 공격 소리")]
+    public SoundClip playerBasicAttack;
+
+    [Tooltip("낙하 공격 시전 소리")]
+    public SoundClip playerDropAttack;
+
+    [Tooltip("낙하 공격 착지 임팩트 소리")]
+    public SoundClip playerDropImpact;
+
+    [Tooltip("닷지 공격 소리")]
+    public SoundClip playerDodgeAttack;
+
+    #endregion
+
+    #region ===== 몬스터 공통 사운드 =====
 
     [Header("=== 몬스터 공통 사운드 ===")]
-    public AudioSource monsterSpawnSound;         // 몬스터 스폰 소리 (공통)
-    public AudioSource monsterHitSound;           // 몬스터 피격 소리 (공통)
+    [Tooltip("몬스터 스폰 소리")]
+    public SoundClip monsterSpawn;
+
+    [Tooltip("몬스터 피격 소리")]
+    public SoundClip monsterHit;
+
+    #endregion
+
+    #region ===== 몬스터별 공격 사운드 =====
 
     [Header("=== 몬스터별 공격 사운드 ===")]
-    public AudioSource minionAttackSound;         // 미니언 일반 공격
-    public AudioSource archerFireSound;           // 궁수 화살 발사
-    public AudioSource mageSpellSound;            // 마법사 주문 시전
-    public AudioSource shielderChargeSound;       // 방패병 돌진 공격
+    [Tooltip("미니언 일반 공격")]
+    public SoundClip minionAttack;
+
+    [Tooltip("궁수 화살 발사")]
+    public SoundClip archerFire;
+
+    [Tooltip("마법사 주문 시전")]
+    public SoundClip mageSpell;
+
+    [Tooltip("방패병 돌진 공격")]
+    public SoundClip shielderCharge;
+
+    #endregion
+
+    #region ===== 큐브 시스템 사운드 =====
 
     [Header("=== 큐브 시스템 사운드 ===")]
-    public AudioSource cubeMoveStartSound;        // 큐브 이동 시작 소리
-    public AudioSource cubeMoveLoopSound;         // 큐브 이동 중 소리
-    public AudioSource cubeMoveEndSound;          // 큐브 이동 도착 소리
-    public AudioSource cubeCollapseWarningSound;  // 큐브 붕괴 경고 소리
-    public AudioSource cubeCollapseShakeSound;    // 큐브 흔들림 소리
-    public AudioSource cubeCollapseFallSound;     // 큐브 붕괴 떨어짐 소리
+    [Tooltip("큐브 이동 시작 소리")]
+    public SoundClip cubeMoveStart;
+
+    [Tooltip("큐브 이동 중 소리 (루프)")]
+    public SoundClip cubeMoveLoop;
+
+    [Tooltip("큐브 이동 도착 소리")]
+    public SoundClip cubeMoveEnd;
+
+    [Tooltip("큐브 붕괴 경고 소리")]
+    public SoundClip cubeCollapseWarning;
+
+    [Tooltip("큐브 흔들림 소리 (루프)")]
+    public SoundClip cubeCollapseShake;
+
+    [Tooltip("큐브 붕괴 떨어짐 소리")]
+    public SoundClip cubeCollapseFall;
+
+    #endregion
+
+    #region ===== 멧돼지 시스템 사운드 =====
 
     [Header("=== 멧돼지 시스템 사운드 ===")]
-    public AudioSource boarWarningSound;          // 멧돼지 경고 소리
-    public AudioSource boarChargeSound;           // 멧돼지 돌진 소리
-    public AudioSource boarCrashSound;            // 멧돼지 충돌 소리
+    [Tooltip("멧돼지 경고 소리")]
+    public SoundClip boarWarning;
+
+    [Tooltip("멧돼지 돌진 소리")]
+    public SoundClip boarCharge;
+
+    [Tooltip("멧돼지 충돌 소리")]
+    public SoundClip boarCrash;
+
+    #endregion
+
+    #region ===== UI 및 시스템 사운드 =====
 
     [Header("=== UI 및 시스템 사운드 ===")]
-    public AudioSource uiClickSound;              // UI 클릭 소리
-    public AudioSource uiDialogSound;             // UI 대화 출력 소리
-    public AudioSource volumeSliderSound;         // 사운드 조절 소리
+    [Tooltip("UI 클릭 소리")]
+    public SoundClip uiClick;
+
+    [Tooltip("UI 대화 출력 소리")]
+    public SoundClip uiDialog;
+
+    [Tooltip("사운드 조절 소리")]
+    public SoundClip volumeSlider;
+
+    #endregion
+
+    #region ===== 내부 변수 =====
 
     // PlayerPrefs 키 상수
     private const string MusicVolumeKey = "MusicVolume";
@@ -60,10 +171,25 @@ public class SoundManager : SingletonT<SoundManager>
     private float currentMusicVolume = 1.0f;
     private float currentEffectVolume = 1.0f;
 
+    // 자동 생성되는 AudioSource들
+    private AudioSource musicSource;        // 배경음악용
+    private AudioSource effectSource;       // 모든 효과음용
+    private AudioSource loopSource;         // 루프 사운드용 (큐브 이동, 흔들림 등)
+
+    // 현재 재생 중인 배경음악 인덱스
+    private int currentMusicIndex = -1;
+
+    #endregion
+
     #region ===== 초기화 =====
 
     protected void Awake()
     {
+        // 싱글톤 설정 (기존 코드 유지)
+
+        // AudioSource 자동 생성
+        CreateAudioSources();
+
         // 모든 효과음 정지
         StopAllEffectSounds();
     }
@@ -78,10 +204,33 @@ public class SoundManager : SingletonT<SoundManager>
         SetEffectVolume(savedEffectVolume);
 
         // 첫 번째 배경 음악 재생
-        if (backgroundMusicSources != null && backgroundMusicSources.Length > 0)
+        if (backgroundMusics != null && backgroundMusics.Length > 0)
         {
             PlayBackgroundMusic(0);
         }
+    }
+
+    /// <summary>
+    /// AudioSource 자동 생성
+    /// </summary>
+    private void CreateAudioSources()
+    {
+        // 배경음악용 AudioSource
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.loop = true;
+        musicSource.playOnAwake = false;
+
+        // 효과음용 AudioSource  
+        effectSource = gameObject.AddComponent<AudioSource>();
+        effectSource.loop = false;
+        effectSource.playOnAwake = false;
+
+        // 루프 사운드용 AudioSource
+        loopSource = gameObject.AddComponent<AudioSource>();
+        loopSource.loop = true;
+        loopSource.playOnAwake = false;
+
+        Debug.Log("[SoundManager] AudioSource 자동 생성 완료 (총 3개)");
     }
 
     /// <summary>
@@ -89,55 +238,11 @@ public class SoundManager : SingletonT<SoundManager>
     /// </summary>
     private void StopAllEffectSounds()
     {
-        // 플레이어 기본 액션 사운드 정지
-        SafeStop(playerMoveSound);
-        SafeStop(playerJumpSound);
-        SafeStop(playerLandSound);
-        SafeStop(playerHitSound);
-        SafeStop(playerDeathSound);
+        if (effectSource != null && effectSource.isPlaying)
+            effectSource.Stop();
 
-        // 플레이어 공격 사운드 정지
-        SafeStop(playerBasicAttackSound);
-        SafeStop(playerDropAttackSound);
-        SafeStop(playerDropImpactSound);
-        SafeStop(playerDodgeAttackSound);
-
-        // 몬스터 사운드 정지
-        SafeStop(monsterSpawnSound);
-        SafeStop(minionAttackSound);
-        SafeStop(monsterHitSound);
-        SafeStop(archerFireSound);
-        SafeStop(mageSpellSound);
-        SafeStop(shielderChargeSound);
-
-        // 큐브 시스템 사운드 정지
-        SafeStop(cubeMoveStartSound);
-        SafeStop(cubeMoveLoopSound);
-        SafeStop(cubeMoveEndSound);
-        SafeStop(cubeCollapseWarningSound);
-        SafeStop(cubeCollapseShakeSound);
-        SafeStop(cubeCollapseFallSound);
-
-        // 멧돼지 시스템 사운드 정지
-        SafeStop(boarWarningSound);
-        SafeStop(boarChargeSound);
-        SafeStop(boarCrashSound);
-
-        // UI 사운드 정지
-        SafeStop(uiClickSound);
-        SafeStop(uiDialogSound);
-        SafeStop(volumeSliderSound);
-    }
-
-    /// <summary>
-    /// 안전한 AudioSource 정지
-    /// </summary>
-    private void SafeStop(AudioSource source)
-    {
-        if (source != null && source.isPlaying)
-        {
-            source.Stop();
-        }
+        if (loopSource != null && loopSource.isPlaying)
+            loopSource.Stop();
     }
 
     #endregion
@@ -151,15 +256,9 @@ public class SoundManager : SingletonT<SoundManager>
     {
         currentMusicVolume = volume;
 
-        if (backgroundMusicSources != null)
+        if (musicSource != null)
         {
-            foreach (var source in backgroundMusicSources)
-            {
-                if (source != null)
-                {
-                    source.volume = volume;
-                }
-            }
+            musicSource.volume = volume;
         }
 
         SaveVolume(MusicVolumeKey, volume);
@@ -172,52 +271,17 @@ public class SoundManager : SingletonT<SoundManager>
     {
         currentEffectVolume = volume;
 
-        // 모든 효과음 AudioSource에 볼륨 적용
-        SetVolumeForSource(playerMoveSound, volume);
-        SetVolumeForSource(playerJumpSound, volume);
-        SetVolumeForSource(playerLandSound, volume);
-        SetVolumeForSource(playerHitSound, volume);
-        SetVolumeForSource(playerDeathSound, volume);
+        if (effectSource != null)
+        {
+            effectSource.volume = volume;
+        }
 
-        SetVolumeForSource(playerBasicAttackSound, volume);
-        SetVolumeForSource(playerDropAttackSound, volume);
-        SetVolumeForSource(playerDropImpactSound, volume);
-        SetVolumeForSource(playerDodgeAttackSound, volume);
-
-        SetVolumeForSource(monsterSpawnSound, volume);
-        SetVolumeForSource(monsterHitSound, volume);
-        SetVolumeForSource(minionAttackSound, volume);
-        SetVolumeForSource(archerFireSound, volume);
-        SetVolumeForSource(mageSpellSound, volume);
-        SetVolumeForSource(shielderChargeSound, volume);
-
-        SetVolumeForSource(cubeMoveStartSound, volume);
-        SetVolumeForSource(cubeMoveLoopSound, volume);
-        SetVolumeForSource(cubeMoveEndSound, volume);
-        SetVolumeForSource(cubeCollapseWarningSound, volume);
-        SetVolumeForSource(cubeCollapseShakeSound, volume);
-        SetVolumeForSource(cubeCollapseFallSound, volume);
-
-        SetVolumeForSource(boarWarningSound, volume);
-        SetVolumeForSource(boarChargeSound, volume);
-        SetVolumeForSource(boarCrashSound, volume);
-
-        SetVolumeForSource(uiClickSound, volume);
-        SetVolumeForSource(uiDialogSound, volume);
-        SetVolumeForSource(volumeSliderSound, volume);
+        if (loopSource != null)
+        {
+            loopSource.volume = volume;
+        }
 
         SaveVolume(EffectVolumeKey, volume);
-    }
-
-    /// <summary>
-    /// 개별 AudioSource 볼륨 설정
-    /// </summary>
-    private void SetVolumeForSource(AudioSource source, float volume)
-    {
-        if (source != null)
-        {
-            source.volume = volume;
-        }
     }
 
     /// <summary>
@@ -246,26 +310,25 @@ public class SoundManager : SingletonT<SoundManager>
     /// </summary>
     public void PlayBackgroundMusic(int index)
     {
-        if (backgroundMusicSources == null || index < 0 || index >= backgroundMusicSources.Length)
+        if (backgroundMusics == null || index < 0 || index >= backgroundMusics.Length)
             return;
 
-        // 모든 배경음악 정지
-        foreach (AudioSource source in backgroundMusicSources)
+        SoundClip musicClip = backgroundMusics[index];
+        if (musicClip == null || musicClip.clip == null)
+            return;
+
+        // 현재 음악 정지
+        if (musicSource.isPlaying)
         {
-            if (source != null && source.isPlaying)
-            {
-                source.Stop();
-                source.time = 0;
-                source.loop = false;
-            }
+            musicSource.Stop();
         }
 
-        // 선택한 배경음악 재생
-        if (backgroundMusicSources[index] != null)
-        {
-            backgroundMusicSources[index].loop = true;
-            backgroundMusicSources[index].Play();
-        }
+        // 새 음악 재생
+        musicSource.clip = musicClip.clip;
+        musicSource.volume = musicClip.volume * currentMusicVolume;
+        musicSource.Play();
+
+        currentMusicIndex = index;
     }
 
     /// <summary>
@@ -273,15 +336,11 @@ public class SoundManager : SingletonT<SoundManager>
     /// </summary>
     public void StopAllBackgroundMusic()
     {
-        if (backgroundMusicSources == null) return;
-
-        foreach (AudioSource source in backgroundMusicSources)
+        if (musicSource != null && musicSource.isPlaying)
         {
-            if (source != null && source.isPlaying)
-            {
-                source.Stop();
-            }
+            musicSource.Stop();
         }
+        currentMusicIndex = -1;
     }
 
     #endregion
@@ -290,27 +349,27 @@ public class SoundManager : SingletonT<SoundManager>
 
     public void PlayPlayerMove()
     {
-        PlaySound(playerMoveSound);
+        PlaySound(playerMove);
     }
 
     public void PlayPlayerJump()
     {
-        PlaySound(playerJumpSound);
+        PlaySound(playerJump);
     }
 
     public void PlayPlayerLand()
     {
-        PlaySound(playerLandSound);
+        PlaySound(playerLand);
     }
 
     public void PlayPlayerHit()
     {
-        PlaySound(playerHitSound);
+        PlaySound(playerHit);
     }
 
     public void PlayPlayerDeath()
     {
-        PlaySound(playerDeathSound);
+        PlaySound(playerDeath);
     }
 
     #endregion
@@ -319,22 +378,22 @@ public class SoundManager : SingletonT<SoundManager>
 
     public void PlayPlayerBasicAttack()
     {
-        PlaySound(playerBasicAttackSound);
+        PlaySound(playerBasicAttack);
     }
 
     public void PlayPlayerDropAttack()
     {
-        PlaySound(playerDropAttackSound);
+        PlaySound(playerDropAttack);
     }
 
     public void PlayPlayerDropImpact()
     {
-        PlaySound(playerDropImpactSound);
+        PlaySound(playerDropImpact);
     }
 
     public void PlayPlayerDodgeAttack()
     {
-        PlaySound(playerDodgeAttackSound);
+        PlaySound(playerDodgeAttack);
     }
 
     /// <summary>
@@ -366,33 +425,33 @@ public class SoundManager : SingletonT<SoundManager>
     // 공통 몬스터 사운드
     public void PlayMonsterSpawn()
     {
-        PlaySound(monsterSpawnSound);
+        PlaySound(monsterSpawn);
     }
 
     public void PlayMonsterHit()
     {
-        PlaySound(monsterHitSound);
+        PlaySound(monsterHit);
     }
 
     // 몬스터별 공격 사운드
     public void PlayArcherFire()
     {
-        PlaySound(archerFireSound);
+        PlaySound(archerFire);
     }
 
     public void PlayMageSpell()
     {
-        PlaySound(mageSpellSound);
+        PlaySound(mageSpell);
     }
 
     public void PlayMinionAttack()
     {
-        PlaySound(minionAttackSound);
+        PlaySound(minionAttack);
     }
 
     public void PlayShielderCharge()
     {
-        PlaySound(shielderChargeSound);
+        PlaySound(shielderCharge);
     }
 
     /// <summary>
@@ -423,42 +482,42 @@ public class SoundManager : SingletonT<SoundManager>
 
     public void PlayCubeMoveStart()
     {
-        PlaySound(cubeMoveStartSound);
+        PlaySound(cubeMoveStart);
     }
 
     public void PlayCubeMoveLoop()
     {
-        PlayLoopSound(cubeMoveLoopSound);
+        PlayLoopSound(cubeMoveLoop);
     }
 
     public void StopCubeMoveLoop()
     {
-        StopSound(cubeMoveLoopSound);
+        StopLoopSound();
     }
 
     public void PlayCubeMoveEnd()
     {
-        PlaySound(cubeMoveEndSound);
+        PlaySound(cubeMoveEnd);
     }
 
     public void PlayCubeCollapseWarning()
     {
-        PlaySound(cubeCollapseWarningSound);
+        PlaySound(cubeCollapseWarning);
     }
 
     public void PlayCubeCollapseShake()
     {
-        PlayLoopSound(cubeCollapseShakeSound);
+        PlayLoopSound(cubeCollapseShake);
     }
 
     public void StopCubeCollapseShake()
     {
-        StopSound(cubeCollapseShakeSound);
+        StopLoopSound();
     }
 
     public void PlayCubeCollapseFall()
     {
-        PlaySound(cubeCollapseFallSound);
+        PlaySound(cubeCollapseFall);
     }
 
     #endregion
@@ -467,17 +526,17 @@ public class SoundManager : SingletonT<SoundManager>
 
     public void PlayBoarWarning()
     {
-        PlaySound(boarWarningSound);
+        PlaySound(boarWarning);
     }
 
     public void PlayBoarCharge()
     {
-        PlaySound(boarChargeSound);
+        PlaySound(boarCharge);
     }
 
     public void PlayBoarCrash()
     {
-        PlaySound(boarCrashSound);
+        PlaySound(boarCrash);
     }
 
     #endregion
@@ -486,17 +545,17 @@ public class SoundManager : SingletonT<SoundManager>
 
     public void PlayUIClick()
     {
-        PlaySound(uiClickSound);
+        PlaySound(uiClick);
     }
 
     public void PlayUIDialog()
     {
-        PlaySound(uiDialogSound);
+        PlaySound(uiDialog);
     }
 
     public void PlayVolumeSlider()
     {
-        PlaySound(volumeSliderSound);
+        PlaySound(volumeSlider);
     }
 
     #endregion
@@ -504,36 +563,41 @@ public class SoundManager : SingletonT<SoundManager>
     #region ===== 헬퍼 메서드들 =====
 
     /// <summary>
-    /// 일반 사운드 재생
+    /// 일반 사운드 재생 (SoundClip 사용)
     /// </summary>
-    private void PlaySound(AudioSource source)
+    private void PlaySound(SoundClip soundClip)
     {
-        if (source != null && source.clip != null)
+        if (effectSource != null && soundClip != null && soundClip.clip != null)
         {
-            source.Play();
+            float finalVolume = soundClip.volume * currentEffectVolume;
+            effectSource.PlayOneShot(soundClip.clip, finalVolume);
         }
     }
 
     /// <summary>
-    /// 루프 사운드 재생
+    /// 루프 사운드 재생 (SoundClip 사용)
     /// </summary>
-    private void PlayLoopSound(AudioSource source)
+    private void PlayLoopSound(SoundClip soundClip)
     {
-        if (source != null && source.clip != null && !source.isPlaying)
+        if (loopSource != null && soundClip != null && soundClip.clip != null)
         {
-            source.loop = true;
-            source.Play();
+            if (loopSource.isPlaying)
+                loopSource.Stop();
+
+            loopSource.clip = soundClip.clip;
+            loopSource.volume = soundClip.volume * currentEffectVolume;
+            loopSource.Play();
         }
     }
 
     /// <summary>
-    /// 사운드 정지
+    /// 루프 사운드 정지
     /// </summary>
-    private void StopSound(AudioSource source)
+    private void StopLoopSound()
     {
-        if (source != null && source.isPlaying)
+        if (loopSource != null && loopSource.isPlaying)
         {
-            source.Stop();
+            loopSource.Stop();
         }
     }
 
@@ -560,9 +624,19 @@ public class SoundManager : SingletonT<SoundManager>
     /// <summary>
     /// 특정 AudioSource가 재생 중인지 확인
     /// </summary>
-    public bool IsPlaying(AudioSource source)
+    public bool IsMusicPlaying()
     {
-        return source != null && source.isPlaying;
+        return musicSource != null && musicSource.isPlaying;
+    }
+
+    public bool IsEffectPlaying()
+    {
+        return effectSource != null && effectSource.isPlaying;
+    }
+
+    public bool IsLoopPlaying()
+    {
+        return loopSource != null && loopSource.isPlaying;
     }
 
     /// <summary>

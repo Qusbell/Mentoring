@@ -46,7 +46,9 @@ public class DodgeAction : ActorAction
     {
         // --- dodge 중에는 dodge X ---
         if (isDodge) { return; }
-        
+
+        SoundManager.Instance.PlayPlayerDodgeAttack();
+
         // --- dodge true ---
         this.enabled = true;
         isDodge = true;
