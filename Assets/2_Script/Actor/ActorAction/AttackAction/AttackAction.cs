@@ -99,7 +99,10 @@ abstract public class AttackAction : ActorAction
 
         // 공격받았을 경우 캔슬 여부
         if (isCancelWhenHit)
-        { thisActor?.damageReaction?.whenHit.AddMulti(CancelAttack); }
+        {
+            thisActor?.damageReaction?.whenHit.AddMulti(CancelAttack);
+            thisActor?.damageReaction?.whenDie.AddMulti(CancelAttack);
+        }
     }
 
 
