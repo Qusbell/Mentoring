@@ -175,7 +175,7 @@ public class ChargeAttack : BasicWeaponAttack
         }
     }
 
-    // <- 임시
+    // <- 임시 (낙사 시 발판 반환)
     protected void OnDestroy()
     { CancelAttack(); }
 }
