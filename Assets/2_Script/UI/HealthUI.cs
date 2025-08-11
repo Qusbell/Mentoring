@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 체력 게이지 전용 UI (Slider 버전 - 색상 문제 수정)
+/// 체력 게이지 전용 UI (Slider 버전 - 펄스 효과만 제거)
 /// </summary>
 public class HealthUI : MonoBehaviour
 {
@@ -22,13 +22,8 @@ public class HealthUI : MonoBehaviour
     [SerializeField] private Color healthWarningColor = Color.yellow;
     [SerializeField] private Color healthDangerColor = Color.red;
 
-    [Header("펄스 효과")]
-    [SerializeField] private bool enablePulseEffect = true;
-    [SerializeField] private float pulseSpeed = 2f;
-
     // 애니메이션 관리
     private Coroutine healthAnimCoroutine;
-    private Coroutine healthPulseCoroutine;
 
     // 현재 값
     private float currentHealthRatio = 1f;
@@ -57,7 +52,7 @@ public class HealthUI : MonoBehaviour
 
             if (damageReaction != null)
             {
-                // 체력 변경 이벤트 구독 - 모든 체력 변화를 감지 (오타 수정)
+                // 체력 변경 이벤트 구독 - 모든 체력 변화를 감지
                 damageReaction.whenHealthChange.AddListener(UpdateHealthUI);
                 Debug.Log("HealthUI: 체력 변경 이벤트 구독 완료 - 모든 체력 변화 감지됨");
             }
@@ -73,7 +68,7 @@ public class HealthUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Fill Image 제대로 찾기 (기존 방식에 문제가 있었음)
+    /// Fill Image 제대로 찾기
     /// </summary>
     private void SetupFillImage()
     {
@@ -132,7 +127,7 @@ public class HealthUI : MonoBehaviour
 
     private void OnDisable()
     {
-        // 이벤트 구독 해제 (오타 수정)
+        // 이벤트 구독 해제
         if (damageReaction != null)
         {
             damageReaction.whenHealthChange.RemoveListener(UpdateHealthUI);
@@ -160,13 +155,10 @@ public class HealthUI : MonoBehaviour
             StopCoroutine(healthAnimCoroutine);
 
         healthAnimCoroutine = StartCoroutine(AnimateHealthBar(targetRatio));
-
-        // 위험 상태일 때 펄스 효과
-        HandleHealthPulseEffect(targetRatio);
     }
 
     /// <summary>
-    /// 체력 바 애니메이션 (색상 업데이트 수정)
+    /// 체력 바 애니메이션
     /// </summary>
     private IEnumerator AnimateHealthBar(float targetRatio)
     {
@@ -184,7 +176,7 @@ public class HealthUI : MonoBehaviour
             // Slider 값 업데이트
             healthSlider.value = currentHealthRatio;
 
-            // 색상 업데이트 (매번 확인하고 적용)
+            // 색상 업데이트
             UpdateHealthColor(currentHealthRatio);
 
             yield return null;
@@ -205,9 +197,6 @@ public class HealthUI : MonoBehaviour
         {
             Color newColor = GetHealthColor(healthRatio);
             healthFillImage.color = newColor;
-
-            // 디버깅용 로그 (필요시 주석 해제)
-            // Debug.Log($"HealthUI: 색상 변경 - HP:{healthRatio:F2} → {newColor}");
         }
         else
         {
@@ -216,52 +205,7 @@ public class HealthUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 체력 위험시 펄스 효과 관리
-    /// </summary>
-    private void HandleHealthPulseEffect(float healthRatio)
-    {
-        if (!enablePulseEffect) return;
-
-        if (healthRatio <= 0.2f)
-        {
-            if (healthPulseCoroutine == null)
-                healthPulseCoroutine = StartCoroutine(PulseHealthBar());
-        }
-        else
-        {
-            if (healthPulseCoroutine != null)
-            {
-                StopCoroutine(healthPulseCoroutine);
-                healthPulseCoroutine = null;
-
-                // 스케일 초기화
-                if (healthSlider != null)
-                    healthSlider.transform.localScale = Vector3.one;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 체력 바 펄스 효과
-    /// </summary>
-    private IEnumerator PulseHealthBar()
-    {
-        while (true)
-        {
-            float pulseValue = Mathf.PingPong(Time.time * pulseSpeed, 1f);
-            float scale = Mathf.Lerp(1f, 1.1f, pulseValue);
-
-            if (healthSlider != null)
-            {
-                healthSlider.transform.localScale = Vector3.one * scale;
-            }
-
-            yield return null;
-        }
-    }
-
-    /// <summary>
-    /// 체력 비율에 따른 색상 반환 (로그 추가)
+    /// 체력 비율에 따른 색상 반환
     /// </summary>
     private Color GetHealthColor(float healthRatio)
     {
@@ -293,12 +237,6 @@ public class HealthUI : MonoBehaviour
             StopCoroutine(healthAnimCoroutine);
             healthAnimCoroutine = null;
         }
-
-        if (healthPulseCoroutine != null)
-        {
-            StopCoroutine(healthPulseCoroutine);
-            healthPulseCoroutine = null;
-        }
     }
 
     /// <summary>
@@ -326,7 +264,7 @@ public class HealthUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 힐링 테스트 메서드 (새로 추가)
+    /// 힐링 테스트 메서드
     /// </summary>
     [ContextMenu("테스트 - HP 회복")]
     public void TestHealHealth()
