@@ -76,6 +76,7 @@ public class ChargeAttack : BasicWeaponAttack
         this.enabled = false;
         thisActor.rigid.isKinematic = false;
         thisActor.rigid.velocity = Vector3.zero;
+
         NotUseWeapon(); // <- 돌진 종료 시 무기 비활성화
     }
 
@@ -124,7 +125,7 @@ public class ChargeAttack : BasicWeaponAttack
         Vector3 nextPos = thisActor.rigid.position + transform.forward * curSpeed * Time.fixedDeltaTime;
 
         // --- 다음 위치 장애물 확인 (위쪽) ---
-        int count = Physics.OverlapSphereNonAlloc(nextPos + new Vector3(0, checkRadius * 2, 0), checkRadius, cubes, checkLayer);
+        int count = Physics.OverlapSphereNonAlloc(nextPos + Vector3.up * checkRadius * 2, checkRadius, cubes, checkLayer);
         if (count > 0)
         {
             EndChargeWhenCube();
@@ -177,5 +178,5 @@ public class ChargeAttack : BasicWeaponAttack
 
     // <- 임시 (낙사 시 발판 반환)
     protected void OnDestroy()
-    { CancelAttack(); }
+    { WarningPlaneSetter.DelWarning(this, ref warningPlane); }
 }

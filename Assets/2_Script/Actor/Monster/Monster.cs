@@ -258,7 +258,7 @@ public class Monster : Actor
 
 
     // 피격 시 애니메이션
-    protected void HitStatus()
+    protected virtual void HitStatus()
     {
         PlayTriggerAnimationOnce("IsHit");
         SwitchStatusWhenAnimationEnd("Hit", IdleStatus);

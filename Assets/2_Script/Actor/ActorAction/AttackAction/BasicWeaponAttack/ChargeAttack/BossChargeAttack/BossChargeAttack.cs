@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BossChargeAttack : ChargeAttack
 {
+    // 스턴 시 이벤트
+    public MyCallBacks stunEvent = new MyCallBacks();
+
+
     protected override void BeforeAttack()
     {
         // --- 경고발판 생성 ---
@@ -34,7 +38,7 @@ public class BossChargeAttack : ChargeAttack
     protected override void EndChargeWhenCube()
     {
         base.EndChargeWhenCube();
-        // <- 기절 이벤트
+        stunEvent.Invoke();
     }
 
 }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,12 +10,32 @@ public class Boss : Monster
     // 돌진 플래그
     protected bool chargePlag = true;
 
+    // 돌진 중 충돌 판정
+    protected bool isHitWhenCharge = false;
+
 
     protected override void Awake()
     {
         base.Awake();
-        nowAttackKey = tempAttackName;
         isBoss = true;
+
+        // 스턴 이벤트 등록
+        nowAttackKey = AttackName.Monster_BossChargeAttack;
+        BossChargeAttack bossChargeAttack = attackAction as BossChargeAttack;
+        if (bossChargeAttack != null)
+        {
+            System.Action action =
+                () => {
+                    animator.PlayAnimation("DoHit");
+                    animator.PlayAnimation("IsHit", true);
+                    isHitWhenCharge = true;
+                    SwitchStatus(HitStatus);
+                };
+            bossChargeAttack.stunEvent.Add(action);
+        }
+
+        // 임시
+        nowAttackKey = tempAttackName;
     }
 
 
@@ -25,6 +43,8 @@ public class Boss : Monster
     {
         base.SwitchStatus(nextStatus);
         chargePlag = true;
+        isHitWhenCharge = false;
+        animator.PlayAnimation("IsHit", false);
     }
 
 
@@ -39,15 +59,13 @@ public class Boss : Monster
 
             case AttackName.Monster_BossChargeAttack:
                 PlayTriggerAnimationOnce("DoChargeAttack");
-                SwitchStatusWhenAnimationEnd("Charge_Attack", IdleStatus);
-                // <- BossChargeAttack에서 애니메이션 직접 제어 중
+                if (!isHitWhenCharge)
+                { SwitchStatusWhenAnimationEnd("Charge_Attack", IdleStatus); }
+                // (BossChargeAttack에서 애니메이션 직접 제어 중)
                 break;
 
                 // <- dropAttack
         }
     }
-
-
-
 
 }
