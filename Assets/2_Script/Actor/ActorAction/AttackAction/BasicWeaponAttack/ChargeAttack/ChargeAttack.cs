@@ -175,4 +175,7 @@ public class ChargeAttack : BasicWeaponAttack
         }
     }
 
+    // <- 임시
+    protected void OnDestroy()
+    { CancelAttack(); }
 }
