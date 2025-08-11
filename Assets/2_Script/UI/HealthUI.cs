@@ -3,15 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 체력 게이지 전용 UI (Slider 버전 - 펄스 효과만 제거)
+/// 체력 게이지 전용 UI (싱글톤 방식)
 /// </summary>
-public class HealthUI : MonoBehaviour
+public class HealthUI : SingletonT<HealthUI>
 {
     private DamageReaction damageReaction;
 
-    [Header("HP 게이지 (Slider 사용)")]
+    [Header("HP 게이지")]
     [SerializeField] private Slider healthSlider;
-    [SerializeField] private Image healthFillImage; // Slider의 Fill 이미지
+    [SerializeField] private Image healthFillImage;
 
     [Header("애니메이션 설정")]
     [SerializeField] private float animationDuration = 0.3f;
@@ -22,135 +22,102 @@ public class HealthUI : MonoBehaviour
     [SerializeField] private Color healthWarningColor = Color.yellow;
     [SerializeField] private Color healthDangerColor = Color.red;
 
-    // 애니메이션 관리
     private Coroutine healthAnimCoroutine;
-
-    // 현재 값
     private float currentHealthRatio = 1f;
 
     private void Start()
     {
-        // 플레이어 찾기 및 이벤트 구독
-        SetupPlayerConnection();
-
-        // Fill Image 제대로 찾기
-        SetupFillImage();
-
-        // 초기 UI 업데이트
-        UpdateHealthUI();
-    }
-
-    /// <summary>
-    /// 플레이어 연결 및 이벤트 구독
-    /// </summary>
-    private void SetupPlayerConnection()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        // 싱글톤 중복 방지
+        if (Instance != null && Instance != this)
         {
-            damageReaction = player.GetComponent<DamageReaction>();
-
-            if (damageReaction != null)
-            {
-                // 체력 변경 이벤트 구독 - 모든 체력 변화를 감지
-                damageReaction.whenHealthChange.AddListener(UpdateHealthUI);
-                Debug.Log("HealthUI: 체력 변경 이벤트 구독 완료 - 모든 체력 변화 감지됨");
-            }
-            else
-            {
-                Debug.LogWarning("HealthUI: DamageReaction 컴포넌트를 찾을 수 없습니다");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("HealthUI: Player 태그 오브젝트를 찾을 수 없습니다");
-        }
-    }
-
-    /// <summary>
-    /// Fill Image 제대로 찾기
-    /// </summary>
-    private void SetupFillImage()
-    {
-        if (healthSlider == null)
-        {
-            Debug.LogError("HealthUI: healthSlider가 할당되지 않았습니다");
+            Destroy(gameObject);
             return;
         }
 
-        // Inspector에서 직접 할당하지 않았다면 자동으로 찾기
-        if (healthFillImage == null)
-        {
-            // 방법 1: fillRect에서 찾기
-            if (healthSlider.fillRect != null)
-            {
-                healthFillImage = healthSlider.fillRect.GetComponent<Image>();
-                Debug.Log($"HealthUI: fillRect에서 Fill Image 찾기: {healthFillImage != null}");
-            }
+        //DontDestroyOnLoad(gameObject);
+        ConnectToPlayer();
+    }
 
-            // 방법 2: 자식에서 "Fill" 이름으로 찾기
-            if (healthFillImage == null)
-            {
-                Transform fillTransform = healthSlider.transform.Find("Fill Area/Fill");
-                if (fillTransform != null)
-                {
-                    healthFillImage = fillTransform.GetComponent<Image>();
-                    Debug.Log($"HealthUI: 이름으로 Fill Image 찾기: {healthFillImage != null}");
-                }
-            }
-
-            // 방법 3: 모든 자식 Image 중에서 찾기 (마지막 수단)
-            if (healthFillImage == null)
-            {
-                Image[] allImages = healthSlider.GetComponentsInChildren<Image>();
-                foreach (Image img in allImages)
-                {
-                    if (img.name.ToLower().Contains("fill"))
-                    {
-                        healthFillImage = img;
-                        Debug.Log($"HealthUI: 자식 검색으로 Fill Image 찾기: {img.name}");
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (healthFillImage == null)
-        {
-            Debug.LogError("HealthUI: Fill Image를 찾을 수 없습니다. Inspector에서 직접 할당해주세요.");
-        }
-        else
-        {
-            Debug.Log($"HealthUI: Fill Image 설정 완료: {healthFillImage.name}");
-        }
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        // 이벤트 구독 해제
-        if (damageReaction != null)
-        {
-            damageReaction.whenHealthChange.RemoveListener(UpdateHealthUI);
-        }
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        DisconnectFromPlayer();
+        StopAnimations();
+    }
 
-        StopAllAnimations();
+    protected override void OnDestroy()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        DisconnectFromPlayer();
+        StopAnimations();
+        base.OnDestroy();
+    }
+
+    private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        ConnectToPlayer();
     }
 
     /// <summary>
-    /// HP UI 애니메이션 업데이트
+    /// 플레이어 연결
+    /// </summary>
+    private void ConnectToPlayer()
+    {
+        DisconnectFromPlayer(); // 기존 연결 해제
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            damageReaction = player.GetComponent<DamageReaction>();
+            if (damageReaction != null)
+            {
+                damageReaction.whenHealthChange.AddListener(UpdateHealthUI);
+                SetupFillImage();
+                UpdateHealthUI();
+                Debug.Log("HealthUI: 플레이어 연결 완료");
+            }
+        }
+    }
+
+    /// <summary>
+    /// 플레이어 연결 해제
+    /// </summary>
+    private void DisconnectFromPlayer()
+    {
+        if (damageReaction != null)
+        {
+            damageReaction.whenHealthChange.RemoveListener(UpdateHealthUI);
+            damageReaction = null;
+        }
+    }
+
+    /// <summary>
+    /// Fill Image 설정
+    /// </summary>
+    private void SetupFillImage()
+    {
+        if (healthSlider == null) return;
+
+        if (healthFillImage == null)
+        {
+            healthFillImage = healthSlider.fillRect?.GetComponent<Image>();
+        }
+    }
+
+    /// <summary>
+    /// 체력 UI 업데이트
     /// </summary>
     private void UpdateHealthUI()
     {
-        if (healthSlider == null || damageReaction == null)
-        {
-            Debug.LogWarning("HealthUI: healthSlider 또는 damageReaction이 null입니다");
-            return;
-        }
+        if (healthSlider == null || damageReaction == null) return;
 
         float targetRatio = (float)damageReaction.healthPoint / damageReaction.maxHealthPoint;
-        Debug.Log($"HealthUI: HP 업데이트 - {damageReaction.healthPoint}/{damageReaction.maxHealthPoint} = {targetRatio:F2}");
 
-        // 체력 바 애니메이션
         if (healthAnimCoroutine != null)
             StopCoroutine(healthAnimCoroutine);
 
@@ -158,7 +125,7 @@ public class HealthUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 체력 바 애니메이션
+    /// 체력바 애니메이션
     /// </summary>
     private IEnumerator AnimateHealthBar(float targetRatio)
     {
@@ -168,69 +135,42 @@ public class HealthUI : MonoBehaviour
         while (elapsedTime < animationDuration)
         {
             elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / animationDuration;
+            float progress = animationCurve.Evaluate(elapsedTime / animationDuration);
+            currentHealthRatio = Mathf.Lerp(startRatio, targetRatio, progress);
 
-            float curveValue = animationCurve.Evaluate(progress);
-            currentHealthRatio = Mathf.Lerp(startRatio, targetRatio, curveValue);
-
-            // Slider 값 업데이트
             healthSlider.value = currentHealthRatio;
-
-            // 색상 업데이트
             UpdateHealthColor(currentHealthRatio);
 
             yield return null;
         }
 
-        // 최종 값 설정
         currentHealthRatio = targetRatio;
         healthSlider.value = currentHealthRatio;
         UpdateHealthColor(currentHealthRatio);
     }
 
     /// <summary>
-    /// 색상 업데이트를 별도 메서드로 분리
+    /// 색상 업데이트
     /// </summary>
     private void UpdateHealthColor(float healthRatio)
     {
-        if (healthFillImage != null)
-        {
-            Color newColor = GetHealthColor(healthRatio);
-            healthFillImage.color = newColor;
-        }
-        else
-        {
-            Debug.LogWarning("HealthUI: healthFillImage가 null이어서 색상을 변경할 수 없습니다");
-        }
-    }
+        if (healthFillImage == null) return;
 
-    /// <summary>
-    /// 체력 비율에 따른 색상 반환
-    /// </summary>
-    private Color GetHealthColor(float healthRatio)
-    {
-        Color resultColor;
-
+        Color newColor;
         if (healthRatio <= 0.2f)
-        {
-            resultColor = healthDangerColor;
-        }
+            newColor = healthDangerColor;
         else if (healthRatio <= 0.5f)
-        {
-            resultColor = healthWarningColor;
-        }
+            newColor = healthWarningColor;
         else
-        {
-            resultColor = healthNormalColor;
-        }
+            newColor = healthNormalColor;
 
-        return resultColor;
+        healthFillImage.color = newColor;
     }
 
     /// <summary>
-    /// 모든 애니메이션 중지
+    /// 애니메이션 중지
     /// </summary>
-    private void StopAllAnimations()
+    private void StopAnimations()
     {
         if (healthAnimCoroutine != null)
         {
@@ -240,42 +180,20 @@ public class HealthUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 수동 체력 업데이트 (외부 호출용)
+    /// 외부 호출용 메서드들
     /// </summary>
-    public void ManualUpdateHealth()
-    {
-        UpdateHealthUI();
-    }
+    public void ConnectToNewPlayer() => ConnectToPlayer();
+    public void ManualUpdateHealth() => UpdateHealthUI();
 
-    /// <summary>
-    /// 테스트 메서드
-    /// </summary>
     [ContextMenu("테스트 - HP 감소")]
     public void TestDecreaseHealth()
     {
-        if (damageReaction != null)
-        {
-            damageReaction.TakeDamage(1, null, 0f, 0f);
-        }
-        else
-        {
-            Debug.LogWarning("HealthUI: damageReaction이 null이어서 테스트할 수 없습니다");
-        }
+        damageReaction?.TakeDamage(1, null, 0f, 0f);
     }
 
-    /// <summary>
-    /// 힐링 테스트 메서드
-    /// </summary>
     [ContextMenu("테스트 - HP 회복")]
     public void TestHealHealth()
     {
-        if (damageReaction != null)
-        {
-            damageReaction.Heal(1);
-        }
-        else
-        {
-            Debug.LogWarning("HealthUI: damageReaction이 null이어서 테스트할 수 없습니다");
-        }
+        damageReaction?.Heal(1);
     }
 }
