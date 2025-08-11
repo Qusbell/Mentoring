@@ -1033,7 +1033,7 @@ MonoBehaviour:
   <attackCost>k__BackingField: 0
   hitEffect: {fileID: 757547568125524834, guid: 7dddcdbfd5836da43a4512fbec18ea46, type: 3}
   effectDestoryTime: 1
-  weaponBeforeDelay: 0.7
+  weaponBeforeDelay: 0.5
   beforeDelayEffect: {fileID: 0}
   beforeDelayEffectPos: {fileID: 0}
   isCancelWhenHit: 1
@@ -1041,6 +1041,7 @@ MonoBehaviour:
   weaponActiveTime: 1
   chargeSpeed: 27
   chargeDistance: 12
+  warningWidth: 1.5
 --- !u!114 &5097308888875272474
 MonoBehaviour:
   m_ObjectHideFlags: 0

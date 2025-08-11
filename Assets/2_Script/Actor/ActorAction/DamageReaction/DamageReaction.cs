@@ -73,20 +73,20 @@ public class DamageReaction : ActorAction
     // 넉백 따로 만들기
     public virtual void KnockBackImpulse(GameObject enemy, float knockBackPower, float knockBackHeight)
     {
+        // 키네마틱 상태면 return
+        if (thisActor.rigid.isKinematic) { return; }
+
         // 넉백 준비
         Vector3 tempVector = (this.transform.position - enemy.transform.position).normalized;
-        Rigidbody rigid = GetComponent<Rigidbody>();
-
-        if (rigid == null) { return; } // null 처리 (넉백 없음)
-
+        
         tempVector *= knockBackPower;
-        tempVector.y = knockBackHeight + rigid.velocity.y; // 상/하 넉백
+        tempVector.y = knockBackHeight + thisActor.rigid.velocity.y; // 상/하 넉백
         if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절 (현재 27f)
-        rigid.velocity = tempVector; // 넉백 적용
+        thisActor.rigid.velocity = tempVector; // 넉백 적용
 
         // 사망 시 추가넉백
         if (isDie)
-        { rigid.velocity = tempVector * bouncePowerWhenDie; }
+        { thisActor.rigid.velocity = tempVector * bouncePowerWhenDie; }
     }
 
 
@@ -119,32 +119,6 @@ public class DamageReaction : ActorAction
         // 레이어 변경
         int targetLayer = LayerMask.NameToLayer("DieActorLayer");
         LayerChanger.ChangeLayerWithAll(this.gameObject, targetLayer);
-
-
-        // --- 가라앉기 / 제거 ---
-
-        // 사망 시간
-        float deathTime = 2f;
-        // 가라앉는 시간
-        float fallTime = 1f;
-
-        // 가라앉기 (콜라이더를 위로 빼기)
-        CapsuleCollider[] cols = GetComponentsInChildren<CapsuleCollider>();
-
-        // 1초 뒤부터 가라앉기 시작
-        Timer.Instance.StartTimer(this, deathTime - fallTime,
-            () => {
-                // 모든 콜라이더 수집 후 일괄 작동
-                int i = 0;
-                foreach (var col in cols)
-                {
-                    i++;
-                    Timer.Instance.StartRepeatTimer(this, "_FallDown" + i, fallTime, () => col.center -= Vector3.down * 0.005f);
-                }
-            });
-
-        // 2초 후 제거
-        Timer.Instance.StartTimer(this, "_WhenDie", deathTime, () => Destroy(this.gameObject));
     }
 
     public void Heal(int amount)

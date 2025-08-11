@@ -26,8 +26,11 @@ public class Player : Actor
         jumpAction = GetComponent<JumpAction>();
         dodgeAction = GetComponent<DodgeAction>();
         staminaAction = GetComponent<StaminaAction>();
-    }
 
+        // 사망 시 애니메이션 등록 / 조작해도 Player 동작X
+        damageReaction.whenDie.AddMulti(
+            () => { animator.PlayAnimation("DoDie"); this.enabled = false; }, true);
+    }
 
 
     // 프레임당 업데이트
