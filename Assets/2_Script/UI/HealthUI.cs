@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// 체력 게이지 전용 UI (싱글톤 방식)
@@ -12,6 +13,7 @@ public class HealthUI : SingletonT<HealthUI>
     [Header("HP 게이지")]
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Image healthFillImage;
+    [SerializeField] private TextMeshProUGUI healthText;
 
     [Header("애니메이션 설정")]
     [SerializeField] private float animationDuration = 0.3f;
@@ -96,6 +98,18 @@ public class HealthUI : SingletonT<HealthUI>
         }
     }
 
+
+    /// <summary> /// 
+    /// 체력 텍스트 업데이트 /// 
+    /// </summary>
+    private void UpdateHealthText()
+    {
+        if (healthText != null && damageReaction != null)
+        {
+            healthText.text = $"{damageReaction.healthPoint}/{damageReaction.maxHealthPoint}";
+        }
+    }
+
     /// <summary>
     /// Fill Image 설정
     /// </summary>
@@ -140,6 +154,7 @@ public class HealthUI : SingletonT<HealthUI>
 
             healthSlider.value = currentHealthRatio;
             UpdateHealthColor(currentHealthRatio);
+            UpdateHealthText();
 
             yield return null;
         }
@@ -147,6 +162,7 @@ public class HealthUI : SingletonT<HealthUI>
         currentHealthRatio = targetRatio;
         healthSlider.value = currentHealthRatio;
         UpdateHealthColor(currentHealthRatio);
+        UpdateHealthText();
     }
 
     /// <summary>
