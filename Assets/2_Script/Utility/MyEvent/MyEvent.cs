@@ -69,16 +69,18 @@ public class MyEvent
 
 
     /// <summary>
-    /// UI 호환을 위한 AddListener (AddMulti와 동일)
+    /// UI 이벤트 구독 (체력/스태미나 UI 업데이트용)
+    /// Unity UI 이벤트와 동일한 방식으로 사용
     /// </summary>
     public void AddListener(System.Action action)
     {
-        AddMulti(action, true); // 중복 방지
+        AddMulti(action, true); // 중복 방지 활성화
     }
 
 
     /// <summary>
-    /// UI 호환을 위한 RemoveListener
+    /// UI 이벤트 구독 해제 (씬 전환/오브젝트 파괴시 메모리 누수 방지)
+    /// Unity UI 이벤트와 동일한 방식으로 사용
     /// </summary>
     public void RemoveListener(System.Action action)
     {
