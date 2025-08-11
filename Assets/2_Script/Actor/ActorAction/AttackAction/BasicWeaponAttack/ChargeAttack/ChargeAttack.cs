@@ -23,7 +23,7 @@ public class ChargeAttack : BasicWeaponAttack
         this.enabled = false;
 
         // 사망 시 돌진발판 즉시 제거
-        thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
+        thisActor.damageReaction.whenDie.AddMulti(CancelAttack, true);
     }
 
 
@@ -35,6 +35,10 @@ public class ChargeAttack : BasicWeaponAttack
             weaponBeforeDelay,
             transform.position,
             transform.forward);
+
+        // --- 지면 상태인 경우 : 키네마틱 활성화
+        if (thisActor.isRand)
+        { thisActor.rigid.isKinematic = true; }
     }
 
     protected override void CancelAttack()

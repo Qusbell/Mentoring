@@ -73,20 +73,20 @@ public class DamageReaction : ActorAction
     // 넉백 따로 만들기
     public virtual void KnockBackImpulse(GameObject enemy, float knockBackPower, float knockBackHeight)
     {
+        // 키네마틱 상태면 return
+        if (thisActor.rigid.isKinematic) { return; }
+
         // 넉백 준비
         Vector3 tempVector = (this.transform.position - enemy.transform.position).normalized;
-        Rigidbody rigid = GetComponent<Rigidbody>();
-
-        if (rigid == null) { return; } // null 처리 (넉백 없음)
-
+        
         tempVector *= knockBackPower;
-        tempVector.y = knockBackHeight + rigid.velocity.y; // 상/하 넉백
+        tempVector.y = knockBackHeight + thisActor.rigid.velocity.y; // 상/하 넉백
         if (27f < tempVector.y) { tempVector.y = 27f; }    // 과도한 vector 조절 (현재 27f)
-        rigid.velocity = tempVector; // 넉백 적용
+        thisActor.rigid.velocity = tempVector; // 넉백 적용
 
         // 사망 시 추가넉백
         if (isDie)
-        { rigid.velocity = tempVector * bouncePowerWhenDie; }
+        { thisActor.rigid.velocity = tempVector * bouncePowerWhenDie; }
     }
 
 

@@ -30,7 +30,6 @@ public class Boss : Monster
 
     protected override void AttackAnimationStatus()
     {
-
         switch (nowAttackKey)
         {
             case AttackName.Monster_BossNormalAttack:
@@ -41,6 +40,7 @@ public class Boss : Monster
             case AttackName.Monster_BossChargeAttack:
                 PlayTriggerAnimationOnce("DoChargeAttack");
                 SwitchStatusWhenAnimationEnd("Charge_Attack", IdleStatus);
+                // <- BossChargeAttack에서 애니메이션 직접 제어 중
                 break;
 
                 // <- dropAttack
