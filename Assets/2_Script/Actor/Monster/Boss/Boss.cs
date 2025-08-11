@@ -8,6 +8,8 @@ public class Boss : Monster
 {
     // 어떤 공격 사용할지 설정(디버그용)
     [SerializeField] protected AttackName tempAttackName;
+
+    // 돌진 플래그
     protected bool chargePlag = true;
 
 
@@ -24,12 +26,6 @@ public class Boss : Monster
         base.SwitchStatus(nextStatus);
         chargePlag = true;
     }
-   
-
-    protected override void LateUpdate()
-    {
-        base.LateUpdate();
-    }
 
 
     protected override void AttackAnimationStatus()
@@ -45,18 +41,13 @@ public class Boss : Monster
             case AttackName.Monster_BossChargeAttack:
                 PlayTriggerAnimationOnce("DoChargeAttack");
                 SwitchStatusWhenAnimationEnd("Charge_Attack", IdleStatus);
-                animator.PlayAnimation("IsChargeAttack", true);
-                if (chargePlag)
-                {
-                    chargePlag = false;
-                    Timer.Instance.StartRepeatTimer(this, "_BeforeCharge",
-                        attackAction.weaponBeforeDelay * 0.8f,
-                        moveAction.Turn);
-                }
                 break;
 
                 // <- dropAttack
         }
     }
+
+
+
 
 }

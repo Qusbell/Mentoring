@@ -102,6 +102,7 @@ abstract public class ActorWeapon : MonoBehaviour
 
 
     // 활성화된 횟수
+    // Use/NotUse 짝을 맞춰줘야 함
     private int _activateStack = 0;
     protected int activateStack
     {
@@ -122,17 +123,15 @@ abstract public class ActorWeapon : MonoBehaviour
         float p_effectDestoryTime = 1f)
     {
         if (0 < ++activateStack)
-        {
-            isActivate = true;
+        { isActivate = true; }
 
-            // 무기 능력치 대입
-            attackDamage = p_attackDamage;
-            maxHitCount = p_maxHitCount;
-            knockBackPower = p_knockBackPower;
-            knockBackHeight = p_knockBackHeight;
-            hitEffect = p_hitEffect;
-            effectDestoryTime = p_effectDestoryTime;
-        }
+        // 무기 능력치 대입
+        attackDamage = p_attackDamage;
+        maxHitCount = p_maxHitCount;
+        knockBackPower = p_knockBackPower;
+        knockBackHeight = p_knockBackHeight;
+        hitEffect = p_hitEffect;
+        effectDestoryTime = p_effectDestoryTime;
     }
 
     public virtual void NotUseWeapon()

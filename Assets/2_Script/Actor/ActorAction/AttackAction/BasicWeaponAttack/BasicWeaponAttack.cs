@@ -35,12 +35,20 @@ public class BasicWeaponAttack : AttackAction
         attackRate += weaponActiveTime;
     }
 
+
+    protected virtual void UseWeapon()
+    { weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime); }
+
+    protected virtual void NotUseWeapon()
+    { weapon.NotUseWeapon(); }
+
+
     protected override void DoAttack()
     {
         // --- 무기 활성화 ---
-        weapon.UseWeapon(attackDamage, maxHitCount, knockBackPower, knockBackHeight, hitEffect, effectDestoryTime);
+        UseWeapon();
 
         // --- 일정 시간 후 무기 비활성화 ---
-        Timer.Instance.StartTimer(this, weaponActiveTime, weapon.NotUseWeapon);
+        Timer.Instance.StartTimer(this, weaponActiveTime, NotUseWeapon);
     }
 }

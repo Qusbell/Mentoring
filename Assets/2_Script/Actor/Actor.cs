@@ -24,8 +24,25 @@ abstract public class Actor : MonoBehaviour
         }
     }
 
+
+
     // 이동
-    protected MoveAction moveAction;
+    private MoveAction _moveAction;
+    public MoveAction moveAction
+    {
+        get
+        {
+            if (_moveAction == null)
+            {
+                _moveAction = GetComponent<MoveAction>();
+                if (_moveAction == null) { Debug.LogWarning($"{gameObject.name} 오브젝트에 MoveAction 컴포넌트가 없습니다."); }
+            }
+
+            return _moveAction;
+        }
+    }
+
+
 
     // 공격
     protected AttackAction attackAction
@@ -70,7 +87,20 @@ abstract public class Actor : MonoBehaviour
 
 
     // 애니메이션
-    protected ActorAnimation animator;
+    protected ActorAnimation _animator;
+
+    public ActorAnimation animator
+    {
+        get
+        {
+            if( _animator == null)
+            {
+                _animator = GetComponent<ActorAnimation>();
+                if (_animator == null) { Debug.LogWarning($"{gameObject.name} 오브젝트에 ActorAnimation 컴포넌트가 없습니다."); }
+            }
+            return _animator;
+        }
+    }
 
 
     // 바닥 콜라이더 (점프 판정) : 현재 Player 이외에 존재하지 않음
@@ -106,9 +136,6 @@ abstract public class Actor : MonoBehaviour
     protected virtual void Awake()
     {
         rigid.freezeRotation = true;
-
-        animator = GetComponent<ActorAnimation>();
-        moveAction = GetComponent<MoveAction>();
 
         // 공격 목록 만들기
         AttackAction[] tempAttackActions = GetComponents<AttackAction>();

@@ -12,8 +12,8 @@ public class ChargeAttack : BasicWeaponAttack
     // 경고 발판
     protected GameObject warningPlane = null;
 
-    // private Vector3 chargeVec = Vector3.zero;  // 공격 방향
-    private Vector3 originPos = Vector3.zero;  // 최초 위치
+    // 최초 위치
+    private Vector3 originPos = Vector3.zero;
 
 
     protected override void Awake()
@@ -21,6 +21,8 @@ public class ChargeAttack : BasicWeaponAttack
         base.Awake();
         checkLayer = 1 << LayerMask.NameToLayer("Cube"); // cube를 만나면 돌진 정지
         this.enabled = false;
+
+        // 사망 시 돌진발판 즉시 제거
         thisActor.damageReaction.whenDie.AddOnce(() => { WarningPlaneSetter.DelWarning(this, ref warningPlane); });
     }
 
@@ -45,9 +47,6 @@ public class ChargeAttack : BasicWeaponAttack
     {
         base.DoAttack();
 
-        // --- 돌진 방향 지정 ---
-        // chargeVec = transform.forward;
-
         // --- 원래 위치 확인 ---
         originPos = transform.position;
 
@@ -66,13 +65,18 @@ public class ChargeAttack : BasicWeaponAttack
     private void StartCharge()
     { this.enabled = true; }
 
-    private void EndCharge()
+    protected virtual void EndCharge()
     {
         Timer.Instance.StopTimer(this, "_EndAttack");
         this.enabled = false;
         thisActor.rigid.isKinematic = false;
         thisActor.rigid.velocity = Vector3.zero;
+        NotUseWeapon();
     }
+
+    
+    protected virtual void EndChargeWhenCube()
+    { EndCharge(); }
 
 
     private LayerMask checkLayer;     // 체크할 레이어
@@ -113,11 +117,14 @@ public class ChargeAttack : BasicWeaponAttack
         // --- 다음 위치 계산 ---
         Vector3 nextPos = thisActor.rigid.position + transform.forward * curSpeed * Time.fixedDeltaTime;
 
+        // 기즈모 디버그
+        gizmoPos = nextPos + new Vector3(0, checkRadius, 0); // 기즈모 표시 위치 저장
+
         // --- 다음 위치 장애물 확인 (위쪽) ---
-        int count = Physics.OverlapSphereNonAlloc(nextPos + new Vector3(0, checkRadius, 0), checkRadius, cubes, checkLayer);
+        int count = Physics.OverlapSphereNonAlloc(nextPos + new Vector3(0, checkRadius * 2, 0), checkRadius, cubes, checkLayer);
         if (count > 0)
         {
-            EndCharge();
+            EndChargeWhenCube();
             return;
         }
 
@@ -132,7 +139,6 @@ public class ChargeAttack : BasicWeaponAttack
         // --- 이동 ---
         thisActor.rigid.MovePosition(nextPos);
     }
-
 
 
     // 돌진 중 튕겨내기
@@ -165,5 +171,20 @@ public class ChargeAttack : BasicWeaponAttack
             }
         }
     }
+
+
+
+
+
+    // 클래스 멤버 변수 추가
+    private Vector3 gizmoPos = Vector3.zero;
+
+    // 기즈모 메서드 추가
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(gizmoPos, checkRadius); // 장애물 멈춤 위치를 빨간색 와이어 구로 표시
+    }
+
 
 }
