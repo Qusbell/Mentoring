@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// 스태미나 게이지 전용 UI (싱글톤 방식)
@@ -12,6 +13,7 @@ public class StaminaUI : SingletonT<StaminaUI>
     [Header("스태미나 게이지")]
     [SerializeField] private Slider staminaSlider;
     [SerializeField] private Image staminaFillImage;
+    [SerializeField] private TextMeshProUGUI staminaText;
 
     [Header("애니메이션 설정")]
     [SerializeField] private float animationDuration = 0.3f;
@@ -125,6 +127,17 @@ public class StaminaUI : SingletonT<StaminaUI>
     }
 
     /// <summary>
+    /// 스태미나바 텍스트
+    /// </summary>
+    private void UpdateStaminaText()
+    {
+        if (staminaText != null && staminaAction != null)
+        {
+            staminaText.text = $"{staminaAction.stamina}/{staminaAction.maxStaminaValue}";
+        }
+    }
+
+    /// <summary>
     /// 스태미나바 애니메이션
     /// </summary>
     private IEnumerator AnimateStaminaBar(float targetRatio)
@@ -140,6 +153,7 @@ public class StaminaUI : SingletonT<StaminaUI>
 
             staminaSlider.value = currentStaminaRatio;
             UpdateStaminaColor(currentStaminaRatio);
+            UpdateStaminaText();
 
             yield return null;
         }
@@ -147,6 +161,7 @@ public class StaminaUI : SingletonT<StaminaUI>
         currentStaminaRatio = targetRatio;
         staminaSlider.value = currentStaminaRatio;
         UpdateStaminaColor(currentStaminaRatio);
+        UpdateStaminaText();
     }
 
     /// <summary>

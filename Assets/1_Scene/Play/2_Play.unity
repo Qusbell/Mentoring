@@ -24595,6 +24595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 594966017}
   healthFillImage: {fileID: 0}
+  healthText: {fileID: 0}
   animationDuration: 0.3
   animationCurve:
     serializedVersion: 2
@@ -24623,8 +24624,6 @@ MonoBehaviour:
   healthNormalColor: {r: 0, g: 1, b: 0, a: 1}
   healthWarningColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   healthDangerColor: {r: 1, g: 0, b: 0, a: 1}
-  enablePulseEffect: 0
-  pulseSpeed: 2
 --- !u!114 &594966017
 MonoBehaviour:
   m_ObjectHideFlags: 0
