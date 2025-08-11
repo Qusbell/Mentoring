@@ -45,8 +45,6 @@ public class ChargeAttack : BasicWeaponAttack
 
     protected override void DoAttack()
     {
-        base.DoAttack();
-
         // --- 원래 위치 확인 ---
         originPos = transform.position;
 
@@ -58,12 +56,15 @@ public class ChargeAttack : BasicWeaponAttack
 
         // --- 물리 조정 && 돌진 활성화 ---
         StartCharge();
-        Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, EndCharge);
+        // Timer.Instance.StartTimer(this, "_EndAttack", weaponActiveTime, EndCharge);
     }
 
 
     private void StartCharge()
-    { this.enabled = true; }
+    {
+        this.enabled = true;
+        UseWeapon();
+    }
 
     protected virtual void EndCharge()
     {
@@ -71,12 +72,13 @@ public class ChargeAttack : BasicWeaponAttack
         this.enabled = false;
         thisActor.rigid.isKinematic = false;
         thisActor.rigid.velocity = Vector3.zero;
-        NotUseWeapon();
+        NotUseWeapon(); // <- 돌진 종료 시 무기 비활성화
     }
 
     
     protected virtual void EndChargeWhenCube()
     { EndCharge(); }
+
 
 
     private LayerMask checkLayer;     // 체크할 레이어
@@ -116,9 +118,6 @@ public class ChargeAttack : BasicWeaponAttack
 
         // --- 다음 위치 계산 ---
         Vector3 nextPos = thisActor.rigid.position + transform.forward * curSpeed * Time.fixedDeltaTime;
-
-        // 기즈모 디버그
-        gizmoPos = nextPos + new Vector3(0, checkRadius, 0); // 기즈모 표시 위치 저장
 
         // --- 다음 위치 장애물 확인 (위쪽) ---
         int count = Physics.OverlapSphereNonAlloc(nextPos + new Vector3(0, checkRadius * 2, 0), checkRadius, cubes, checkLayer);
@@ -171,20 +170,5 @@ public class ChargeAttack : BasicWeaponAttack
             }
         }
     }
-
-
-
-
-
-    // 클래스 멤버 변수 추가
-    private Vector3 gizmoPos = Vector3.zero;
-
-    // 기즈모 메서드 추가
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(gizmoPos, checkRadius); // 장애물 멈춤 위치를 빨간색 와이어 구로 표시
-    }
-
 
 }
