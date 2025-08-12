@@ -86,6 +86,12 @@ public class Monster : Actor
     protected virtual void Update()
     { actionStatus(); }
 
+    protected virtual void FixedUpdate()
+    {
+        if (moveAction.isMove)
+        { moveAction.Move(); }
+    }
+
     protected virtual void LateUpdate()
     { animator.PlayAnimation("IsMove", moveAction.isMove); }
 
@@ -223,9 +229,6 @@ public class Monster : Actor
             else
             { IsMoveOff(); }
 
-            if (moveAction.isMove)
-            { moveAction.Move(); }
-            
             if (!isFacing)
             { moveAction.Turn(); }
         }
@@ -238,7 +241,7 @@ public class Monster : Actor
         // 공격 가능하다면
         if (isReadyToAttack)
         {
-            chaseAction.UpdateMyPositionOnNav(); // <- 끄트머리에 끼인 경우 navMesh 되돌아오기 (임시)
+            chaseAction.ReturnToNav(); // <- 끄트머리에 끼인 경우 navMesh 되돌아오기 (임시)
             attackAction.Attack();
             SwitchStatus(AttackAnimationStatus);
         }

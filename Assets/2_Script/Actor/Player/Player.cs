@@ -33,12 +33,8 @@ public class Player : Actor
     }
 
 
-    // 프레임당 업데이트
-    protected virtual void Update()
+    private void FixedUpdate()
     {
-        // --- 입력 ---
-        input.SetInput();
-
         // --- 이동 ---
         if (input.isMoveKeyDown && !dodgeAction.isDodge)
         {
@@ -48,7 +44,14 @@ public class Player : Actor
             moveAction.Turn();
         }
         else { moveAction.isMove = false; }
+    }
 
+
+    // 프레임당 업데이트
+    protected virtual void Update()
+    {
+        // --- 입력 ---
+        input.SetInput();
 
         // --- 점프 ---
         if (input.isJumpKeyDown)

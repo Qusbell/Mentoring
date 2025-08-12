@@ -34,7 +34,8 @@ public class GuidedProjectileMove : ProjectileMove
         Vector3 dir = (target.position - transform.position).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, dir, turnSpeed * Time.deltaTime, 0.0f);
         transform.rotation = Quaternion.LookRotation(newDir);
+        moveVec = transform.forward;
 
-        transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        base.Move();
     }
 }

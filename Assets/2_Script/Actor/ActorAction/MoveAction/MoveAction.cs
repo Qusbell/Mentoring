@@ -50,7 +50,7 @@ public class MoveAction : ActorAction
     // 이동 메서드
     // 현재위치 += 방향 * 이동 간격 * 이동 간격 보정
     public virtual void Move()
-    { rigid.MovePosition(rigid.position + moveVec * moveSpeed * Time.deltaTime); }
+    { rigid.MovePosition(rigid.position + moveVec * moveSpeed * Time.fixedDeltaTime); }
 
     // 회전
     public virtual void Turn()

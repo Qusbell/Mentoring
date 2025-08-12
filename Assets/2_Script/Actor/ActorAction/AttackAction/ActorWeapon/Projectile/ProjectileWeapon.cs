@@ -25,10 +25,10 @@ public class ProjectileWeapon : ActorWeapon
     }
 
     // 매 프레임 이동
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         if (moveAction.isMove) { moveAction.Move(); }
-        if (owner == null) { EffectAndDestory(); }
+        if (owner.damageReaction.isDie) { EffectAndDestory(); }
     }
 
     protected override void OnTriggerEnter(Collider other)

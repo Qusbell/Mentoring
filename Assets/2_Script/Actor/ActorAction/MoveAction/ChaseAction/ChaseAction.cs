@@ -67,13 +67,13 @@ public class ChaseAction : MoveAction
 
     public override void Move()
     {
-        // UpdateDestination();       // 경로 갱신
+        // UpdateDestination();    // 경로 갱신
         UpdateNextMoveDirection(); // 다음 방향 설정
         UpdateMyPositionOnNav();   // 자신 위치 갱신
 
         // 타겟이 존재하고,
         // 길이 존재하는 경우에만 move
-        if (target != null && nav.hasPath && nav.pathStatus == NavMeshPathStatus.PathComplete)
+        if (target != null && nav.hasPath)
         { base.Move(); }
     }
 
@@ -107,6 +107,13 @@ public class ChaseAction : MoveAction
     // 네비게이션 위치와 자신 위치 동기화
     public void UpdateMyPositionOnNav()
     {
+        if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
+    }
+
+
+    // 
+    public void ReturnToNav()
+    {
         // nav상 위치와 transform 위치의 괴리
         float gapDistance = (nav.nextPosition - transform.position).sqrMagnitude;
 
@@ -120,9 +127,9 @@ public class ChaseAction : MoveAction
             { nav.Warp(hit.position); }
         }
 
-        if (nav.isOnNavMesh) { nav.nextPosition = rigid.position; }
+        UpdateMyPositionOnNav();
     }
-
+    
 
 
     // 회전 속도
