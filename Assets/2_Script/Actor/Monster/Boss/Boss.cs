@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss : Monster
@@ -7,13 +8,16 @@ public class Boss : Monster
     // 3 2 1 -> 다음 공격
     protected MaxNowInt normalAttackCount = new MaxNowInt(2);
     protected MaxNowInt chargeAttackCount = new MaxNowInt(1);
-    protected MaxNowInt beforeJumpCycleCount = new MaxNowInt(1);
+    protected MaxNowInt beforeJumpCycleCount = new MaxNowInt(0);
 
     // 공격 플래그
     private bool attackPlag = true;
 
     // 돌진 중 충돌 판정
     protected bool hitWhenChargePlag = false;
+
+    // wave를 실행할 위치
+    [SerializeField] protected Transform wavePos;
 
 
     protected override void Awake()
@@ -96,17 +100,17 @@ public class Boss : Monster
     // (돌진 1번 -> 평타 2번) * 사이클 2번 -> 점프 -> 반복
     protected void NextSelectStatus()
     {
-        System.Action nextAction = null;
+        System.Action nextAction = IdleStatus;
+
+        Debug.Log($"돌진:{chargeAttackCount.now} / 평타:{normalAttackCount.now} / 사이클: {beforeJumpCycleCount.now}");
 
         if (0 < chargeAttackCount)
         {
             nowAttackKey = AttackName.Monster_BossChargeAttack;
-            nextAction = IdleStatus;
         }
         else if (0 < normalAttackCount)
         {
             nowAttackKey = AttackName.Monster_BossNormalAttack;
-            nextAction = IdleStatus;
         }
         else if (0 < beforeJumpCycleCount)
         {
@@ -114,9 +118,8 @@ public class Boss : Monster
             chargeAttackCount.Reset();
             normalAttackCount.Reset();
             beforeJumpCycleCount -= 1;
-            nextAction = IdleStatus;
         }
-        else
+        else if (0 == beforeJumpCycleCount)
         {
             nowAttackKey = AttackName.Monster_BossChargeAttack;
             chargeAttackCount.Reset();
@@ -138,14 +141,51 @@ public class Boss : Monster
 
 
 
+    protected bool tempPlag = true;
+    // 점프 준비
+    protected void PrepareJumpStatus()
+    {
+        if (tempPlag)
+        {
+            tempPlag = false;
+            Timer.Instance.StartTimer(this, "_점프준비", 1f, () => { tempPlag = true; SwitchStatus(JumpStatus); });
+        }
+    }
 
-    // 도약 -> 목표 지점으로 이동
+    // 점프 중 업데이트
     protected void JumpStatus()
     {
         if (this.transform.position.y <= 80f)
-        { rigid.velocity = Vector3.up * 40f; }
-
+        {
+            rigid.useGravity = false;
+            rigid.velocity = Vector3.up * 40f;
+        }
+        else
+        {
+            rigid.useGravity = true;
+            transform.position =
+                new Vector3(wavePos.position.x,
+                transform.position.y,
+                wavePos.position.z);
+            SwitchStatus(FallStatus);
+        }    
     }
+
+
+    protected void FallStatus()
+    {
+        if (tempPlag)
+        {
+            tempPlag = false;
+            foot.whenGroundEvent.Add(() => { tempPlag = true; SwitchStatus(WaveStatus); }, 1, true);
+        }
+    }
+
+
+    protected void WaveStatus()
+    {
+
+    }    
 
 
 

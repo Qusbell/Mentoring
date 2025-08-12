@@ -191,7 +191,7 @@ public class Monster : Actor
     // 대기 상태
     protected void IdleStatus()
     {
-        chaseAction.ReturnToNav();
+        chaseAction.ReturnToNav(); // <- nav 위로 되돌아오기
 
         if (isReadyToAttack)
         { SwitchStatus(AttackStatus); }
@@ -243,7 +243,6 @@ public class Monster : Actor
         // 공격 가능하다면
         if (isReadyToAttack)
         {
-            chaseAction.ReturnToNav(); // <- 끄트머리에 끼인 경우 navMesh 되돌아오기 (임시)
             attackAction.Attack();
             SwitchStatus(AttackAnimationStatus);
         }
@@ -276,6 +275,7 @@ public class Monster : Actor
     {
         PlayTriggerAnimationOnce("IsDie");
     }
+
 
 
 }

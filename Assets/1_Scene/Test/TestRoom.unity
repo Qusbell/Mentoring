@@ -1620,7 +1620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 268780190671213734, guid: 0c802c67291db70489f2febac684735c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 644356163616296476, guid: 0c802c67291db70489f2febac684735c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1670,6 +1670,10 @@ PrefabInstance:
       propertyPath: attackDamage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6813301875135894386, guid: 0c802c67291db70489f2febac684735c, type: 3}
+      propertyPath: wavePos
+      value: 
+      objectReference: {fileID: 149708000}
     - target: {fileID: 6813301875135894386, guid: 0c802c67291db70489f2febac684735c, type: 3}
       propertyPath: tempAttackName
       value: 9
@@ -1802,7 +1806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6143643343095581565, guid: ec3da66061dcb8548b506fe5bd8ed024, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
