@@ -81,7 +81,8 @@ public class CubeController : MonoBehaviour
         TimeTrigger,  // 시간 트리거: 일정 시간 경과 후 오브젝트 활성화
         AreaTrigger,  // 영역 트리거: 특정 영역에 플레이어가 들어오면 활성화
         KillTrigger,  // 킬 트리거: 특정 영역의 모든 몬스터 제거 시 활성화
-        Manual        // 수동 트리거: 코드에서 직접 호출하여 활성화
+        TimeOrKill,   // 시간 OR 킬 트리거: 시간 달성 또는 몬스터 전멸 시 활성화
+        AreaOrKill    // 영역 OR 킬 트리거: 플레이어 진입 또는 몬스터 전멸 시 활성화
     }
 
 
@@ -96,8 +97,8 @@ public class CubeController : MonoBehaviour
             // 이미 활성화된 큐브는 스킵
             if (data.hasActivated) continue;
 
-            // 영역 트리거 조건이고 영역과 태그가 일치하는지 확인
-            if (data.triggerType == TriggerType.AreaTrigger &&
+            // 영역 트리거 또는 영역+킬 조건이고 영역과 태그가 일치하는지 확인
+            if ((data.triggerType == TriggerType.AreaTrigger || data.triggerType == TriggerType.AreaOrKill) &&
                 data.triggerArea == triggerArea &&
                 other.CompareTag(data.targetTag))
             {
@@ -158,9 +159,46 @@ public class CubeController : MonoBehaviour
                 { ActivateCube(data); }
             }
 
-            // 킬 트리거 처리 (새로 추가)
+            // 킬 트리거 처리
             if (data.triggerType == TriggerType.KillTrigger)
             {
+                if (data.triggerArea != null)
+                {
+                    AllKillTrigger killTrigger = data.triggerArea.GetComponent<AllKillTrigger>();
+                    if (killTrigger != null && killTrigger.IsCompleted)
+                    {
+                        ActivateCube(data);
+                    }
+                }
+            }
+
+            // 시간 OR 킬 트리거 처리 (새로 추가)
+            if (data.triggerType == TriggerType.TimeOrKill)
+            {
+                // 시간 조건 체크
+                data.timer += Time.deltaTime;
+                bool timeCondition = (data.timer >= data.delayTime);
+
+                // 킬 조건 체크
+                bool killCondition = false;
+                if (data.triggerArea != null)
+                {
+                    AllKillTrigger killTrigger = data.triggerArea.GetComponent<AllKillTrigger>();
+                    killCondition = (killTrigger != null && killTrigger.IsCompleted);
+                }
+
+                // OR 조건: 둘 중 하나만 만족하면 활성화
+                if (timeCondition || killCondition)
+                {
+                    ActivateCube(data);
+                }
+            }
+
+            // 영역 OR 킬 트리거 처리 (새로 추가)
+            if (data.triggerType == TriggerType.AreaOrKill)
+            {
+                // 영역 조건은 OnAreaTrigger에서 처리됨
+                // 킬 조건만 여기서 체크
                 if (data.triggerArea != null)
                 {
                     AllKillTrigger killTrigger = data.triggerArea.GetComponent<AllKillTrigger>();
@@ -204,7 +242,7 @@ public class CubeController : MonoBehaviour
         // 참고: KillTrigger는 targetTag를 사용하지 않음 (KillAllTrigger에서 자체 처리)
         public string targetTag = "Player";
 
-        [Tooltip("영역 트리거일 경우, 충돌 감지할 영역 오브젝트 / KillTrigger일 경우, AllKillTrigger 오브젝트")]
+        [Tooltip("영역 트리거일 경우, 충돌 감지할 영역 오브젝트 / KillTrigger/TimeOrKill/AreaOrKill일 경우, AllKillTrigger 오브젝트")]
         public GameObject triggerArea;
 
         [Tooltip("시간 트리거일 경우, 기다릴 시간")]

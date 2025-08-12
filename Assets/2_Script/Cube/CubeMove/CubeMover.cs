@@ -61,7 +61,7 @@ public class CubeMover : MonoBehaviour
         originalPosition = transform.position;
         startPosition = originalPosition + startPositionOffset;
 
-        // isTrigger 체크 (한 번만)
+        // isTrigger 체크 
         Collider col = GetComponent<Collider>();
         isTriggerCube = (col != null && col.isTrigger);
 
@@ -156,7 +156,7 @@ public class CubeMover : MonoBehaviour
 
     private void ChangeLayersRecursively(Transform trans, int layer)
     {
-        // 각 오브젝트마다 isTrigger 체크
+        // 각 오브젝트마다 개별적으로 isTrigger 체크
         Collider col = trans.GetComponent<Collider>();
         if (col == null || !col.isTrigger)
         {
