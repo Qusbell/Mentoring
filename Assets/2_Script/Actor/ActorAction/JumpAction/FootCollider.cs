@@ -41,7 +41,7 @@ public class FootCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 큐브인 경우
-        if (other.CompareTag("Cube"))
+        if (other.CompareTag("Cube") && !other.isTrigger)
         {
             //Debug.Log("착지");
             rands.Add(other);
@@ -58,7 +58,7 @@ public class FootCollider : MonoBehaviour
     // 지형에서 벗어날 경우의 판정
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Cube"))
+        if (other.CompareTag("Cube") && !other.isTrigger)
         {
             // 현재 위치 저장
             Vector3 tempPos = this.transform.position;
