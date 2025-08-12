@@ -33,7 +33,10 @@ public class FootCollider : MonoBehaviour
     // 착지 판정 시 이벤트
     // public MyEvent whenGround = new MyEvent(); // <- remove 추가 후 다시 써보자
 
-    public List<System.Action> whenGroundEvent { get; set; } = new List<System.Action>();
+    public MyCallBacks whenJumpEvent { get; set; } = new MyCallBacks();
+
+    public MyCallBacks whenGroundEvent { get; set; } = new MyCallBacks();
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -44,8 +47,7 @@ public class FootCollider : MonoBehaviour
             rands.Add(other);
 
             // 이벤트 일괄 발생
-            foreach (System.Action groundEvent in whenGroundEvent.ToArray())
-            { groundEvent?.Invoke(); }
+            whenGroundEvent.Invoke();
         }
     }
 
@@ -66,8 +68,12 @@ public class FootCollider : MonoBehaviour
 
             // 공중에 뜸 상태라면
             // 마지막 위치를 저장
+            // 점프 시 이벤트 발생
             if (!isRand)
-            { lastestRandedPos = tempPos; }
+            {
+                lastestRandedPos = tempPos;
+                whenJumpEvent.Invoke();
+            }
         }
     }
 

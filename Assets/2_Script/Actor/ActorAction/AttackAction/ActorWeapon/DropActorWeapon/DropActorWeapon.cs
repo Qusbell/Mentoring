@@ -34,8 +34,8 @@ public class DropActorWeapon : ActorWeapon
         if (owner.foot != null && !owner.isRand)
         {
             // <- 이후 MyEvent.AddOnce로 교체
-            owner.foot.whenGroundEvent.Add(DropAttack);   // 먼저 드랍어택
-            owner.foot.whenGroundEvent.Add(NotUseWeapon); // 그 후 무기 사용 종료
+            owner.foot.whenGroundEvent.Add(DropAttack, 1);   // 먼저 드랍어택
+            owner.foot.whenGroundEvent.Add(NotUseWeapon, 1); // 그 후 무기 사용 종료
         }
         // 지상인 경우: 즉시 사용
         else
@@ -50,9 +50,6 @@ public class DropActorWeapon : ActorWeapon
     {
         base.NotUseWeapon();
         this.owner.rigid.velocity = Vector3.zero;
-
-        owner.foot.whenGroundEvent.Remove(DropAttack);
-        owner.foot.whenGroundEvent.Remove(NotUseWeapon);
     }
 
 

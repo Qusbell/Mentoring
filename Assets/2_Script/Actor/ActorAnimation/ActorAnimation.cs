@@ -64,8 +64,8 @@ public class ActorAnimation : ActorAction
         {
             isJumpAttackPlag = true;
             System.Action action = null;
-            action = () => { isJumpAttackPlag = false; thisActor.foot.whenGroundEvent.Remove(action); };
-            thisActor.foot.whenGroundEvent.Add(action);
+            action = () => { isJumpAttackPlag = false; };
+            thisActor.foot.whenGroundEvent.Add(action, 1);
         }
     }
 
@@ -80,13 +80,10 @@ public class ActorAnimation : ActorAction
 
             // 착지 시 애니메이션 재개
             System.Action resumeAction = null;
-            resumeAction = () => {
-                animator.speed = 1f;
-                thisActor.foot.whenGroundEvent.Remove(resumeAction);
-            };
+            resumeAction = () => { animator.speed = 1f; };
 
             // 이벤트 추가
-            thisActor.foot.whenGroundEvent.Add(resumeAction);
+            thisActor.foot.whenGroundEvent.Add(resumeAction, 1);
         }
     }
 

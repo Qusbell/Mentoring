@@ -106,6 +106,9 @@ public class Monster : Actor
         isTriggerAnimationAvailable = true;
         isAnimationPlaying = false;
 
+        // 이동 상태 종료시키기
+        IsMoveOff();
+
         // 다음 상태로 교체
         actionStatus = nextStatus;
         UpdateStateName(actionStatus); // <- 디버그
