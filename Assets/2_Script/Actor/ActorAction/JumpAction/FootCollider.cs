@@ -91,7 +91,13 @@ public class FootCollider : MonoBehaviour
         get
         {
             Vector3 checkPos = transform.position + Vector3.down * groundCheckOffset;
-            int hitCount = Physics.OverlapSphereNonAlloc(checkPos, groundCheckRadius, overlaps, groundLayer);
+            int hitCount = Physics.OverlapSphereNonAlloc(
+                checkPos,
+                groundCheckRadius,
+                overlaps,
+                groundLayer,
+                QueryTriggerInteraction.Ignore
+            );
             return hitCount > 0;
         }
     }
