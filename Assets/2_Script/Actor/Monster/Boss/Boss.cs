@@ -179,12 +179,15 @@ public class Boss : Monster
             tempPlag = false;
             foot.whenGroundEvent.Add(() => { tempPlag = true; SwitchStatus(WaveStatus); }, 1, true);
         }
+
+        moveAction.Turn();
     }
 
 
     protected void WaveStatus()
     {
-
+        PlayTriggerAnimationOnce("DoWaveMaking");
+        SwitchStatusWhenAnimationEnd("Wave_Making", IdleStatus);
     }    
 
 

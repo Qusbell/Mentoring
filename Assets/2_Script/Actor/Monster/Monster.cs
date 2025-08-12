@@ -193,6 +193,8 @@ public class Monster : Actor
     {
         chaseAction.ReturnToNav(); // <- nav 위로 되돌아오기
 
+        
+
         if (isReadyToAttack)
         { SwitchStatus(AttackStatus); }
         //  else if (!attackAction.isCanAttack)

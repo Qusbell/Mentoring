@@ -128,6 +128,7 @@ public class ChargeAttack : BasicWeaponAttack
         int count = Physics.OverlapSphereNonAlloc(nextPos + Vector3.up * checkRadius * 2, checkRadius, cubes, checkLayer);
         if (count > 0)
         {
+            Debug.Log("장애물 정지");
             EndChargeWhenCube();
             return;
         }
@@ -136,6 +137,7 @@ public class ChargeAttack : BasicWeaponAttack
         count = Physics.OverlapSphereNonAlloc(nextPos - new Vector3(0, checkRadius, 0), checkRadius, cubes, checkLayer);
         if (count == 0)
         {
+            Debug.Log("낭떠러지 정지");
             EndCharge();
             return;
         }
@@ -179,4 +181,43 @@ public class ChargeAttack : BasicWeaponAttack
     // <- 임시 (낙사 시 발판 반환)
     protected void OnDestroy()
     { WarningPlaneSetter.DelWarning(this, ref warningPlane); }
+
+
+    private void OnDrawGizmos()
+    {
+        // 현재 오브젝트가 활성화되어 있지 않아도 위치 표시를 위해 transform 사용
+        Vector3 currentPos = transform.position;
+
+        // 현재 위치와 최초 위치 사이의 거리 계산
+        float traveledDistance = Vector3.Distance(currentPos, originPos);
+
+        // 다음 위치 예측 (기본 속도 사용)
+        float curSpeed = chargeSpeed;
+        if (traveledDistance / chargeDistance >= 0.8f)
+        {
+            // 마지막 20% 감속 고려 (간단히 최소 0.3배 속도 적용)
+            curSpeed = chargeSpeed * 0.3f;
+        }
+        Vector3 nextPos = currentPos + transform.forward * curSpeed * Time.fixedDeltaTime;
+
+        // Gizmo 색상 및 구체 크기 설정
+        float radius = checkRadius;
+
+        // 1. 장애물 확인용 OverlapSphere 위치 (nextPos 위쪽)
+        Gizmos.color = Color.red * new Color(1, 1, 1, 0.5f); // 반투명 빨강
+        Vector3 obstacleCheckPos = nextPos + Vector3.up * radius * 2;
+        Gizmos.DrawSphere(obstacleCheckPos, radius);
+
+        // 2. 낭떠러지 확인용 OverlapSphere 위치 (nextPos 아래쪽)
+        Gizmos.color = Color.blue * new Color(1, 1, 1, 0.5f); // 반투명 파랑
+        Vector3 cliffCheckPos = nextPos - new Vector3(0, radius, 0);
+        Gizmos.DrawSphere(cliffCheckPos, radius);
+
+        // 3. 경로 거리 표시 (최초 위치 originPos가 Vector3.zero가 아닌 경우만)
+        if (originPos != Vector3.zero)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(originPos, currentPos);
+        }
+    }
 }
