@@ -435,7 +435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3355376649835269217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1672,7 +1672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1c9ea500b304149aff6ffd47879d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
+  moveSpeed: 10
 --- !u!114 &8983823797723537583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1872,8 +1872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5bbf6cb28f4b94d9b0d3757eade0cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 30
-  nowHp: 30
+  maxHp: 10
+  nowHp: 10
   bouncePowerWhenDie: 15
   invincibilityTime: 1
   flikerTime: 0.08

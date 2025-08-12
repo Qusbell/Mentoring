@@ -117,4 +117,13 @@ public class MonsterSpawner : Spawner
             PrefabIndex += 1;
         }
     }
+
+    // AllKillTriger
+    public bool IsSpawnerCompleted
+    {
+        get { return isCompleted; }
+    }
+
+
+
 }

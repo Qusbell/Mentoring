@@ -21,6 +21,7 @@ using UnityEngine;
 /// 큐브 이동을 관리하는 컴포넌트
 /// 미리 배치된 큐브가 시작 시 꺼지고, 활성화될 때 지정한 위치에서 시작하여 원래 배치된 위치로 돌아옴
 /// 이동 경로를 레이저로 시각화 (에디터에서만)
+/// isTrigger 큐브는 레이어 변경하지 않음
 /// </summary>
 public class CubeMover : MonoBehaviour
 {
@@ -52,12 +53,17 @@ public class CubeMover : MonoBehaviour
     private Vector3 startPosition;         // 계산된 시작 위치
     private bool isMovingToOriginal;       // 원래 위치로 이동 중
     private bool hasArrived;               // 원래 위치에 도착했는지 여부
+    private bool isTriggerCube;            // isTrigger 큐브인지 확인 (레이어 변경 방지용)
 
     // 시작 시 초기화
     void Awake()
     {
         originalPosition = transform.position;
         startPosition = originalPosition + startPositionOffset;
+
+        // isTrigger 체크 (한 번만)
+        Collider col = GetComponent<Collider>();
+        isTriggerCube = (col != null && col.isTrigger);
 
 #if UNITY_EDITOR
         // 에디터에서만 LineRenderer 설정
@@ -68,7 +74,12 @@ public class CubeMover : MonoBehaviour
         if (gameObject.activeSelf)
         {
             gameObject.SetActive(false);
-            ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Default"));
+
+            // 트리거가 아닌 경우만 레이어 변경
+            if (!isTriggerCube)
+            {
+                ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Default"));
+            }
         }
     }
 
@@ -81,6 +92,12 @@ public class CubeMover : MonoBehaviour
         // 이동 시작
         isMovingToOriginal = true;
         hasArrived = false;
+
+        // 트리거가 아닌 경우만 레이어 변경
+        if (!isTriggerCube)
+        {
+            ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Default"));
+        }
 
 #if UNITY_EDITOR
         // 에디터에서만 레이저 경로 업데이트
@@ -113,7 +130,12 @@ public class CubeMover : MonoBehaviour
             {
                 transform.position = originalPosition;  // 정확한 위치로 설정
                 hasArrived = true;                      // 도착 상태로 변경
-                ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Cube"));
+
+                // 트리거가 아닌 경우만 레이어 변경
+                if (!isTriggerCube)
+                {
+                    ChangeLayersRecursively(this.transform, LayerMask.NameToLayer("Cube"));
+                }
 
                 // NavMesh 리빌드-이동 끝 발판 생성
                 if (NavMeshManager.instance != null) // null 체크 추가 (안정성)
