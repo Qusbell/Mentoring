@@ -24,16 +24,16 @@ public class CubeController : MonoBehaviour
         {
             // ----- 큐브무버 컴포넌트 애드 -----
             if (data.targetCube != null)
-           // { Debug.Log("cubeMover 없음"); }
+                // { Debug.Log("cubeMover 없음"); }
 
 
-            // ----- 공통 시간 딜레이 부여 -----
-            if (0 < sharingDelayTime)
-            {
-                tempTime += data.delayTime;
-                tempTime += sharingDelayTime;
-                data.delayTime = tempTime;
-            }
+                // ----- 공통 시간 딜레이 부여 -----
+                if (0 < sharingDelayTime)
+                {
+                    tempTime += data.delayTime;
+                    tempTime += sharingDelayTime;
+                    data.delayTime = tempTime;
+                }
         } // foreach
     }
 
@@ -80,6 +80,7 @@ public class CubeController : MonoBehaviour
     {
         TimeTrigger,  // 시간 트리거: 일정 시간 경과 후 오브젝트 활성화
         AreaTrigger,  // 영역 트리거: 특정 영역에 플레이어가 들어오면 활성화
+        KillTrigger,  // 킬 트리거: 특정 영역의 모든 몬스터 제거 시 활성화
         Manual        // 수동 트리거: 코드에서 직접 호출하여 활성화
     }
 
@@ -156,6 +157,19 @@ public class CubeController : MonoBehaviour
                 if (data.timer >= data.delayTime)
                 { ActivateCube(data); }
             }
+
+            // 킬 트리거 처리 (새로 추가)
+            if (data.triggerType == TriggerType.KillTrigger)
+            {
+                if (data.triggerArea != null)
+                {
+                    AllKillTrigger killTrigger = data.triggerArea.GetComponent<AllKillTrigger>();
+                    if (killTrigger != null && killTrigger.IsCompleted)
+                    {
+                        ActivateCube(data);
+                    }
+                }
+            }
         }
 
         // 모든 큐브 활성화 체크
@@ -187,9 +201,10 @@ public class CubeController : MonoBehaviour
         public TriggerType triggerType = TriggerType.TimeTrigger;
 
         [Tooltip("영역 트리거의 대상 태그 (기본: Player)")]
+        // 참고: KillTrigger는 targetTag를 사용하지 않음 (KillAllTrigger에서 자체 처리)
         public string targetTag = "Player";
 
-        [Tooltip("영역 트리거일 경우, 충돌 감지할 영역 오브젝트")]
+        [Tooltip("영역 트리거일 경우, 충돌 감지할 영역 오브젝트 / KillTrigger일 경우, AllKillTrigger 오브젝트")]
         public GameObject triggerArea;
 
         [Tooltip("시간 트리거일 경우, 기다릴 시간")]
@@ -257,7 +272,7 @@ public class CubeController : MonoBehaviour
 
         foreach (var data in activationSettings)
         {
-            // 트리거 영역 표시
+            // AreaTrigger만 표시 (KillTrigger는 KillAllTrigger에서 자체 시각화)
             if (data.triggerType == TriggerType.AreaTrigger && data.triggerArea != null)
             {
                 Collider triggerCollider = data.triggerArea.GetComponent<Collider>();
