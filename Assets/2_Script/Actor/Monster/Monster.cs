@@ -191,6 +191,8 @@ public class Monster : Actor
     // 대기 상태
     protected void IdleStatus()
     {
+        chaseAction.ReturnToNav();
+
         if (isReadyToAttack)
         { SwitchStatus(AttackStatus); }
         //  else if (!attackAction.isCanAttack)
